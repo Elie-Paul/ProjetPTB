@@ -4,7 +4,15 @@
 
 {% block body %}
     <h1>BilletPtb index</h1>
-
+    <script>
+        function print(id)
+        {
+            //document.location.href = "http://localhost:8000/";
+            var nbreprint = prompt("Please enter your name");
+            alert(nbreprint);
+            document.location.href = "http://localhost:8000/blogs/"+id+"/"+nbreprint;
+        }
+    </script>
     <table class="table">
         <thead>
             <tr>
@@ -14,7 +22,7 @@
                 <th>Arrivée</th>
                 <th>Prix</th>
                 <th>guichet</th>
-                <th>UpdateAt</th>
+                <th>NumeroDepart</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -27,10 +35,10 @@
                 <td>{{ billet_ptb.ptb.trajet.arrivee.libelle }}</td>
                 <td>{{ billet_ptb.ptb.section.prix }}</td>
                 <td>{{ billet_ptb.guichet.nom }}</td>
-                <td>{{ billet_ptb.updateAt ? billet_ptb.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{billet_ptb.numeroDernierBillets}}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}">show</a>
-                    <a class="btn btn-warning" href="#">Imprimer</a>
+                    <a class="btn btn-warning" id="{{ billet_ptb.id }}" href="#" onclick="print({{ billet_ptb.id }})">Imprimer</a>
                 </td>
             </tr>
         {% else %}

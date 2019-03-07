@@ -7,16 +7,16 @@
 <table style="height: 174px;" width="545" border=1>
 <tbody>
 {% set myVal = 0 %}
-{% for i in 0..100 %}
+{% for i in nbrebillet %}
     
 {% if myVal == 0 %}
     <tr style="height: 156px;">
 {% endif %}
 <td style="width: 100px; height: 156px;">
     <p>numero:#{{i}}}</p>
-    <p>Guichet:code</p>
-    <p>Section:1</p>
-    <p>Prix:150</p>
+    <p>Guichet:{{billet.guichet.nom }}</p>
+    <p>Section:{{billet.ptb.section.libelle }}</p>
+    <p>Prix:{{billet.ptb.section.prix}}</p>
 </td>
 {% set myVal = myVal + 1 %}
 {% if myVal == 5 %}
@@ -37,7 +37,7 @@
     
     
         window.print();
-    window.onafterprint = function(event) { document.location.href = "http://localhost:8000/"; };
+    window.onafterprint = function(event) { document.location.href = "http://localhost:8000/billet/ptb/"; };
     
     
         
