@@ -41,7 +41,7 @@ class Ptb
     private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\BilletPtb", mappedBy="ptb", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="BilletPtb", mappedBy="ptb", cascade={"persist", "remove"})
      */
     private $billetPtb;
 

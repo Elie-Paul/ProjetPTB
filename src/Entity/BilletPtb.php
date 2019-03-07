@@ -17,7 +17,7 @@ class BilletPtb
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\PTB", inversedBy="billetPtb", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Ptb", inversedBy="billetPtb", cascade={"persist", "remove"})
      */
     private $ptb;
 
@@ -47,12 +47,12 @@ class BilletPtb
         return $this->id;
     }
 
-    public function getPtb(): ?PTB
+    public function getPtb(): ?Ptb
     {
         return $this->ptb;
     }
 
-    public function setPtb(?PTB $ptb): self
+    public function setPtb(?Ptb $ptb): self
     {
         $this->ptb = $ptb;
 
@@ -106,4 +106,11 @@ class BilletPtb
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getGuichet()+' '+$this->getPtb()->getTrajet()->getDepart();
+    }
+
+
 }
