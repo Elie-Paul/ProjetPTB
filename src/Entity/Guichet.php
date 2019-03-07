@@ -45,7 +45,7 @@ class Guichet
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\BilletPtb", mappedBy="guichet")
+     * @ORM\OneToMany(targetEntity="BilletPtb", mappedBy="guichet")
      */
     private $billetPtbs;
 

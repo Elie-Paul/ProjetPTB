@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New BilletPtb{% endblock %}
+
+{% block body %}
+    <h1>Create new BilletPtb</h1>
+
+    {{ include('billet_ptb/_form.html.twig') }}
+
+    <a href="{{ path('billet_ptb_index') }}">back to list</a>
+{% endblock %}
