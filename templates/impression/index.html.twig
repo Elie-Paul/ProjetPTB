@@ -1,0 +1,46 @@
+
+
+
+
+{% block body %}
+
+<table style="height: 174px;" width="545" border=1>
+<tbody>
+{% set myVal = 0 %}
+{% for i in 0..100 %}
+    
+{% if myVal == 0 %}
+    <tr style="height: 156px;">
+{% endif %}
+<td style="width: 100px; height: 156px;">
+    <p>numero:#{{i}}}</p>
+    <p>Guichet:code</p>
+    <p>Section:1</p>
+    <p>Prix:150</p>
+</td>
+{% set myVal = myVal + 1 %}
+{% if myVal == 5 %}
+    </tr>
+    {% set myVal = 0%}
+{% endif %}
+
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}
+<script>
+  /*  $(document).ready(function() 
+    { 
+        alert('sss');
+    }
+    );*/
+    
+    
+        window.print();
+    window.onafterprint = function(event) { document.location.href = "http://localhost:8000/"; };
+    
+    
+        
+    
+    
+</script>
