@@ -90,8 +90,8 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Les Parametres:</h6>
             <a class="collapse-item" href="#">Agent</a>
-            <a class="collapse-item" href="#">Trajet</a>
-            <a class="collapse-item" href="#">Station</a>
+            <a class="collapse-item" href="{{ path('trajet_index') }}">Trajet</a>
+            <a class="collapse-item" href="{{ path('guichet_index') }}">Guichet</a>
         </div>
       </li>
 
@@ -156,7 +156,7 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="{{ path ('security_logout') }}" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>

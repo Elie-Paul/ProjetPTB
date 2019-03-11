@@ -1,34 +1,36 @@
 <?php
 
 namespace App\DataFixtures;
-use App\Entity\Lieux;
+use App\Entity\User;
 use App\Entity\Trajet;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+
+     private $passwordEncoder;
+
+     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+         $this->passwordEncoder = $passwordEncoder;
+    }
+
     public function load(ObjectManager $manager)
     {
         // $product = new Product();
         // $manager->persist($product);
-        $lieux1 = $this->getDoctrine()->getRepository(Lieux::class)->find(1);
-        $lieux2 = $this->getDoctrine()->getRepository(Lieux::class)->find(2);
-        $lieux3 = $this->getDoctrine()->getRepository(Lieux::class)->find(3);        
-        $lieux4 = $this->getDoctrine()->getRepository(Lieux::class)->find(4);  
-        $trajet = new Trajet();
-        $trajet->setDepart(1);
-        $trajet->setArrivee(2);
-        $trajet1 = new Trajet();
-        $trajet1->setDepart(2);
-        $trajet1->setArrivee(1);
-        $trajet2 = new Trajet();
-        $trajet2->setDepart(2);
-        $trajet2->setArrivee(3);
-        $manager->persist($lieu1);
-        $manager->persist($lieu2);
-        $manager->persist($lieu3);
-        $manager->persist($lieu4);
+        $user=new User();
+        $user->setUsername("moukondo");
+
+        $roles [] = "admin";
+        //$user->setRoles($roles[0]);
+        $user->setPassword($this->passwordEncoder->encodePassword(
+                         $user,
+                         '123456'
+                    ));
+        $manager->persist($user);
         $manager->flush();
     }
 }
