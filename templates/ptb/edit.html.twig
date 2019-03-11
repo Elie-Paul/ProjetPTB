@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Ptb{% endblock %}
+
+{% block body %}
+    <h1>Edit Ptb</h1>
+
+    {{ include('ptb/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('ptb_index') }}">back to list</a>
+
+    {{ include('ptb/_delete_form.html.twig') }}
+{% endblock %}
