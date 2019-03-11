@@ -25,8 +25,8 @@
                 <td>{{ section.createdAt ? section.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ section.updatedAt ? section.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('section_show', {'id': section.id}) }}">show</a>
-                    <a href="{{ path('section_edit', {'id': section.id}) }}">edit</a>
+                    <a class="btn btn-info" role="button" href="{{ path('section_show', {'id': section.id}) }}">voir</a>
+                    <a class="btn btn-info" role="button" href="{{ path('section_edit', {'id': section.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('section_new') }}">Create new</a>
+    <a class="btn btn-info" role="button" href="{{ path('section_new') }}">nouveau</a>
 {% endblock %}

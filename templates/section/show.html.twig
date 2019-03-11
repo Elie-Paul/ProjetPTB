@@ -30,9 +30,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('section_index') }}">back to list</a>
+    <a class="btn btn-info" role="button" href="{{ path('section_index') }}">retour a la liste</a>
 
-    <a href="{{ path('section_edit', {'id': section.id}) }}">edit</a>
+    <a class="btn btn-info" role="button" href="{{ path('section_edit', {'id': section.id}) }}">voir</a>
 
     {{ include('section/_delete_form.html.twig') }}
 {% endblock %}

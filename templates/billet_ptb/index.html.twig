@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BilletPtb index{% endblock %}
+
+{% block body %}
+    <h1>BilletPtb index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NumeroDernierBillets</th>
+                <th>CreatedAt</th>
+                <th>UpdateAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for billet_ptb in billet_ptbs %}
+            <tr>
+                <td>{{ billet_ptb.id }}</td>
+                <td>{{ billet_ptb.numeroDernierBillets }}</td>
+                <td>{{ billet_ptb.createdAt ? billet_ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ billet_ptb.updateAt ? billet_ptb.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}">voir</a>
+                    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_edit', {'id': billet_ptb.id}) }}">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_new') }}">nouveau</a>
+{% endblock %}

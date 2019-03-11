@@ -47,7 +47,7 @@ class Trajet
      * @ORM\OneToOne(targetEntity="App\Entity\Ptb", mappedBy="trajet", cascade={"persist", "remove"})
      */
     private $ptb;
-
+     private $trajetlib;
     public function getId(): ?int
     {
         return $this->id;
@@ -134,4 +134,11 @@ class Trajet
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return (string)$this->depart->getLibelle().'-'.$this->arrivee->getLibelle();
+    }
+
+    
 }

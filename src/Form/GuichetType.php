@@ -2,23 +2,21 @@
 
 namespace App\Form;
 
-use App\Entity\Trajet;
+use App\Entity\Guichet;
 use App\Entity\Lieux;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TrajetType extends AbstractType
+class GuichetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('depart', EntityType::class, [
-                'class' => Lieux::class,
-                'choice_label' => 'libelle'
-            ])
-            ->add('arrivee', EntityType::class, [
+            ->add('code')
+            ->add('nom')
+            ->add('lieu',EntityType::class, [
                 'class' => Lieux::class,
                 'choice_label' => 'libelle'
             ])
@@ -28,7 +26,7 @@ class TrajetType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Trajet::class,
+            'data_class' => Guichet::class,
         ]);
     }
 }

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Guichet{% endblock %}
+
+{% block body %}
+    <h1>Create new Guichet</h1>
+
+    {{ include('guichet/_form.html.twig') }}
+
+    <a class="btn btn-info" role="button" href="{{ path('guichet_index') }}">retour a la liste</a>
+{% endblock %}

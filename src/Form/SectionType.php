@@ -14,8 +14,6 @@ class SectionType extends AbstractType
         $builder
             ->add('libelle')
             ->add('prix')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 

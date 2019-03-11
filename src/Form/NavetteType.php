@@ -2,24 +2,23 @@
 
 namespace App\Form;
 
+use App\Entity\Navette;
 use App\Entity\Trajet;
-use App\Entity\Lieux;
+use App\Entity\Classe;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TrajetType extends AbstractType
+class NavetteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('depart', EntityType::class, [
-                'class' => Lieux::class,
-                'choice_label' => 'libelle'
-            ])
-            ->add('arrivee', EntityType::class, [
-                'class' => Lieux::class,
+            ->add('prix')
+            ->add('trajet')
+            ->add('classe', EntityType::class, [
+                'class' => Classe::class,
                 'choice_label' => 'libelle'
             ])
         ;
@@ -28,7 +27,7 @@ class TrajetType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Trajet::class,
+            'data_class' => Navette::class,
         ]);
     }
 }

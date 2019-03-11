@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Classe index</h1>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Id</th>
@@ -23,8 +23,8 @@
                 <td>{{ classe.createdAt ? classe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ classe.updatedAt ? classe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('classe_show', {'id': classe.id}) }}">show</a>
-                    <a href="{{ path('classe_edit', {'id': classe.id}) }}">edit</a>
+                    <a class="btn btn-info" role="button" href="{{ path('classe_show', {'id': classe.id}) }}">voir</a>
+                    <a class="btn btn-info" role="button" href="{{ path('classe_edit', {'id': classe.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('classe_new') }}">Create new</a>
+    <a class="btn btn-info" role="button" href="{{ path('classe_new') }}">nouveau</a>
 {% endblock %}
