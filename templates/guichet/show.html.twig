@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guichet{% endblock %}
+
+{% block body %}
+    <h1>Guichet</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ guichet.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ guichet.code }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ guichet.nom }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('guichet_index') }}">retour</a>
+
+    <a href="{{ path('guichet_edit', {'id': guichet.id}) }}">edit</a>
+
+    {{ include('guichet/_delete_form.html.twig') }}
+{% endblock %}

@@ -17,7 +17,7 @@ class Tracabilite
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users", inversedBy="tracabilites")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tracabilites")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -52,12 +52,12 @@ class Tracabilite
         return $this->id;
     }
 
-    public function getUser(): ?Users
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?Users $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
