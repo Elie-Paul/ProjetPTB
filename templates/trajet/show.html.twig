@@ -22,9 +22,15 @@
         </tbody>
     </table>
 
+<<<<<<< HEAD
     <a href="{{ path('trajet_index') }}">retour</a>
 
     <a href="{{ path('trajet_edit', {'id': trajet.id}) }}">edit</a>
+=======
+    <a class="btn btn-info" role="button" href="{{ path('trajet_index') }}">back to list</a>
+
+    <a class="btn btn-info" role="button" href="{{ path('trajet_edit', {'id': trajet.id}) }}">edit</a>
+>>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
 
     {{ include('trajet/_delete_form.html.twig') }}
 {% endblock %}

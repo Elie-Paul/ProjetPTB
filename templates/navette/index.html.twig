@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Navette index{% endblock %}
+
+{% block body %}
+    <h1>Navette index</h1>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prix</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for navette in navettes %}
+            <tr>
+                <td>{{ navette.id }}</td>
+                <td>{{ navette.prix }}</td>
+                <td>{{ navette.createdAt ? navette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ navette.updatedAt ? navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-info" role="button" href="{{ path('navette_show', {'id': navette.id}) }}">voir</a>
+                    <a class="btn btn-info" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-info" role="button" href="{{ path('navette_new') }}">nouveau</a>
+{% endblock %}

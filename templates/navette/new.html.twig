@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Navette{% endblock %}
+
+{% block body %}
+    <h1>Create new Navette</h1>
+
+    {{ include('navette/_form.html.twig') }}
+
+    <a class="btn btn-info" role="button" href="{{ path('navette_index') }}">retour a la liste</a>
+{% endblock %}

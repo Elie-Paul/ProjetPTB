@@ -3,6 +3,7 @@
 {% block title %}BilletPtb index{% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -63,16 +64,26 @@ var modal = document.getElementById('myModal');
         }
         
     </script>
+=======
+    <h1>BilletPtb index</h1>
+
+>>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
+<<<<<<< HEAD
                 <th>Section</th>
                 <th>Depart</th>
                 <th>Arrivée</th>
                 <th>Prix</th>
                 <th>guichet</th>
                 <th>NumeroDepart</th>
+=======
+                <th>NumeroDernierBillets</th>
+                <th>CreatedAt</th>
+                <th>UpdateAt</th>
+>>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
                 <th>actions</th>
             </tr>
         </thead>
@@ -80,6 +91,7 @@ var modal = document.getElementById('myModal');
         {% for billet_ptb in billet_ptbs %}
             <tr>
                 <td>{{ billet_ptb.id }}</td>
+<<<<<<< HEAD
                 <td>{{ billet_ptb.ptb.section.libelle }}</td>
                 <td>{{ billet_ptb.ptb.trajet.depart.libelle }}</td>
                 <td>{{ billet_ptb.ptb.trajet.arrivee.libelle }}</td>
@@ -89,6 +101,14 @@ var modal = document.getElementById('myModal');
                 <td>
                     <a class="btn btn-primary" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}">show</a>
                     <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.id }})">Imprimer</a>
+=======
+                <td>{{ billet_ptb.numeroDernierBillets }}</td>
+                <td>{{ billet_ptb.createdAt ? billet_ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ billet_ptb.updateAt ? billet_ptb.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}">voir</a>
+                    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_edit', {'id': billet_ptb.id}) }}">modifier</a>
+>>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
                 </td>
             </tr>
         {% else %}
@@ -99,5 +119,9 @@ var modal = document.getElementById('myModal');
         </tbody>
     </table>
 
+<<<<<<< HEAD
     <a href="{{ path('billet_ptb_new') }}">Create new</a>
+=======
+    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_new') }}">nouveau</a>
+>>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
 {% endblock %}

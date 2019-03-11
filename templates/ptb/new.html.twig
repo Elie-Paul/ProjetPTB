@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ptb{% endblock %}
+
+{% block body %}
+    <h1>Create new Ptb</h1>
+
+    {{ include('ptb/_form.html.twig') }}
+
+    <a class="btn btn-info" role="button" href="{{ path('ptb_index') }}">retour a la liste</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Navette{% endblock %}
+
+{% block body %}
+    <h1>Edit Navette</h1>
+
+    {{ include('navette/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-info" role="button" href="{{ path('navette_index') }}">retour a la liste</a>
+
+    {{ include('navette/_delete_form.html.twig') }}
+{% endblock %}

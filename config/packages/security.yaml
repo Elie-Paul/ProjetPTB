@@ -40,4 +40,4 @@ security:
         - { path: ^/admin, roles: ROLE_SUPERADMIN }
         - { path: ^/user, roles: ROLE_USER }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
-       # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/profile, roles: ROLE_USER }

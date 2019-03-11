@@ -25,8 +25,13 @@
                 <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
+<<<<<<< HEAD
                     <a href="{{ path('guichet_show', {'id': guichet.id}) }}">show</a>
                     <a href="{{ path('guichet_edit', {'id': guichet.id}) }}">edit</a>
+=======
+                    <a class="btn btn-info" role="button" href="{{ path('guichet_show', {'id': guichet.id}) }}">voir</a>
+                    <a class="btn btn-info" role="button" href="{{ path('guichet_edit', {'id': guichet.id}) }}">modifier</a>
+>>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
                 </td>
             </tr>
         {% else %}
@@ -37,5 +42,9 @@
         </tbody>
     </table>
 
+<<<<<<< HEAD
     <a href="{{ path('guichet_new') }}">Create new</a>
+=======
+    <a class="btn btn-info" role="button" href="{{ path('guichet_new') }}">nouveau</a>
+>>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
 {% endblock %}
