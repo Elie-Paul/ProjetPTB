@@ -36,7 +36,7 @@ class GuichetController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $guichet->setCreatedAt(new \DateTime());
-            $guichet->setUpdateAt(new \DateTime());
+            $guichet->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($guichet);
             $entityManager->flush();
@@ -69,7 +69,7 @@ class GuichetController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $guichet->setUpdateAt(new \DateTime());
+            $guichet->setUpdatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('guichet_index', [

@@ -36,7 +36,7 @@ class ClasseController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $classe->setCreatedAt(new \DateTime());
-            $classe->setUpdateAt(new \DateTime());
+            $classe->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($classe);
             $entityManager->flush();
@@ -69,7 +69,7 @@ class ClasseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $classe->setUpdateAt(new \DateTime());
+            $classe->setUpdatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('classe_index', [

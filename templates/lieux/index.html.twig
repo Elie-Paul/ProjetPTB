@@ -28,8 +28,8 @@
                 <td>{{ lieux.createdAt ? lieux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ lieux.updatedAt ? lieux.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a class="btn btn-info" role="button" href="{{ path('lieux_show', {'id': lieux.id}) }}">show</a>
-                    <a class="btn btn-info" href="{{ path('lieux_edit', {'id': lieux.id}) }}">edit</a>
+                    <a class="btn btn-info" role="button" href="{{ path('lieux_show', {'id': lieux.id}) }}">voir</a>
+                    <a class="btn btn-info" href="{{ path('lieux_edit', {'id': lieux.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -40,7 +40,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-info" href="{{ path('lieux_new') }}">Create new</a>
+    <a class="btn btn-info" href="{{ path('lieux_new') }}">nouveau</a>
 
     {% block javascript %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

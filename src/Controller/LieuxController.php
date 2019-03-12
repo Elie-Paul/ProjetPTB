@@ -36,7 +36,7 @@ class LieuxController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $lieux->setCreatedAt(new \DateTime());
-            $lieux->setUpdateAt(new \DateTime());
+            $lieux->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($lieux);
             $entityManager->flush();
@@ -69,7 +69,7 @@ class LieuxController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $lieux->setUpdateAt(new \DateTime());
+            $lieux->setUpdatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('lieux_index', [
