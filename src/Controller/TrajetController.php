@@ -35,6 +35,8 @@ class TrajetController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trajet->setCreatedAt(new \DateTime());
+            $trajet->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($trajet);
             $entityManager->flush();
@@ -67,6 +69,7 @@ class TrajetController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $trajet->setUpdatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('trajet_index', [
