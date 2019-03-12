@@ -23,13 +23,8 @@
                 <td>{{ classe.createdAt ? classe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ classe.updatedAt ? classe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-<<<<<<< HEAD
                     <a href="{{ path('classe_show', {'id': classe.id}) }}">show</a>
                     <a href="{{ path('classe_edit', {'id': classe.id}) }}">edit</a>
-=======
-                    <a class="btn btn-info" role="button" href="{{ path('classe_show', {'id': classe.id}) }}">voir</a>
-                    <a class="btn btn-info" role="button" href="{{ path('classe_edit', {'id': classe.id}) }}">modifier</a>
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
                 </td>
             </tr>
         {% else %}
@@ -40,9 +35,5 @@
         </tbody>
     </table>
 
-<<<<<<< HEAD
     <a href="{{ path('classe_new') }}">Create new</a>
-=======
-    <a class="btn btn-info" role="button" href="{{ path('classe_new') }}">nouveau</a>
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
 {% endblock %}

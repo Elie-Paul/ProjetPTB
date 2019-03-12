@@ -47,6 +47,21 @@ class Tracabilite
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $motif;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numDepart;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $numFin;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +135,42 @@ class Tracabilite
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getMotif(): ?string
+    {
+        return $this->motif;
+    }
+
+    public function setMotif(string $motif): self
+    {
+        $this->motif = $motif;
+
+        return $this;
+    }
+
+    public function getNumDepart(): ?int
+    {
+        return $this->numDepart;
+    }
+
+    public function setNumDepart(int $numDepart): self
+    {
+        $this->numDepart = $numDepart;
+
+        return $this;
+    }
+
+    public function getNumFin(): ?int
+    {
+        return $this->numFin;
+    }
+
+    public function setNumFin(int $numFin): self
+    {
+        $this->numFin = $numFin;
 
         return $this;
     }

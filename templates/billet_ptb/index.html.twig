@@ -3,7 +3,6 @@
 {% block title %}BilletPtb index{% endblock %}
 
 {% block body %}
-<<<<<<< HEAD
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -13,13 +12,21 @@
     <span class="close">&times;</span>
     <form>
         <div class="form-group">
-            <label for="email">Nombre de billet a imprimer</label>
+            <label for="nbreprint">Nombre de billet a imprimer</label>
             <input type="number" class="form-control" id="nbreprint">
         </div>
-        <!--Material textarea-->
-        <div class="md-form" style="display:none;">
-            <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
+          <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="modifierdpt">
+          <label class="custom-control-label" for="modifierdpt">modifier la valeur de depart</label>
+        </div>
+        <div class="form-group test" style="display:none;">
+            <label for="nbredepart">Nombre de depart</label>
+            <input type="number" class="form-control" id="nbredepart">
+        </div>
+        
+        <div class="md-form test" style="display:none;">
             <label for="form7">Motif</label>
+            <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
         </div>
         
     </form>
@@ -30,60 +37,98 @@
     <h1>BilletPtb index</h1>
     <script>
          idb=0;
-        function print(id)
+         dpt=0;
+        function show()
         {
-            idb=id;
-            
-var modal = document.getElementById('myModal');
-            modal.style.display = "block";
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() 
+            var test = document.getElementsByClassName("test")[0];
+            var test1 = document.getElementsByClassName("test")[1];
+            test.style.display="block";
+            test1.style.display="block";
+            return true;
+        }
+        function hide()
+        {
+            var test = document.getElementsByClassName("test")[0];
+            var test1 = document.getElementsByClassName("test")[1];
+            test.style.display="none";
+            test1.style.display="none";
+            return true;
+        }
+        var checkbox = document.getElementById("modifierdpt");
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById('myModal');
+        span.onclick = function() 
+        {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) 
+        {
+            if (event.target == modal) 
             {
                 modal.style.display = "none";
             }
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) 
-            {
-                if (event.target == modal) 
+        }
+        checkbox.onclick = function() 
+        {
+                if(checkbox.checked)
                 {
-                    modal.style.display = "none";
+                    show();
+                    return true;
                 }
-            }
+                else
+                {
+                    hide();
+                    return true;
+                }       
+        }
+        function print(id)
+        {
+            idb=id;
+            alert("aaa");
+            var modal = document.getElementById('myModal');
+            var td = document.getElementById('dpt'+idb);
+            dpt=parseInt(td.innerHTML,10)
+            modal.style.display = "block";
+            var checkbox = document.getElementById("modifierdpt");
+          
         }
         function print2()
         {
             var nbreprint = document.getElementById("nbreprint").value;
-            //parseInt(nbreprint, 10);
-            //alert("sss");
+            var checkbox = document.getElementById("modifierdpt");
+            var userid = parseInt(document.getElementById("userid").innerHTML, 10);
+            var motif = "";  
+            if(checkbox.checked)
+            {
+                motif = document.getElementById("form7").value;  
+                dpt = parseInt(document.getElementById('nbredepart').value, 10);
+            }
+            else
+            {
+                motif="pas de changement";
+            }
             var modal = document.getElementById('myModal');
             modal.style.display = "none";
-            document.location.href = "http://localhost:8000/blogs/"+idb+"/"+nbreprint;
+            document.location.href = `http://localhost:8000/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;
+            
+                
+                
+            //document.location.href = `http://localhost:8000/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;
+            
 
         }
         
     </script>
-=======
-    <h1>BilletPtb index</h1>
-
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-<<<<<<< HEAD
                 <th>Section</th>
                 <th>Depart</th>
                 <th>Arrivée</th>
                 <th>Prix</th>
                 <th>guichet</th>
                 <th>NumeroDepart</th>
-=======
-                <th>NumeroDernierBillets</th>
-                <th>CreatedAt</th>
-                <th>UpdateAt</th>
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
                 <th>actions</th>
             </tr>
         </thead>
@@ -91,24 +136,15 @@ var modal = document.getElementById('myModal');
         {% for billet_ptb in billet_ptbs %}
             <tr>
                 <td>{{ billet_ptb.id }}</td>
-<<<<<<< HEAD
                 <td>{{ billet_ptb.ptb.section.libelle }}</td>
                 <td>{{ billet_ptb.ptb.trajet.depart.libelle }}</td>
                 <td>{{ billet_ptb.ptb.trajet.arrivee.libelle }}</td>
                 <td>{{ billet_ptb.ptb.section.prix }}</td>
                 <td>{{ billet_ptb.guichet.nom }}</td>
-                <td>{{billet_ptb.numeroDernierBillets}}</td>
+                <td id="dpt{{ billet_ptb.id }}">{{billet_ptb.numeroDernierBillets}}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}">show</a>
                     <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.id }})">Imprimer</a>
-=======
-                <td>{{ billet_ptb.numeroDernierBillets }}</td>
-                <td>{{ billet_ptb.createdAt ? billet_ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ billet_ptb.updateAt ? billet_ptb.updateAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}">voir</a>
-                    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_edit', {'id': billet_ptb.id}) }}">modifier</a>
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
                 </td>
             </tr>
         {% else %}
@@ -118,10 +154,8 @@ var modal = document.getElementById('myModal');
         {% endfor %}
         </tbody>
     </table>
-
-<<<<<<< HEAD
+    <div id="userid" style="display:none;">
+            {{ app.user.id }}
+        </div>
     <a href="{{ path('billet_ptb_new') }}">Create new</a>
-=======
-    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_new') }}">nouveau</a>
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
 {% endblock %}

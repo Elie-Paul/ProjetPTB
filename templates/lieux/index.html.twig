@@ -1,25 +1,11 @@
 {% extends 'base.html.twig' %}
 
-<<<<<<< HEAD
 {% block title %}Lieux index{% endblock %}
 
 {% block body %}
     <h1>Lieux index</h1>
 
     <table class="table">
-=======
-{% block stylesheets %}
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"-->
-{% endblock %}
-
-{% block title %}Lieux index{% endblock %}
-
-{% block body %}
-   
-    <h1>Lieux index</h1>
-
-    <table class="table table-hover">
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
         <thead>
             <tr>
                 <th>Id</th>
@@ -37,13 +23,8 @@
                 <td>{{ lieux.createdAt ? lieux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ lieux.updatedAt ? lieux.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-<<<<<<< HEAD
                     <a href="{{ path('lieux_show', {'id': lieux.id}) }}">show</a>
                     <a href="{{ path('lieux_edit', {'id': lieux.id}) }}">edit</a>
-=======
-                    <a class="btn btn-info" role="button" href="{{ path('lieux_show', {'id': lieux.id}) }}">show</a>
-                    <a class="btn btn-info" href="{{ path('lieux_edit', {'id': lieux.id}) }}">edit</a>
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
                 </td>
             </tr>
         {% else %}
@@ -54,15 +35,5 @@
         </tbody>
     </table>
 
-<<<<<<< HEAD
     <a href="{{ path('lieux_new') }}">Create new</a>
-=======
-    <a class="btn btn-info" href="{{ path('lieux_new') }}">Create new</a>
-
-    {% block javascript %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    {% endblock %}
-
->>>>>>> 30cd1a1c165ebc07c54ef2ee611f269f2a59cb83
 {% endblock %}
