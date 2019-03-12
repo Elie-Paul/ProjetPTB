@@ -14,8 +14,6 @@ class GuichetType extends AbstractType
         $builder
             ->add('code')
             ->add('nom')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('lieu')
         ;
     }

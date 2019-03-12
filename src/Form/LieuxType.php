@@ -13,8 +13,6 @@ class LieuxType extends AbstractType
     {
         $builder
             ->add('libelle')
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 
