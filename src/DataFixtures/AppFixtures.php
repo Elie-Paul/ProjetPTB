@@ -22,13 +22,13 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $user=new User();
-        $user->setUsername("moukondo");
+        $user->setUsername("thera");
 
         $roles [] = "admin";
         //$user->setRoles($roles[0]);
         $user->setPassword($this->passwordEncoder->encodePassword(
                          $user,
-                         '123456'
+                         'passer'
                     ));
         $manager->persist($user);
         $manager->flush();
