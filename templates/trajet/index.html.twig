@@ -21,8 +21,13 @@
                 <td>{{ trajet.createdAt ? trajet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ trajet.updatedAt ? trajet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
+<<<<<<< HEAD
                     <a class="btn btn-info" role="button" href="{{ path('trajet_show', {'id': trajet.id}) }}">show</a>
                     <a class="btn btn-info" role="button" href="{{ path('trajet_edit', {'id': trajet.id}) }}">edit</a>
+=======
+                    <a href="{{ path('trajet_show', {'id': trajet.id}) }}">show</a>
+                    <a href="{{ path('trajet_edit', {'id': trajet.id}) }}">edit</a>
+>>>>>>> c78f1b554dbe737aa7d985890701381f80f1903f
                 </td>
             </tr>
         {% else %}
@@ -33,5 +38,9 @@
         </tbody>
     </table>
 
+<<<<<<< HEAD
     <a class="btn btn-info" role="button" href="{{ path('trajet_new') }}">Create new</a>
+=======
+    <a href="{{ path('trajet_new') }}">Create new</a>
+>>>>>>> c78f1b554dbe737aa7d985890701381f80f1903f
 {% endblock %}

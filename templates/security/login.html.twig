@@ -1,0 +1,96 @@
+<html lang="en">
+<head>
+	<title>Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="{{ asset('img/favicon.ico') }}"/>
+<link rel="stylesheet" type="text/css" href="{{ asset('vendors/bootstrap/css/bootstrap.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ asset('fontslog/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ asset('fontslog/iconic/css/material-design-iconic-font.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/animate/animate.css') }}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/css-hamburgers/hamburgers.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href=" {{ asset('vendors/animsition/css/animsition.min.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/select2/select2.min.css') }}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/daterangepicker/daterangepicker.css') }}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{ asset('csslog/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('csslog/main.css') }}">
+<!--===============================================================================================-->
+</head>
+{% block title %}{% endblock %}
+
+{% block body %}
+<div class="limiter">
+		<div class="container-login100" style="background-image: url('/img/bg-01.jpg');">
+			<div class="wrap-login100">
+                <form method="post">
+                    <span class="login100-form-logo">
+				        <img src="{{ asset('img/logo.png') }}"/>
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						
+					</span>
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <div class="wrap-input100 validate-input" data-validate = "Enter username">
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="input100" placeholder="Username" required autofocus>    
+    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+    </div>
+    <div class="wrap-input100 validate-input" data-validate="Enter password">
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" id="inputPassword" class="input100" placeholder="Password" required>    
+    <span class="focus-input100" data-placeholder="&#xf191;"></span>
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+    </div>
+
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+<div class="container-login100-form-btn">
+    <button class="login100-form-btn" type="submit">
+        Connexion
+    </button>
+</div>
+</form>
+		</div>
+		</div>
+	</div>
+    	<div id="dropDownSelect1"></div>
+	<script src="{{ asset('vendors/jquery/jquery-3.2.1.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ asset('vendors/animsition/js/animsition.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ asset('vendors/bootstrap/js/popper.js') }}"></script>
+	<script src="{{ asset('vendors/bootstrap/js/bootstrap.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ asset('vendors/select2/select2.min.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ asset('vendors/daterangepicker/moment.min.js') }}"></script>
+	<script src="{{ asset('vendors/daterangepicker/daterangepicker.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ asset('vendors/countdowntime/countdowntime.js') }}"></script>
+<!--===============================================================================================-->
+	<script src="{{ asset('jslog/main.js') }}"></script>
+{% endblock %}
+</html>

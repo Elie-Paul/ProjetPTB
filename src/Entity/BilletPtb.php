@@ -52,7 +52,7 @@ class BilletPtb
         return $this->ptb;
     }
 
-    public function setPtb(?PTB $ptb): self
+    public function setPtb(?Ptb $ptb): self
     {
         $this->ptb = $ptb;
 
