@@ -10,7 +10,7 @@
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Responsive Hover Table</h3>
+                <h3 class="box-title">Les Lieux</h3>
 
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -41,8 +41,8 @@
                             <td>{{ lieux.createdAt ? lieux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>{{ lieux.updatedAt ? lieux.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>
-                                <a class="btn btn-info" role="button" href="{{ path('lieux_show', {'id': lieux.id}) }}">voir</a>
-                                <a class="btn btn-info" href="{{ path('lieux_edit', {'id': lieux.id}) }}">modifier</a>
+                                <a class="btn btn-info" role="button" href="{{ path('lieux_show', {'id': lieux.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>  voir</a>
+                                <a class="btn btn-info" href="{{ path('lieux_edit', {'id': lieux.id}) }}"><i class="glyphicon glyphicon-pencil"></i>modifier</a>
                             </td>
                         </tr>
                     {% else %}
@@ -52,16 +52,15 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                
             </div>
         </div>
     </div>
 </div>
 
-<a class="btn btn-info" href="{{ path('lieux_new') }}">nouveau</a>
-
+<a class="btn btn-info" href="{{ path('lieux_new') }}"><i class="glyphicon glyphicon-plus"></i> nouveau</a>
+{% endblock %}
 {% block javascript %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-{% endblock %}
-
 {% endblock %}

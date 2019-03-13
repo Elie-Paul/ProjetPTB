@@ -77,61 +77,32 @@
       
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">         
-          
-          <!-- Tasks: style can be found in dropdown.less -->
-          <li class="dropdown tasks-menu">
-            
-            <ul class="dropdown-menu">
-                                        
-            </ul>
-          </li>
+        <ul class="nav navbar-nav">                          
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <i class="glyphicon glyphicon-user"></i>
               <span class="hidden-xs">Alexander Pierce</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+                <img src="{{ asset('img/user.png') }}" class="img-circle" alt="User Image">
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  Alexander Pierce                  
                 </p>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
+              </li>              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ path('security_logout') }}" class="btn btn-default btn-flat">Deconnexion</a>
                 </div>
               </li>
             </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
-          <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li>          
         </ul>
       </div>
 
@@ -144,36 +115,36 @@
       <!-- Sidebar user panel -->     
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview">
+        <li class="header">MENU DE NAVIGATION</li>
+        <li>
           <a href="{{ path('home') }}">
             <i class="fa fa-dashboard"></i> 
-            <span>Dashboard</span>
+            <span>Tableau de Bord</span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="glyphicon glyphicon-folder-open"></i>
             <span>Billet</span>
             <span class="pull-right-container">
               <span class="label label-primary pull-right">2</span>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i>Ptb</a></li>
+            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>Ptb</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i>Autorail</a></li>            
           </ul>
         </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
+        <li>
+          <a href="/">
+            <i class="glyphicon glyphicon-text-background"></i>
             <span>Abonnement</span>          
           </a>        
         </li>
 
         <li class="treeview">
           <a href="#">
-            <i class="fa-line-chart"></i>
+            <i class="glyphicon glyphicon-signal"></i>
             <span>Statistique</span>
             <span class="pull-right-container">              
             </span>
@@ -181,16 +152,22 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-laptop"></i>
+            <i class="glyphicon glyphicon-wrench"></i>
             <span>Parametre</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i> Agent</a></li>
-            <li><a href="{{ path('guichet_index') }}"><i class="fa fa-circle-o"></i> Guichet</a></li>   
-            <li><a href="{{ path('trajet_index') }}"><i class="fa fa-circle-o"></i>Trajet</a></li>          
+            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>
+            <li><a href="{{ path('guichet_index') }}"><i class="glyphicon glyphicon-credit-card"></i> Guichet</a></li>   
+            <li><a href="{{ path('trajet_index') }}"><i class="glyphicon glyphicon-road"></i>Trajet</a></li>   
+            <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>   
+            <li><a href="{{ path('lieux_index') }}"><i class="glyphicon glyphicon-map-marker"></i>Lieux</a></li>  
+            <li><a href="{{ path('classe_index') }}"><i class="glyphicon glyphicon-certificate"></i>Classe</a></li>  
+            <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
+            <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>Ptb</a></li>
+            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>   
           </ul>
         </li>                                              
       </ul>
@@ -206,8 +183,6 @@
           
  
           
-          
->>>>>>> 9287e5a9f358a65ef01f9da9e14a48b01cd21a7b
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>

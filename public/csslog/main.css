@@ -26,7 +26,13 @@
 }
 
 
-
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
@@ -186,7 +192,7 @@ iframe {
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(255,255,255,0.9);
+  /*background-color: rgba(255,255,255,0.9);*/
 }
 
 .wrap-login100 {
@@ -194,8 +200,8 @@ iframe {
   border-radius: 10px;
   overflow: hidden;
   padding: 55px 55px 37px 55px;
-
-  background: #25aa7e;
+  background-color: rgba(166, 166, 218, 0.5);
+  /*background: #778b85;*/
  
 }
 
