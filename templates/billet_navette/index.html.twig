@@ -1,11 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BilletPtb index{% endblock %}
+{% block title %}BilletNavette index{% endblock %}
 
 {% block body %}
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
+    <div id="myModal" class="modal">
 
   <!-- Modal content -->
   <div class="modal-content">
@@ -34,8 +32,8 @@
   </div>
 
 </div>
-    <h1>BilletPtb index</h1>
-    <script>
+    <h1>BilletNavette index</h1>
+     <script>
          idb=0;
          dpt=0;
         function show()
@@ -84,7 +82,7 @@
         function print(id)
         {
             idb=id;
-            alert("aaa");
+            
             var modal = document.getElementById('myModal');
             var td = document.getElementById('dpt'+idb);
             dpt=parseInt(td.innerHTML,10)
@@ -94,6 +92,7 @@
         }
         function print2()
         {
+            alert("aaa");
             var nbreprint = document.getElementById("nbreprint").value;
             var checkbox = document.getElementById("modifierdpt");
             var userid = parseInt(document.getElementById("userid").innerHTML, 10);
@@ -109,7 +108,7 @@
             }
             var modal = document.getElementById('myModal');
             modal.style.display = "none";
-            document.location.href = `http://localhost:8000/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;
+            document.location.href = `http://localhost:8000/impressionAutorail/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;
             
                 
                 
@@ -122,8 +121,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Section</th>
+                <th>#</th>
+                <th>Classe</th>
                 <th>Depart</th>
                 <th>Arrivée</th>
                 <th>Prix</th>
@@ -133,18 +132,17 @@
             </tr>
         </thead>
         <tbody>
-        {% for billet_ptb in billet_ptbs %}
+        {% for billet_navette in billet_navettes %}
             <tr>
-                <td>{{ billet_ptb.id }}</td>
-                <td>{{ billet_ptb.ptb.section.libelle }}</td>
-                <td>{{ billet_ptb.ptb.trajet.depart.libelle }}</td>
-                <td>{{ billet_ptb.ptb.trajet.arrivee.libelle }}</td>
-                <td>{{ billet_ptb.ptb.section.prix }}</td>
-                <td>{{ billet_ptb.guichet.nom }}</td>
-                <td id="dpt{{ billet_ptb.id }}">{{billet_ptb.numeroDernierBillets}}</td>
-                <td>
-                    
-                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.id }})">Imprimer</a>
+                <td>{{ billet_navette.id }}</td> 
+                <td>{{ billet_navette.navette.classe.libelle}}</td>
+                <td>{{ billet_navette.navette.trajet.depart.libelle}}</td>
+                <td>{{ billet_navette.navette.trajet.arrivee.libelle}}</td>
+                <td>{{ billet_navette.navette.prix}}</td>
+                <td>{{ billet_navette.guichet.nom}}</td>
+                <td id="dpt{{ billet_navette.id }}">{{ billet_navette.numeroDernierBillet}}</td>
+                 <td>
+                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_navette.id }})">Imprimer</a>
                 </td>
             </tr>
         {% else %}
@@ -154,8 +152,8 @@
         {% endfor %}
         </tbody>
     </table>
+
     <div id="userid" style="display:none;">
             {{ app.user.id }}
         </div>
-    
 {% endblock %}

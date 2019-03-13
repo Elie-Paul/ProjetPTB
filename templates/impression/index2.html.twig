@@ -1,0 +1,48 @@
+
+{% block body %}
+
+
+{% set myVal = 0 %}
+{% set myVal2 = 0 %}
+{% for i in nbrebillet %}
+{% if myVal2 == 0 %}
+    <table style="height: 174px;page-break-after: always;" width="545" >
+    <tbody>
+{% endif %}    
+{% if myVal == 0 %}
+    <tr style="height: 156px;">
+{% endif %}
+
+<td border=1  style="background-color:#00FFFF;border-width: 1px;border-style: dashed;width: 100%;">
+<h1 style="color: #000;font-weight: 500;">N&deg;:#{{i}}</h1>
+<h2 style="color: #000;font-weight: 700;">Navette</h2>
+<h2 style="color: #000;">{{billet.guichet.nom}}</h2>
+<h2 style="color: #000;">D&eacute;part:{{billet.navette.trajet.depart.libelle}}</h2>
+<h2 style="color: #000;">Arriv&eacute;e:{{billet.navette.trajet.arrivee.libelle}}</h2>
+<h2 style="color: #000;">{{billet.navette.classe.libelle}}</h2>
+<h2 style="color: #000;">Tarif:{{billet.navette.prix}}Fcfa</h2>
+
+</td>
+{% set myVal = myVal + 1 %}
+{% set myVal2 = myVal2 + 1 %}
+{% if myVal == 5 %}
+    </tr>
+    {% set myVal = 0%}
+{% endif %}
+{% if myVal2 == 15 %}
+    </tbody>
+    </table>
+   
+    {% set myVal2 = 0%}
+{% endif %}
+
+{% endfor %}
+
+{% endblock %}
+<script>
+
+    window.print();
+    window.onafterprint = function(event) { document.location.href = "http://localhost:8000/billet/navette/"; };
+
+</script>
+

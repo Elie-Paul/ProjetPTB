@@ -19,7 +19,7 @@ class Navette
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Trajet", inversedBy="navette", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Trajet", inversedBy="navette", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $trajet;
@@ -49,6 +49,11 @@ class Navette
      * @ORM\OneToMany(targetEntity="App\Entity\Tracabilite", mappedBy="navette")
      */
     private $tracabilites;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\BilletNavette", mappedBy="navette", cascade={"persist", "remove"})
+     */
+    private $billetNavette;
 
     public function __construct()
     {
@@ -145,6 +150,23 @@ class Navette
             if ($tracabilite->getNavette() === $this) {
                 $tracabilite->setNavette(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getBilletNavette(): ?BilletNavette
+    {
+        return $this->billetNavette;
+    }
+
+    public function setBilletNavette(BilletNavette $billetNavette): self
+    {
+        $this->billetNavette = $billetNavette;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $billetNavette->getNavette()) {
+            $billetNavette->setNavette($this);
         }
 
         return $this;
