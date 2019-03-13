@@ -3,28 +3,34 @@
 {% block title %}Classe{% endblock %}
 
 {% block body %}
-    <h1>Classe</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ classe.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
-                <td>{{ classe.libelle }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ classe.createdAt ? classe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ classe.updatedAt ? classe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information de la classe {{classe.libelle}}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ classe.id }}</td>
+                </tr>
+                <tr>
+                    <th>Libelle</th>
+                    <td>{{ classe.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Date de creation</th>
+                    <td>{{ classe.createdAt ? classe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de modification</th>
+                    <td>{{ classe.updatedAt ? classe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
     <a class="btn btn-info" role="button" href="{{ path('classe_index') }}">retour a la liste</a>

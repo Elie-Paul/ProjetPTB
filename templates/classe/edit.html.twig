@@ -3,10 +3,14 @@
 {% block title %}Edit Classe{% endblock %}
 
 {% block body %}
-    <h1>Edit Classe</h1>
-
-    {{ include('classe/_form.html.twig', {'button_label': 'Update'}) }}
-
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">Modifier le libelle de la classe {{classe.libelle}}</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('classe/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('classe_index') }}">rerour a la liste</a>
 

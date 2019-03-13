@@ -3,9 +3,16 @@
 {% block title %}Edit Lieux{% endblock %}
 
 {% block body %}
-    <h1>Edit Lieux</h1>
+    <!--h1>Edit Lieux</h1-->
 
-    {{ include('lieux/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">Modifier le lieux {{lieux.libelle}}</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('lieux/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('lieux_index') }}">retour a la liste</a>
 

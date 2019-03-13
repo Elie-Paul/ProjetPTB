@@ -3,28 +3,42 @@
 {% block title %}Navette{% endblock %}
 
 {% block body %}
-    <h1>Navette</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ navette.id }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ navette.prix }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ navette.createdAt ? navette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ navette.updatedAt ? navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information du train autorail</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ navette.id }}</td>
+                </tr>
+                <tr>
+                    <th>Trajet</th>
+                    <td>{{ navette.trajet.depart.libelle }}-{{ navette.trajet.arrivee.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Classe</th>
+                    <td>{{ navette.classe.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Prix</th>
+                    <td>{{ navette.prix }}</td>
+                </tr>
+                <tr>
+                    <th>Date de creation</th>
+                    <td>{{ navette.createdAt ? navette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de modification</th>
+                    <td>{{ navette.updatedAt ? navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('navette_index') }}">retour a la liste</a>
 

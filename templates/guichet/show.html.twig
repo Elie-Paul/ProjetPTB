@@ -3,32 +3,42 @@
 {% block title %}Guichet{% endblock %}
 
 {% block body %}
-    <h1>Guichet</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ guichet.id }}</td>
-            </tr>
-            <tr>
-                <th>Code</th>
-                <td>{{ guichet.code }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ guichet.nom }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information du trajet {{guichet.nom}}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ guichet.id }}</td>
+                </tr>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ guichet.code }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ guichet.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Lieu</th>
+                    <td>{{ guichet.lieu.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Date de creation</th>
+                    <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de modifiaction</th>
+                    <td>{{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
     <a class="btn btn-info" role="button" href="{{ path('guichet_index') }}">retour a la liste</a>

@@ -3,38 +3,62 @@
 {% block title %}Trajet index{% endblock %}
 
 {% block body %}
-    <h1>Trajet index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for trajet in trajets %}
-            <tr>
-                <td>{{ trajet.id }}</td>
-                <td>{{ trajet.createdAt ? trajet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ trajet.updatedAt ? trajet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h1 class="box-title">Liste des trajets</h1>
 
-                    <a class="btn btn-info" role="button" href="{{ path('trajet_show', {'id': trajet.id}) }}">show</a>
-                    <a class="btn btn-info" role="button" href="{{ path('trajet_edit', {'id': trajet.id}) }}">edit</a>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Depart</th>
+                            <th>Arrivée</th>
+                            <th>Date de creation</th>
+                            <th>Date de modification</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for trajet in trajets %}
+                        <tr>
+                            <td>{{ trajet.id }}</td>
+                            <td>{{ trajet.depart.libelle }}</td>
+                            <td>{{ trajet.arrivee.libelle }}</td>
+                            <td>{{ trajet.createdAt ? trajet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ trajet.updatedAt ? trajet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
 
-    <a href="{{ path('trajet_new') }}">Create new</a>
+                                <a class="btn btn-info" role="button" href="{{ path('trajet_show', {'id': trajet.id}) }}">voir</a>
+                                <a class="btn btn-info" role="button" href="{{ path('trajet_edit', {'id': trajet.id}) }}">modifier</a>
+
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">Aucun enregistrement trouvé</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <a class="btn btn-info" role="button" href="{{ path('trajet_new') }}">nouveau</a>
 
 {% endblock %}

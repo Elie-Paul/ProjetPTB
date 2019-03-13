@@ -3,28 +3,36 @@
 {% block title %}Lieux{% endblock %}
 
 {% block body %}
-    <h1>Lieux</h1>
+    <!--h1>Lieux</h1-->
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ lieux.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
-                <td>{{ lieux.libelle }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ lieux.createdAt ? lieux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ lieux.updatedAt ? lieux.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information du lieux {{lieux.libelle}}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ lieux.id }}</td>
+                </tr>
+                <tr>
+                    <th>Libelle</th>
+                    <td>{{ lieux.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Date de creation</th>
+                    <td>{{ lieux.createdAt ? lieux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de modification</th>
+                    <td>{{ lieux.updatedAt ? lieux.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
     <a class="btn btn-info" role="button" href="{{ path('lieux_index') }}"><i class="glyphicon glyphicon-chevron-left"></i>retour a la liste</a>

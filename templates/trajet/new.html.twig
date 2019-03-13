@@ -3,10 +3,16 @@
 {% block title %}New Trajet{% endblock %}
 
 {% block body %}
-    <h1>Create new Trajet</h1>
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">Ajouter un nouveau trajet</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('trajet/_form.html.twig') }}
+    </div>
+</div>
+    
 
-    {{ include('trajet/_form.html.twig') }}
-
-    <a href="{{ path('trajet_index') }}">retour</a>
+    <a class="btn btn-info" role="button" href="{{ path('trajet_index') }}">retour a la liste</a>
 
 {% endblock %}

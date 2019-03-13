@@ -1,11 +1,21 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
 {% block title %}New Lieux{% endblock %}
 
 {% block body %}
-    <h1>Create new Lieux</h1>
-
-    {{ include('lieux/_form.html.twig') }}
+    <!--h1>Create new Lieux</h1-->
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">Ajouter un nouveau lieux</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('lieux/_form.html.twig') }}
+    </div><!-- /.box-body -->
+</div>
 
 
     <a class="btn btn-info" role="button" href="{{ path('lieux_index') }}">retour a la liste</a>

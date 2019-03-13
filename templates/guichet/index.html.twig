@@ -3,41 +3,60 @@
 {% block title %}Guichet index{% endblock %}
 
 {% block body %}
-    <h1>Guichet index</h1>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h1 class="box-title">Liste des guichets</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Code</th>
-                <th>Nom</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for guichet in guichets %}
-            <tr>
-                <td>{{ guichet.id }}</td>
-                <td>{{ guichet.code }}</td>
-                <td>{{ guichet.nom }}</td>
-                <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
-                    <a class="btn btn-info" role="button" href="{{ path('guichet_show', {'id': guichet.id}) }}">voir</a>
-                    <a class="btn btn-info" role="button" href="{{ path('guichet_edit', {'id': guichet.id}) }}">modifier</a>
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Lieux</th>
+                            <th>Code</th>
+                            <th>Nom</th>
+                            <th>Date de creation</th>
+                            <th>Date de modification</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for guichet in guichets %}
+                        <tr>
+                            <td>{{ guichet.lieu.libelle }}</td>
+                            <td>{{ guichet.code }}</td>
+                            <td>{{ guichet.nom }}</td>
+                            <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
 
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                                <a class="btn btn-info" role="button" href="{{ path('guichet_show', {'id': guichet.id}) }}">voir</a>
+                                <a class="btn btn-info" role="button" href="{{ path('guichet_edit', {'id': guichet.id}) }}">modifier</a>
+
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">Aucun enregistrement trouvé</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('guichet_new') }}">nouveau</a>
 

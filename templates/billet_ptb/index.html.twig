@@ -149,7 +149,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -157,5 +157,5 @@
     <div id="userid" style="display:none;">
             {{ app.user.id }}
         </div>
-    
+    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_new') }}">nouveau</a>
 {% endblock %}
