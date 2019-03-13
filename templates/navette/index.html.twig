@@ -3,37 +3,58 @@
 {% block title %}Navette index{% endblock %}
 
 {% block body %}
-    <h1>Navette index</h1>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h1 class="box-title">Liste des trains autorail</h1>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Prix</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for navette in navettes %}
-            <tr>
-                <td>{{ navette.id }}</td>
-                <td>{{ navette.prix }}</td>
-                <td>{{ navette.createdAt ? navette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ navette.updatedAt ? navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a class="btn btn-info" role="button" href="{{ path('navette_show', {'id': navette.id}) }}">voir</a>
-                    <a class="btn btn-info" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}">modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Trajet</th>
+                            <th>Classe</th>
+                            <th>Prix</th>
+                            <th>Date de cretation</th>
+                            <th>Date de modification</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for navette in navettes %}
+                        <tr>
+                            <td>{{ navette.trajet.depart.libelle }}-{{ navette.trajet.arrivee.libelle }}</td>
+                            <td>{{ navette.classe.libelle }}</td>
+                            <td>{{ navette.prix }}</td>
+                            <td>{{ navette.createdAt ? navette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ navette.updatedAt ? navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
+                                <a class="btn btn-info" role="button" href="{{ path('navette_show', {'id': navette.id}) }}">voir</a>
+                                <a class="btn btn-info" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}">modifier</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Aucun enregistrement trouvé</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('navette_new') }}">nouveau</a>
 {% endblock %}

@@ -3,9 +3,14 @@
 {% block title %}Edit Ptb{% endblock %}
 
 {% block body %}
-    <h1>Edit Ptb</h1>
-
-    {{ include('ptb/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">Modifier le train ptb</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('ptb/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('ptb_index') }}">retour a la liste</a>
 

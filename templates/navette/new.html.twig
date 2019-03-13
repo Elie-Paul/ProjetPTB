@@ -3,9 +3,14 @@
 {% block title %}New Navette{% endblock %}
 
 {% block body %}
-    <h1>Create new Navette</h1>
-
-    {{ include('navette/_form.html.twig') }}
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">Ajouter une nouvelle navette</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('navette/_form.html.twig') }}
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('navette_index') }}">retour a la liste</a>
 {% endblock %}

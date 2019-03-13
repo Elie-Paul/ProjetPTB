@@ -143,13 +143,13 @@
                 <td>{{ billet_ptb.guichet.nom }}</td>
                 <td id="dpt{{ billet_ptb.id }}">{{billet_ptb.numeroDernierBillets}}</td>
                 <td>
-                    <a class="btn btn-primary" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}">show</a>
+                    <a class="btn btn-primary" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}">voir</a>
                     <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.id }})">Imprimer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -157,5 +157,5 @@
     <div id="userid" style="display:none;">
             {{ app.user.id }}
         </div>
-    <a href="{{ path('billet_ptb_new') }}">Create new</a>
+    <a class="btn btn-info" role="button" href="{{ path('billet_ptb_new') }}">nouveau</a>
 {% endblock %}

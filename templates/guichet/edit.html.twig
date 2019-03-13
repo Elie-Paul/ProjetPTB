@@ -3,9 +3,14 @@
 {% block title %}Edit Guichet{% endblock %}
 
 {% block body %}
-    <h1>Edit Guichet</h1>
-
-    {{ include('guichet/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">Modifier le guichet {{guichet.nom}}</h3>
+    </div>
+    <div class="box-body">
+        {{ include('guichet/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('guichet_index') }}">retour a la liste</a>
 

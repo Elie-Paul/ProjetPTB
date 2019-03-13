@@ -3,24 +3,38 @@
 {% block title %}Ptb{% endblock %}
 
 {% block body %}
-    <h1>Ptb</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ ptb.id }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ ptb.createdAt ? ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ ptb.updatedAt ? ptb.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information du train ptb</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ ptb.id }}</td>
+                </tr>
+                <tr>
+                    <th>Trajet</th>
+                    <td>{{ ptb.trajet.depart.libelle }}-{{ ptb.trajet.arrivee.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Section</th>
+                    <td>{{ ptb.section.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Date de creation</th>
+                    <td>{{ ptb.createdAt ? ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de modification</th>
+                    <td>{{ ptb.updatedAt ? ptb.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('ptb_index') }}">retour a la liste</a>
 
