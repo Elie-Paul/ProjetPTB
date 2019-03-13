@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tracabilite index{% endblock %}
+
+{% block body %}
+    <h1>Tracabilite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>userName</th>
+                <th>Type</th>
+                <th>Motif</th>
+                <th>NumDepart</th>
+                <th>NumFin</th>
+                <th>Jour</th>
+                <th>Mois</th>
+                <th>Année</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tracabilite in tracabilites %}
+            <tr>
+                <td>{{ tracabilite.id }}</td>
+                <td>{{ tracabilite.user.userName}}</td>
+                <td>{{ tracabilite.type }}</td>
+                <td>{{ tracabilite.motif }}</td>
+                <td>{{ tracabilite.numDepart }}</td>
+                <td>{{ tracabilite.numFin }}</td>
+                <td>{{ tracabilite.createdAt ? tracabilite.createdAt|date('d') : '' }}</td>
+                <td>{{ tracabilite.createdAt ? tracabilite.createdAt|date('m') : '' }}</td>
+                <td>{{ tracabilite.createdAt ? tracabilite.createdAt|date('Y') : '' }}</td>
+                <td>
+                    <a href="{{ path('tracabilite_show', {'id': tracabilite.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

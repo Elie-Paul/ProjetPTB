@@ -39,7 +39,7 @@ class Trajet
     private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Navette", mappedBy="trajet", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Navette", mappedBy="trajet", cascade={"persist", "remove"})
      */
     private $navette;
 
@@ -47,7 +47,11 @@ class Trajet
      * @ORM\OneToOne(targetEntity="App\Entity\Ptb", mappedBy="trajet", cascade={"persist", "remove"})
      */
     private $ptb;
-     private $trajetlib;
+    private $trajetlib;
+    public function __construct()
+    {
+        $this->navette = new ArrayCollection();
+    }
     public function getId(): ?int
     {
         return $this->id;
