@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $user=new User();
-        $user->setUsername("moukondo");
+        $user->setUsername("elie");
 
         $roles [] = "admin";
         //$user->setRoles($roles[0]);

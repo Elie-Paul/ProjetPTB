@@ -1,11 +1,20 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
 {% block title %}New Section{% endblock %}
 
 {% block body %}
-    <h1>Create new Section</h1>
+    <!--h1>Create new Section</h1-->
 
-    {{ include('section/_form.html.twig') }}
+<div class="box box-solid box-default">
+    <div class="box-header">
+        <h3 class="box-title">Ajouter une nouvelle section</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('section/_form.html.twig') }}
+    </div>
+</div>
 
     <a class="btn btn-info" role="button" href="{{ path('section_index') }}">retour a la liste</a>
 {% endblock %}
