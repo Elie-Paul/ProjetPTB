@@ -35,7 +35,6 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Depart</th>
                             <th>Arrivée</th>
                             <th>Date de creation</th>
@@ -45,8 +44,7 @@
                     </thead>
                     <tbody>
                     {% for trajet in trajets %}
-                        <tr>
-                            <td>{{ trajet.id }}</td>
+                        <tr>                            
                             <td>{{ trajet.depart.libelle }}</td>
                             <td>{{ trajet.arrivee.libelle }}</td>
                             <td>{{ trajet.createdAt ? trajet.createdAt|date('Y-m-d H:i:s') : '' }}</td>

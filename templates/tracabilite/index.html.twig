@@ -32,7 +32,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>userName</th>
                 <th>Type</th>
                 <th>Motif</th>
@@ -45,7 +44,6 @@
         <tbody>
         {% for tracabilite in tracabilites %}
             <tr>
-                <td>{{ tracabilite.id }}</td>
                 <td>{{ tracabilite.user.userName}}</td>
                 <td>{{ tracabilite.type }}</td>
                 <td>{{ tracabilite.motif }}</td>
@@ -53,7 +51,7 @@
                 <td>{{ tracabilite.numFin }}</td>
                 <td>{{ tracabilite.createdAt ? tracabilite.createdAt|date('d-m-Y /H:i:s') : '' }}</td>               
                 <td>
-                    <a class="btn btn-info" role="button"  href="{{ path('tracabilite_show', {'id': tracabilite.id}) }}">voir</a>
+                    <a class="btn btn-warning" role="button"  href="{{ path('tracabilite_show', {'id': tracabilite.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;voir</a>
                 </td>
             </tr>
         {% else %}
