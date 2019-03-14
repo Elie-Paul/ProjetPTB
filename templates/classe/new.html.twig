@@ -3,6 +3,11 @@
 {% block title %}New Classe{% endblock %}
 
 {% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('classe_index') }}">Retour</a>
+          </div>
+</div>
 <div class="box box-solid box-default">
     <div class="box-header">
         <h3 class="box-title">Ajouter une nouvelle classe</h3>   
@@ -12,8 +17,5 @@
     </div>
 </div>
     
-
-<a class="btn btn-info" role="button" href="{{ path('classe_index') }}">retour a la liste</a>
-
 
 {% endblock %}

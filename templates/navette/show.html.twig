@@ -3,6 +3,12 @@
 {% block title %}Navette{% endblock %}
 
 {% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('navette_index') }}">Retour</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
 <div class="box">
     <div class="box-header with-border">
         <h3 class="box-title">Information du train autorail</h3>
@@ -39,8 +45,6 @@
         </table>
     </div>
 </div>
-
-    <a class="btn btn-info" role="button" href="{{ path('navette_index') }}">retour a la liste</a>
 
     <a class="btn btn-info" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}">modifier</a>
 

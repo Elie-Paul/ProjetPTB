@@ -3,6 +3,12 @@
 {% block title %}Guichet index{% endblock %}
 
 {% block body %}
+   <div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('guichet_new') }}">Nouveau</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -57,7 +63,5 @@
         </div>
     </div>
 </div>
-
-    <a class="btn btn-info" role="button" href="{{ path('guichet_new') }}">nouveau</a>
 
 {% endblock %}

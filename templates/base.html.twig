@@ -68,30 +68,32 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="#" class="logo">      
+    <a href="#" class="logo">   
+    <span class="logo-mini"><b>P</b>TB</span>   
       <!-- logo for regular state and mobile devices -->
-      <img src="{{ asset('img/logo.png') }}" class="img-circle" alt="User Image">
+     <span class="logo-lg"><b>PTB</b></span>
     </a>
-
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>      
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">                          
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="glyphicon glyphicon-user"></i>
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img src="{{ asset('img/user.png') }}" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{ app.user.roles ? app.user.roles|json_encode : '' }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="{{ asset('img/user.png') }}" class="img-circle" alt="User Image">
                 <p>
-                  Alexander Pierce                  
+                  {{ app.user.username }}                  
                 </p>
               </li>              
               <!-- Menu Footer-->
@@ -114,12 +116,23 @@
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+
+    <div class="user-panel">
+        <div class="pull-left image">
+          <img src="{{ asset('img/user.png') }}" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>{{ app.user.username }}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
+        </div>
+      </div>
+     
       <!-- Sidebar user panel -->     
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MENU DE NAVIGATION</li>
+        <li class="header"></li>
         <li>
-          <a href="{{ path('home') }}">
+          <a active href="{{ path('home') }}">
             <i class="fa fa-dashboard"></i> 
             <span>Tableau de Bord</span>
           </a>
@@ -152,6 +165,10 @@
             </span>
           </a>        
         </li>
+        <li><a href="{{ path('guichet_index') }}"><i class="glyphicon glyphicon-credit-card"></i> Guichets</a></li>   
+        <li><a href="{{ path('trajet_index') }}"><i class="glyphicon glyphicon-road"></i>  Trajets</a></li>   
+        <li><a href="{{ path('lieux_index') }}"><i class="glyphicon glyphicon-map-marker"></i>Lieux</a></li>
+        <li><a href="{{ path('classe_index') }}"><i class="glyphicon glyphicon-certificate"></i>Classe</a></li>  
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-wrench"></i>
@@ -161,15 +178,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>
-            <li><a href="{{ path('guichet_index') }}"><i class="glyphicon glyphicon-credit-card"></i> Guichet</a></li>   
-            <li><a href="{{ path('trajet_index') }}"><i class="glyphicon glyphicon-road"></i>Trajet</a></li>   
-            <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>   
-            <li><a href="{{ path('lieux_index') }}"><i class="glyphicon glyphicon-map-marker"></i>Lieux</a></li>  
-            <li><a href="{{ path('classe_index') }}"><i class="glyphicon glyphicon-certificate"></i>Classe</a></li>  
+            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>                        
+            <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>                             
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>Ptb</a></li>
-            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>   
+            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
+            <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Traçabilité</a></li>    
           </ul>
         </li>                                              
       </ul>

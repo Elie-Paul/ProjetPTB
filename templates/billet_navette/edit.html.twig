@@ -3,11 +3,15 @@
 {% block title %}Edit BilletNavette{% endblock %}
 
 {% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('billet_navette_index') }}">Retour</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
     <h1>Edit BilletNavette</h1>
 
     {{ include('billet_navette/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('billet_navette_index') }}">back to list</a>
 
     {{ include('billet_navette/_delete_form.html.twig') }}
 {% endblock %}

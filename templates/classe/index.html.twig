@@ -3,6 +3,12 @@
 {% block title %}Classe index{% endblock %}
 
 {% block body %}
+   <div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('classe_new') }}">Nouveau</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
 
 <div class="row">
     <div class="col-xs-12">
@@ -52,10 +58,5 @@
         </div>
     </div>
 </div>
-
-
-
-    <a class="btn btn-info" role="button" href="{{ path('classe_new') }}">nouveau</a>
-
 
 {% endblock %}

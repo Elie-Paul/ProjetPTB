@@ -3,9 +3,14 @@
 {% block title %}New User{% endblock %}
 
 {% block body %}
+
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('user_index') }}">Retour</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
     <h1>Create new User</h1>
 
     {{ include('user/_form.html.twig') }}
-
-    <a href="{{ path('user_index') }}">back to list</a>
 {% endblock %}

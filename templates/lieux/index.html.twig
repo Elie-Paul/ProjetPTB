@@ -9,6 +9,13 @@
    
 <!--h1>Lieux index</h1-->
 
+ <div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('lieux_new') }}">Nouveau</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
+
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -61,7 +68,6 @@
     </div>
 </div>
 
-<a class="btn btn-info" href="{{ path('lieux_new') }}">Nouveau</a>
 {% endblock %}
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

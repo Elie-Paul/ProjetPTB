@@ -6,7 +6,12 @@
 
 {% block body %}
     <!--h1>Create new Section</h1-->
-
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('section_index') }}">Retour</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
 <div class="box box-solid box-default">
     <div class="box-header">
         <h3 class="box-title">Ajouter une nouvelle section</h3>   
@@ -15,6 +20,4 @@
         {{ include('section/_form.html.twig') }}
     </div>
 </div>
-
-    <a class="btn btn-info" role="button" href="{{ path('section_index') }}">retour a la liste</a>
 {% endblock %}

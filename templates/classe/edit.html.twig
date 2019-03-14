@@ -3,6 +3,12 @@
 {% block title %}Edit Classe{% endblock %}
 
 {% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('classe_index') }}">Retour</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
 <div class="box box-solid box-default">
     <div class="box-header">
         <h3 class="box-title">Modifier le libelle de la classe {{classe.libelle}}</h3>   
@@ -11,8 +17,6 @@
         {{ include('classe/_form.html.twig', {'button_label': 'Update'}) }}
     </div>
 </div>
-
-    <a class="btn btn-info" role="button" href="{{ path('classe_index') }}">rerour a la liste</a>
 
 
     {{ include('classe/_delete_form.html.twig') }}

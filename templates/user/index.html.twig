@@ -3,7 +3,30 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('user_new') }}">Nouveau</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
     <h1>User index</h1>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h1 class="box-title">Liste des lieux</h1>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-body table-responsive no-padding">
 
     <table class="table">
         <thead>
@@ -23,8 +46,8 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a class="btn btn-warning" role="button" href="{{ path('user_show', {'id': user.id}) }}">voir</a>
+                    <a class="btn btn-info" role="button" href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -34,6 +57,8 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('user_new') }}">Create new</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

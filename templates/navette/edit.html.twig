@@ -3,6 +3,13 @@
 {% block title %}Edit Navette{% endblock %}
 
 {% block body %}
+
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('navette_index') }}">Retour</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
 <div class="box box-solid box-default">
     <div class="box-header">
         <h3 class="box-title">Modifier la navette</h3>   
@@ -11,8 +18,6 @@
         {{ include('navette/_form.html.twig', {'button_label': 'Update'}) }}
     </div>
 </div>
-
-    <a class="btn btn-info" role="button" href="{{ path('navette_index') }}">retour a la liste</a>
 
     {{ include('navette/_delete_form.html.twig') }}
 {% endblock %}

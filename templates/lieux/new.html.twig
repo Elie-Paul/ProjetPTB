@@ -7,6 +7,13 @@
 {% block title %}New Lieux{% endblock %}
 
 {% block body %}
+
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('lieux_index') }}">Retour</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
     <!--h1>Create new Lieux</h1-->
 <div class="box box-solid box-default">
     <div class="box-header">
@@ -16,8 +23,5 @@
         {{ include('lieux/_form.html.twig') }}
     </div><!-- /.box-body -->
 </div>
-
-
-    <a class="btn btn-info" role="button" href="{{ path('lieux_index') }}">retour a la liste</a>
 
 {% endblock %}

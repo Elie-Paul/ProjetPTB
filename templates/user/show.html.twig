@@ -3,6 +3,12 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('user_index') }}">Retour</a>
+          </div>
+          <!-- /.box-body -->
+        </div>
     <h1>User</h1>
 
     <table class="table">
@@ -25,9 +31,6 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
 
     {{ include('user/_delete_form.html.twig') }}
