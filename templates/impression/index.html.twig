@@ -57,7 +57,7 @@
             {% endif %}
             <div class="billet">
                 <h3>N : {{i}}</h3>
-                <h3>PTB/03/2019</h3>
+                <h3>PTB{{ date ? date|date('m/Y ') : '' }}</h3>
                 <h3>{{billet.guichet.nom }}</h3>
                 <h5>Aller simple</h5>
                 <h5>Départ:{{billet.ptb.trajet.depart.libelle}}</h5>

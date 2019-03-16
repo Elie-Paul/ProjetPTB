@@ -99,8 +99,9 @@ class ImpressionController extends AbstractController
         $tracabilite->setUpdatedAt(new \DateTime());
         $entityManager->persist($tracabilite);
         $entityManager->flush();
+        $date=new \DateTime();
          return $this->render('impression/index.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array,'color' => $color
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date
          ]);
     }
     /**
@@ -114,7 +115,7 @@ class ImpressionController extends AbstractController
          $motif = $arr[1];
          $depart = intval($arr[2]);
          $userid = intval($arr[3]);
-         $color = intval($arr[4]);
+         $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
@@ -123,28 +124,28 @@ class ImpressionController extends AbstractController
          for( $i=$depart;;$i++)
          {
             $pre = '';
-            if (i < 10) 
+            if ($i < 10) 
             {
                 $pre="0000";
             } 
-            else if (i <100)
+            else if ($i <100)
             {
                 $pre="000";
             }
-            else if (i <100)
+            else if ($i <100)
             {
                 $pre="000";
             }
-            else if (i <1000)
+            else if ($i <1000)
             {
                 $pre="00";
             }
-            else if (i <10000)
+            else if ($i <10000)
             {
                 $pre="0";
             }
             $k=$pre.$i;
-            array_push($array, $i);
+            array_push($array, $k);
              $j++;
              if( $j == $num)
                 break;
@@ -161,8 +162,9 @@ class ImpressionController extends AbstractController
         $tracabilite->setUpdatedAt(new \DateTime());
         $entityManager->persist($tracabilite);
         $entityManager->flush();
+        $date=new \DateTime();
          return $this->render('impression/index2.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array,'color' => $color
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date
          ]);
     }
 }
