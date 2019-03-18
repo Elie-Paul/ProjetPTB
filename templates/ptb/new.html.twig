@@ -5,13 +5,18 @@
 {% block body %}
 <div class="box box-default">
           <div class="box-header with-border">
-            <a class="btn btn-info" href="{{ path('ptb_index') }}">Retour</a>
+          <div class="col-md-6">
+            <h4><i class="fa fa-plus"></i>&nbsp;<big>Ajouter Train PTB</big></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('ptb_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste PTB</big></a>
+          </div>
           </div>
           <!-- /.box-body -->
         </div>
-<div class="box box-solid box-default">
+<div class="box box-solid box-primary">
     <div class="box-header">
-        <h3 class="box-title">Ajouter un nouveau train ptb</h3>   
+        <h3 class="box-title">Ajouter un Nouveau Train PTB</h3>   
     </div>
     <div class="box-body">
         {{ include('ptb/_form.html.twig') }}

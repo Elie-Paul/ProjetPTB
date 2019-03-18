@@ -5,33 +5,45 @@
 {% block body %}
 <div class="box box-default">
           <div class="box-header with-border">
-            <a class="btn btn-info" href="{{ path('user_index') }}">Retour</a>
+          <div class="col-md-6">
+            <h4></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('user_index') }}"><i class="fa fa-list"></i>&nbsp;Liste des Utilisateurs</a>
+          </div>
           </div>
           <!-- /.box-body -->
         </div>
-    <h1>User</h1>
-
-    <table class="table">
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information d'utilisateur</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>utilisateur</th>
                 <td>{{ user.username }}</td>
             </tr>
             <tr>
-                <th>Roles</th>
+                <th>Rôles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
-                <th>Password</th>
+                <th>Mot de passe</th>
                 <td>{{ user.password }}</td>
             </tr>
         </tbody>
     </table>
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+    <a class="btn btn-warning" role="button" href="{{ path('user_edit', {'id': user.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+    </div>
+</div>
+
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

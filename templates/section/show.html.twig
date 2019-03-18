@@ -6,12 +6,18 @@
 
 <div class="box box-default">
           <div class="box-header with-border">
-            <a class="btn btn-info" href="{{ path('section_index') }}">Retour</a>
+          <div class="col-md-6">
+            <h4></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('section_index') }}"><i class="fa fa-list"></i>&nbsp;Liste des Sections</a>&nbsp;
+            <a class="btn btn-warning" role="button" href="{{ path('section_edit', {'id': section.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+          </div>
           </div>
           <!-- /.box-body -->
         </div>
     <!--h1>Section</h1-->
-<div class="box">
+<div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title">Information de la section {{section.libelle}}</h3>
     </div>
@@ -24,7 +30,7 @@
                     <td>{{ section.id }}</td>
                 </tr>
                 <tr>
-                    <th>Libelle</th>
+                    <th>Libellé</th>
                     <td>{{ section.libelle }}</td>
                 </tr>
                 <tr>
@@ -32,7 +38,7 @@
                     <td>{{ section.prix }}</td>
                 </tr>
                 <tr>
-                    <th>Date de creation</th>
+                    <th>Date de création</th>
                     <td>{{ section.createdAt ? section.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
@@ -43,8 +49,6 @@
         </table>
     </div>
 </div>
-
-    <a class="btn btn-info" role="button" href="{{ path('section_edit', {'id': section.id}) }}">modifier</a>
 
     {{ include('section/_delete_form.html.twig') }}
 {% endblock %}

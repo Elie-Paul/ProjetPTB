@@ -3,8 +3,24 @@
 {% block title %}Tracabilite{% endblock %}
 
 {% block body %}
-    <h1>Tracabilite</h1>
+<div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('tracabilite_index') }}"><i class="fa fa-list"></i>&nbsp;Liste de Traçabilite</a>&nbsp;            
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
 
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information de la traçabilite</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
     <table class="table">
         <tbody>
             <tr>
@@ -16,11 +32,11 @@
                 <td>{{ tracabilite.type }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
+                <th>Date Création</th>
                 <td>{{ tracabilite.createdAt ? tracabilite.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>UpdatedAt</th>
+                <th>Date de Modification</th>
                 <td>{{ tracabilite.updatedAt ? tracabilite.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
@@ -28,19 +44,19 @@
                 <td>{{ tracabilite.motif }}</td>
             </tr>
             <tr>
-                <th>NumDepart</th>
+                <th>Numéro Départ</th>
                 <td>{{ tracabilite.numDepart }}</td>
             </tr>
             <tr>
-                <th>NumFin</th>
+                <th>Numéro Fin</th>
                 <td>{{ tracabilite.numFin }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('tracabilite_index') }}">back to list</a>
-
-    <a href="{{ path('tracabilite_edit', {'id': tracabilite.id}) }}">edit</a>
+    <a class="btn btn-warning" role="button" href="{{ path('tracabilite_edit', {'id': tracabilite.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+     </div>
+</div>
 
     {{ include('tracabilite/_delete_form.html.twig') }}
 {% endblock %}

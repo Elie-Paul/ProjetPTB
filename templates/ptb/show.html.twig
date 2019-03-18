@@ -7,13 +7,19 @@
 
 <div class="box box-default">
           <div class="box-header with-border">
-            <a class="btn btn-info" href="{{ path('ptb_index') }}">Retour</a>
+          <div class="col-md-6">
+            <h4></h4>
           </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('ptb_index') }}"><i class="fa fa-list"></i>&nbsp;Liste PTB</a>&nbsp;
+            <a class="btn btn-warning" role="button" href="{{ path('ptb_edit', {'id': ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+          </div>
+          </div>    
           <!-- /.box-body -->
         </div>
-<div class="box">
+<div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Information du train ptb</h3>
+        <h3 class="box-title">Information du train PTB</h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
@@ -32,7 +38,7 @@
                     <td>{{ ptb.section.libelle }}</td>
                 </tr>
                 <tr>
-                    <th>Date de creation</th>
+                    <th>Date de création</th>
                     <td>{{ ptb.createdAt ? ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>
@@ -43,7 +49,6 @@
         </table>
     </div>
 </div>
-    <a class="btn btn-info" role="button" href="{{ path('ptb_edit', {'id': ptb.id}) }}">modifier</a>
 
     {{ include('ptb/_delete_form.html.twig') }}
 {% endblock %}

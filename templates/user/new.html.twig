@@ -6,11 +6,23 @@
 
 <div class="box box-default">
           <div class="box-header with-border">
-            <a class="btn btn-info" href="{{ path('user_index') }}">Retour</a>
+          <div class="col-md-6">
+            <h4><i class="fa fa-plus"></i>&nbsp;<big>Ajouter utilisateur</big></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('user_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste des Utilisateurs</big></a>
+          </div>
           </div>
           <!-- /.box-body -->
         </div>
-    <h1>Create new User</h1>
 
+  <div class="box box-solid box-primary">
+    <div class="box-header">
+    <h3 class="box-title">Ajouter un Nouveau utilisateur</h3>   
+    </div>
+    <div class="box-body">
     {{ include('user/_form.html.twig') }}
+
+     </div>
+</div>
 {% endblock %}

@@ -120,15 +120,20 @@
     </script>
     <div class="box box-default">
           <div class="box-header with-border">
-            <a class="btn btn-info" href="{{ path('billet_ptb_new') }}">Nouveau</a>
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Billets PTB</big></h4>
+          </div>
+            <div class="col-md-6 text-right">
+            <a class="btn btn-primary pull-right" href="{{ path('ptb_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau PTB</a>
+            </div>
           </div>
           <!-- /.box-body -->
         </div>
     <div class="row">
     <div class="col-xs-12">
-        <div class="box">
+        <div class="box box-primary">
             <div class="box-header">
-                <h1 class="box-title">Liste des lieux</h1>
+                <h1 class="box-title">Liste des billets PTB</h1>
 
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -144,20 +149,18 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Section</th>
-                <th>Depart</th>
+                <th>Départ</th>
                 <th>Arrivée</th>
                 <th>Prix</th>
-                <th>guichet</th>
-                <th>NumeroDepart</th>
-                <th>actions</th>
+                <th>Guichet</th>
+                <th>Numéro Depart</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
         {% for billet_ptb in billet_ptbs %}
             <tr>
-                <td>{{ billet_ptb.id }}</td>
                 <td>{{ billet_ptb.ptb.section.libelle }}</td>
                 <td>{{ billet_ptb.ptb.trajet.depart.libelle }}</td>
                 <td>{{ billet_ptb.ptb.trajet.arrivee.libelle }}</td>
@@ -166,7 +169,7 @@
                 <td id="dpt{{ billet_ptb.id }}">{{billet_ptb.numeroDernierBillets}}</td>
                 <td>
                     
-                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.id }})">Imprimer</a>
+                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
                 </td>
             </tr>
         {% else %}
