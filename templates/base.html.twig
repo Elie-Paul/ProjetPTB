@@ -78,16 +78,16 @@
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>      
+        <span class="sr-only">Toggle navigation</span>        
+      </a>     
       <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">                          
+      <div class="navbar-custom-menu">       
+        <ul class="nav navbar-nav">                                        
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="{{ asset('img/user.png') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{ app.user.roles ? app.user.roles|json_encode : '' }}</span>
+              <span class="hidden-xs">{{ app.user.username}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -100,10 +100,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ path('security_logout') }}" class="btn btn-default btn-flat">Deconnexion</a>
+                  <a href="{{ path('security_logout') }}" class="btn btn-danger btn-flat"><i class="glyphicon glyphicon-off"></i>&nbsp;Deconnexion</a>
                 </div>
               </li>
             </ul>
@@ -147,8 +147,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>Ptb</a></li>
-            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>            
+            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>
+            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
+            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>            
           </ul>
         </li>
         <li>
@@ -166,14 +167,62 @@
             </span>
           </a>        
         </li>
-        <li><a href="{{ path('guichet_index') }}"><i class="glyphicon glyphicon-credit-card"></i> Guichets</a></li>   
-        <li><a href="{{ path('trajet_index') }}"><i class="glyphicon glyphicon-road"></i>  Trajets</a></li>   
-        <li><a href="{{ path('lieux_index') }}"><i class="glyphicon glyphicon-map-marker"></i>Lieux</a></li>
-        <li><a href="{{ path('classe_index') }}"><i class="glyphicon glyphicon-certificate"></i>Classe</a></li>  
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-credit-card"></i> 
+        <span>Guichets</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('guichet_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('guichet_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>
+        </li>   
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-road"></i> 
+            <span>Trajets</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+         </a>
+         <ul class="treeview-menu">
+            <li><a href="{{ path('trajet_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('trajet_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>
+         </li>   
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-map-marker"></i>
+        <span>Gares</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>
+        </li>
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-certificate"></i>
+          <span>Classes</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('classe_new') }}"><i class="fa fa-circle-o"></i>Nouvelle</a></li>            
+            <li><a href="{{ path('classe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>
+        </li>  
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-wrench"></i>
-            <span>Parametre</span>
+            <span>Paramètre</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -182,7 +231,7 @@
             <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>                        
             <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>                             
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
-            <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>Ptb</a></li>
+            <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
             <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
             <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Traçabilité</a></li>    
           </ul>
