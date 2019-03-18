@@ -25,6 +25,7 @@ class UserType extends AbstractType
                 'multiple' => true
             ])            
             ->add('password',PasswordType::class)
+            ->add('confirme_password',PasswordType::class)
         ;
     }
 
