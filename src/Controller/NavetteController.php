@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Navette;
+use App\Entity\BilletNavette;
+use App\Entity\Guichet;
 use App\Form\NavetteType;
 use App\Repository\NavetteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +33,8 @@ class NavetteController extends AbstractController
     public function new(Request $request): Response
     {
         $navette = new Navette();
+        $billetNavette = new BilletNavette();
+        $repository = $this->getDoctrine()->getRepository(Guichet::class);
         $form = $this->createForm(NavetteType::class, $navette);
         $form->handleRequest($request);
 
@@ -39,6 +43,13 @@ class NavetteController extends AbstractController
             $navette->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($navette);
+            $guichet = $repository->findOneBy(['lieu'=>$navette->getTrajet()->getDepart()]);
+            $billetNavette->setNumeroDernierBillet(0);
+            $billetNavette->setNavette($navette);
+            $billetNavette->setGuichet($guichet);
+            $billetNavette->setCreatedAt(new \DateTime());
+            $billetNavette->setUpdatedAt(new \DateTime());
+            $entityManager->persist($billetNavette);
             $entityManager->flush();
 
             return $this->redirectToRoute('navette_index');

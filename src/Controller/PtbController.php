@@ -43,7 +43,7 @@ class PtbController extends AbstractController
             $ptb->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($ptb);
-            $guichet=$repository->findOneBy(['lieu'=>$ptb->getTrajet()->getDepart()->getLibelle()]);
+            $guichet = $repository->findOneBy(['lieu'=>$ptb->getTrajet()->getDepart()]);
             $billetPTB->setPtb($ptb);
             $billetPTB->setGuichet($guichet);
             $billetPTB->setNumeroDernierBillets(0);
