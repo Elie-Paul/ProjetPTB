@@ -3,8 +3,25 @@
 {% block title %}Abonnement index{% endblock %}
 
 {% block body %}
-    <h1>Abonnement index</h1>
+ <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Abonnés</big></h4>
+          </div>
+            <div class="col-md-6 text-right">
+                <a class="btn btn-info" href="{{ path('abonnement_new') }}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nouveau Abonné</a>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
 
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h1 class="box-title">Liste des utilisateurs</h1>
+            </div>
+            <div class="box-body">
     <table class="table">
         <thead>
             <tr>
@@ -27,8 +44,8 @@
                 <td>{{ abonnement.type }}</td>
                 <td>{{ abonnement.type.prix }}</td>
                 <td>
-                    <a href="{{ path('abonnement_show', {'id': abonnement.id}) }}">show</a>
-                    <a href="{{ path('abonnement_edit', {'id': abonnement.id}) }}">edit</a>
+                    <a class="btn btn-info" role="button" href="{{ path('abonnement_show', {'id': abonnement.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;show</a>
+                    <a class="btn btn-warning" role="button" href="{{ path('abonnement_edit', {'id': abonnement.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;edit</a>
                 </td>
             </tr>
         {% else %}
@@ -38,6 +55,8 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('abonnement_new') }}">Create new</a>
+   </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

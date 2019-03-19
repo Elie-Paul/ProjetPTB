@@ -86,15 +86,17 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ asset('img/user.png') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{ app.user.username}}</span>
+            
+              <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="user-image" alt="User Image">
+        
+              <span class="hidden-xs">{{ app.user.username|capitalize}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ asset('img/user.png') }}" class="img-circle" alt="User Image">
+                <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
-                  {{ app.user.username }}                  
+                  {{ app.user.username|capitalize }}                  
                 </p>
               </li>              
               <!-- Menu Footer-->
@@ -120,10 +122,10 @@
 
     <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset('img/user.png') }}" class="img-circle" alt="User Image">
+          <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>{{ app.user.username }}</p>
+          <p>{{ app.user.username|capitalize }}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
         </div>
       </div>
@@ -152,11 +154,18 @@
             <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>            
           </ul>
         </li>
-        <li>
-          <a href="/">
+        <li class="treeview">
+          <a href="#">
             <i class="glyphicon glyphicon-text-background"></i>
-            <span>Abonnement</span>          
-          </a>        
+            <span>Abonnement</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>          
+          </a> 
+          <ul class="treeview-menu">
+            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>       
         </li>
 
         <li class="treeview">
@@ -269,6 +278,7 @@
 <script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </body>
 {% block javascripts %}{% endblock %}
 </html> 
