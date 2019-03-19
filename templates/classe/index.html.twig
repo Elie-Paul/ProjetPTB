@@ -48,7 +48,7 @@
                             <td>{{ classe.createdAt ? classe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>{{ classe.updatedAt ? classe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>
-                                <a class="btn btn-info" role="button" href="{{ path('classe_show', {'id': classe.id}) }}"><i class="fa fa-list"></i>&nbsp;voir</a>
+                                <a class="btn btn-info" role="button" href="{{ path('classe_show', {'id': classe.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('classe_edit', {'id': classe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
                             </td>
                         </tr>
