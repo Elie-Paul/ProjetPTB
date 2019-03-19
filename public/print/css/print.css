@@ -60,8 +60,6 @@
     .milieu .cote-gauche .ligne span {
         -webkit-print-color-adjust: exact;
         -webkit-text-fill-color: rgb(210, 183, 21);
-        -webkit-column-rule-color: blue;
-        -webkit-text-stroke-color: green;
     }
 
     .ligne span {
