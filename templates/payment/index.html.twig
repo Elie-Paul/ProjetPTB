@@ -14,8 +14,9 @@
 
         .seconde-page {
             -webkit-print-color-adjust: exact;
-            display: none;
+            display: block;
         }
+
         .cote-gauche .ligne span {
             -webkit-print-color-adjust: exact;
             color: #f0ad4e;
@@ -26,18 +27,42 @@
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
-        function printContent() {
+        function survol(filename) {
+            let file = filename;
+            let image = document.getElementById('photop');
+            image.src=("{{ asset('clients/images/') }}"+file);
+        }
+        function printContent(id, nom, prenom, type, section, filename) {
+            //LA PARTIE AFFICHAGE DES INFORMATIONS DE L'ABONNE SUR LA CARTE
+            let image = document.getElementById('photop');
+            let idp = id;
+            let nomp = nom;
+            let prenomp = prenom;
+            let typep = type;
+            let sectionp = section;
+            let file = filename;
+            image.src=("{{ asset('clients/images/') }}"+file);
+            let str = "" + idp;
+            let pad = "00000";
+            let ans = pad.substring(0, pad.length - str.length) + str;
+            document.querySelector('#numerop').innerHTML = ans;
+
+            document.getElementById('nomp').innerHTML = nomp;
+            document.getElementById('prenomp').innerHTML = prenomp;
+            document.getElementById('typep').innerHTML = typep;
+            document.getElementById('sectionp').innerHTML = sectionp;
+
+            image.src=("{{ asset('clients/images/') }}"+file);
+
+            //LA PARTIE HIDE AND SHOW
             var hide = document.querySelector('.toHide');
             var show = document.querySelector('.toPrint');
             hide.style.display = 'none';
             show.style.display = 'block';
-            var col = document.querySelector('.ligne');
-            col.style.bgColor = '#28fe2e';
             window.print();
-            col.style.bgColor = '#32fe6b';
             show.style.display = 'none';
             hide.style.display = 'block';
-            return true;
+            return false;
         }
     </script>
 {% endblock %}
@@ -56,7 +81,7 @@
                 </div>
             </div>
             <div class="numero col-xs-12">
-                <p><span class="numero-content">Numero: 00000</span></p>
+                <p><span class="numero-content">Numero: <span id="numerop">00000</span></span></p>
             </div>
             <div class="col-sm-12 milieu">
                 <div class="col-sm-4 cote-gauche">
@@ -74,20 +99,20 @@
                     </div>
                 </div>
                 <div class="col-sm-6 cote-milieu">
-                    <p>Nom: <span class="valeur">THERA</span>
+                    <p>Nom: <span id="nomp" class="valeur">THERA</span>
                     </p>
-                    <p>Prenom: <span class="valeur">Daouda S.</span>
+                    <p>Prenom: <span id="prenomp" class="valeur">Daouda S.</span>
                     </p>
-                    <p>Type d'abonnement: <span class="valeur">Etudiant</span>
+                    <p>Type d'abonnement: <span id="typep" class="valeur">Etudiant</span>
                     </p>
-                    <p>Section: <span class="valeur">Section 1</span>
+                    <p>Section: <span id="sectionp" class="valeur"></span>
                     </p>
-                    <p>Date d'expiration: <span class="valeur">31/12/2019</span>
+                    <p>Date d'expiration: <span id="datep" class="valeur">31/12/{{ "" | date('Y') }}</span>
                     </p>
                 </div>
                 <div class="col-sm-3 cote-droit">
                     <div class="photo">
-                        <img class="picture" src="{{ asset('home.jpg') }}" alt="photo">
+                        <img id="photop" src="{{ asset('clients/images/student carte.jpeg') }}" class="picture"  alt="photo">
                     </div>
                     <div class="le-cacher">
                     </div>
@@ -104,16 +129,24 @@
             </div>
         </div>
         <div class="seconde-page">
-            <p class="titre-recommandation"><strong>
-                    <ul>RECOMMANDATION</ul>
-                </strong></p>
-            <p class="paragraphe">1. Cette carte doit être présentée en bon état, sans rature ni surcharge, à toute
-                demande des agents chargés du controle.</p>
-            <p class="paragraphe">2. Chaque mois, le client est tenu d'acheter une vignette pour la validité de sa carte
-                d'abonnement.</p>
-            <p class="paragraphe">3. La carte est nominative. Toute utilisation frauduleuse, en plus du retrait immediat
-                de la carte, exposerait le contrevenant à des poursuites.</p>
-            <p class="paragraphe">4. Cette carte est valable jusqu'au DD/MM/YYYY.</p>
+            <div class="titre-content">
+                <p class="titre-recommandation">
+                    <strong>
+                        RECOMMANDATION
+                    </strong>
+                </p>
+            </div>
+            <div class="principal-content">
+                <p class="paragraphe">1. Cette carte doit être présentée en bon état, sans rature ni surcharge, à toute
+                    demande des agents chargés du controle.</p>
+                <p class="paragraphe">2. Chaque mois, le client est tenu d'acheter une vignette pour la validité de sa
+                    carte
+                    d'abonnement.</p>
+                <p class="paragraphe">3. La carte est nominative. Toute utilisation frauduleuse, en plus du retrait
+                    immediat
+                    de la carte, exposerait le contrevenant à des poursuites.</p>
+                <p class="paragraphe">4. Cette carte est valable jusqu'au DD/MM/YYYY.</p>
+            </div>
         </div>
 
     </div>
@@ -138,6 +171,7 @@
             <tbody>
             {% for payment in payments %}
                 <tr>
+                    <td id="p{{ payment.id }}">{{ payment.id }}</td>
                     <td>{{ payment.annee }}</td>
                     <td>{{ payment.mois }}</td>
                     <td>{{ payment.abonnement.nom }}</td>
@@ -149,7 +183,9 @@
                     <td>
                         <a href="{{ path('payment_show', {'id': payment.id}) }}">show</a>
                         <a href="{{ path('payment_edit', {'id': payment.id}) }}">edit</a>
-                        <a onclick="printContent()" href="#">Génerer la carte</a>
+                        <a onmouseover="survol('{{ payment.abonnement.filename }}')" onclick="printContent({{ payment.id }}, '{{ payment.abonnement.nom }}', '{{ payment.abonnement.prenom }}'
+                                , '{{ payment.abonnement.type.libelle }}', '{{ payment.abonnement.type.section }}', '{{ payment.abonnement.filename }}')"
+                           href="#">Génerer la carte</a>
                     </td>
                 </tr>
             {% else %}
