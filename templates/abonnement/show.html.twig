@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Abonnement{% endblock %}
+
+{% block body %}
+    <h1>Abonnement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ abonnement.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom du photo</th>
+                <td>{{ abonnement.filename }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ abonnement.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ abonnement.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ abonnement.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>+221: {{ abonnement.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Date de creation</th>
+                <td>{{ abonnement.createdAt ? abonnement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de modification</th>
+                <td>{{ abonnement.updateAt ? abonnement.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('abonnement_index') }}">Retour vers la liste</a>
+
+    <a class="btn btn-warning" href="{{ path('abonnement_edit', {'id': abonnement.id}) }}">edit</a>
+
+    {{ include('abonnement/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,231 @@
+@media print {
+
+    /*TOUTE LA PARTIE ENTETE*/
+    .toPrint {
+        /*display: flex;*/
+        /*justify-content: center;*/
+        /*align-items: center;*/
+        /*flex-direction: column;*/
+        /*text-align: justify;*/
+    }
+
+    img.logo {
+        margin-top: 15px;
+        width: 120px;
+        height: 85px;
+        margin-left: 75px;
+    }
+
+    img.picture {
+        width: 130px;
+        height: 150px;
+        margin-top: -40px;
+        margin-left: 0px;
+    }
+
+    .titre-principal p span.gras {
+        -webkit-print-color-adjust: exact;
+        font-family: Algerian;
+        font-weight: bold;
+        font-size: 30px;
+        color: #fdfdfe;
+        background-color: #fd7c44;
+    }
+
+    .titre-principal {
+        margin-top: 15px;
+        /*margin-left: -160px;*/
+        font-style: normal;
+    }
+
+    .titre-principal p span.petit-train {
+        font-size: 25px;
+    }
+
+
+    .titre-principal p span {
+        /*font-family: "Courier New", Courier, monospace;*/
+        font-size: xx-large;
+    }
+
+    .numero {
+        margin-top: 2.1%;
+        margin-left: 75px;
+        font-family: Arial;
+        font-size: large;
+    }
+
+    /*FIN DE LA PARTIE ENTETE*/
+    /*DEBUT DE LA PARTIE MILIEU*/
+    .milieu .cote-gauche .ligne span {
+        -webkit-print-color-adjust: exact;
+        -webkit-text-fill-color: rgb(210, 183, 21);
+    }
+
+    .ligne span {
+        padding: 20px;
+    }
+
+    .ligne {
+        padding: 40px;
+        margin-top: -35px;
+    }
+
+    .cote-gauche {
+        margin-right: 0px;
+        margin-top: 0px;
+    }
+
+    .cote-milieu {
+        margin-left: -75px;
+    }
+
+    .cote-milieu p {
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .cote-milieu p span {
+        margin-left: 20px;
+    }
+
+    .cote-droit {
+        margin-left: -110px;
+    }
+
+    /*FIN DE LA PARTIE MILIEU*/
+    /*DEBUT DE LA PARTIE FOOTER*/
+    .footer {
+        margin-left: 75px;
+        text-align: justify;
+    }
+
+    .footer .noter-bien {
+        -webkit-print-color-adjust: exact;
+        /*-webkit-text-fill-color: rgba(17, 255, 196, 0.03);*/
+        font-weight: bold;
+        font-size: 15px;
+        font-family: cursive;
+        margin-left: 0px;
+    }
+
+    .footer .tel {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .footer .adresse {
+        text-align: center;
+        font-weight: bold;
+    }
+
+}
+
+
+/*!*TOUTE LA PARTIE ENTETE*!*/
+/*.toPrint {*/
+/*display: flex;*/
+/*justify-content: center;*/
+/*align-items: center;*/
+/*flex-direction: column;*/
+/*text-align: justify;*/
+/*}*/
+
+/*img.logo {*/
+/*margin-top: 25px;*/
+/*width: 150px;*/
+/*height: 100px;*/
+/*margin-left: 65px;*/
+/*}*/
+
+/*img.picture {*/
+/*width: 130px;*/
+/*height: 150px;*/
+/*margin-left: -100px;*/
+/*margin-top: -30px;*/
+/*}*/
+
+/*.titre-principal p span.gras {*/
+/*font-family: Algerian;*/
+/*font-weight: bold;*/
+/*font-size: 37px;*/
+/*}*/
+
+/*.titre-principal {*/
+/*margin-top: 15px;*/
+/*margin-left: -160px;*/
+/*font-style: normal;*/
+/*}*/
+
+/*.titre-principal p span.petit-train {*/
+/*!*font-weight: bold;*!*/
+/*}*/
+
+
+/*.titre-principal p span {*/
+/*!*font-family: "Courier New", Courier, monospace;*!*/
+/*font-size: xx-large;*/
+/*}*/
+
+/*.numero {*/
+/*margin-top: 2.1%;*/
+/*margin-left: 100px;*/
+/*font-family: Arial;*/
+/*font-size: large;*/
+/*}*/
+
+/*!*FIN DE LA PARTIE ENTETE*!*/
+
+/*!*DEBUT DE LA PARTIE MILIEU*!*/
+/*.milieu .premier-ligne {*/
+/*margin-bottom: 15%;*/
+/*}*/
+
+/*.ligne span {*/
+/*background-color: #ffdb99;*/
+/*margin: 10px 10px 30px;*/
+/*padding: 15px 15px 20px;*/
+/*}*/
+
+/*.ligne {*/
+/*margin: 30px;*/
+/*}*/
+
+/*.cote-gauche {*/
+/*margin-right: 0px;*/
+/*}*/
+
+/*.cote-milieu {*/
+/*margin-left: -60px;*/
+/*margin-top: 15px;*/
+/*}*/
+
+/*.cote-droit {*/
+/*!*margin-left: -110px;*!*/
+/*}*/
+
+/*!*FIN DE LA PARTIE MILIEU*!*/
+
+/*!*DEBUT DE LA PARTIE FOOTER*!*/
+
+/*.footer {*/
+/*margin-left: 100px;*/
+/*text-align: justify;*/
+/*}*/
+
+/*.footer .noter-bien {*/
+/*font-weight: bold;*/
+/*color: #41dcff;*/
+/*font-size: 15px;*/
+/*font-family: cursive;*/
+/*margin-left: -20px;*/
+/*}*/
+
+/*.footer .tel {*/
+/*font-weight: bold;*/
+/*text-align: center;*/
+/*}*/
+/*.footer .adresse {*/
+/*text-align: center;*/
+/*font-weight: bold;*/
+/*}*/
