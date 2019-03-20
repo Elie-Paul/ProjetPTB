@@ -134,12 +134,14 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header"></li>
+        {% if is_granted('ROLE_ADMIN') %}
         <li>
           <a active href="{{ path('home') }}">
             <i class="fa fa-dashboard"></i> 
             <span>Tableau de Bord</span>
           </a>
         </li>
+        {% endif %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-folder-open"></i>
