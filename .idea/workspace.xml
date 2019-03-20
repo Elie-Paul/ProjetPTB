@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c833adc-0786-421a-b62a-a428cf249f95" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/public/print/css/print.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/print/css/print.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/payment/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/payment/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/abonnement/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/abonnement/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,11 +16,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/payment/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+            <state relative-caret-position="3145">
+              <caret line="185" column="59" selection-start-line="185" selection-start-column="59" selection-end-line="185" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/abonnement/index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+              <folding>
+                <element signature="e#890#905#0#Twig" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -91,7 +103,6 @@
         <option value="$PROJECT_DIR$/templates/type/show.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/Type.php" />
         <option value="$PROJECT_DIR$/src/Form/AbonnementType.php" />
-        <option value="$PROJECT_DIR$/templates/abonnement/index.html.twig" />
         <option value="$PROJECT_DIR$/src/Entity/Abonnement.php" />
         <option value="$PROJECT_DIR$/templates/payment/_form.html.twig" />
         <option value="$PROJECT_DIR$/src/Form/PaymentType.php" />
@@ -104,6 +115,7 @@
         <option value="$PROJECT_DIR$/src/Controller/PaymentController.php" />
         <option value="$PROJECT_DIR$/public/print/css/print.css" />
         <option value="$PROJECT_DIR$/templates/payment/index.html.twig" />
+        <option value="$PROJECT_DIR$/templates/abonnement/index.html.twig" />
       </list>
     </option>
   </component>
@@ -221,8 +233,8 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="945" />
-    <option name="y" value="-10" />
+    <option name="x" value="1031" />
+    <option name="y" value="165" />
     <option name="width" value="980" />
     <option name="height" value="1040" />
   </component>
@@ -234,6 +246,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -241,33 +254,10 @@
               <item name="aCan" type="b2602c69:ProjectViewProjectNode" />
               <item name="aCan" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="aCan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aCan" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aCan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aCan" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aCan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aCan" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="abonnement" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="aCan" type="b2602c69:ProjectViewProjectNode" />
-              <item name="aCan" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="classe" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -325,7 +315,8 @@
       <workItem from="1552740195998" duration="7910000" />
       <workItem from="1552829611159" duration="18935000" />
       <workItem from="1552897170692" duration="11890000" />
-      <workItem from="1552985462723" duration="29350000" />
+      <workItem from="1552985462723" duration="30912000" />
+      <workItem from="1553073750746" duration="2986000" />
     </task>
     <task id="LOCAL-00001" summary="update title dans home index">
       <created>1551870595850</created>
@@ -338,13 +329,35 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="178732000" />
+    <option name="totallyTimeSpent" value="183280000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17181209" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15637584" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.9291785" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="12" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="rails-model-fields" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15704697" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -365,7 +378,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="rails-model-fields" order="3" />
       <window_info anchor="right" id="Database" order="4" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -689,13 +702,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/abonnement/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="36" column="17" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/classe/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -723,23 +729,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes/annotations.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/AbonnementController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="24" column="30" lean-forward="true" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
+        <state relative-caret-position="-561">
+          <caret line="24" column="30" selection-start-line="24" selection-start-column="30" selection-end-line="24" selection-end-column="30" />
           <folding>
             <element signature="e#701#729#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes/annotations.yaml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/payment/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        <state relative-caret-position="3145">
+          <caret line="185" column="59" selection-start-line="185" selection-start-column="59" selection-end-line="185" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/abonnement/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding>
+            <element signature="e#890#905#0#Twig" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
