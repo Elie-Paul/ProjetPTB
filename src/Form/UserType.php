@@ -21,6 +21,9 @@ class UserType extends AbstractType
                 'required' => true,
                 'label' => "L'image doit être de type jpeg"
             ])
+            ->add('nom')            
+            ->add('prenom')
+            ->add('email')
             ->add('username')
             ->add('roles', ChoiceType::class, [
                 'choices' => [
