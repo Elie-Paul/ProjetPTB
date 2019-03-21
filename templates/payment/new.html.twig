@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Payment{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('payment/css/app.css') }}">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('payment/js/app.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1 style="margin-bottom: 20px;">Nouveau payment</h1>
+    <div class="erreur" style="background-color:#ff0c51;">
+        {% if error is defined %}
+            {{ error }}
+        {% endif %}
+    </div>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Payer') }}</button>
+    {{ form_end(form) }}
+
+    {#{{ include('payment/_form.html.twig') }}#}
+
+    <a href="{{ path('payment_index') }}">back to list</a>
+
+
+
+
+{% endblock %}
