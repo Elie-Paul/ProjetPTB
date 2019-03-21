@@ -45,9 +45,11 @@ class UserType extends AbstractType
             ])            
             ->add('password',PasswordType::class,[
                 'label'=> "Mot de Passe",
+                'mapped' => false,
             ])
             ->add('confirme_password',PasswordType::class,[
                 'label'=> "Confirmation de Mot de Passe",
+                'mapped' => false,
             ])
         ;
     }
