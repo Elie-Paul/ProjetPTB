@@ -23,7 +23,7 @@ class AbonnementController extends AbstractController
      */
     public function index(AbonnementRepository $abonnementRepository): Response
     {
-        return $this->render('abonnement/index.html.twig', [
+        return $this->render('abonnement/index2.html.twig', [
             'abonnements' => $abonnementRepository->findAll(),
         ]);
     }
@@ -56,7 +56,7 @@ class AbonnementController extends AbstractController
         return $this->render('abonnement/new.html.twig', [
             'abonnement' => $abonnement,
             'form' => $form->createView(),
-            'expiration' => $abonnement->get
+            'expiration' => $abonnement->getExpiration()
         ]);
     }
 

@@ -1,0 +1,323 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Abonnement index{% endblock %}
+{% block stylesheets %}
+    <style>
+        .toHide {
+            display: block;
+        }
+
+        .toPrint {
+            display: none;
+        }
+
+        .seconde-page {
+            -webkit-print-color-adjust: exact;
+            display: block;
+        }
+
+        .cote-gauche .ligne span {
+            -webkit-print-color-adjust: exact;
+            color: #f0ad4e;
+        }
+    </style>
+    <link rel="stylesheet" media="print" href="{{ asset('print/css/print2.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('payment/css/app.css') }}">#}
+{% endblock %}
+{% block javascripts %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        function survol(filename, expiration) {
+            // alert(expiration)
+            let file = filename;
+            let image = document.getElementById('photop');
+            image.src = ("{{ asset('clients/images/') }}" + file);
+        }
+
+        function retablir(id) {
+            swal({
+                title: "Etes vous sûr ?",
+                text: "Cliquez sur ok pour un réabonnement ou cancel pour annuler!",
+                icon: "warning",
+                buttons: true,
+                // dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
+                    }
+                });
+
+        }
+
+        function printContent(id, nom, prenom, type, section, filename, expiration) {
+            //LA PARTIE AFFICHAGE DES INFORMATIONS DE L'ABONNE SUR LA CARTE
+            window.location.href = "http://localhost:8000/abonnement/valider/" + id;
+            let image = document.getElementById('photop');
+            let idp = id;
+            let nomp = nom;
+            let prenomp = prenom;
+            let typep = type;
+            let sectionp = section;
+            let file = filename;
+            let exp = expiration;
+            image.src = ("{{ asset('clients/images/') }}" + file);
+            let str = "" + idp;
+            let pad = "00000";
+            let ans = pad.substring(0, pad.length - str.length) + str;
+            document.querySelector('#numerop').innerHTML = ans;
+
+            document.getElementById('nomp').innerHTML = nomp;
+            document.getElementById('prenomp').innerHTML = prenomp;
+            document.getElementById('typep').innerHTML = typep;
+            document.getElementById('sectionp').innerHTML = sectionp;
+            document.getElementById('datep').innerHTML = exp;
+            document.getElementById('recommendationDate').innerHTML = exp;
+
+            image.src = ("{{ asset('clients/images/') }}" + file);
+
+            //LA PARTIE HIDE AND SHOW
+            var hide = document.querySelector('.toHide');
+            var show = document.querySelector('.toPrint');
+            hide.style.display = 'none';
+            show.style.display = 'block';
+            window.print();
+            show.style.display = 'none';
+            hide.style.display = 'block';
+
+            //LA CARTE EST DEJA IMPRIMEE
+
+            return false;
+        }
+    </script>
+{% endblock %}
+
+{% block body %}
+    {#---------------------------------------------To PRINT------------------------------------------#}
+
+    <div class="toPrint">
+        <div class="col-xs-12 inset">
+            <div class="row">
+                <div class="col-xs-3 logo">
+                    <img class="logo" src="{{ asset('logo.png') }}" alt="logo">
+                </div>
+                <div class="col-md-8 titre-principal">
+                <p><span class="petit-train">PETIT TRAIN DE BANLIEUE</span></p>
+                <p><span class="gras">CARTE D'ABONNEMENT</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="numero col-xs-12">
+                <p><span class="numero-content">Numero: <span id="numerop">00000</span></span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 milieu">
+                    <div class="col-sm-4 cote-gauche">
+                        <div class="premier-ligne ligne">
+                            <span>01</span> <span>02</span> <span>03</span>
+                        </div>
+                        <div class="premier-ligne ligne">
+                            <span>04</span> <span>05</span> <span>06</span>
+                        </div>
+                        <div class="premier-ligne ligne">
+                            <span>07</span> <span>08</span> <span>09</span>
+                        </div>
+                        <div class=" premier-ligne ligne">
+                            <span>10</span> <span>11</span> <span>12</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 cote-milieu">
+                        <p>Nom: <span id="nomp" class="valeur">THERA</span>
+                        </p>
+                        <p>Prenom: <span id="prenomp" class="valeur">Daouda S.</span>
+                        </p>
+                        <p>Type d'abonnement: <span id="typep" class="valeur">Etudiant</span>
+                        </p>
+                        <p>Section: <span id="sectionp" class="valeur"></span>
+                        </p>
+                        <p>Date d'expiration: <span id="datep" class="valeur"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-2 cote-droit">
+                        <div class="photo">
+                            <img id="photop" src="{{ asset('clients/images/student carte.jpeg') }}" class="picture"
+                            alt="photo">
+                        </div>
+                        <div class="le-cacher">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 footer">
+                    <p class="noter-bien"><span class="nb">NB: </span>Cette Carte est strictement personnelle.</p>
+                    <p class="footer-haut"><span class="adresse">Adresse :</span> Immeuble Bâtiment, Av Malick SY 3ème étage
+                    | BP : 265 Dakar - Sénégal |
+                    <a href="#">www.ptb.sn</a></p>
+                    <p class="footer-bas"><span class="tel">Téléphone :</span> 33 889 19 00 / 77 862 54 71 / 76 021 85 00 /
+                    70 345 00 05 [ Fax : 33
+                    842 62 60</p>
+                </div>
+            </div>
+        </div>
+        <div class="seconde-page">
+            <div class="col-xs-12 inset2">
+                <div class="row">
+                    <div class="titre-content">
+                        <p class="titre-recommandation">
+                            <strong>
+                                RECOMMANDATION
+                            </strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="principal-content">
+                        <p class="paragraphe">1. Cette carte doit être présentée en bon état, sans rature ni surcharge, à toute
+                            demande des agents chargés du controle.</p>
+                        <p class="paragraphe">2. Chaque mois, le client est tenu d'acheter une vignette pour la validité de sa
+                            carte
+                            d'abonnement.</p>
+                        <p class="paragraphe">3. La carte est nominative. Toute utilisation frauduleuse, en plus du retrait
+                            immediat
+                            de la carte, exposerait le contrevenant à des poursuites.</p>
+                        <p class="paragraphe">4. Cette carte est valable jusqu'au <span id="recommendationDate">DD/MM/YYYY.</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#<div class="premiere-page">#}
+            {#<div class="cote-top">#}
+                {#<div class="col-sm-3 logo">#}
+                    {#<img class="logo" src="{{ asset('logo.png') }}" alt="logo">#}
+                {#</div>#}
+                {#<div class="col-md-8 titre-principal">#}
+                    {#<p><span class="petit-train">PETIT TRAIN DE BANLIEUE</span></p>#}
+                    {#<p><span class="gras">CARTE D'ABONNEMENT</span></p>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="numero col-xs-12">#}
+                {#<p><span class="numero-content">Numero: <span id="numerop">00000</span></span></p>#}
+            {#</div>#}
+            {#<div class="col-sm-12 milieu">#}
+                {#<div class="col-sm-4 cote-gauche">#}
+                    {#<div class="premier-ligne ligne">#}
+                        {#<span>01</span> <span>02</span> <span>03</span>#}
+                    {#</div>#}
+                    {#<div class="premier-ligne ligne">#}
+                        {#<span>04</span> <span>05</span> <span>06</span>#}
+                    {#</div>#}
+                    {#<div class="premier-ligne ligne">#}
+                        {#<span>07</span> <span>08</span> <span>09</span>#}
+                    {#</div>#}
+                    {#<div class=" premier-ligne ligne">#}
+                        {#<span>10</span> <span>11</span> <span>12</span>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="col-sm-6 cote-milieu">#}
+                    {#<p>Nom: <span id="nomp" class="valeur">THERA</span>#}
+                    {#</p>#}
+                    {#<p>Prenom: <span id="prenomp" class="valeur">Daouda S.</span>#}
+                    {#</p>#}
+                    {#<p>Type d'abonnement: <span id="typep" class="valeur">Etudiant</span>#}
+                    {#</p>#}
+                    {#<p>Section: <span id="sectionp" class="valeur"></span>#}
+                    {#</p>#}
+                    {#<p>Date d'expiration: <span id="datep" class="valeur"></span>#}
+                    {#</p>#}
+                {#</div>#}
+                {#<div class="col-sm-3 cote-droit">#}
+                    {#<div class="photo">#}
+                        {#<img id="photop" src="{{ asset('clients/images/student carte.jpeg') }}" class="picture"#}
+                             {#alt="photo">#}
+                    {#</div>#}
+                    {#<div class="le-cacher">#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="col-sm-12 footer">#}
+                {#<p class="noter-bien"><span class="nb">NB: </span>Cette Carte est strictement personnelle.</p>#}
+                {#<p class="footer-haut"><span class="adresse">Adresse :</span> Immeuble Bâtiment, Av Malick SY 3ème étage#}
+                    {#| BP : 265 Dakar - Sénégal |#}
+                    {#<a href="#">www.ptb.sn</a></p>#}
+                {#<p class="footer-bas"><span class="tel">Téléphone :</span> 33 889 19 00 / 77 862 54 71 / 76 021 85 00 /#}
+                    {#70 345 00 05 [ Fax : 33#}
+                    {#842 62 60</p>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="seconde-page">#}
+            {#<div class="titre-content">#}
+                {#<p class="titre-recommandation">#}
+                    {#<strong>#}
+                        {#RECOMMANDATION#}
+                    {#</strong>#}
+                {#</p>#}
+            {#</div>#}
+            {#<div class="principal-content">#}
+                {#<p class="paragraphe">1. Cette carte doit être présentée en bon état, sans rature ni surcharge, à toute#}
+                    {#demande des agents chargés du controle.</p>#}
+                {#<p class="paragraphe">2. Chaque mois, le client est tenu d'acheter une vignette pour la validité de sa#}
+                    {#carte#}
+                    {#d'abonnement.</p>#}
+                {#<p class="paragraphe">3. La carte est nominative. Toute utilisation frauduleuse, en plus du retrait#}
+                    {#immediat#}
+                    {#de la carte, exposerait le contrevenant à des poursuites.</p>#}
+                {#<p class="paragraphe">4. Cette carte est valable jusqu'au DD/MM/YYYY.</p>#}
+            {#</div>#}
+        {#</div>#}
+
+    </div>
+
+    {#---------------------------------------------TO HIDE-------------------------------------------#}
+    <div class="toHide">
+        <h1>Abonnement index</h1>
+
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse</th>
+                <th>Telephone</th>
+                <th>Type d'abonnement</th>
+                <th>Prix</th>
+                <th>Date d'expiration</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for abonnement in abonnements %}
+                <tr>
+                    <td>{{ abonnement.nom }}</td>
+                    <td>{{ abonnement.prenom }}</td>
+                    <td>{{ abonnement.adresse }}</td>
+                    <td>{{ abonnement.telephone }}</td>
+                    <td>{{ abonnement.type }}</td>
+                    <td>{{ abonnement.type.prix }}</td>
+                    <td>{{ abonnement.expiration | date('d-m-Y') }}</td>
+                    <td>
+                        <a href="{{ path('abonnement_show', {'id': abonnement.id}) }}">show</a>
+                        <a href="{{ path('abonnement_edit', {'id': abonnement.id}) }}">edit</a>
+                        {% if abonnement.nombreCarte is not defined or abonnement.nombreCarte != 1 %}
+                            <a onmouseover="survol('{{ abonnement.filename }}', '{{ abonnement.expiration | date('d-m-Y') }}' )"
+                               onclick="printContent({{ abonnement.id }}, '{{ abonnement.nom }}', '{{ abonnement.prenom }}'
+                                       , '{{ abonnement.type.libelle }}', '{{ abonnement.type.section }}', '{{ abonnement.filename }}', '{{ abonnement.expiration | date('d-m-Y') }}')"
+                               href="#">Génerer la carte</a>
+                        {% else %}
+                            <a onclick="retablir({{ abonnement.id }})" href="#">Reabonner</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('abonnement_new') }}">Create new</a>
+    </div>
+{% endblock %}
