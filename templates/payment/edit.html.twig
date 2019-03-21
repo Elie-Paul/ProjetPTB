@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Payment{% endblock %}
+
+{% block body %}
+    <h1>Edit Payment</h1>
+    <div class="erreur" style="background-color:#ff0c51;">
+        {% if error is defined %}
+            {{ error }}
+        {% endif %}
+    </div>
+    {{ include('payment/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('payment_index') }}">back to list</a>
+
+    {{ include('payment/_delete_form.html.twig') }}
+{% endblock %}

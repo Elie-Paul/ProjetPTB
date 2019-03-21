@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Abonnement{% endblock %}
+
+{% block body %}
+    <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-plus"></i>&nbsp;<big>Ajouter Abonné</big></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('abonnement_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste les Abonnés</big></a>
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+
+<div class="box box-solid box-primary">
+    <div class="box-header">
+    <h3 class="box-title">Ajouter un Nouveau Abonné</h3>   
+    </div>
+    <div class="box-body">
+    {{ include('abonnement/_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

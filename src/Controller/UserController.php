@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/user")
@@ -32,13 +33,17 @@ class UserController extends AbstractController
     public function new(Request $request,UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
+        
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hash=$encoder->encodePassword($user, $user->getPassword());            
-            $entityManager = $this->getDoctrine()->getManager();
-            $user->setPassword($hash);
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $user->setCreatedAt(new \DateTime());
+            $user->setUpdateAt(new \DateTime());              
+            $hash=$encoder->encodePassword($user, $user->getPassword()); 
+            $user->setPassword($hash);           
+            $entityManager = $this->getDoctrine()->getManager();           
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -68,6 +73,8 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        $user->setCreatedAt(new \DateTime());
+        $user->setUpdateAt(new \DateTime());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $hash=$encoder->encodePassword($user, $user->getPassword());  
@@ -98,4 +105,17 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+ /**
+  * Require ROLE_ADMIN for *every* controller method in this class.
+  *
+  * @IsGranted("ROLE_ADMIN")
+  */
+  public function adminDashboard()
+{
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+    // or add an optional message - seen by developers
+    $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+}
 }
