@@ -1,13 +1,35 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
 {% block title %}New Lieux{% endblock %}
 
 {% block body %}
-    <h1>Create new Lieux</h1>
-
-    {{ include('lieux/_form.html.twig') }}
-
-
-    <a class="btn btn-info" role="button" href="{{ path('lieux_index') }}">retour a la liste</a>
+<h1><big> Gestion des gares </big></h1>
+<div class="box box-default">
+    <div class="box-header with-border">
+            <div class="col-md-6">
+            <h4><i class="fa fa-plus"></i> &nbsp;<big> Ajouter une nouvelle gare</big></h4>
+            </div>
+            <div class="col-md-6 text-right">
+            <a href="{{ path('lieux_index') }}" class="btn btn-primary"><i class="fa fa-list"></i> <big>Liste Gare</big></a>
+            </div>
+    </div>
+</div>
+<!--div class="box box-default">
+          <div class="box-header with-border">
+            <a class="btn btn-info" href="{{ path('lieux_index') }}">Retour</a>
+          </div>
+</div-->
+<div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Ajouter une nouvelle gare</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('lieux/_form.html.twig') }}
+    </div><!-- /.box-body -->
+</div>
 
 {% endblock %}

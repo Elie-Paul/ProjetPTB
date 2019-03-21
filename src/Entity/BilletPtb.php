@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class BilletPtb
      * @ORM\Column(type="datetime")
      */
     private $updateAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandePtb", mappedBy="billet")
+     */
+    private $commandePtbs;
+
+    public function __construct()
+    {
+        $this->commandePtbs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -110,6 +122,37 @@ class BilletPtb
     public function __toString()
     {
         return $this->getGuichet()+' '+$this->getPtb()->getTrajet()->getDepart();
+    }
+
+    /**
+     * @return Collection|CommandePtb[]
+     */
+    public function getCommandePtbs(): Collection
+    {
+        return $this->commandePtbs;
+    }
+
+    public function addCommandePtb(CommandePtb $commandePtb): self
+    {
+        if (!$this->commandePtbs->contains($commandePtb)) {
+            $this->commandePtbs[] = $commandePtb;
+            $commandePtb->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandePtb(CommandePtb $commandePtb): self
+    {
+        if ($this->commandePtbs->contains($commandePtb)) {
+            $this->commandePtbs->removeElement($commandePtb);
+            // set the owning side to null (unless already changed)
+            if ($commandePtb->getBillet() === $this) {
+                $commandePtb->setBillet(null);
+            }
+        }
+
+        return $this;
     }
 
 

@@ -3,9 +3,23 @@
 {% block title %}New Ptb{% endblock %}
 
 {% block body %}
-    <h1>Create new Ptb</h1>
-
-    {{ include('ptb/_form.html.twig') }}
-
-    <a class="btn btn-info" role="button" href="{{ path('ptb_index') }}">retour a la liste</a>
+<div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-plus"></i>&nbsp;<big>Ajouter Train PTB</big></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('ptb_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste PTB</big></a>
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+<div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Ajouter un Nouveau Train PTB</h3>   
+    </div>
+    <div class="box-body">
+        {{ include('ptb/_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}

@@ -20,6 +20,7 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+{% block stylesheets %}{% endblock %}
 <style>
 .modal {
   display: none; /* Hidden by default */
@@ -33,7 +34,9 @@
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
-
+@media print {
+  #dd {page-break-after: always;}
+}
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
@@ -59,79 +62,54 @@
 }
 </style>
 </head>
-    {% block stylesheets %}{% endblock %}
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="#" class="logo">      
+    <a href="{{ path('home') }}" class="logo">   
+    <span class="logo-mini"><b>P</b>TB</span>   
       <!-- logo for regular state and mobile devices -->
-      <img src="{{ asset('img/logo.png') }}" class="img-circle" alt="User Image">
+     <span class="logo-lg">Billetterie <b>PTB</b></span>
     </a>
-
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>        
+      </a>     
       <!-- Navbar Right Menu -->
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">         
-          
-          <!-- Tasks: style can be found in dropdown.less -->
-          <li class="dropdown tasks-menu">
-            
-            <ul class="dropdown-menu">
-                                        
-            </ul>
-          </li>
+      <div class="navbar-custom-menu">       
+        <ul class="nav navbar-nav">                                        
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+            
+              <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="user-image" alt="User Image">
+        
+              <span class="hidden-xs">{{ app.user.username|capitalize}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+                <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  {{ app.user.username|capitalize }}                  
                 </p>
-              </li>
-              <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
+              </li>              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ path('security_logout') }}" class="btn btn-danger btn-flat"><i class="glyphicon glyphicon-off"></i>&nbsp;Deconnexion</a>
                 </div>
               </li>
             </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
-          <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li>          
         </ul>
       </div>
 
@@ -141,56 +119,132 @@
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
+
+    <div class="user-panel">
+        <div class="pull-left image">
+          <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>{{ app.user.username|capitalize }}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
+        </div>
+      </div>
+     
       <!-- Sidebar user panel -->     
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview">
-          <a href="{{ path('home') }}">
+        <li class="header"></li>
+        {% if is_granted('ROLE_ADMIN') %}
+        <li>
+          <a active href="{{ path('home') }}">
             <i class="fa fa-dashboard"></i> 
-            <span>Dashboard</span>
+            <span>Tableau de Bord</span>
           </a>
         </li>
+        {% endif %}
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="glyphicon glyphicon-folder-open"></i>
             <span>Billet</span>
             <span class="pull-right-container">
               <span class="label label-primary pull-right">2</span>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i>Ptb</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Autorail</a></li>            
+            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>
+            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>            
           </ul>
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Abonnement</span>          
-          </a>        
+            <i class="glyphicon glyphicon-text-background"></i>
+            <span>Abonnement</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>          
+          </a> 
+          <ul class="treeview-menu">
+            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>       
         </li>
 
         <li class="treeview">
           <a href="#">
-            <i class="fa-line-chart"></i>
+            <i class="glyphicon glyphicon-signal"></i>
             <span>Statistique</span>
             <span class="pull-right-container">              
             </span>
           </a>        
         </li>
         <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-credit-card"></i> 
+        <span>Guichets</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('guichet_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('guichet_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>
+        </li>   
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-road"></i> 
+            <span>Trajets</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+         </a>
+         <ul class="treeview-menu">
+            <li><a href="{{ path('trajet_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('trajet_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>
+         </li>   
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-map-marker"></i>
+        <span>Gares</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>
+        </li>
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-certificate"></i>
+          <span>Classes</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('classe_new') }}"><i class="fa fa-circle-o"></i>Nouvelle</a></li>            
+            <li><a href="{{ path('classe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>
+        </li>  
+        <li class="treeview">
           <a href="#">
-            <i class="fa fa-laptop"></i>
-            <span>Parametre</span>
+            <i class="glyphicon glyphicon-wrench"></i>
+            <span>Paramètre</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-circle-o"></i> Agent</a></li>
-            <li><a href="{{ path('guichet_index') }}"><i class="fa fa-circle-o"></i> Guichet</a></li>   
-            <li><a href="{{ path('trajet_index') }}"><i class="fa fa-circle-o"></i>Trajet</a></li>          
+            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>                        
+            <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>                             
+            <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
+            <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
+            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
+            <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Traçabilité</a></li>    
           </ul>
         </li>                                              
       </ul>
@@ -205,9 +259,8 @@
 <!-- /.content-wrapper -->
           
  
-          
-          
->>>>>>> 9287e5a9f358a65ef01f9da9e14a48b01cd21a7b
+<script src="{{ asset('jslog/jscolor.js') }}"></script> 
+<script src="{{ asset('jslog/commandePtb.js') }}"></script>          
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -228,6 +281,7 @@
 <script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </body>
 {% block javascripts %}{% endblock %}
 </html> 

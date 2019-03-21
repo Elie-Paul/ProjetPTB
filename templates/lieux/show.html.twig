@@ -3,33 +3,52 @@
 {% block title %}Lieux{% endblock %}
 
 {% block body %}
-    <h1>Lieux</h1>
+<h1><big> Gestion des gares </big></h1>
+<div class="box box-primary">
+    <div class="box-header with-border">
+            <div class="col-md-6">
+            <h4><i class="fa fa-plus"></i> &nbsp;<big> Ajouter une nouvelle gare</big></h4>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="{{ path('lieux_index') }}" class="btn btn-success"><i class="fa fa-list"></i><big> Liste Gare</big></a>
+                <a class="btn btn-warning" role="button" href="{{ path('lieux_edit', {'id': lieux.id}) }}"><i class="glyphicon glyphicon-pencil"></i> <big>modifier</big></a>
+            </div>
+    </div>
+</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ lieux.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
-                <td>{{ lieux.libelle }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ lieux.createdAt ? lieux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ lieux.updatedAt ? lieux.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information du lieux {{lieux.libelle}}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ lieux.id }}</td>
+                </tr>
+                <tr>
+                    <th>Libelle</th>
+                    <td>{{ lieux.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Date de creation</th>
+                    <td>{{ lieux.createdAt ? lieux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de modification</th>
+                    <td>{{ lieux.updatedAt ? lieux.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
-    <a class="btn btn-info" role="button" href="{{ path('lieux_index') }}">retour a la liste</a>
+    <!--a class="btn btn-info" role="button" href="{{ path('lieux_index') }}"><i class="glyphicon glyphicon-chevron-left"></i>retour a la liste</a>
 
-    <a class="btn btn-info" role="button" href="{{ path('lieux_edit', {'id': lieux.id}) }}">modifier</a>
+    <a class="btn btn-info" role="button" href="{{ path('lieux_edit', {'id': lieux.id}) }}"><i class="glyphicon glyphicon-pencil"></i>modifier</a-->
 
 
     {{ include('lieux/_delete_form.html.twig') }}

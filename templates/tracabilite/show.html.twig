@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tracabilite{% endblock %}
+
+{% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('tracabilite_index') }}"><i class="fa fa-list"></i>&nbsp;Liste de Traçabilite</a>&nbsp;            
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information de la traçabilite</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tracabilite.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ tracabilite.type }}</td>
+            </tr>
+            <tr>
+                <th>Date Création</th>
+                <td>{{ tracabilite.createdAt ? tracabilite.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de Modification</th>
+                <td>{{ tracabilite.updatedAt ? tracabilite.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Motif</th>
+                <td>{{ tracabilite.motif }}</td>
+            </tr>
+            <tr>
+                <th>Numéro Départ</th>
+                <td>{{ tracabilite.numDepart }}</td>
+            </tr>
+            <tr>
+                <th>Numéro Fin</th>
+                <td>{{ tracabilite.numFin }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-warning" role="button" href="{{ path('tracabilite_edit', {'id': tracabilite.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+     </div>
+</div>
+
+    {{ include('tracabilite/_delete_form.html.twig') }}
+{% endblock %}

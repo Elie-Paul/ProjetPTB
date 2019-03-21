@@ -23,7 +23,7 @@ class AbonnementController extends AbstractController
      */
     public function index(AbonnementRepository $abonnementRepository): Response
     {
-        return $this->render('abonnement/index.html.twig', [
+        return $this->render('abonnement/index2.html.twig', [
             'abonnements' => $abonnementRepository->findAll(),
         ]);
     }
@@ -45,7 +45,7 @@ class AbonnementController extends AbstractController
         $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {           
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($abonnement);
             $entityManager->flush();

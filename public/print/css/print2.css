@@ -1,0 +1,143 @@
+@media print {
+    @page {
+        size: landscape;
+
+    }
+    .inset {border-style: inset;
+        float: none; page-break-before: always}
+    .inset2 {border-style: inset;}
+    .premiere-page {
+        float: none;
+    }
+    img.logo {
+        margin-top: 15px;
+        width: 120px;
+        height: 85px;
+        margin-left: 75px;
+    }
+    img.picture {
+        width: 130px;
+        height: 150px;
+        margin-top: -40px;
+        margin-left: 0px;
+    }
+    .titre-principal p span.gras {
+        -webkit-print-color-adjust: exact;
+        font-family: Algerian;
+        font-weight: bold;
+        font-size: 30px;
+    }
+    .titre-principal {
+        margin-top: 15px;
+        /*margin-left: -160px;*/
+        font-style: normal;
+    }
+
+    .titre-principal p span.petit-train {
+        font-size: 25px;
+    }
+
+    .titre-principal p span {
+        /*font-family: "Courier New", Courier, monospace;*/
+        font-size: xx-large;
+    }
+
+    .numero {
+        margin-top: 2.1%;
+        margin-left: 75px;
+        font-family: Arial;
+        font-size: large;
+    }
+
+    .milieu .cote-gauche .ligne span {
+        -webkit-print-color-adjust: exact !important;
+        background-color: #c4cd0a !important;
+        -webkit-text-fill-color: rgb(0, 0, 0);
+    }
+
+    .ligne span {
+        padding: 20px;
+    }
+
+    .ligne {
+        padding: 40px;
+        margin-top: -35px;
+    }
+
+    .cote-gauche {
+        margin-right: 0px;
+        margin-top: 0px;
+        /*margin-left: 10px;*/
+    }
+
+    .cote-milieu {
+        margin-left: -75px;
+    }
+
+    .cote-milieu p {
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .cote-milieu p span {
+        margin-left: 20px;
+    }
+
+    .cote-droit {
+        margin-left: -110px;
+    }
+
+    /*FIN DE LA PARTIE MILIEU*/
+    /*DEBUT DE LA PARTIE FOOTER*/
+    .footer {
+        margin-left: 75px;
+        text-align: justify;
+    }
+
+    .footer .noter-bien {
+        -webkit-print-color-adjust: exact;
+        /*-webkit-text-fill-color: rgba(17, 255, 196, 0.03);*/
+        font-weight: bold;
+        font-size: 15px;
+        font-family: cursive;
+        margin-left: 0px;
+    }
+
+    .footer .tel {
+        font-weight: bold;
+        text-align: center;
+    }
+    .footer .adresse {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    /*.seconde-page {*/
+        /*float: none;*/
+        /*page-break-before: always;*/
+
+    /*}*/
+    .seconde-page .titre-content {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .principal-content {
+        margin-left: 50px;
+    }
+
+
+
+
+
+
+
+
+
+
+    .seconde-page {
+        float: none;
+        page-break-before: always;
+
+    }
+}

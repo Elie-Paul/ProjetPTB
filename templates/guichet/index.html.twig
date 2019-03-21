@@ -1,44 +1,118 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+{% endblock %}
 {% block title %}Guichet index{% endblock %}
-
 {% block body %}
-    <h1>Guichet index</h1>
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <div class="col-md-6">
+                <h4>
+                    <i class="fa fa-list"></i>&nbsp;<big>Liste des Guichets</big>
+                </h4>
+            </div>
+            <div class="col-md-6 text-right">
+                <a class="btn btn-primary pull-right" href="{{ path('guichet_new') }}">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    Nouveau Guichet</a>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h1 class="box-title">Liste des guichets</h1>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <!--input class="form-control pull-right" name="table_search" placeholder="Search" type="text">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div-->
+                            </div>
+                        </div>
+                    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Code</th>
-                <th>Nom</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for guichet in guichets %}
-            <tr>
-                <td>{{ guichet.id }}</td>
-                <td>{{ guichet.code }}</td>
-                <td>{{ guichet.nom }}</td>
-                <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
+                    <div class="box-body">
+                        <table class="table table-hover table-striped dataTable" id="example1">
+                            <thead>
+                                <tr>
+                                    <th>Emplacement</th>
+                                    <th>Code Guichet</th>
+                                    <th>Nom Guichet</th>
+                                    <th>Date de création</th>
+                                    <th>Date de modification</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for guichet in guichets %}
+                                    <tr>
+                                        <td>
+                                            {{ guichet.lieu.libelle }}</td>
+                                        <td>
+                                            {{ guichet.code }}</td>
+                                        <td>
+                                            {{ guichet.nom }}</td>
+                                        <td>
+                                            {{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        <td>
+                                            {{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                        <td>
+                                            <a class="btn btn-info" role="button" href="{{ path('guichet_show', {'id': guichet.id}) }}">
+                                                <i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>
+                                            <a class="btn btn-warning" role="button" href="{{ path('guichet_edit', {'id': guichet.id}) }}">
+                                                <i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="6">Aucun enregistrement trouvé</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+{% block javascripts %}
+    
+    <!-- DataTables -->
+    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
 
-                    <a class="btn btn-info" role="button" href="{{ path('guichet_show', {'id': guichet.id}) }}">voir</a>
-                    <a class="btn btn-info" role="button" href="{{ path('guichet_edit', {'id': guichet.id}) }}">modifier</a>
-
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a class="btn btn-info" role="button" href="{{ path('guichet_new') }}">nouveau</a>
-
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                "reponsive": true,
+                "pageLength": 10,
+                
+                "language": {
+                    "decimal":        "",
+                    "loadingRecords": "Chargement...",
+                    "processing":     "En traitement...",
+                    "lengthMenu":     "Afficher _MENU_ entrées",
+                    "zeroRecords":    "Aucun enregistrements correspondants trouvés",
+                    "emptyTable":     "aucune donnée disponible",
+                    "infoFiltered":   "(filtré de _MAX_ entrées totales)",
+                    "infoEmpty":      "Affiche 0 à 0 sur 0 entrées",
+                    "info": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
+                    "search": "Rechercher : ",
+                    "paginate": {
+                        "first": "Premier",
+                        "last":  "Dernier",
+                        "previous": "Précédent",
+                        "next": "Suivant"
+                    }
+                }
+            })
+        })
+    </script>
 {% endblock %}
