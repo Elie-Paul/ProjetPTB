@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * @Route("/user")
@@ -71,7 +75,39 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user,UserPasswordEncoderInterface $encoder): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createFormBuilder($user)
+        ->add('imageFile', FileType::class, [                
+            'label' => "Image",
+            'attr' => [                    
+                'class' => 'form-control',
+                'required' => true                  
+                ]             
+        ])
+        ->add('nom')            
+        ->add('prenom')
+        ->add('email')
+        ->add('username',TextType::class,[
+            'required' => true,
+            'label'=> "Utilisateur",
+            'attr'=>[
+                'disabled' => true
+            ]          
+        ])
+        ->add('roles', ChoiceType::class, [
+            'choices' => [                    
+                'utilisateur' => 'ROLE_USER',
+                'Administrateur' => 'ROLE_ADMIN',
+                'Superviseur' => 'ROLE_SUPER_ADMIN',
+            ],
+            'label'=> "Rôles",
+            'expanded' => false,
+            'multiple' => true
+        ])
+        ->add('password',PasswordType::class,[
+            'label'=> "Mot de Passe",
+            
+        ])        
+        ->getForm();
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {

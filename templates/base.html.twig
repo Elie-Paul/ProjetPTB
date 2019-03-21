@@ -96,7 +96,9 @@
               <li class="user-header">
                 <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
-                  {{ app.user.username|capitalize }}                  
+                  {{ app.user.username|capitalize }}</br>
+                  {{ app.user.roles ? app.user.roles[0] }}
+
                 </p>
               </li>              
               <!-- Menu Footer-->
