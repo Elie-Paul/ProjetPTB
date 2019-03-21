@@ -27,13 +27,21 @@
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
-        function survol(filename) {
+        function survol(filename, expiration) {
+            // alert(expiration)
             let file = filename;
             let image = document.getElementById('photop');
-            image.src=("{{ asset('clients/images/') }}"+file);
+            image.src = ("{{ asset('clients/images/') }}" + file);
         }
-        function printContent(id, nom, prenom, type, section, filename) {
+
+        function retablir(id) {
+            window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
+        }
+
+        function printContent(id, nom, prenom, type, section, filename, expiration) {
+            // alert(expiration.toString());
             //LA PARTIE AFFICHAGE DES INFORMATIONS DE L'ABONNE SUR LA CARTE
+            window.location.href = "http://localhost:8000/abonnement/valider/" + id;
             let image = document.getElementById('photop');
             let idp = id;
             let nomp = nom;
@@ -41,7 +49,8 @@
             let typep = type;
             let sectionp = section;
             let file = filename;
-            image.src=("{{ asset('clients/images/') }}"+file);
+            let exp = expiration;
+            image.src = ("{{ asset('clients/images/') }}" + file);
             let str = "" + idp;
             let pad = "00000";
             let ans = pad.substring(0, pad.length - str.length) + str;
@@ -51,8 +60,9 @@
             document.getElementById('prenomp').innerHTML = prenomp;
             document.getElementById('typep').innerHTML = typep;
             document.getElementById('sectionp').innerHTML = sectionp;
+            document.getElementById('datep').innerHTML = exp;
 
-            image.src=("{{ asset('clients/images/') }}"+file);
+            image.src = ("{{ asset('clients/images/') }}" + file);
 
             //LA PARTIE HIDE AND SHOW
             var hide = document.querySelector('.toHide');
@@ -62,6 +72,9 @@
             window.print();
             show.style.display = 'none';
             hide.style.display = 'block';
+
+            //LA CARTE EST DEJA IMPRIMEE
+
             return false;
         }
     </script>
@@ -108,7 +121,7 @@
                     </p>
                     <p>Section: <span id="sectionp" class="valeur"></span>
                     </p>
-                    <p>Date d'expiration: <span id="datep" class="valeur">31/12/{{ "" | date('Y') }}</span>
+                    <p>Date d'expiration: <span id="datep" class="valeur"></span>
                     </p>
                 </div>
                 <div class="col-sm-3 cote-droit">
@@ -167,6 +180,7 @@
                 <th>Telephone</th>
                 <th>Type d'abonnement</th>
                 <th>Prix</th>
+                <th>Date d'expiration</th>
                 <th>actions</th>
             </tr>
             </thead>
@@ -179,12 +193,18 @@
                     <td>{{ abonnement.telephone }}</td>
                     <td>{{ abonnement.type }}</td>
                     <td>{{ abonnement.type.prix }}</td>
+                    <td>{{ abonnement.expiration | date('d-m-Y') }}</td>
                     <td>
                         <a href="{{ path('abonnement_show', {'id': abonnement.id}) }}">show</a>
                         <a href="{{ path('abonnement_edit', {'id': abonnement.id}) }}">edit</a>
-                        <a onmouseover="survol('{{ abonnement.filename }}')" onclick="printContent({{ abonnement.id }}, '{{ abonnement.nom }}', '{{ abonnement.prenom }}'
-                                , '{{ abonnement.type.libelle }}', '{{ abonnement.type.section }}', '{{ abonnement.filename }}')"
-                           href="#">Génerer la carte</a>
+                        {% if abonnement.nombreCarte is not defined or abonnement.nombreCarte != 1 %}
+                            <a onmouseover="survol('{{ abonnement.filename }}', '{{ abonnement.expiration | date('d-m-Y') }}' )"
+                               onclick="printContent({{ abonnement.id }}, '{{ abonnement.nom }}', '{{ abonnement.prenom }}'
+                                       , '{{ abonnement.type.libelle }}', '{{ abonnement.type.section }}', '{{ abonnement.filename }}', '{{ abonnement.expiration | date('d-m-Y') }}')"
+                               href="#">Génerer la carte</a>
+                        {% else %}
+                            <a onclick="retablir({{ abonnement.id }})" href="#">Reabonner</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}
