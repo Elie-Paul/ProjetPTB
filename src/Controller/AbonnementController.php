@@ -56,7 +56,7 @@ class AbonnementController extends AbstractController
         return $this->render('abonnement/new.html.twig', [
             'abonnement' => $abonnement,
             'form' => $form->createView(),
-            'expiration' => $abonnement->get
+            'expiration' => $abonnement->getExpiration()
         ]);
     }
 
