@@ -147,10 +147,13 @@ function getJson3()
  }     
  function setTotal()
  {
+    let tot=0;
     for(let i= 0 ; i<Nbres.length ; i++)
     {
+        tot += parseInt(Nbres[i].value);
         
     } 
+    total.innerText=""+tot;
  } 
  getJson("http://localhost:8000/json/guichet/",1);
  getJson("http://localhost:8000/json/section/",2);
