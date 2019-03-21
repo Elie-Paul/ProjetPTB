@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('payment/css/app.css') }}">
 {% endblock %}
 {% block javascripts %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
         function survol(filename, expiration) {
             // alert(expiration)
@@ -35,7 +36,25 @@
         }
 
         function retablir(id) {
-            window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
+            swal({
+                title: "Etes vous sûr ?",
+                text: "Cliquez sur ok pour un réabonnement ou cancel pour annuler!",
+                icon: "warning",
+                buttons: true,
+                // dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
+                        // swal("Poof! Your imaginary file has been deleted!", {
+                        //     icon: "success",
+                        // });
+                    }
+                    // } else {
+                    //     swal("Your imaginary file is safe!");
+                    // }
+                });
+
         }
 
         function printContent(id, nom, prenom, type, section, filename, expiration) {
