@@ -7,6 +7,7 @@ use App\Entity\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +19,7 @@ class AbonnementType extends AbstractType
         $builder
             ->add('imageFile', FileType::class, [
                 'required' => true,
-                'label' => "L'image doit être de type jpeg"
+                'label' => "L'image doit être de type jpeg",
             ])
             ->add('nom')
             ->add('prenom')

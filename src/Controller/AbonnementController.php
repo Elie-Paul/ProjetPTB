@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @Route("/abonnement")
@@ -40,6 +41,9 @@ class AbonnementController extends AbstractController
         $form->handleRequest($request);
         $abonnement->setCreatedAt(new \DateTime());
         $abonnement->setUpdateAt(new \DateTime());
+        $expiration = new \DateTime();
+        $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
+
 
         if ($form->isSubmitted() && $form->isValid()) {           
             $entityManager = $this->getDoctrine()->getManager();
@@ -52,6 +56,7 @@ class AbonnementController extends AbstractController
         return $this->render('abonnement/new.html.twig', [
             'abonnement' => $abonnement,
             'form' => $form->createView(),
+            'expiration' => $abonnement->getExpiration()
         ]);
     }
 
@@ -93,6 +98,41 @@ class AbonnementController extends AbstractController
     }
 
     /**
+     * @Route("/valider/{id}", name="valider_carte")
+     * @param Request $request
+     * @param Abonnement $abonnement
+     * @return Response
+     * @throws \Exception
+     */
+    public function validerCarte(Request $request, Abonnement $abonnement): Response
+    {
+        $abonnement->setNombreCarte(1);
+        $abonnement->setUpdateAt(new \DateTime());
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('abonnement_index');
+    }
+
+    /**
+     * @Route("/retablir/{id}", name="retablir_carte")
+     * @param Abonnement $abonnement
+     * @return Response
+     * @throws \Exception
+     */
+    public function retablirCarte(Abonnement $abonnement): Response
+    {
+        $abonnement->setNombreCarte(0);
+        $abonnement->setCreatedAt(new \DateTime());
+        $abonnement->setUpdateAt(new \DateTime());
+        $expiration = new \DateTime();
+        $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('abonnement_index');
+    }
+
+
+    /**
      * @Route("/{id}", name="abonnement_delete", methods={"DELETE"})
      * @param Request $request
      * @param Abonnement $abonnement
@@ -100,7 +140,7 @@ class AbonnementController extends AbstractController
      */
     public function delete(Request $request, Abonnement $abonnement): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$abonnement->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $abonnement->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($abonnement);
             $entityManager->flush();

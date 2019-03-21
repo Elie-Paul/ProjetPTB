@@ -1,4 +1,8 @@
 @media print {
+    @page {
+        size: landscape;
+
+    }
 
     /*TOUTE LA PARTIE ENTETE*/
     .toPrint {
@@ -31,8 +35,6 @@
         font-family: Algerian;
         font-weight: bold;
         font-size: 30px;
-        color: #fdfdfe;
-        background-color: #fd7c44;
     }
 
     .titre-principal {

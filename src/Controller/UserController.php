@@ -73,10 +73,10 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        $user->setCreatedAt(new \DateTime());
-        $user->setUpdateAt(new \DateTime());
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setCreatedAt(new \DateTime());
+            $user->setUpdateAt(new \DateTime());
             $hash=$encoder->encodePassword($user, $user->getPassword());  
             $user->setPassword($hash);
             $this->getDoctrine()->getManager()->flush();            

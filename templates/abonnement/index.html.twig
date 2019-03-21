@@ -1,6 +1,103 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Abonnement index{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .toHide {
+            display: block;
+        }
+
+        .toPrint {
+            display: none;
+        }
+
+        .seconde-page {
+            -webkit-print-color-adjust: exact;
+            display: block;
+        }
+
+        .cote-gauche .ligne span {
+            -webkit-print-color-adjust: exact;
+            color: #f0ad4e;
+        }
+    </style>
+    <link rel="stylesheet" media="print" href="{{ asset('print/css/print.css') }}">
+    <link rel="stylesheet" href="{{ asset('payment/css/app.css') }}">
+{% endblock %}
+{% block javascripts %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        function survol(filename, expiration) {
+            // alert(expiration)
+            let file = filename;
+            let image = document.getElementById('photop');
+            image.src = ("{{ asset('clients/images/') }}" + file);
+        }
+
+        function retablir(id) {
+            swal({
+                title: "Etes vous sûr ?",
+                text: "Cliquez sur ok pour un réabonnement ou cancel pour annuler!",
+                icon: "warning",
+                buttons: true,
+                // dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
+                        // swal("Poof! Your imaginary file has been deleted!", {
+                        //     icon: "success",
+                        // });
+                    }
+                    // } else {
+                    //     swal("Your imaginary file is safe!");
+                    // }
+                });
+
+        }
+
+        function printContent(id, nom, prenom, type, section, filename, expiration) {
+            // alert(expiration.toString());
+            //LA PARTIE AFFICHAGE DES INFORMATIONS DE L'ABONNE SUR LA CARTE
+            window.location.href = "http://localhost:8000/abonnement/valider/" + id;
+            let image = document.getElementById('photop');
+            let idp = id;
+            let nomp = nom;
+            let prenomp = prenom;
+            let typep = type;
+            let sectionp = section;
+            let file = filename;
+            let exp = expiration;
+            image.src = ("{{ asset('clients/images/') }}" + file);
+            let str = "" + idp;
+            let pad = "00000";
+            let ans = pad.substring(0, pad.length - str.length) + str;
+            document.querySelector('#numerop').innerHTML = ans;
+
+            document.getElementById('nomp').innerHTML = nomp;
+            document.getElementById('prenomp').innerHTML = prenomp;
+            document.getElementById('typep').innerHTML = typep;
+            document.getElementById('sectionp').innerHTML = sectionp;
+            document.getElementById('datep').innerHTML = exp;
+
+            image.src = ("{{ asset('clients/images/') }}" + file);
+
+            //LA PARTIE HIDE AND SHOW
+            var hide = document.querySelector('.toHide');
+            var show = document.querySelector('.toPrint');
+            hide.style.display = 'none';
+            show.style.display = 'block';
+            window.print();
+            show.style.display = 'none';
+            hide.style.display = 'block';
+
+            //LA CARTE EST DEJA IMPRIMEE
+
+            return false;
+        }
+    </script>
+{% endblock %}
 
 {% block body %}
  <div class="box box-default">
@@ -31,6 +128,7 @@
                 <th>Telephone</th>
                 <th>Type d'abonnement</th>
                 <th>Prix</th>
+                <th>Date d'expiration</th>
                 <th>actions</th>
             </tr>
         </thead>
