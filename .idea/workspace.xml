@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c833adc-0786-421a-b62a-a428cf249f95" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/thera.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/thera.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/BilletPtb.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/BilletPtb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Guichet.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Guichet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Ptb.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Ptb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/billet_ptb/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/billet_ptb/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/lieux/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/lieux/index.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,74 +16,12 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1181645803">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="5" />
-          <entry key="project.open.time.19" value="1" />
-          <entry key="project.open.time.26" value="1" />
-          <entry key="project.open.time.3" value="2" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.53" value="1" />
-          <entry key="project.opened" value="6" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="env" value="2" />
-          <entry key="php" value="34" />
-          <entry key="twig" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key=".env file" value="2" />
-          <entry key="PHP" value="34" />
-          <entry key="Twig" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="dummy" value="24" />
-          <entry key="php" value="178" />
-          <entry key="twig" value="416" />
-          <entry key="txt" value="46" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="PHP" value="178" />
-          <entry key="PLAIN_TEXT" value="70" />
-          <entry key="Twig" value="416" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Lieux.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/billet_ptb/index.html.twig">
+        <entry file="file://$PROJECT_DIR$/templates/lieux/index.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Trajet.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-171" />
+            <state relative-caret-position="-2040" />
           </provider>
         </entry>
       </file>
@@ -121,17 +54,6 @@
         <option value="$PROJECT_DIR$/templates/billet_ptb/index.html.twig" />
       </list>
     </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/public/vendor/fontawesome-free/package.json" />
-    </packageJsonPaths>
   </component>
   <component name="PhpServers">
     <servers />
@@ -243,9 +165,10 @@
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="952" />
-    <option name="width" value="977" />
-    <option name="height" value="1038" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -259,24 +182,19 @@
         <subPane>
           <expand>
             <path>
-              <item name="thera" type="b2602c69:ProjectViewProjectNode" />
-              <item name="thera" type="462c0819:PsiDirectoryNode" />
+              <item name="eliePtb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eliePtb" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="thera" type="b2602c69:ProjectViewProjectNode" />
-              <item name="thera" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="thera" type="b2602c69:ProjectViewProjectNode" />
-              <item name="thera" type="462c0819:PsiDirectoryNode" />
+              <item name="eliePtb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eliePtb" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="thera" type="b2602c69:ProjectViewProjectNode" />
-              <item name="thera" type="462c0819:PsiDirectoryNode" />
+              <item name="eliePtb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="eliePtb" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="billet_ptb" type="462c0819:PsiDirectoryNode" />
+              <item name="lieux" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -288,6 +206,7 @@
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="index&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/templates/billet_ptb/index.html.twig&#10;lieu&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/src/Entity/Lieux.php&#10;tra&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/src/Entity/Trajet.php&#10;billetp&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/src/Entity/BilletPtb.php&#10;bi&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/src/Entity/BilletPtb.php&#10;trac&#9;null&#9;null&#10;ptb&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/src/Entity/Ptb.php&#10;bille&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/src/Entity/BilletPtb.php&#10;.env&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/.env&#10;appf&#9;FILE&#9;file://C:/Users/ddthe/OneDrive/Bureau/aCan/thera/src/DataFixtures/AppFixtures.php&#10;kerne&#9;null&#9;null&#10;.en&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
@@ -321,6 +240,7 @@
       <workItem from="1551896865304" duration="610000" />
       <workItem from="1551897936570" duration="4000" />
       <workItem from="1551949570525" duration="11571000" />
+      <workItem from="1552956386023" duration="761000" />
     </task>
     <task id="LOCAL-00001" summary="update title dans home index">
       <created>1551870595850</created>
@@ -333,13 +253,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18780000" />
+    <option name="totallyTimeSpent" value="19541000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14697987" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14901665" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -352,7 +271,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.93049645" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.29953918" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -363,9 +282,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update title dans home index" />
@@ -481,23 +397,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Trajet.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-171" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/Lieux.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
+        <state relative-caret-position="-351">
           <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Trajet.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-952" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/billet_ptb/index.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+        <state relative-caret-position="1071">
+          <caret line="132" column="18" lean-forward="true" selection-start-line="132" selection-start-column="18" selection-end-line="132" selection-end-column="18" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/lieux/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2040" />
       </provider>
     </entry>
   </component>

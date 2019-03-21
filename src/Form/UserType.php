@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserType extends AbstractType
 {
@@ -17,13 +18,14 @@ class UserType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'utilisateur' => 'ROLE_USER',
-                    'Admin' => 'ROLE_ADMIN',
-                    'Super admin' => 'ROLE_SUPER_ADMIN',
+                    'Administrateur' => 'ROLE_ADMIN',
+                    'Superviseur' => 'ROLE_SUPER_ADMIN',
                 ],
                 'expanded' => true,
                 'multiple' => true
             ])            
-            ->add('password')
+            ->add('password',PasswordType::class)
+            ->add('confirme_password',PasswordType::class)
         ;
     }
 
