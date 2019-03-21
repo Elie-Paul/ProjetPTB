@@ -52,6 +52,7 @@ class ImpressionController extends AbstractController
          $motif = $arr[1];
          $depart = intval($arr[2]);
          $userid = intval($arr[3]);
+         $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
@@ -59,7 +60,29 @@ class ImpressionController extends AbstractController
          $j =0 ;
          for( $i=$depart;;$i++)
          {
-             array_push($array, $i);
+            $pre = '';
+            if ($i < 10) 
+            {
+                $pre="0000";
+            } 
+            else if ($i <100)
+            {
+                $pre="000";
+            }
+            else if ($i <100)
+            {
+                $pre="000";
+            }
+            else if ($i <1000)
+            {
+                $pre="00";
+            }
+            else if ($i <10000)
+            {
+                $pre="0";
+            }
+            $k=$pre.$i;
+            array_push($array, $k);
              $j++;
              if( $j == $num)
                 break;
@@ -76,8 +99,9 @@ class ImpressionController extends AbstractController
         $tracabilite->setUpdatedAt(new \DateTime());
         $entityManager->persist($tracabilite);
         $entityManager->flush();
+        $date=new \DateTime();
          return $this->render('impression/index.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date
          ]);
     }
     /**
@@ -91,14 +115,37 @@ class ImpressionController extends AbstractController
          $motif = $arr[1];
          $depart = intval($arr[2]);
          $userid = intval($arr[3]);
+         $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
          $array=array();
-         $j =0 ;
+         $j =0;
          for( $i=$depart;;$i++)
          {
-             array_push($array, $i);
+            $pre = '';
+            if ($i < 10) 
+            {
+                $pre="0000";
+            } 
+            else if ($i <100)
+            {
+                $pre="000";
+            }
+            else if ($i <100)
+            {
+                $pre="000";
+            }
+            else if ($i <1000)
+            {
+                $pre="00";
+            }
+            else if ($i <10000)
+            {
+                $pre="0";
+            }
+            $k=$pre.$i;
+            array_push($array, $k);
              $j++;
              if( $j == $num)
                 break;
@@ -115,8 +162,9 @@ class ImpressionController extends AbstractController
         $tracabilite->setUpdatedAt(new \DateTime());
         $entityManager->persist($tracabilite);
         $entityManager->flush();
+        $date=new \DateTime();
          return $this->render('impression/index2.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date
          ]);
     }
 }
