@@ -7,6 +7,7 @@ const   cmbTrajets = document.getElementsByClassName('form-control TrajetId');
 const   Nbres = document.getElementsByClassName('form-control nbreBillet');
 const   tbody = document.getElementById('tbody');
 const   trows=document.getElementsByClassName('rowsss');
+const   total=document.getElementById('total');
 console.log(trows);
 trows[0].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
 
@@ -36,6 +37,7 @@ function addRow()
        getJson("http://localhost:8000/json/section/",2);
        cmbGuichets[index].addEventListener("change",getJson3);
        cmbSections[index].addEventListener("change",getJson3);
+       Nbres[index].addEventListener("change",setTotal);
     }
     
 }
@@ -142,13 +144,21 @@ function getJson3()
            cmbTrajets[trajetid].appendChild(option);
            
       }
- }      
+ }     
+ function setTotal()
+ {
+    for(let i= 0 ; i<Nbres.length ; i++)
+    {
+        
+    } 
+ } 
  getJson("http://localhost:8000/json/guichet/",1);
  getJson("http://localhost:8000/json/section/",2);
  cmbGuichets[index].addEventListener("change",getJson3);
  cmbSections[index].addEventListener("change",getJson3);
  //cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));
  Nbres[index].addEventListener("click",addRow);
+ Nbres[index].addEventListener("change",setTotal);
  
  
  
