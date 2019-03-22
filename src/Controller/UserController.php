@@ -88,11 +88,12 @@ class UserController extends AbstractController
         ->add('email')
         ->add('username',TextType::class,[
             'required' => true,
-            'label'=> "Utilisateur",
-            'attr'=>[
-                'disabled' => true
-            ]          
+            'label'=> "Utilisateur"          
         ])
+        /*,
+        'attr'=>[
+            'disabled' => true
+        ]*/
         ->add('roles', ChoiceType::class, [
             'choices' => [                    
                 'utilisateur' => 'ROLE_USER',

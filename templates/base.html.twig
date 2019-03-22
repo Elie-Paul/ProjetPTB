@@ -104,7 +104,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
+                  <a href="{{ path('user_show', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ path('security_logout') }}" class="btn btn-danger btn-flat"><i class="glyphicon glyphicon-off"></i>&nbsp;Deconnexion</a>
@@ -136,14 +136,12 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <h1></h1>
-        {% if is_granted('ROLE_ADMIN') %}
         <li>
           <a active href="{{ path('home') }}">
             <i class="fa fa-dashboard"></i> 
             <span>Tableau de Bord</span>
           </a>
         </li>
-        {% endif %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-folder-open"></i>
