@@ -96,13 +96,15 @@
               <li class="user-header">
                 <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
-                  {{ app.user.username|capitalize }}                  
+                  {{ app.user.username|capitalize }}</br>
+                  {{ app.user.roles ? app.user.roles[0] }}
+
                 </p>
               </li>              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
+                  <a href="{{ path('user_show', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ path('security_logout') }}" class="btn btn-danger btn-flat"><i class="glyphicon glyphicon-off"></i>&nbsp;Deconnexion</a>
@@ -133,15 +135,13 @@
       <!-- Sidebar user panel -->     
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header"></li>
-        {% if is_granted('ROLE_ADMIN') %}
+        <h1></h1>
         <li>
           <a active href="{{ path('home') }}">
             <i class="fa fa-dashboard"></i> 
             <span>Tableau de Bord</span>
           </a>
         </li>
-        {% endif %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-folder-open"></i>

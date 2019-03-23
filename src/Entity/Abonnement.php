@@ -38,7 +38,7 @@ class Abonnement
      * @Vich\UploadableField(mapping="client_image", fileNameProperty="filename")
      * @var File
      * @Assert\Image(
-     *     mimeTypes="image/jpeg"
+     *     mimeTypes="image/*"
      * )
      */
     private $imageFile;
