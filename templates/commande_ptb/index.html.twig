@@ -8,6 +8,35 @@
 {% block title %}BilletPtb{% endblock %}
 
 {% block body %}
+<style>
+    tr
+    {
+         animation: slide-up 0.4s ease;
+    }
+    @keyframes slide-up 
+    {
+        0% 
+        {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        50%
+        {
+            opacity: 0.25;
+            transform: translateY(20px);
+        }
+        50%
+        {
+            opacity: 0.75;
+            transform: translateY(20px);
+        }
+        100% 
+        {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }    
+</style>
     <h1>Génération de Commande Billets PTB</h1>
     
     <div class="box box-default">
@@ -41,7 +70,7 @@
             <tr  class="rowsss" id="0">
                 <td>
                     <div class="form-group">
-                    <select class="form-control GuichetId" >
+                    <select id="g" class="form-control GuichetId" >
                         <option id="0" selected disabled>Guichet</option>
                     </select>
                     </div>   

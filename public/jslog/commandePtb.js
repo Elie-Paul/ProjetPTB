@@ -1,4 +1,3 @@
-
 let index=0;
 let selectedrow=0;
 const   cmbSections = document.getElementsByClassName('form-control SectionId');
@@ -28,6 +27,8 @@ function addRow()
         rowcopy.id=`${index}`; 
         tbody.appendChild(rowcopy);
         Nbres[index].addEventListener("click",addRow);
+        Nbres[index].addEventListener("keyup",removeRow);
+        Nbres[index].addEventListener("focus",removeRow);
         trows[index].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
        // cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));    
        getJson("http://localhost:8000/json/guichet/",1);
@@ -40,11 +41,22 @@ function addRow()
 }
 
 
-function removeRow(i)
+function removeRow()
 {
-    tbody.removeChild(tbody.children[i]);
-    index--;
-    Nbres[index].addEventListener("click",addRow);
+    if (selectedrow!=0) 
+    {
+        let idGuichet = cmbGuichets[selectedrow-1].options[cmbGuichets[selectedrow-1].selectedIndex].id;
+        let idSection = cmbSections[selectedrow-1].options[cmbSections[selectedrow-1].selectedIndex].id;
+        if(Nbres[selectedrow-1].value =="" && idGuichet=='0' && idSection=='0')
+        {
+            
+            tbody.removeChild(tbody.children[selectedrow-1]);
+            index--;
+            Nbres[index].addEventListener("click",addRow);
+            addRow();
+        }    
+    } 
+    
 }
 
 
@@ -89,7 +101,7 @@ function getJson3()
    }
     let link =`http://localhost:8000/json/trajet/${idGuichet}+${idSection}`;
     console.log(link);
-    if (idGuichet!='' && idSection!='')
+    if (idGuichet!='0' && idSection!='0')
     {
         getJson(link,3,selectedrow);
     } 
@@ -109,6 +121,7 @@ function getJson3()
            cmbGuichets[index].appendChild(option);
            
       }
+      
  }
  function setSection(array)
  {
@@ -153,7 +166,7 @@ function getJson3()
         if(Nbres[i].value != '')
         {
             tot += parseInt(Nbres[i].value);
-            if (i!=0) 
+           /* if (i!=0) 
             {
                 let idGuichet = cmbGuichets[i-1].options[cmbGuichets[i-1].selectedIndex].id;
                 let idSection = cmbSections[i-1].options[cmbSections[i-1].selectedIndex].id;
@@ -162,7 +175,7 @@ function getJson3()
                     removeRow(i-1);
                     addRow();
                 }    
-            }    
+            } */   
         }
         
         else
@@ -181,6 +194,8 @@ function getJson3()
  cmbSections[index].addEventListener("change",getJson3);
  //cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));
  Nbres[index].addEventListener("click",addRow);
+ Nbres[index].addEventListener("keyup",removeRow);
+ Nbres[index].addEventListener("focus",removeRow);
  Nbres[index].addEventListener("change",setTotal);
  
  
@@ -207,5 +222,6 @@ function getJson3()
      xhttp.send();  
     }       
  }
+ 
  //test.    addEventListener("click",() =>addRow());
           
