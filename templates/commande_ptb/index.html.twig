@@ -42,14 +42,14 @@
                 <td>
                     <div class="form-group">
                     <select class="form-control GuichetId" >
-                        <option  selected disabled>Guichet</option>
+                        <option id="0" selected disabled>Guichet</option>
                     </select>
                     </div>   
                 </td>
                 <td>
                     <div class="form-group ">
                     <select class="form-control SectionId" >
-                        <option  selected disabled>Section</option>
+                        <option  id='0' selected disabled>Section</option>
                     </select>
                     </div>  
                 </td>
@@ -62,21 +62,31 @@
                 </td>
                 <td>
                     <div class="form-group">
-                    <input type="number"  value="0" class="form-control nbreBillet"  placeholder="nombre de billet">
+                    <input type="number"  class="form-control nbreBillet"  placeholder="nombre de billet">
                     </div>  
                 </td>
                 <td></td>
             </tr>
+          
+       
         </tbody>
-        <tr>
+          <tr>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td><span id="total"></span> billets</td>
         </tr>
+         <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <button class="btn btn-warning" onclick="passerCommande();">commander</button>
+        </tr>
     </table>
-            
+        
+
             </div>
         </div>
     </div>

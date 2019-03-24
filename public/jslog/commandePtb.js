@@ -9,13 +9,10 @@ const   tbody = document.getElementById('tbody');
 const   trows=document.getElementsByClassName('rowsss');
 const   total=document.getElementById('total');
 console.log(trows);
+
 trows[0].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
 
 let row=tbody.children[0].cloneNode(true);
-function getElementId(element)
-{
-    alert(element.parentElement.parentElement.parentElement.id);
-}
 function addRow()
 {
     
@@ -43,9 +40,11 @@ function addRow()
 }
 
 
-function removeRow()
+function removeRow(i)
 {
-
+    tbody.removeChild(tbody.children[i]);
+    index--;
+    Nbres[index].addEventListener("click",addRow);
 }
 
 
@@ -61,10 +60,10 @@ function removeRow()
              switch (id) 
              {
                 case 1:
-                    setGuichet(response.notes);
+                    setGuichet(response);
                     break;
                 case 2:
-                    setSection(response.notes);
+                    setSection(response);
                     break;                    
                 case 3:
                     setTrajet(response,trajetid);
@@ -150,8 +149,29 @@ function getJson3()
     let tot=0;
     for(let i= 0 ; i<Nbres.length ; i++)
     {
-        tot += parseInt(Nbres[i].value);
+       
+        if(Nbres[i].value != '')
+        {
+            tot += parseInt(Nbres[i].value);
+            if (i!=0) 
+            {
+                let idGuichet = cmbGuichets[i-1].options[cmbGuichets[i-1].selectedIndex].id;
+                let idSection = cmbSections[i-1].options[cmbSections[i-1].selectedIndex].id;
+                if(Nbres[i-1].value =="" && idGuichet=='0' && idSection=='0')
+                {
+                    removeRow(i-1);
+                    addRow();
+                }    
+            }    
+        }
         
+        else
+        {
+            if(i!=0)
+            {
+                
+            }
+        }
     } 
     total.innerText=""+tot;
  } 
@@ -164,6 +184,28 @@ function getJson3()
  Nbres[index].addEventListener("change",setTotal);
  
  
- 
- //test.addEventListener("click",() =>addRow());
+ function passerCommande() 
+ {
+    for (let i = 0; i < index; i++) 
+    {
+        let idGuichet = cmbGuichets[i].options[cmbGuichets[i].selectedIndex].id;
+        let idSection = cmbSections[i].options[cmbSections[i].selectedIndex].id;
+        let idTrajet  = Nbres[i].value;    
+        let xhttp=new XMLHttpRequest();
+     xhttp.onreadystatechange = function()
+     {
+         if (this.readyState == 4 && this.status == 200)
+         {
+             //let response = JSON.parse();
+             alert(xhttp.responseText);
+             
+             
+         }
+     }
+     let link ="http://localhost:8000/newCommande/"+idGuichet+idSection+idTrajet;
+     xhttp.open("POST",link,true);
+     xhttp.send();  
+    }       
+ }
+ //test.    addEventListener("click",() =>addRow());
           

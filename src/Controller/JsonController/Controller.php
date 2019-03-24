@@ -20,6 +20,13 @@ class Controller extends AbstractController
     {
         
     }
+     /**
+     * @Route("/newCommande/{info}", name="json_controller_")
+     */
+    public function newCommande($info)
+    {
+        return new Response("<h1>".$info."</h1>");
+    }
     /**
      * @Route("/json/guichet/", name="json_controller_guichet")
      */
@@ -35,7 +42,7 @@ class Controller extends AbstractController
         }
         $data = [
             'notes' => $note];
-            return new Response(json_encode($data));
+            return new Response(json_encode($note));
     }
     /**
      * @Route("/json/section/", name="json_controller_section")
@@ -52,7 +59,7 @@ class Controller extends AbstractController
         }
         $data = [
             'notes' => $note];
-            return new Response(json_encode($data));
+            return new Response(json_encode($note));
 
     }
     /**
