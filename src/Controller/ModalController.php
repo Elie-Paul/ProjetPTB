@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Lieux;
 use App\Entity\Trajet;
 use App\Form\TrajetType;
+use App\Entity\Guichet;
+use App\Form\GuichetType;
 use App\Repository\TrajetRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,9 +25,9 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/add/{libelle}", name="lieux_add")
+     * @Route("/addLieuTrajet/{libelle}", name="lieux_addTrajet")
      */
-    public function add($libelle)
+    public function addLieuTrajet($libelle)
     {        
         $lieux = new Lieux();
         $trajet = new Trajet();
@@ -43,5 +45,27 @@ class ModalController extends AbstractController
             'form' => $form->createView(),
         ]);
         //return new Response('/trajet');
+    }
+
+    /**
+     * @Route("/addLieuGuichet/{libelle}", name="lieux_addGuichet")
+     */
+    public function addLieuGuichet($libelle)
+    {        
+        $lieux = new Lieux();
+        $guichet = new Guichet();
+        $form = $this->createForm(GuichetType::class, $guichet);
+
+        $lieux->setLibelle($libelle);
+        $lieux->setCreatedAt(new \DateTime());
+        $lieux->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
+        $entityManager->flush();
+
+        return $this->render('guichet/new.html.twig', [
+            'guichet' => $guichet,
+            'form' => $form->createView(),
+        ]);
     }
 }

@@ -44,7 +44,8 @@
     <div class="box-body">
         {{ include('trajet/_form.html.twig') }}
     </div>
-</div>    
+</div> 
+
 
 {% endblock %}
 
@@ -52,6 +53,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <script>
         
@@ -72,14 +74,8 @@
         function ajouter(){
           var libelle = document.getElementById("libelle").value;
           modal.style.display = "none";
-          document.location.href = `http://localhost:8000/add/${libelle}`;
-          /*swal({
-                title: "Etes vous sûr ?",
-                text: "Cliquez sur ok pour un réabonnement ou cancel pour annuler!",
-                icon: "warning",
-                buttons: true,
-                // dangerMode: true,
-            })*/
+          document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success");
           
 
         }
