@@ -96,9 +96,10 @@ class UserController extends AbstractController
         ]*/
         ->add('roles', ChoiceType::class, [
             'choices' => [                    
-                'utilisateur' => 'ROLE_USER',
-                'Administrateur' => 'ROLE_ADMIN',
-                'Superviseur' => 'ROLE_SUPER_ADMIN',
+                'Billetteur' => 'ROLE_BILLETTEUR',
+                'Validateur' => 'ROLE_VALIDATEUR',
+                'Administrateur' => 'ROLE_ADMINISTRATEUR',
+                'Superviseur' => 'ROLE_SUPERVISEUR',
             ],
             'label'=> "Rôles",
             'expanded' => false,
@@ -150,9 +151,21 @@ class UserController extends AbstractController
   */
   public function adminDashboard()
 {
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    $this->denyAccessUnlessGranted('ROLE_ADMINISTRATEUR');
 
     // or add an optional message - seen by developers
-    $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+    $this->denyAccessUnlessGranted('ROLE_ADMINISTRATEUR', null, 'User tried to access a page without having ROLE_ADMINISTRATEUR');
+}
+/**
+  * Require ROLE_BILLETTEUR for *every* controller method in this class.
+  *
+  * @IsGranted("ROLE_BILLETTEUR")
+  */
+  public function billetteurDashboard()
+{
+    $this->denyAccessUnlessGranted('ROLE_BILLETTEUR');
+
+    // or add an optional message - seen by developers
+    $this->denyAccessUnlessGranted('ROLE_BILLETTEUR', null, 'User tried to access a page without having ROLE_BILLETTEUR');
 }
 }

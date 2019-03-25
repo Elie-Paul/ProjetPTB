@@ -151,7 +151,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
+          {% if is_granted('ROLE_BILLETTEUR') %}
             <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>
+          {% endif %}
             <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>            
           </ul>
