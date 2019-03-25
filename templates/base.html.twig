@@ -97,7 +97,7 @@
                 <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
                   {{ app.user.username|capitalize }}</br>
-                  {{ app.user.roles ? app.user.roles[0] }}
+                  {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize }}
 
                 </p>
               </li>              
@@ -142,6 +142,7 @@
             <span>Tableau de Bord</span>
           </a>
         </li>
+        {% if is_granted('ROLE_BILLETTEUR') %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-folder-open"></i>
@@ -151,11 +152,24 @@
             </span>
           </a>
           <ul class="treeview-menu">
-          {% if is_granted('ROLE_BILLETTEUR') %}
-            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>
-          {% endif %}
+          
+            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>          
             <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>            
+          </ul>
+        </li>
+        {% endif %}
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-folder-open"></i>
+            <span>Commande</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">          
+            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>          
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                        
           </ul>
         </li>
         <li class="treeview">
@@ -241,8 +255,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>                        
+            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>
+            {% if is_granted('ROLE_ADMINISTRATEUR') %}                        
             <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>                             
+            {% endif %}
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
             <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>

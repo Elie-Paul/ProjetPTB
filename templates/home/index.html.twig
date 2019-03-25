@@ -103,42 +103,45 @@
                 <!-- /.col -->
                 <div class="col-md-4">
                   <p class="text-center">
-                    <strong>Goal Completion</strong>
+                    <strong>Progression de la vente des Billets</strong>
                   </p>
-
+                  {% set bitptbs1=(160/200)*100 %}
                   <div class="progress-group">
-                    <span class="progress-text">Add Products to Cart</span>
-                    <span class="progress-number"><b>160</b>/200</span>
+                    <span class="progress-text">Billets PTB section 1</span>
+                    <span class="progress-number"><b>160</b>/200 soit <b>{{bitptbs1}}%</b></span>
 
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
+                      <div class="progress-bar progress-bar-aqua" style="width: {{bitptbs1}}%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
                   <div class="progress-group">
-                    <span class="progress-text">Complete Purchase</span>
-                    <span class="progress-number"><b>310</b>/400</span>
+                  {% set bitptbs2=(310/400)*100 %}
+                    <span class="progress-text">Billets PTB section 2</span>
+                    <span class="progress-number"><b>310</b>/400 soit <b>{{ bitptbs2 }}%</b></span>
 
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-red" style="width: 80%"></div>
+                      <div class="progress-bar progress-bar-red" style="width: {{ bitptbs2 }}%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
                   <div class="progress-group">
-                    <span class="progress-text">Visit Premium Page</span>
-                    <span class="progress-number"><b>480</b>/800</span>
+                  {% set bitautc1=(480/800)*100 %}
+                    <span class="progress-text">Billets Autorail classe 1</span>
+                    <span class="progress-number"><b>480</b>/800 soit <b>{{ bitautc1 }}%</b></span>
 
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-green" style="width: 80%"></div>
+                      <div class="progress-bar progress-bar-green" style="width: {{ bitautc1 }}%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
                   <div class="progress-group">
-                    <span class="progress-text">Send Inquiries</span>
-                    <span class="progress-number"><b>250</b>/500</span>
+                  {% set bitautc1=(250/500)*100 %}
+                    <span class="progress-text">Billets Autorail classe 2</span>
+                    <span class="progress-number"><b>250</b>/500 soit <b>{{ bitautc1 }}%</b></span>
 
                     <div class="progress sm">
-                      <div class="progress-bar progress-bar-yellow" style="width: 80%"></div>
+                      <div class="progress-bar progress-bar-yellow" style="width: {{ bitautc1 }}%"></div>
                     </div>
                   </div>
                   <!-- /.progress-group -->
