@@ -3,13 +3,36 @@
 {% block title %}New Trajet{% endblock %}
 
 {% block body %}
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form>
+        <div class="form-group">
+            <label for="nomGare"><big>Libelle</big></label>
+            <input type="text"
+              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une gare">
+          </div>
+    </form>
+    <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Ajouter</big></button>
+  </div>
+  
+
+</div>
+
+
+
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
             <h4><i class="fa fa-plus"></i>&nbsp;<big>Ajouter Trajet</big></h4>
           </div>
           <div class="col-md-6 text-right">
-            <a class="btn btn-info" href="{{ path('trajet_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste Trajet</a>
+            <a class="btn btn-info" href="{{ path('trajet_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste Trajet</big></a>
+            <button type="button" class="btn btn-warning" id="myBBtn" onclick="print()"><i class="glyphicon glyphicon-plus"></i><big> Ajouter une gare</button>
           </div>
           </div>
           <!-- /.box-body -->
@@ -21,6 +44,51 @@
     <div class="box-body">
         {{ include('trajet/_form.html.twig') }}
     </div>
-</div>    
+</div> 
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  <script>
+        
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById('myModal');
+        span.onclick = function() 
+        {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) 
+        {
+            if (event.target == modal) 
+            {
+                modal.style.display = "none";
+            }
+        }
+
+        function ajouter(){
+          var libelle = document.getElementById("libelle").value;
+          modal.style.display = "none";
+          document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success");
+          
+
+        }
+        
+        function print()
+        {
+            var modal = document.getElementById('myModal');
+
+            modal.style.display = "block";
+          
+        }
+        
+        
+    </script>
 
 {% endblock %}
