@@ -204,11 +204,11 @@ function getJson3()
  
  function passerCommande() 
  {
-    for (let i = 0; i < index; i++) 
+    for (let i = 0; i <= index; i++) 
     {
         let idGuichet = cmbGuichets[i].options[cmbGuichets[i].selectedIndex].id;
         let idSection = cmbSections[i].options[cmbSections[i].selectedIndex].id;
-        let idTrajet  = Nbres[i].value;    
+        let idTrajet  = cmbTrajets[i].options[cmbTrajets[i].selectedIndex].id;    
         let xhttp=new XMLHttpRequest();
      /*xhttp.onreadystatechange = function()
      {
@@ -231,9 +231,15 @@ function getJson3()
         }
      }
      let link ="http://localhost:8000/newCommande/";
-     let params = "alpha="+idGuichet+idSection+idTrajet;
-     xhttp.open("POST",link,true);
-     xhttp.send(params);  
+     let params =`${idGuichet}+${idSection}+${idTrajet}+${Nbres[i].value}`;
+     console.log(params);
+     if(Nbres[i].value !="" && idGuichet!='0' && idSection!='0'&& idTrajet!='0')
+     {
+        xhttp.open("POST",link,true);
+        xhttp.send(params);  
+     }
+     
+     
     }       
  }
  

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190324212454 extends AbstractMigration
+final class Version20190325122719 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20190324212454 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE vignette ADD prix INT NOT NULL');
+        $this->addSql('ALTER TABLE commande_ptb CHANGE date_commande_valider date_commande_valider DATETIME DEFAULT NULL, CHANGE date_commande_realiser date_commande_realiser DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,6 @@ final class Version20190324212454 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE vignette DROP prix');
+        $this->addSql('ALTER TABLE commande_ptb CHANGE date_commande_valider date_commande_valider DATETIME NOT NULL, CHANGE date_commande_realiser date_commande_realiser DATETIME NOT NULL');
     }
 }

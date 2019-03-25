@@ -38,12 +38,12 @@ class CommandePtb
     private $dateCommande;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $dateCommandeValider;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $dateCommandeRealiser;
 
@@ -56,6 +56,16 @@ class CommandePtb
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nombreBilletRealise;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nombreBilletVendu;
 
     public function getId(): ?int
     {
@@ -154,6 +164,30 @@ class CommandePtb
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getNombreBilletRealise(): ?int
+    {
+        return $this->nombreBilletRealise;
+    }
+
+    public function setNombreBilletRealise(int $nombreBilletRealise): self
+    {
+        $this->nombreBilletRealise = $nombreBilletRealise;
+
+        return $this;
+    }
+
+    public function getNombreBilletVendu(): ?int
+    {
+        return $this->nombreBilletVendu;
+    }
+
+    public function setNombreBilletVendu(int $nombreBilletVendu): self
+    {
+        $this->nombreBilletVendu = $nombreBilletVendu;
 
         return $this;
     }

@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Guichet;
 use App\Entity\Trajet;
 use App\Entity\Section;
+use App\Entity\BilletPtb;
+use App\Entity\Ptb;
+use App\Entity\CommandePtb;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
@@ -24,9 +27,56 @@ class Controller extends AbstractController
      /**
      * @Route("/newCommande/", name="json_controller_")
      */
-    public function newCommande(Request $request)
+    public function newCommande(Request $request)//Request $request
     {
-        return new Response("<h1>".$request->getContent()."</h1>");
+        $array=explode('+',$request->getCOntent());//
+        $guichet = $this->getDoctrine()
+        ->getRepository(Guichet::class)
+        ->find(intval($array[0]));
+        $section = $this->getDoctrine()
+        ->getRepository(Section::class)
+        ->find(intval($array[1]));
+        $trajet = $this->getDoctrine()
+        ->getRepository(Trajet::class)
+        ->find(intval($array[2]));
+        $ptb = $this->getDoctrine()
+        ->getRepository(Ptb::class)
+        ->findOneBy
+        (
+            [
+                "trajet" => $trajet,
+                "section" => $section
+            ]
+        );
+        $billetPtb = $this->getDoctrine()
+        ->getRepository(BilletPtb::class)
+        ->findOneBy
+        (
+            [
+                "guichet" => $guichet,
+                "ptb" => $ptb,
+            ]
+        );
+        $commandePtb = new CommandePtb();
+        $commandePtb->setBillet($billetPtb);
+        $commandePtb->setNombreBillet(intval($array[3]));
+        $commandePtb->setNombreBilletRealise(0);
+        $commandePtb->setNombreBilletVendu(0);
+        
+        $commandePtb->setEtatCommande(0);
+        
+        $commandePtb->setDateCommande(new \DateTime());
+        //$commandePtb->setDateCommandeValider(null);
+        //$commandePtb->setDateCommandeRealiser(null);
+        
+        $commandePtb->setCreatedAt(new \DateTime());
+        $commandePtb->setUpdatedAt(new \DateTime());
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($commandePtb);
+        $entityManager->flush();
+        return new Response("<h1>".$billetPtb->getId()."</h1>");
+        //return new Response("<h1>".$ptb->getId()."</h1>");
     }
     /**
      * @Route("/json/guichet/", name="json_controller_guichet")
@@ -81,7 +131,7 @@ class Controller extends AbstractController
         {
             if ($variable->getPtb()->getSection() == $section) 
             {
-                $myarray = array('id' => "".$variable->getId()."",  
+                $myarray = array('id' => "".$variable->getPtb()->getTrajet()->getId(),  
                 'Depart' => $variable->getPtb()->getTrajet()->getDepart()->getLibelle(),
                 'Arrivee' => $variable->getPtb()->getTrajet()->getArrivee()->getLibelle());
                 array_push($note,$myarray);  
