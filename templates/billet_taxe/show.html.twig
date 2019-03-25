@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BilletTaxe{% endblock %}
+
+{% block body %}
+    <h1>BilletTaxe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ billet_taxe.id }}</td>
+            </tr>
+            <tr>
+                <th>NumeroDernierBillet</th>
+                <td>{{ billet_taxe.numeroDernierBillet }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ billet_taxe.prix }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ billet_taxe.createdAt ? billet_taxe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ billet_taxe.updatedAt ? billet_taxe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('billet_taxe_index') }}">back to list</a>
+
+    <a href="{{ path('billet_taxe_edit', {'id': billet_taxe.id}) }}">edit</a>
+
+    {{ include('billet_taxe/_delete_form.html.twig') }}
+{% endblock %}

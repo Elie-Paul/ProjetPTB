@@ -20,15 +20,17 @@ function addRow()
         test=0;
     if(Nbres[test].value!="" || index==0)
     {
-        Nbres[index].removeEventListener("click",addRow);
+        //Nbres[index].removeEventListener("click",addRow);
       //  cmbGuichets[index].removeEventListener("click",(e) =>getElementId(e.target));
+      checkforEmpty();
         index++;
         let rowcopy=row.cloneNode(true);
         rowcopy.id=`${index}`; 
         tbody.appendChild(rowcopy);
         Nbres[index].addEventListener("click",addRow);
-        Nbres[index].addEventListener("keyup",removeRow);
-        Nbres[index].addEventListener("focus",removeRow);
+        Nbres[index].addEventListener("keyup",checkforEmpty);
+        //Nbres[index].addEventListener("keyup",removeRow);
+       // Nbres[index].addEventListener("focus",removeRow);
         trows[index].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
        // cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));    
        getJson("http://localhost:8000/json/guichet/",1);
@@ -36,14 +38,33 @@ function addRow()
        cmbGuichets[index].addEventListener("change",getJson3);
        cmbSections[index].addEventListener("change",getJson3);
        Nbres[index].addEventListener("change",setTotal);
+       
+       
     }
     
 }
 
-
+function checkforEmpty()
+{
+   if(index !=0)
+   {
+        for (let i = 0; i < index; i++) 
+        {
+            let idGuichet = cmbGuichets[i].options[cmbGuichets[i].selectedIndex].id;
+            let idSection = cmbSections[i].options[cmbSections[i].selectedIndex].id;
+            if(Nbres[i].value =="" && idGuichet=='0' && idSection=='0')
+            {
+                
+                tbody.removeChild(tbody.children[i]);
+                index--;
+            }  
+        } 
+   }
+   
+}
 function removeRow()
 {
-    if (selectedrow!=0) 
+    /*if (selectedrow!=0) 
     {
         let idGuichet = cmbGuichets[selectedrow-1].options[cmbGuichets[selectedrow-1].selectedIndex].id;
         let idSection = cmbSections[selectedrow-1].options[cmbSections[selectedrow-1].selectedIndex].id;
@@ -55,7 +76,7 @@ function removeRow()
             Nbres[index].addEventListener("click",addRow);
             addRow();
         }    
-    } 
+    } */
     
 }
 
@@ -162,30 +183,12 @@ function getJson3()
     let tot=0;
     for(let i= 0 ; i<Nbres.length ; i++)
     {
-       
         if(Nbres[i].value != '')
         {
-            tot += parseInt(Nbres[i].value);
-           /* if (i!=0) 
-            {
-                let idGuichet = cmbGuichets[i-1].options[cmbGuichets[i-1].selectedIndex].id;
-                let idSection = cmbSections[i-1].options[cmbSections[i-1].selectedIndex].id;
-                if(Nbres[i-1].value =="" && idGuichet=='0' && idSection=='0')
-                {
-                    removeRow(i-1);
-                    addRow();
-                }    
-            } */   
+            tot += parseInt(Nbres[i].value); 
         }
-        
-        else
-        {
-            if(i!=0)
-            {
-                
-            }
-        }
-    } 
+    }
+    checkforEmpty() 
     total.innerText=""+tot;
  } 
  getJson("http://localhost:8000/json/guichet/",1);
@@ -194,8 +197,8 @@ function getJson3()
  cmbSections[index].addEventListener("change",getJson3);
  //cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));
  Nbres[index].addEventListener("click",addRow);
- Nbres[index].addEventListener("keyup",removeRow);
- Nbres[index].addEventListener("focus",removeRow);
+ Nbres[index].addEventListener("keyup",checkforEmpty);
+ //Nbres[index].addEventListener("focus",removeRow);
  Nbres[index].addEventListener("change",setTotal);
  
  
@@ -207,7 +210,7 @@ function getJson3()
         let idSection = cmbSections[i].options[cmbSections[i].selectedIndex].id;
         let idTrajet  = Nbres[i].value;    
         let xhttp=new XMLHttpRequest();
-     xhttp.onreadystatechange = function()
+     /*xhttp.onreadystatechange = function()
      {
          if (this.readyState == 4 && this.status == 200)
          {
@@ -216,10 +219,21 @@ function getJson3()
              
              
          }
+     }*/
+     xhttp.onload = function ()
+     {
+        if ( this.status == 200)
+        {
+            //let response = JSON.parse();
+            alert(xhttp.responseText);
+            
+            
+        }
      }
-     let link ="http://localhost:8000/newCommande/"+idGuichet+idSection+idTrajet;
+     let link ="http://localhost:8000/newCommande/";
+     let params = "alpha="+idGuichet+idSection+idTrajet;
      xhttp.open("POST",link,true);
-     xhttp.send();  
+     xhttp.send(params);  
     }       
  }
  

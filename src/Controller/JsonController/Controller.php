@@ -5,6 +5,7 @@ namespace App\Controller\JsonController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Guichet;
 use App\Entity\Trajet;
 use App\Entity\Section;
@@ -21,11 +22,11 @@ class Controller extends AbstractController
         
     }
      /**
-     * @Route("/newCommande/{info}", name="json_controller_")
+     * @Route("/newCommande/", name="json_controller_")
      */
-    public function newCommande($info)
+    public function newCommande(Request $request)
     {
-        return new Response("<h1>".$info."</h1>");
+        return new Response("<h1>".$request->getContent()."</h1>");
     }
     /**
      * @Route("/json/guichet/", name="json_controller_guichet")
