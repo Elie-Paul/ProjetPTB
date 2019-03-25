@@ -20,8 +20,21 @@ class BilletPtbController extends AbstractController
      * @param BilletPtbRepository $billetPtbRepository
      * @return Response
      */
-    public function index(BilletPtbRepository $billetPtbRepository): Response
+    public function index(BilletPtbRepository $billetPtbRepository, \Swift_Mailer $mailer, Request $request): Response
     {
+            $message = (new \Swift_Message('Hello Email'))
+                ->setFrom('send@example.com')
+                ->setTo('recipient@example.com')
+                ->setReplyTo('napalousmanadda@gmail.com')
+                ->setBody($this->renderView(
+                    // templates/emails/registration.html.twig
+                    'emails/test.html.twig'
+                ),
+                'text/html');
+        
+            $mailer->send($message);
+        
+
         return $this->render('billet_ptb/index.html.twig', [
             'billet_ptbs' => $billetPtbRepository->findAll(),
         ]);
