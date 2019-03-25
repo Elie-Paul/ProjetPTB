@@ -72,13 +72,12 @@
             {% endif %}
             <div class="billet">
                 <h3>N : {{i}}</h3>
-                <h3>autorail{{ date ? date|date('m/Y ') : '' }}</h3>
-                <h3>{{billet.guichet.nom }}</h3>
-                <h5>Aller simple</h5>
-                <h5>Départ:{{billet.navette.trajet.depart.libelle}}</h5>
-                <h5>Arrivée:{{billet.navette.trajet.arrivee.libelle}}</h5>
-                <h5>{{billet.navette.classe.libelle}}</h5>
-                <h5>Tarif: {{billet.navette.prix}}Fcfa</h5>
+                <h3>PTB{{ date ? date|date('m/Y ') : '' }}</h3>
+                <h3>{{billet.guichet.nom}}</h3>
+                <h3>Abonnement:{{billet.type.libelle}}</h3>
+                <h3>carteN:.......</h3>
+                <h3>{{billet.type.section}}</h3>
+                <h5>Tarif:{{billet.prix}}Fcfa</h5>
                 <h3>***Senegal***</h3>
             </div>
             {% set myVal = myVal + 1 %}

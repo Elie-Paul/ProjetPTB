@@ -8,6 +8,35 @@
 {% block title %}BilletPtb{% endblock %}
 
 {% block body %}
+<style>
+    tr
+    {
+         animation: slide-up 0.4s ease;
+    }
+    @keyframes slide-up 
+    {
+        0% 
+        {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        50%
+        {
+            opacity: 0.25;
+            transform: translateY(20px);
+        }
+        50%
+        {
+            opacity: 0.75;
+            transform: translateY(20px);
+        }
+        100% 
+        {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }    
+</style>
     <h1>Génération de Commande Billets PTB</h1>
     
     <div class="box box-default">
@@ -41,15 +70,15 @@
             <tr  class="rowsss" id="0">
                 <td>
                     <div class="form-group">
-                    <select class="form-control GuichetId" >
-                        <option  selected disabled>Guichet</option>
+                    <select id="g" class="form-control GuichetId" >
+                        <option id="0" selected disabled>Guichet</option>
                     </select>
                     </div>   
                 </td>
                 <td>
                     <div class="form-group ">
                     <select class="form-control SectionId" >
-                        <option  selected disabled>Section</option>
+                        <option  id='0' selected disabled>Section</option>
                     </select>
                     </div>  
                 </td>
@@ -62,21 +91,31 @@
                 </td>
                 <td>
                     <div class="form-group">
-                    <input type="number" class="form-control nbreBillet"  placeholder="nombre de billet">
+                    <input type="number"  class="form-control nbreBillet"  placeholder="nombre de billet">
                     </div>  
                 </td>
                 <td></td>
             </tr>
+          
+       
         </tbody>
-        <tr>
+          <tr>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td><span id="total"></span>billets</td>
+        <td><span id="total"></span> billets</td>
+        </tr>
+         <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <button class="btn btn-warning" onclick="passerCommande();">commander</button>
         </tr>
     </table>
-            
+        
+
             </div>
         </div>
     </div>

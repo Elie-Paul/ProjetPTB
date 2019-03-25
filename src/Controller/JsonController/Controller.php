@@ -5,6 +5,7 @@ namespace App\Controller\JsonController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Guichet;
 use App\Entity\Trajet;
 use App\Entity\Section;
@@ -19,6 +20,13 @@ class Controller extends AbstractController
     public function index()
     {
         
+    }
+     /**
+     * @Route("/newCommande/", name="json_controller_")
+     */
+    public function newCommande(Request $request)
+    {
+        return new Response("<h1>".$request->getContent()."</h1>");
     }
     /**
      * @Route("/json/guichet/", name="json_controller_guichet")
@@ -35,7 +43,7 @@ class Controller extends AbstractController
         }
         $data = [
             'notes' => $note];
-            return new Response(json_encode($data));
+            return new Response(json_encode($note));
     }
     /**
      * @Route("/json/section/", name="json_controller_section")
@@ -52,7 +60,7 @@ class Controller extends AbstractController
         }
         $data = [
             'notes' => $note];
-            return new Response(json_encode($data));
+            return new Response(json_encode($note));
 
     }
     /**

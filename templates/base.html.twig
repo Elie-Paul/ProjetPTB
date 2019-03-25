@@ -20,6 +20,7 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 {% block stylesheets %}{% endblock %}
 <style>
 .modal {
@@ -276,7 +277,8 @@
    </div>
 <!-- /.content-wrapper -->
           
- 
+ <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
 <script src="{{ asset('jslog/jscolor.js') }}"></script> 
 <script src="{{ asset('jslog/commandePtb.js') }}"></script>          
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -300,6 +302,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 </body>
 {% block javascripts %}{% endblock %}
 </html> 
