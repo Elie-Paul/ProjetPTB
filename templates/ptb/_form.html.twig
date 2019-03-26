@@ -1,4 +1,156 @@
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="form-group">
+      <label for="sel1">Depart</label>
+      <select class="form-control" id="sel1">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="sel1">Depart</label>
+      <select class="form-control" id="sel1">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+    </div>
+  </div>
+  
+
+</div>
+
+<!-- The Modal -->
+<div id="myModal1" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="form-group">
+      <label for="sel1">Libelle</label>
+      <select class="form-control" id="sel1">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="sel1">Prix</label>
+      <select class="form-control" id="sel1">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+    </div>
+  </div>
+  
+
+</div>
+
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="row">
+    <div class="col-xs-10">{{ form_row(form.trajet) }}</div>
+    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    </div>
+<div class="row">
+    <div class="col-xs-10">{{ form_row(form.section) }}</div>
+    <div class="col-xs-2 cs2"><a type="button" class="btn btn-warning" id="myBBtn2" onclick="mode2()"><i class="glyphicon glyphicon-plus"></i></a></div>
+</div>
     <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+
+<style>
+    .cs{
+       position: relative;
+       top: 1.55em;
+       left: 3em; 
+    }
+
+    .cs2{
+       position: relative;
+       top: 1.55em;
+       left: 3em; 
+    }
+</style>
+
+ <script>
+        
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById('myModal');
+        span.onclick = function() 
+        {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) 
+        {
+            if (event.target == modal) 
+            {
+                modal.style.display = "none";
+            }
+        }
+
+        function ajouter(){
+          var libelle = document.getElementById("libelle").value;
+          modal.style.display = "none";
+          document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success");
+          
+        }
+        
+        function mode()
+        {
+            var modal = document.getElementById('myModal');
+
+            modal.style.display = "block";
+          
+        }
+        
+        
+</script>
+
+<script>
+        
+        var span1 = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById('myModal1');
+        span.onclick = function() 
+        {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) 
+        {
+            if (event.target == modal) 
+            {
+                modal.style.display = "none";
+            }
+        }
+
+        function ajouter(){
+          var libelle = document.getElementById("libelle").value;
+          modal.style.display = "none";
+          document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success");
+          
+        }
+        
+        function mode2()
+        {
+            var modal1 = document.getElementById('myModal1');
+
+            modal1.style.display = "block";
+          
+        }
+        
+        
+</script>
