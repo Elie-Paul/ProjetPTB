@@ -3,9 +3,24 @@
 {% block title %}New BilletTaxe{% endblock %}
 
 {% block body %}
-    <h1>Create new BilletTaxe</h1>
-
+    <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="glyphicon glyphicon-plus"></i>&nbsp;<big>Nouveau Taxe</big></h4>
+          </div>
+            <div class="col-md-6 text-right">
+                <a class="btn btn-info" href="{{ path('billet_taxe_index') }}"><i class="fa fa-list"></i>&nbsp;Liste des Taxes</a>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+<div class="box box-solid box-primary">
+    <div class="box-header">
+    <h3 class="box-title">Ajouter un Nouveau Taxe</h3>   
+    </div>
+    <div class="box-body"> 
     {{ include('billet_taxe/_form.html.twig') }}
+</div>
+</div>
 
-    <a href="{{ path('billet_taxe_index') }}">back to list</a>
 {% endblock %}

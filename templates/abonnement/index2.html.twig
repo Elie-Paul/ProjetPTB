@@ -277,13 +277,19 @@
             <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Abonnés</big></h4>
           </div>
             <div class="col-md-6 text-right">
-            <a class="btn btn-primary pull-right" href="{{ path('abonnement_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau PTB</a>
+            <a class="btn btn-primary pull-right" href="{{ path('abonnement_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau Abonné</a>
             </div>
           </div>
           <!-- /.box-body -->
         </div>
 
-
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h1 class="box-title">Liste des Abonnés</h1>
+            </div>
+            <div class="box-body">
         <table class="table">
             <thead>
             <tr>
@@ -294,7 +300,7 @@
                 <th>Type d'abonnement</th>
                 <th>Prix</th>
                 <th>Date d'expiration</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -328,4 +334,8 @@
             </tbody>
         </table>
     </div>
+    </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
