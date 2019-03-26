@@ -31,7 +31,7 @@ class Controller extends AbstractController
      */
     public function showAllCommandePTB()
     {
-        return $this->render('commandeView/validerCommande.html.twig');
+        return $this->render('commandeView/validerCommandePTB.html.twig');
     }
      /**
      * @Route("/Json/listCommande", name="getAllCommandePTB")
@@ -71,6 +71,12 @@ class Controller extends AbstractController
 
                 'nombreDeBilletCommander' => $variable
                 ->getNombreBillet(),
+                
+                'nombreBilletRealiser' => $variable
+                ->getNombreBilletRealise(),
+
+                'nombreBilletVendu' => $variable
+                ->getNombreBilletVendu(),
 
                 'etat' => $variable
                 ->getEtatCommande(),
@@ -79,12 +85,21 @@ class Controller extends AbstractController
                 ->getBillet()
                 ->getPtb()
                 ->getSection()
-                ->getLibelle()
+                ->getLibelle(),
+                'dateCommandeValider' => $variable
+                ->getDateCommandeValider()
             );
             array_push($data,$myarray);
         }
             return new Response(json_encode($data));
             //return new Response('dddd');
+    }
+     /**
+     * @Route("/listCommandetoPrint", name="showAllCommandePTBtoPrint")
+     */
+    public function showAllCommandePTBtoPrint()
+    {
+        return $this->render('commandeView/printCommandePTB.html.twig');
     }
      /**
      * @Route("/newCommande/", name="newCommande")

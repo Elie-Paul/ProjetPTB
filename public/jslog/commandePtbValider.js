@@ -48,8 +48,8 @@ function createRowElement(commande)
     
     let pdiv2 =document.getElementById('pdiv2').cloneNode(true);
     pdiv2.style.display = 'block';
-    pdiv2.style.width = '0%'
-    let realisationContent = document.createTextNode('0%');
+    pdiv2.style.width = '40%'
+    let realisationContent = document.createTextNode('40%');
     pdiv2.appendChild(realisationContent);
     pdiv.appendChild(pdiv2)
     realisation.appendChild(pdiv);
