@@ -22,10 +22,72 @@ class Controller extends AbstractController
      */
     public function index()
     {
-        
+        return $this->render('billet_taxe/index.html.twig', [
+            'billet_taxes' => $billetTaxeRepository->findAll(),
+        ]);
+    }
+    /**
+     * @Route("/listCommande", name="showAllCommandePTB")
+     */
+    public function showAllCommandePTB()
+    {
+        return $this->render('commandeView/validerCommande.html.twig');
     }
      /**
-     * @Route("/newCommande/", name="json_controller_")
+     * @Route("/Json/listCommande", name="getAllCommandePTB")
+     */
+    public function getAllCommandePTB()
+    {
+        $repository = $this->getDoctrine()->getRepository(CommandePtb::class);
+        $commandePtbs = $repository->findAll();
+        $data = array();
+        foreach ($commandePtbs as $key => $variable) 
+        {
+            $myarray = array
+            (
+                'id' => $variable->getId(),
+
+                'section' => $variable
+                ->getBillet()
+                ->getPtb()
+                ->getSection(),
+
+                'depart' => $variable
+                ->getBillet()
+                ->getPtb()->getTrajet()
+                ->getDepart()
+                ->getLibelle(),
+
+                'arrivee' => $variable
+                ->getBillet()
+                ->getPtb()->getTrajet()
+                ->getArrivee()
+                ->getLibelle(),
+
+                'guichet' => $variable
+                ->getBillet()
+                ->getGuichet()
+                ->getNom(),
+
+                'nombreDeBilletCommander' => $variable
+                ->getNombreBillet(),
+
+                'etat' => $variable
+                ->getEtatCommande(),
+
+                'section' => $variable
+                ->getBillet()
+                ->getPtb()
+                ->getSection()
+                ->getLibelle()
+            );
+            array_push($data,$myarray);
+        }
+            return new Response(json_encode($data));
+            //return new Response('dddd');
+    }
+     /**
+     * @Route("/newCommande/", name="newCommande")
      */
     public function newCommande(Request $request)//Request $request
     {
@@ -75,8 +137,27 @@ class Controller extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($commandePtb);
         $entityManager->flush();
-        return new Response("<h1>".$billetPtb->getId()."</h1>");
+        return new Response("true");
         //return new Response("<h1>".$ptb->getId()."</h1>");
+    }
+    /**
+     * @Route("/ValidationCommande", name="ValidationCommande")
+     */
+    public function ValidationCommande(Request $request)
+    {
+        $idCommande = intVal($request->getContent());
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $commande = $entityManager
+        ->getRepository(CommandePTB::class)
+        ->find($idCommande);
+        if($commande->getEtatCommande()==0)
+            $commande->setEtatCommande(1);
+        else
+            $commande->setEtatCommande(0);
+        $entityManager->flush();
+        return new Response('<h1>'.$commande->getId().'</h1>');
     }
     /**
      * @Route("/json/guichet/", name="json_controller_guichet")

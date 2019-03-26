@@ -94,7 +94,10 @@
                     <input type="number"  class="form-control nbreBillet"  placeholder="nombre de billet">
                     </div>  
                 </td>
-                <td></td>
+                <td>
+                    <span style='display:none;'  class="label label-success">Success</span>
+                    <span style='display:none;' class="label label-danger">echec</span>
+                </td>
             </tr>
           
        
@@ -125,7 +128,7 @@
     </div>
     
     
-
+<script src="{{ asset('jslog/commandePtb.js') }}"></script>
     
 {% endblock %}
 

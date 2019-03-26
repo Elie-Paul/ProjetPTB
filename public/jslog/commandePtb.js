@@ -5,6 +5,8 @@ const   cmbGuichets = document.getElementsByClassName('form-control GuichetId');
 const   cmbTrajets = document.getElementsByClassName('form-control TrajetId');
 const   Nbres = document.getElementsByClassName('form-control nbreBillet');
 const   tbody = document.getElementById('tbody');
+const spansSuccess =  document.getElementsByClassName('label label-success');
+const spansDanger =  document.getElementsByClassName('label label-danger');
 const   trows=document.getElementsByClassName('rowsss');
 const   total=document.getElementById('total');
 console.log(trows);
@@ -220,13 +222,15 @@ function getJson3()
              
          }
      }*/
+     let a= 0;
      xhttp.onload = function ()
      {
         if ( this.status == 200)
         {
             //let response = JSON.parse();
-            alert(xhttp.responseText);
-            
+            //alert(xhttp.responseText);
+            ///a++;
+            spansSuccess[i].style.display = "block";
             
         }
      }
