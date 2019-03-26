@@ -102,6 +102,7 @@
         }
         function print2()
         {
+            window.location.href = "/billet/ptb/#";
             var nbreprint = document.getElementById("nbreprint").value;
             var color = document.getElementById("color").value;
             var checkbox = document.getElementById("modifierdpt");
@@ -179,7 +180,7 @@
                 <td id="dpt{{ billet_ptb.id }}">{{billet_ptb.numeroDernierBillets}}</td>
                 <td>
                     
-                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                    <!--a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a-->
                 </td>
             </tr>
         {% else %}
