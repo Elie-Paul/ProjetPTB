@@ -1,61 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Impression</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+<Style>
+    .page
+    {
+        display: grid;
+        grid-template-columns: repeat(4, 190px);
+        grid-template-rows: repeat(5, 200px);
+        position:relative;
+        top :45px;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        width: 100%;
+        grid-row-gap:20px;
+            
+    }
 
-
-{% block body %}
-
-
-{% set myVal = 0 %}
-{% set myVal2 = 0 %}
-{% for i in nbrebillet %}
-{% if myVal2 == 0 %}
-    <table style="height: 174px;page-break-after: always;" width="545" >
-    <tbody>
-{% endif %}    
-{% if myVal == 0 %}
-    <tr style="height: 156px;">
-{% endif %}
-<!--<td background="https://ptb.sn/wp-content/uploads/2016/08/TRAIN_Rame_Reversible_PTB.jpg" style="width: 100px; height: 156px;background-image: url('https://ptb.sn/wp-content/uploads/2016/08/TRAIN_Rame_Reversible_PTB.jpg');">
-    <p>numero:#{{i}}</p>
-    <p>Guichet:{{billet.guichet.nom }}</p>
-    <p>Section:{{billet.ptb.section.libelle }}</p>
-    <p>Prix:{{billet.ptb.section.prix}}FCFA</p>
-</td>-->
-<td border=1  style="background-color:#00FFFF;border-width: 1px;border-style: dashed;width: 100%;">
-<h1 style="color: #000;font-weight: 500;">N&deg;:#{{i}}</h1>
-<h2 style="color: #000;font-weight: 700;">PTB</h2>
-<h2 style="color: #000;">{{billet.guichet.nom}}</h2>
-<h2 style="color: #000;">D&eacute;part:{{billet.ptb.trajet.depart.libelle}}</h2>
-<h2 style="color: #000;">Arriv&eacute;e:{{billet.ptb.trajet.arrivee.libelle}}</h2>
-<h2 style="color: #000;">{{billet.ptb.section.libelle}}</h2>
-<h2 style="color: #000;">Tarif:{{billet.ptb.section.prix}}Fcfa</h2>
-
-</td>
-{% set myVal = myVal + 1 %}
-{% set myVal2 = myVal2 + 1 %}
-{% if myVal == 5 %}
-    </tr>
-    {% set myVal = 0%}
-{% endif %}
-{% if myVal2 == 15 %}
-    </tbody>
-    </table>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    {% set myVal2 = 0%}
-{% endif %}
-
-{% endfor %}
-
-{% endblock %}
+    @page {
+    size: auto;   /* auto is the initial value */
+    margin: 0px;  /* this affects the margin in the printer settings */
+    margin-bottom:20px;
+    }
+    .billet
+    {
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+        background-image: url('{{ asset('img/backbillet3.png') }}');
+        line-height:0.5px; 
+        opacity: 0.85;
+        
+        
+    }
+    
+   .main
+    {
+       display: block;
+       -webkit-print-color-adjust: exact;
+        position: absolute;
+        
+        left: 40px;
+        right: 20px;
+        width :100%;
+    }
+  @media print 
+  {
+      .page
+      {
+        overflow: auto;
+        page-break-after: always;
+        page-break-inside: Avoid;
+      }
+  }
+   
+</style>
+<body style="width: 100%;">
+    
+    <div class="main" style="background-color:#{{color}};">
+        {% set myVal = 0 %}
+        {% for i in nbrebillet %}
+            {% if myVal == 0 %}
+            <div class="page">
+            {% endif %}
+            <div class="billet">
+                <h3>N : {{i}}</h3>
+                <h3>PTB{{ date ? date|date('m/Y ') : '' }}</h3>
+                <h3>{{billet.guichet.nom }}</h3>
+                <h5>Aller simple</h5>
+                <h5>Départ:{{billet.ptb.trajet.depart.libelle}}</h5>
+                <h5>Arrivée:{{billet.ptb.trajet.arrivee.libelle}}</h5>
+                <h5>{{billet.ptb.section.libelle}}</h5>
+                <h5>Tarif: {{billet.ptb.section.prix}}Fcfa</h5>
+                <h3>***Senegal***</h3>
+            </div>
+            {% set myVal = myVal + 1 %}
+            {% if myVal == 20 %}
+                </div>
+                {% set myVal = 0 %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+</body>
+</html>
 <script>
+    
+    //var main = document.getElementById('main');
+    /*main.style.backgroundColor="#"{{color}};*/
     window.print();
-    window.onafterprint = function(event) { document.location.href = "http://localhost:8000/billet/ptb/"; };
+    window.onafterprint = 
+    function(event) 
+    { 
+       //document.location.href = "http://localhost:8000/billet/ptb/";
+
+    };
 </script>

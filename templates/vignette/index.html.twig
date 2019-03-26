@@ -1,0 +1,227 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}BilletPtb{% endblock %}
+
+{% block body %}
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form>
+        <div class="form-group">
+            <label for="nbreprint">Nombre de billets à imprimer</label>
+            <input type="number" class="form-control" id="nbreprint">
+        </div>
+         <div class="form-group">
+            <label for="color">Couleur billet</label>
+            <input class="jscolor"  id="color" class="form-control" value="fff">
+        </div>
+          <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="modifierdpt">
+          <label class="custom-control-label" for="modifierdpt">Modifier la valeur de depart</label>
+        </div>
+        <div class="form-group test" style="display:none;">
+            <label for="nbredepart">Nombre de depart</label>
+            <input type="number" class="form-control" id="nbredepart">
+        </div>
+        
+        <div class="md-form test" style="display:none;">
+            <label for="form7">Motif</label>
+            <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
+        </div>
+        
+    </form>
+    <button  id="submit" onclick="print2()" class="btn btn-primary">Submit</button>
+  </div>
+
+</div>
+    <h1>Génération de Billets PTB</h1>
+    <script>
+         idb=0;
+         dpt=0;
+        function show()
+        {
+            var test = document.getElementsByClassName("test")[0];
+            var test1 = document.getElementsByClassName("test")[1];
+            test.style.display="block";
+            test1.style.display="block";
+            return true;
+        }
+        function hide()
+        {
+            var test = document.getElementsByClassName("test")[0];
+            var test1 = document.getElementsByClassName("test")[1];
+            test.style.display="none";
+            test1.style.display="none";
+            return true;
+        }
+        var checkbox = document.getElementById("modifierdpt");
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById('myModal');
+        span.onclick = function() 
+        {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) 
+        {
+            if (event.target == modal) 
+            {
+                modal.style.display = "none";
+            }
+        }
+        checkbox.onclick = function() 
+        {
+                if(checkbox.checked)
+                {
+                    show();
+                    return true;
+                }
+                else
+                {
+                    hide();
+                    return true;
+                }       
+        }
+        function print(id)
+        {
+            idb=id;
+            var modal = document.getElementById('myModal');
+            var td = document.getElementById('dpt'+idb);
+            dpt=parseInt(td.innerHTML,10)
+            modal.style.display = "block";
+            var checkbox = document.getElementById("modifierdpt");
+          
+        }
+        function print2()
+        {
+            var nbreprint = document.getElementById("nbreprint").value;
+            var color = document.getElementById("color").value;
+            var checkbox = document.getElementById("modifierdpt");
+            var userid = parseInt(document.getElementById("userid").innerHTML, 10);
+            var motif = "";  
+            if(checkbox.checked)
+            {
+                motif = document.getElementById("form7").value;  
+                dpt = parseInt(document.getElementById('nbredepart').value, 10);
+            }
+            else
+            {
+                motif="pas de changement";
+            }
+            var modal = document.getElementById('myModal');
+            modal.style.display = "none";
+            document.location.href = `http://localhost:8000/impressionvignette/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
+            
+                
+                
+            //document.location.href = `http://localhost:8000/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;
+            
+
+        }
+        
+    </script>
+    <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Billets PTB</big></h4>
+          </div>
+            <div class="col-md-6 text-right">
+            <a class="btn btn-primary pull-right" href="{{ path('ptb_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau PTB</a>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+    <div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h1 class="box-title">Liste des billets PTB</h1>
+
+                <!--div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div-->
+            </div>
+            <div class="box-body">
+    <table class="table table-hover table-striped dataTable" id="example1">
+        <thead>
+            <tr>
+                <th>Guichet</th>
+                <th>Type</th>
+                <th>Section</th>
+                <th>prix</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vignette in vignettes %}
+            <tr>
+                <td>{{ vignette.guichet.nom }}</td>
+                <td>{{ vignette.type.libelle}}</td>
+                <td>{{ vignette.type.section}}</td>
+                <td>{{ vignette.type.prix}}</td>
+                <td id="dpt{{ vignette.id }}">{{vignette.numeroDernierBillet}}</td>
+                <td>
+                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ vignette.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+              
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="userid" style="display:none;">
+            {{ app.user.id }}
+        </div>
+{% endblock %}
+{% block javascripts %}
+    <!-- DataTables -->
+    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                "reponsive": true,
+                "pageLength": 10,
+                "language": {
+                    "decimal": "",
+                    "loadingRecords": "Chargement...",
+                    "processing": "En traitement...",
+                    "lengthMenu": "Afficher _MENU_ entrées",
+                    "zeroRecords": "Aucun enregistrements correspondants trouvés",
+                    "emptyTable": "aucune donnée disponible",
+                    "infoFiltered": "(filtré de _MAX_ entrées totales)",
+                    "infoEmpty": "Affiche 0 à 0 sur 0 entrées",
+                    "info": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
+                    "search": "Rechercher : ",
+                    "paginate": {
+                        "first": "Premier",
+                        "last": "Dernier",
+                        "previous": "Précédent",
+                        "next": "Suivant"
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

@@ -20,6 +20,7 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 {% block stylesheets %}{% endblock %}
 <style>
 .modal {
@@ -69,7 +70,7 @@
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="#" class="logo">   
+    <a href="{{ path('home') }}" class="logo">   
     <span class="logo-mini"><b>P</b>TB</span>   
       <!-- logo for regular state and mobile devices -->
      <span class="logo-lg">Billetterie <b>PTB</b></span>
@@ -86,21 +87,25 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ asset('img/user.png') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">{{ app.user.username}}</span>
+            
+              <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="user-image" alt="User Image">
+        
+              <span class="hidden-xs">{{ app.user.username|capitalize}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ asset('img/user.png') }}" class="img-circle" alt="User Image">
+                <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
-                  {{ app.user.username }}                  
+                  {{ app.user.username|capitalize }}</br>
+                  {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize }}
+
                 </p>
               </li>              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
+                  <a href="{{ path('user_show', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ path('security_logout') }}" class="btn btn-danger btn-flat"><i class="glyphicon glyphicon-off"></i>&nbsp;Deconnexion</a>
@@ -120,10 +125,10 @@
 
     <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ asset('img/user.png') }}" class="img-circle" alt="User Image">
+          <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>{{ app.user.username }}</p>
+          <p>{{ app.user.username|capitalize }}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
         </div>
       </div>
@@ -131,14 +136,31 @@
       <!-- Sidebar user panel -->     
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header"></li>
+        <h1></h1>
         <li>
           <a active href="{{ path('home') }}">
             <i class="fa fa-dashboard"></i> 
             <span>Tableau de Bord</span>
           </a>
         </li>
+        <!--== false-->
+         {% if is_granted('ROLE_BILLETTEUR') %}
         <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-text-background"></i>
+            <span>Abonnement</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>          
+          </a> 
+          <ul class="treeview-menu">
+            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
+          </ul>       
+        </li>
+        {% endif %}
+        {% if is_granted('ROLE_BILLETTEUR') %}
+        <!--li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-folder-open"></i>
             <span>Billet</span>
@@ -146,18 +168,27 @@
               <span class="label label-primary pull-right">2</span>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>
-            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>            
+          <ul class="treeview-menu"-->
+          
+            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-train"></i>Billet PTB</a></li>          
+            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-subway"></i>Billet Autorail</a></li>
+            <li><a href="#"><i class="fa fa-credit-card"></i>Taxe</a></li>            
+          <!--/ul>
+        </li-->        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-cart-arrow-down"></i>
+            <span>Commande</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">          
+            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>          
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                        
           </ul>
         </li>
-        <li>
-          <a href="/">
-            <i class="glyphicon glyphicon-text-background"></i>
-            <span>Abonnement</span>          
-          </a>        
-        </li>
+        {% endif %}        
 
         <li class="treeview">
           <a href="#">
@@ -167,6 +198,7 @@
             </span>
           </a>        
         </li>
+        {% if is_granted('ROLE_ADMINISTRATEUR') %} 
         <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-credit-card"></i> 
@@ -218,7 +250,20 @@
             <li><a href="{{ path('classe_new') }}"><i class="fa fa-circle-o"></i>Nouvelle</a></li>            
             <li><a href="{{ path('classe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>
-        </li>  
+        </li> 
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-user"></i>
+            <span>Utilisateur</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ path('user_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('user_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li> 
+          </ul>
+        </li>         
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-wrench"></i>
@@ -227,15 +272,14 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>                        
-            <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>                             
+          <ul class="treeview-menu">                                                                          
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
             <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
             <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Traçabilité</a></li>    
           </ul>
-        </li>                                              
+        </li>
+        {% endif %}                                              
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -247,8 +291,10 @@
    </div>
 <!-- /.content-wrapper -->
           
- 
-          
+ <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
+<script src="{{ asset('jslog/jscolor.js') }}"></script> 
+<script src="{{ asset('jslog/commandePtb.js') }}"></script>          
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
@@ -269,6 +315,8 @@
 <script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 </body>
 {% block javascripts %}{% endblock %}
 </html> 

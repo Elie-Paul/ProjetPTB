@@ -16,7 +16,7 @@
         </div>
 <div class="box box-solid box-primary">
     <div class="box-header">
-        <h3 class="box-title">Modification de l'utilisateur {{user.username}}</h3>   
+        <h3 class="box-title">Modification de l'utilisateur {{user.username|capitalize}}</h3>   
     </div>
     <div class="box-body">
     {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}

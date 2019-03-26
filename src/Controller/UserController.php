@@ -10,6 +10,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * @Route("/user")
@@ -35,11 +40,14 @@ class UserController extends AbstractController
         
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hash=$encoder->encodePassword($user, $user->getPassword());            
-            $entityManager = $this->getDoctrine()->getManager();
-            $user->setPassword($hash);
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $user->setCreatedAt(new \DateTime());
+            $user->setUpdateAt(new \DateTime());              
+            $hash=$encoder->encodePassword($user, $user->getPassword()); 
+            $user->setPassword($hash);           
+            $entityManager = $this->getDoctrine()->getManager();           
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -67,10 +75,46 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user,UserPasswordEncoderInterface $encoder): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createFormBuilder($user)
+        ->add('imageFile', FileType::class, [                
+            'label' => "Image",
+            'attr' => [                    
+                'class' => 'form-control',
+                'required' => true                  
+                ]             
+        ])
+        ->add('nom')            
+        ->add('prenom')
+        ->add('email')
+        ->add('username',TextType::class,[
+            'required' => true,
+            'label'=> "Utilisateur"          
+        ])
+        /*,
+        'attr'=>[
+            'disabled' => true
+        ]*/
+        ->add('roles', ChoiceType::class, [
+            'choices' => [                    
+                'Billetteur' => 'ROLE_BILLETTEUR',
+                'Validateur' => 'ROLE_VALIDATEUR',
+                'Administrateur' => 'ROLE_ADMINISTRATEUR',
+                'Superviseur' => 'ROLE_SUPERVISEUR',
+            ],
+            'label'=> "Rôles",
+            'expanded' => false,
+            'multiple' => true
+        ])
+        ->add('password',PasswordType::class,[
+            'label'=> "Mot de Passe",
+            
+        ])        
+        ->getForm();
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setCreatedAt(new \DateTime());
+            $user->setUpdateAt(new \DateTime());
             $hash=$encoder->encodePassword($user, $user->getPassword());  
             $user->setPassword($hash);
             $this->getDoctrine()->getManager()->flush();            
@@ -99,4 +143,29 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+ /**
+  * Require ROLE_ADMIN for *every* controller method in this class.
+  *
+  * @IsGranted("ROLE_ADMIN")
+  */
+  public function adminDashboard()
+{
+    $this->denyAccessUnlessGranted('ROLE_ADMINISTRATEUR');
+
+    // or add an optional message - seen by developers
+    $this->denyAccessUnlessGranted('ROLE_ADMINISTRATEUR', null, 'User tried to access a page without having ROLE_ADMINISTRATEUR');
+}
+/**
+  * Require ROLE_BILLETTEUR for *every* controller method in this class.
+  *
+  * @IsGranted("ROLE_BILLETTEUR")
+  */
+  public function billetteurDashboard()
+{
+    $this->denyAccessUnlessGranted('ROLE_BILLETTEUR');
+
+    // or add an optional message - seen by developers
+    $this->denyAccessUnlessGranted('ROLE_BILLETTEUR', null, 'User tried to access a page without having ROLE_BILLETTEUR');
+}
 }
