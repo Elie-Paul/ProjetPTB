@@ -16,6 +16,9 @@ use App\Repository\TrajetRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Section;
+use App\Entity\Ptb;
+use App\Form\PtbType;
 
 class ModalController extends AbstractController
 {
@@ -70,6 +73,53 @@ class ModalController extends AbstractController
 
         return $this->render('guichet/new.html.twig', [
             'guichet' => $guichet,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addSection/{libelle}/{prix}", name="lieux_addGuichet")
+     */
+    public function addSection($libelle, $prix)
+    {        
+        $section = new Section();
+        $prix = intval($prix);
+        $ptb = new Ptb();
+        $form = $this->createForm(PtbType::class, $ptb);
+
+        $section->setLibelle($libelle);
+        $section->setPrix($prix);
+        $section->setCreatedAt(new \DateTime());
+        $section->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($section);
+        $entityManager->flush();
+
+        return $this->render('ptb/new.html.twig', [
+            'ptb' => $ptb,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addTrajet/{depart}/{arrivee}", name="lieux_addGuichet")
+     */
+    public function addTrajet($depart, $arrivee)
+    {        
+        $trajet = new Trajet();
+        $ptb = new Ptb();
+        $form = $this->createForm(PtbType::class, $ptb);
+
+        $trajet->setDepart($depart);
+        $trajet->setArrivee($arrivee);
+        $trajet->setCreatedAt(new \DateTime());
+        $trajet->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($trajet);
+        $entityManager->flush();
+
+        return $this->render('ptb/new.html.twig', [
+            'ptb' => $ptb,
             'form' => $form->createView(),
         ]);
     }
