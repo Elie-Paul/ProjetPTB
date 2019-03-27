@@ -41,6 +41,8 @@ class SectionController extends AbstractController
             $entityManager->persist($section);
             $entityManager->flush();
 
+            /// Message de confirmation
+            $this->addFlash('success','La section '.$section->getLibelle().' a été créer');
             return $this->redirectToRoute('section_index');
         }
 

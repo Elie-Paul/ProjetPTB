@@ -22,6 +22,32 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 {% block stylesheets %}{% endblock %}
+
+<style> 
+#myModa {
+  position: absolute;
+  width: 250px;
+  height: 50px;
+  background-color: transparent;
+  text-align: center;
+  color: white;
+  left: 0;
+  -webkit-animation: mymove 0s infinite; /* Chrome, Safari, Opera */
+  animation: mymove 20s infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+  50% {left: 800px;}
+  50% {box-shadow: 15px 20px 30px blue;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+  50% {left: 800px;}
+  50% {box-shadow: 15px 20px 30px blue;}
+}
+</style>
 <style>
 .modal {
   display: none; /* Hidden by default */
@@ -98,7 +124,7 @@
                 <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
                   {{ app.user.username|capitalize }}</br>
-                  {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize }}
+                  {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}
 
                 </p>
               </li>              
@@ -154,7 +180,8 @@
             </span>          
           </a> 
           <ul class="treeview-menu">
-            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li> 
+            <li><a href="{{ path('type_index') }}"><i class="fa fa-circle-o"></i>Type</a></li>            
             <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>       
         </li>
@@ -170,9 +197,13 @@
           </a>
           <ul class="treeview-menu"-->
           
-            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-train"></i>Billet PTB</a></li>          
-            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-subway"></i>Billet Autorail</a></li>
-            <li><a href="#"><i class="fa fa-credit-card"></i>Taxe</a></li>            
+            <li>
+              <a href="{{ path('billet_ptb_index') }}"><i class="fa fa-train"></i><span>Billet PTB</span></a>
+            </li>          
+            <li>
+              <a href="{{ path('billet_navette_index') }}"><i class="fa fa-subway"></i><span>Billet Autorail</span></a>
+            </li>
+            <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-credit-card"></i><span>Taxe</span></a></li>            
           <!--/ul>
         </li-->        
         <li class="treeview">
@@ -284,11 +315,18 @@
     </section>
     <!-- /.sidebar -->
   </aside>
+
  <div class="content-wrapper">
     <section class="content">
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success" id="myModa">
+          {{message}}
+      </div>
+    {% endfor %}
   {% block body %}{% endblock %}
     </section>
    </div>
+
 <!-- /.content-wrapper -->
           
  <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>

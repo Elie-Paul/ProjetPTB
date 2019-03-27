@@ -41,6 +41,8 @@ class ClasseController extends AbstractController
             $entityManager->persist($classe);
             $entityManager->flush();
 
+            $this->addFlash('success','La classe '.$classe->getLibelle().' créée');
+
             return $this->redirectToRoute('classe_index');
         }
 

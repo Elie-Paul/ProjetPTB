@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Emails\EmailTest;
 
 
 /**
@@ -37,13 +36,16 @@ class LieuxController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {        
+            //$mailer->send($message);
             $lieux->setCreatedAt(new \DateTime());
             $lieux->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($lieux);
             $entityManager->flush();
-
-            return $this->redirectToRoute('lieux_new');
+           /// Message de confirmation
+            $this->addFlash('success','Lieu '.$lieux->getLibelle().' a été créer');
+           
+            return $this->redirectToRoute('lieux_index');
         }
 
         return $this->render('lieux/new.html.twig', [

@@ -13,9 +13,7 @@ class BilletTaxeType extends AbstractType
     {
         $builder
             ->add('numeroDernierBillet')
-            ->add('prix')
-            ->add('createdAt')
-            ->add('updatedAt')
+            ->add('prix')            
         ;
     }
 

@@ -51,6 +51,9 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+            /// Message de confirmation
+            $this->addFlash('success','L\'utilisateur '.$user->getNom().' '.$user->getPrenom().' a été créer');
+
             return $this->redirectToRoute('user_index');
         }
 
@@ -167,5 +170,33 @@ class UserController extends AbstractController
 
     // or add an optional message - seen by developers
     $this->denyAccessUnlessGranted('ROLE_BILLETTEUR', null, 'User tried to access a page without having ROLE_BILLETTEUR');
+}
+
+
+
+/**
+  * Require ROLE_VALIDATEUR for *every* controller method in this class.
+  *
+  * @IsGranted("ROLE_VALIDATEUR")
+  */
+  public function validateurDashboard()
+{
+    $this->denyAccessUnlessGranted('ROLE_VALIDATEUR');
+
+    // or add an optional message - seen by developers
+    $this->denyAccessUnlessGranted('ROLE_VALIDATEUR', null, 'User tried to access a page without having ROLE_VALIDATEUR');
+}
+
+/**
+  * Require ROLE_SUPERVISEUR for *every* controller method in this class.
+  *
+  * @IsGranted("ROLE_SUPERVISEUR")
+  */
+  public function superviseurDashboard()
+{
+    $this->denyAccessUnlessGranted('ROLE_SUPERVISEUR');
+
+    // or add an optional message - seen by developers
+    $this->denyAccessUnlessGranted('ROLE_SUPERVISEUR', null, 'User tried to access a page without having ROLE_SUPERVISEUR');
 }
 }

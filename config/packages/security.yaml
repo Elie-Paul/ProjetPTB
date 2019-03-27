@@ -40,6 +40,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMINISTRATEUR }
         - { path: ^/user, roles: ROLE_USER }
         - { path: ^/user, roles: ROLE_BILLETTEUR }
+        - { path: ^/user, roles: ROLE_RESPONSABLE_DE_VENTE }
         - { path: ^/user, roles: ROLE_SUPERVISEUR }
         - { path: ^/user, roles: ROLE_VALIDATEUR }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

@@ -4,24 +4,31 @@
 
   <!-- Modal content -->
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="form-group">
-      <label for="sel1">Depart</label>
-      <select class="form-control" id="sel1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
+    <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="sel1">Depart</label>
+        <select class="form-control" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sel1">Arrivée</label>
+        <select class="form-control" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="sel1">Depart</label>
-      <select class="form-control" id="sel1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary">Ajouter</button>
     </div>
   </div>
   
@@ -29,28 +36,29 @@
 </div>
 
 <!-- The Modal -->
-<div id="myModal1" class="modal">
+<div id="myModal1" class="modal" style="display: none; padding-right: 5px; border-radius: 10px">
 
   <!-- Modal content -->
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="form-group">
-      <label for="sel1">Libelle</label>
-      <select class="form-control" id="sel1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
+    <div class="modal-header">
+      <span class="close" style="color: red;">&times;</span>
     </div>
-    <div class="form-group">
-      <label for="sel1">Prix</label>
-      <select class="form-control" id="sel1">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
+
+    <div class="modal-body">
+      <div class="input-group">
+        <span class="input-group-addon"><big>Libelle</big></span>
+        <input id="msg" type="text" class="form-control" name="msg" placeholder="Saisir un libelle">
+      </div>
+      <br>
+      <div class="input-group">
+        <span class="input-group-addon"><big>Prix</big></span>
+        <input id="msg" type="number" class="form-control" name="msg" placeholder="Saisir un prix">
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary">Ajouter</button>
     </div>
   </div>
   
@@ -74,82 +82,68 @@
     .cs{
        position: relative;
        top: 1.55em;
-       left: 3em; 
+       left: 2em; 
     }
 
     .cs2{
        position: relative;
        top: 1.55em;
-       left: 3em; 
+       left: 2em; 
     }
 </style>
 
  <script>
         
         var span = document.getElementsByClassName("close")[0];
-        var modal = document.getElementById('myModal');
+        var modal = document.getElementsByClassName('modal')[0];
+
         span.onclick = function() 
         {
-            modal.style.display = "none";
-        }
-        window.onclick = function(event) 
-        {
-            if (event.target == modal) 
-            {
-                modal.style.display = "none";
-            }
+          modal.style.display = "none";
         }
 
-        function ajouter(){
+       function ajouter()
+        {
           var libelle = document.getElementById("libelle").value;
           modal.style.display = "none";
           document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
-          swal("Good job!", "Vous avez ajouté une gare", "success");
-          
+          swal("Good job!", "Vous avez ajouté une gare", "success");          
         }
         
         function mode()
         {
-            var modal = document.getElementById('myModal');
-
-            modal.style.display = "block";
-          
+          modal.style.display = "block";          
         }
         
         
-</script>
 
-<script>
         
-        var span1 = document.getElementsByClassName("close")[0];
-        var modal = document.getElementById('myModal1');
-        span.onclick = function() 
+        var span1 = document.getElementsByClassName("close")[1];
+        var modal1 = document.getElementsByClassName('modal')[1];
+        
+        span1.onclick = function() 
         {
-            modal.style.display = "none";
+            modal1.style.display = "none";
         }
 
-        window.onclick = function(event) 
-        {
-            if (event.target == modal) 
-            {
-                modal.style.display = "none";
-            }
-        }
-
-        function ajouter(){
+        
+        /*function ajouter(){
           var libelle = document.getElementById("libelle").value;
-          modal.style.display = "none";
+          modal1.style.display = "none";
           document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
           swal("Good job!", "Vous avez ajouté une gare", "success");
           
-        }
+        }*/
         
         function mode2()
         {
-            var modal1 = document.getElementById('myModal1');
+          modal1.style.display = "block";          
+        }
 
-            modal1.style.display = "block";
-          
+         window.onclick = function(event) 
+        {            
+          modal.style.display = "none";
+          modal1.style.display = "none";
         }
         
         
