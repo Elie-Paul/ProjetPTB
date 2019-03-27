@@ -25,7 +25,7 @@
     @page {
     size: auto;   /* auto is the initial value */
     margin: 0px;  /* this affects the margin in the printer settings */
-    margin-bottom:20px;
+    margin-bottom:0px;
     }
     .billet
     {
@@ -37,13 +37,22 @@
         
         
     }
+    .main2
+    {
+         display: block;
+       -webkit-print-color-adjust: exact;
+        position: absolute;
+        top:0;
+        left: 0px;
+        width :40px;
+    }
     
    .main
     {
        display: block;
        -webkit-print-color-adjust: exact;
         position: absolute;
-        
+        top:0;
         left: 40px;
         right: 20px;
         width :100%;
@@ -60,7 +69,7 @@
    
 </style>
 <body style="width: 100%;">
-    
+    <div class="main2" style="background-color:#{{color}};"></div>
     <div class="main" style="background-color:#{{color}};">
         {% set myVal = 0 %}
         {% for i in nbrebillet %}

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\BilletPtb;
 use App\Entity\BilletNavette;
+use App\Entity\CommandePtb;
 use App\Entity\BilletTaxe;
 use App\Entity\Vignette;
 use App\Entity\User;
@@ -58,6 +59,13 @@ class ImpressionController extends AbstractController
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         $commnadesPTB = $entityManager->getRepository(CommandePtb::class)->findBy
+         (
+             [
+                'billet' => $billet,
+             ],
+             ['dateCommande' =>'ASC']
+         );
          $array=array();
          $j =0 ;
          for( $i=$depart;;$i++)
@@ -90,7 +98,40 @@ class ImpressionController extends AbstractController
                 break;
          }
         $billet->setNumeroDernierBillets(end($array));
-        $tracabilite = new Tracabilite();
+        $a=0;
+        $d=0;
+        $test=array();
+        while ($a<count($commnadesPTB)) 
+        {
+            for ($d;$d<$num;$d++) 
+            {
+                if($commnadesPTB[$a]->getEtatCommande() == 0 )
+                {
+                    array_push($test, $commnadesPTB[$a]->getId());
+                    break;
+                }
+                else
+                {
+                    if($commnadesPTB[$a]->getNombreBilletRealise()== $commnadesPTB[$a]->getNombreBillet())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        $commnadesPTB[$a]->setNombreBilletRealise(
+                            $commnadesPTB[$a]->getNombreBilletRealise()+1
+                        );
+                    }
+                    
+                    
+                    
+                   
+                    
+                }
+            }
+            $a++;
+        }
+        /*$tracabilite = new Tracabilite();
         $tracabilite->setUser($user);
         $tracabilite->setPtb($billet->getPtb());
         $tracabilite->setType("Ptb");
@@ -99,12 +140,14 @@ class ImpressionController extends AbstractController
         $tracabilite->setNumFin(end($array));
         $tracabilite->setCreatedAt(new \DateTime());
         $tracabilite->setUpdatedAt(new \DateTime());
-        $entityManager->persist($tracabilite);
+        $entityManager->persist($tracabilite);*/
         $entityManager->flush();
         $date=new \DateTime();
-         return $this->render('impression/index.html.twig', [
+        /* return $this->render('impression/index.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date
-         ]);
+         ]);*/
+         
+         return new Response(var_dump($test));
     }
     /**
     * @Route("/impressionAutorail/{id}/{numDepartMotif}",name="impressionAutorail_process")
@@ -121,6 +164,7 @@ class ImpressionController extends AbstractController
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+        
          $array=array();
          $j =0;
          for( $i=$depart;;$i++)
@@ -153,7 +197,9 @@ class ImpressionController extends AbstractController
                 break;
          }
         $billet->setNumeroDernierBillet(end($array));
-        $tracabilite = new Tracabilite();
+        
+        
+        /*$tracabilite = new Tracabilite();
         $tracabilite->setUser($user);
         $tracabilite->setNavette($billet->getNavette());
         $tracabilite->setType("Navette");
@@ -162,7 +208,7 @@ class ImpressionController extends AbstractController
         $tracabilite->setNumFin(end($array));
         $tracabilite->setCreatedAt(new \DateTime());
         $tracabilite->setUpdatedAt(new \DateTime());
-        $entityManager->persist($tracabilite);
+        $entityManager->persist($tracabilite);*/
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/index2.html.twig', [

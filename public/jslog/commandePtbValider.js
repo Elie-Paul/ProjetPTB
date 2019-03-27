@@ -47,9 +47,12 @@ function createRowElement(commande)
     pdiv.style.display='block';
     
     let pdiv2 =document.getElementById('pdiv2').cloneNode(true);
+    let progress =(commande.nombreBilletRealiser
+        /commande.nombreDeBilletCommander)*100;
+        pdiv2.style.width = `${progress}%`
     pdiv2.style.display = 'block';
-    pdiv2.style.width = '40%'
-    let realisationContent = document.createTextNode('40%');
+    //pdiv2.style.width = '40%'
+    let realisationContent = document.createTextNode(`${progress}%`);
     pdiv2.appendChild(realisationContent);
     pdiv.appendChild(pdiv2)
     realisation.appendChild(pdiv);

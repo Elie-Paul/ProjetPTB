@@ -9,6 +9,7 @@ const spansSuccess =  document.getElementsByClassName('label label-success');
 const spansDanger =  document.getElementsByClassName('label label-danger');
 const   trows=document.getElementsByClassName('rowsss');
 const   total=document.getElementById('total');
+const  buttonCommande = document.getElementById('commander');
 console.log(trows);
 
 trows[0].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
@@ -206,6 +207,7 @@ function getJson3()
  
  function passerCommande() 
  {
+    buttonCommande.style.display="none";
     for (let i = 0; i <= index; i++) 
     {
         let idGuichet = cmbGuichets[i].options[cmbGuichets[i].selectedIndex].id;
@@ -232,6 +234,7 @@ function getJson3()
             ///a++;
             spansSuccess[i].style.display = "block";
             
+            
         }
      }
      let link ="http://localhost:8000/newCommande/";
@@ -243,9 +246,15 @@ function getJson3()
         xhttp.send(params);  
      }
      
+     if(i==index)
+     {
+        setTimeout(function(){ document.location.href = "http://localhost:8000/commande/ptb/";}
+        , index*600); 
+     }
+    } 
+    
      
-    }       
  }
  
- //test.    addEventListener("click",() =>addRow());
+ 
           
