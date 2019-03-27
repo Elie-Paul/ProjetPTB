@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Emails\EmailTest;
 
 
 /**
@@ -43,7 +42,9 @@ class LieuxController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($lieux);
             $entityManager->flush();
-            $this->addFlash('success','Lieu créé');
+           /// Message de confirmation
+            $this->addFlash('success','Lieu '.$lieux->getLibelle().' a été créer');
+           
             return $this->redirectToRoute('lieux_index');
         }
 

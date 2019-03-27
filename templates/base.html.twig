@@ -24,26 +24,28 @@
 {% block stylesheets %}{% endblock %}
 
 <style> 
-#myModal {
+#myModa {
   position: absolute;
-  width: 200px;
+  width: 250px;
   height: 50px;
+  text-align:center;
   background-color: transparent;
+  text-align: center;
   color: white;
   left: 0;
   -webkit-animation: mymove 0s infinite; /* Chrome, Safari, Opera */
-  animation: mymove 5s infinite;
+  animation: mymove 20s infinite;
 }
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes mymove {
-  50% {left: 500px;}
+  50% {left: 800px;}
   50% {box-shadow: 15px 20px 30px blue;}
 }
 
 /* Standard syntax */
 @keyframes mymove {
-  50% {left: 500px;}
+  50% {left: 800px;}
   50% {box-shadow: 15px 20px 30px blue;}
 }
 </style>
@@ -175,7 +177,7 @@
             <i class="glyphicon glyphicon-text-background"></i>
             <span>Abonnement</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
             </span>          
           </a> 
           <ul class="treeview-menu">
@@ -184,8 +186,6 @@
             <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>       
         </li>
-        {% endif %}
-        {% if is_granted('ROLE_BILLETTEUR') %}
         <!--li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-folder-open"></i>
@@ -203,6 +203,12 @@
               <a href="{{ path('billet_navette_index') }}"><i class="fa fa-subway"></i><span>Billet Autorail</span></a>
             </li>
             <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-credit-card"></i><span>Taxe</span></a></li>            
+            <li>
+              <a href="{{ path('billet_ptb_index') }}"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span></a>
+            </li>
+            <li>
+              <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Vignette</span></a>
+            </li>
           <!--/ul>
         </li-->        
         <li class="treeview">
@@ -210,16 +216,102 @@
             <i class="fa fa-cart-arrow-down"></i>
             <span>Commande</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
             </span>
           </a>
           <ul class="treeview-menu">          
-            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>          
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                        
+            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>          
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Evenement</a></li>                        
           </ul>
         </li>
-        {% endif %}        
+        {% endif %}
 
+        {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_SUPERVISEUR') %}
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-train"></i>
+            <span>Commande PTB</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}          
+            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Vente</a></li> 
+            {% endif %}         
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                   
+          </ul>         
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-subway"></i>
+            <span>Commande Autorail</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}           
+            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Vente</a></li> 
+          {% endif %}          
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                    
+          </ul>         
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-credit-card"></i>
+            <span>Commande Taxe</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE')  %}        
+            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li> 
+            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Vente</a></li> 
+            {% endif %}    
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                   
+          </ul>         
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-cc-mastercard"></i>
+            <span>Commande Vignette</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}          
+            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Vente</a></li>
+            {% endif %}          
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                              
+          </ul>         
+        </li>
+         <li class="treeview">
+              <a href="#"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+              </a>
+                <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-circle-o"></i>Commande Billet</a></li> 
+                {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}                                   
+                  <li><a href="#"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+                  <li><a href="#"><i class="fa fa-circle-o"></i>Vente</a></li>
+                  {% endif %}                  
+                  <li><a href="#"><i class="fa fa-circle-o"></i>Lister</a></li>
+                </ul>
+         </li>  
+        {% endif %}      
+        {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_VALIDATEUR')  %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-signal"></i>
@@ -228,13 +320,14 @@
             </span>
           </a>        
         </li>
+        {% endif %}
         {% if is_granted('ROLE_ADMINISTRATEUR') %} 
         <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-credit-card"></i> 
         <span>Guichets</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
             </span>
         </a>
         <ul class="treeview-menu">
@@ -247,7 +340,7 @@
         <i class="glyphicon glyphicon-road"></i> 
             <span>Trajets</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
             </span>
          </a>
          <ul class="treeview-menu">
@@ -260,7 +353,7 @@
         <i class="glyphicon glyphicon-map-marker"></i>
         <span>Gares</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
             </span>
         </a>
         <ul class="treeview-menu">
@@ -273,7 +366,7 @@
         <i class="glyphicon glyphicon-certificate"></i>
           <span>Classes</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
             </span>
         </a>
         <ul class="treeview-menu">
@@ -286,7 +379,7 @@
             <i class="glyphicon glyphicon-user"></i>
             <span>Utilisateur</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -299,31 +392,35 @@
             <i class="glyphicon glyphicon-wrench"></i>
             <span>Paramètre</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right fa-spin"></i>
             </span>
           </a>
           <ul class="treeview-menu">                                                                          
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
-            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
-            <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Traçabilité</a></li>    
+            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>                
           </ul>
         </li>
-        {% endif %}                                              
+        {% endif %}
+        {% if is_granted('ROLE_SUPERVISEUR') %}
+          <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-road"></i><span>&nbsp;Audit</span></a></li>                                       
+        {% endif %}
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
+
  <div class="content-wrapper">
     <section class="content">
     {% for message in app.flashes('success') %}
-      <div class="alert alert-success" id="myModal">
+      <div class="alert alert-success" id="myModa">
           {{message}}
       </div>
     {% endfor %}
   {% block body %}{% endblock %}
     </section>
    </div>
+
 <!-- /.content-wrapper -->
           
  <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>

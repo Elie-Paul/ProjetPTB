@@ -23,12 +23,18 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
         $user=new User();
         $user->setUsername("elie");
+        $user->setNom("Elie");
+        $user->setPrenom("Paul");
+        $user->setEmail("eliepaulmoubotouto@gmail.com");
+        $user->setUpdateAt(new \DateTime());
+        $user->setCreatedAt(new \DateTime());
+        $user->setFilename("elie.jpg");
 
         $roles [] = "admin";
         //$user->setRoles($roles[0]);
         $user->setPassword($this->passwordEncoder->encodePassword(
                          $user,
-                         'passer'
+                         '123456'
                     ));
         $manager->persist($user);
         $manager->flush();
