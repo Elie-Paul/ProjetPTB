@@ -41,6 +41,9 @@ class GuichetController extends AbstractController
             $entityManager->persist($guichet);
             $entityManager->flush();
 
+            /// Message de confirmation
+            $this->addFlash('success','Guichet '.$guichet->getNom().' a été créer');
+
             return $this->redirectToRoute('guichet_index');
         }
 
