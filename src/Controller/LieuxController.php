@@ -53,7 +53,7 @@ class LieuxController extends AbstractController
     }
 
     /**
-     * @Route("/show/{id}", name="lieux_show", methods={"GET"})
+     * @Route("/{id}", name="lieux_show", methods={"GET"})
      */
     public function show(Lieux $lieux): Response
     {
