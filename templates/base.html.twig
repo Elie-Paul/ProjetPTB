@@ -22,6 +22,31 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 {% block stylesheets %}{% endblock %}
+
+<style> 
+#myModal {
+  position: absolute;
+  width: 200px;
+  height: 50px;
+  background-color: transparent;
+  color: white;
+  left: 0;
+  -webkit-animation: mymove 0s infinite; /* Chrome, Safari, Opera */
+  animation: mymove 5s infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+  50% {left: 500px;}
+  50% {box-shadow: 15px 20px 30px blue;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+  50% {left: 500px;}
+  50% {box-shadow: 15px 20px 30px blue;}
+}
+</style>
 <style>
 .modal {
   display: none; /* Hidden by default */
@@ -98,7 +123,7 @@
                 <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
                   {{ app.user.username|capitalize }}</br>
-                  {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize }}
+                  {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}
 
                 </p>
               </li>              
@@ -291,6 +316,11 @@
   </aside>
  <div class="content-wrapper">
     <section class="content">
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success" id="myModal">
+          {{message}}
+      </div>
+    {% endfor %}
   {% block body %}{% endblock %}
     </section>
    </div>

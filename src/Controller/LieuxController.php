@@ -37,13 +37,13 @@ class LieuxController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {        
-            $mailer->send($message);
+            //$mailer->send($message);
             $lieux->setCreatedAt(new \DateTime());
             $lieux->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($lieux);
             $entityManager->flush();
-
+            $this->addFlash('success','Lieu créé');
             return $this->redirectToRoute('lieux_index');
         }
 

@@ -40,7 +40,7 @@ class ClasseController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($classe);
             $entityManager->flush();
-
+            $this->addFlash('success','classe créée');
             return $this->redirectToRoute('classe_index');
         }
 

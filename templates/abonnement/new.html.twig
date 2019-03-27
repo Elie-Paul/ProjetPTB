@@ -3,6 +3,31 @@
 {% block title %}New Abonnement{% endblock %}
 {% block stylesheets %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<style> 
+#myModal {
+  position: absolute;
+  width: 1200px;
+  height: 700px;
+  background-color: transparent;
+  color: white;
+  left: 0;
+  -webkit-animation: mymove 0s infinite; /* Chrome, Safari, Opera */
+  animation: mymove 5s infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+  50% {left: 200px;}
+  50% {box-shadow: 15px 20px 30px blue;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+  50% {left: 200px;}
+  50% {box-shadow: 15px 20px 30px blue;}
+}
+</style>
 {% endblock %}
 {% block body %}
 

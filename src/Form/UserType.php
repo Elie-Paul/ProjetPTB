@@ -38,8 +38,9 @@ class UserType extends AbstractType
                     'Billetteur' => 'ROLE_BILLETTEUR',
                     'Administrateur' => 'ROLE_ADMINISTRATEUR',
                     'Superviseur' => 'ROLE_SUPERVISEUR',
-                    'Validateur' => 'ROLE_VALIDATEUR'
-                ],
+                    'Validateur' => 'ROLE_VALIDATEUR',
+                    'Responsable Vente' => 'ROLE_RESPONSABLE_DE_VENTE',
+                ],                
                 'label'=> "Rôles",
                 'expanded' => false,
                 'multiple' => true
