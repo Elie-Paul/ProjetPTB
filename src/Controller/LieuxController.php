@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Emails\EmailTest;
+
 
 /**
  * @Route("/lieux")
@@ -29,18 +31,19 @@ class LieuxController extends AbstractController
      * @Route("/new", name="lieux_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
-    {
+    {        
         $lieux = new Lieux();
         $form = $this->createForm(LieuxType::class, $lieux);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {        
+            //$mailer->send($message);
             $lieux->setCreatedAt(new \DateTime());
             $lieux->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($lieux);
             $entityManager->flush();
-
+            $this->addFlash('success','Lieu créé');
             return $this->redirectToRoute('lieux_index');
         }
 
@@ -96,4 +99,6 @@ class LieuxController extends AbstractController
 
         return $this->redirectToRoute('lieux_index');
     }
+
+    
 }

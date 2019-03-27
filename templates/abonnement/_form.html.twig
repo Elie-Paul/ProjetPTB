@@ -2,5 +2,6 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
-    <a class="btn btn-primary" href="{{ path('abonnement_index') }}">Créer un nouveau type</a>
+    <a class="btn btn-primary" id="myBBtn" onclick="print()">Créer un nouveau type</a>
 {{ form_end(form) }}
+<!--href="{{ path('type_index') }}"-->

@@ -22,6 +22,31 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 {% block stylesheets %}{% endblock %}
+
+<style> 
+#myModal {
+  position: absolute;
+  width: 200px;
+  height: 50px;
+  background-color: transparent;
+  color: white;
+  left: 0;
+  -webkit-animation: mymove 0s infinite; /* Chrome, Safari, Opera */
+  animation: mymove 5s infinite;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+  50% {left: 500px;}
+  50% {box-shadow: 15px 20px 30px blue;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+  50% {left: 500px;}
+  50% {box-shadow: 15px 20px 30px blue;}
+}
+</style>
 <style>
 .modal {
   display: none; /* Hidden by default */
@@ -98,7 +123,7 @@
                 <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
                   {{ app.user.username|capitalize }}</br>
-                  {{ app.user.roles ? app.user.roles[0] }}
+                  {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}
 
                 </p>
               </li>              
@@ -143,20 +168,8 @@
             <span>Tableau de Bord</span>
           </a>
         </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-folder-open"></i>
-            <span>Billet</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">2</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>
-            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>            
-          </ul>
-        </li>
+        <!--== false-->
+         {% if is_granted('ROLE_BILLETTEUR') %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-text-background"></i>
@@ -166,10 +179,46 @@
             </span>          
           </a> 
           <ul class="treeview-menu">
-            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li> 
+            <li><a href="{{ path('type_index') }}"><i class="fa fa-circle-o"></i>Type</a></li>            
             <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>       
         </li>
+        {% endif %}
+        {% if is_granted('ROLE_BILLETTEUR') %}
+        <!--li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-folder-open"></i>
+            <span>Billet</span>
+            <span class="pull-right-container">
+              <span class="label label-primary pull-right">2</span>
+            </span>
+          </a>
+          <ul class="treeview-menu"-->
+          
+            <li>
+              <a href="{{ path('billet_ptb_index') }}"><i class="fa fa-train"></i><span>Billet PTB</span></a>
+            </li>          
+            <li>
+              <a href="{{ path('billet_navette_index') }}"><i class="fa fa-subway"></i><span>Billet Autorail</span></a>
+            </li>
+            <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-credit-card"></i><span>Taxe</span></a></li>            
+          <!--/ul>
+        </li-->        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-cart-arrow-down"></i>
+            <span>Commande</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">          
+            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>          
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                        
+          </ul>
+        </li>
+        {% endif %}        
 
         <li class="treeview">
           <a href="#">
@@ -179,6 +228,7 @@
             </span>
           </a>        
         </li>
+        {% if is_granted('ROLE_ADMINISTRATEUR') %} 
         <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-credit-card"></i> 
@@ -230,7 +280,20 @@
             <li><a href="{{ path('classe_new') }}"><i class="fa fa-circle-o"></i>Nouvelle</a></li>            
             <li><a href="{{ path('classe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>
-        </li>  
+        </li> 
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-user"></i>
+            <span>Utilisateur</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ path('user_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('user_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li> 
+          </ul>
+        </li>         
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-wrench"></i>
@@ -239,21 +302,25 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>                        
-            <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>                             
+          <ul class="treeview-menu">                                                                          
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
             <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
             <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Traçabilité</a></li>    
           </ul>
-        </li>                                              
+        </li>
+        {% endif %}                                              
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
  <div class="content-wrapper">
     <section class="content">
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success" id="myModal">
+          {{message}}
+      </div>
+    {% endfor %}
   {% block body %}{% endblock %}
     </section>
    </div>

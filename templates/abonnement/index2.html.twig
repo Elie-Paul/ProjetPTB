@@ -271,9 +271,25 @@
 
     {#---------------------------------------------TO HIDE-------------------------------------------#}
     <div class="toHide">
-        <h1>Abonnement index</h1>
+        <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Abonnés</big></h4>
+          </div>
+            <div class="col-md-6 text-right">
+            <a class="btn btn-primary pull-right" href="{{ path('abonnement_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau Abonné</a>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
 
-
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h1 class="box-title">Liste des Abonnés</h1>
+            </div>
+            <div class="box-body">
         <table class="table">
             <thead>
             <tr>
@@ -284,7 +300,7 @@
                 <th>Type d'abonnement</th>
                 <th>Prix</th>
                 <th>Date d'expiration</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -298,15 +314,15 @@
                     <td>{{ abonnement.type.prix }}</td>
                     <td>{{ abonnement.expiration | date('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ path('abonnement_show', {'id': abonnement.id}) }}">show</a>
-                        <a href="{{ path('abonnement_edit', {'id': abonnement.id}) }}">edit</a>
+                        <a class="btn btn-info" role="button" href="{{ path('abonnement_show', {'id': abonnement.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>
+                        <a class="btn btn-warning" role="button" href="{{ path('abonnement_edit', {'id': abonnement.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
                         {% if abonnement.nombreCarte is not defined or abonnement.nombreCarte != 1 %}
-                            <a onmouseover="survol('{{ abonnement.filename }}', '{{ abonnement.expiration | date('d-m-Y') }}' )"
+                            <a class="btn btn-success" role="button" onmouseover="survol('{{ abonnement.filename }}', '{{ abonnement.expiration | date('d-m-Y') }}' )"
                                onclick="printContent({{ abonnement.id }}, '{{ abonnement.nom }}', '{{ abonnement.prenom }}'
                                        , '{{ abonnement.type.libelle }}', '{{ abonnement.type.section }}', '{{ abonnement.filename }}', '{{ abonnement.expiration | date('d-m-Y') }}')"
                                href="#">Génerer la carte</a>
                         {% else %}
-                            <a onclick="retablir({{ abonnement.id }})" href="#">Reabonner</a>
+                            <a class="btn btn-info" role="button" onclick="retablir({{ abonnement.id }})" href="#">Reabonner</a>
                         {% endif %}
                     </td>
                 </tr>
@@ -317,7 +333,9 @@
             {% endfor %}
             </tbody>
         </table>
-
-        <a href="{{ path('abonnement_new') }}">Create new</a>
     </div>
+    </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

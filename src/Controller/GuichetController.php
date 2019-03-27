@@ -19,7 +19,7 @@ class GuichetController extends AbstractController
      * @Route("/", name="guichet_index", methods={"GET"})
      */
     public function index(GuichetRepository $guichetRepository): Response
-    {
+    {        
         return $this->render('guichet/index.html.twig', [
             'guichets' => $guichetRepository->findAll(),
         ]);
