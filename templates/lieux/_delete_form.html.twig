@@ -1,8 +1,36 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<form method="post" action="{{ path('lieux_delete', {'id': lieux.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+
+
+
+<form method="post" action="{{ path('lieux_delete', {'id': lieux.id}) }}">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ lieux.id) }}">
 
-    <button  class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> <big>Supprimer</big></button>
+    <a onclick="confirmation({{ lieux.id }})" type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> <big>Supprimer</big></a>
 
 </form>
+
+
+<script>
+    function confirmation(id){
+       /*alert("Voulez vous supprimer ?");
+        window.location.href = `http://127.0.0.1:8000/lieux/${id}` ;*/
+        swal({
+            title: "Êtes-vous sûr?",
+            text: "Une fois supprimé, vous ne pourrez plus récupérer ce fichier!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                swal("Poof! Fichier supprimer", {
+                icon: "success",
+                });
+                window.location.href = `http://127.0.0.1:8000/lieux/${id}` ;
+            } else {
+                swal("Fihier non supprimer!");
+            }
+        });
+    }
+</script>

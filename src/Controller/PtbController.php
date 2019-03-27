@@ -52,6 +52,8 @@ class PtbController extends AbstractController
             $entityManager->persist($billetPTB);
             $entityManager->flush();
 
+            /// Message de confirmation
+            $this->addFlash('success','Le train Ptb ayant le trajet '.$ptb->getTrajet().' et de '.$ptb->getSection()->getLibelle().' a été créer');
             return $this->redirectToRoute('ptb_index');
         }
 

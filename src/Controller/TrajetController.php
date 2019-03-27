@@ -41,7 +41,10 @@ class TrajetController extends AbstractController
             $entityManager->persist($trajet);
             $entityManager->flush();
 
-            return $this->redirectToRoute('trajet_new');
+            /// Message de confirmation
+            $this->addFlash('success','Trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' a été créer');
+
+            return $this->redirectToRoute('trajet_index');
         }
 
         return $this->render('trajet/new.html.twig', [

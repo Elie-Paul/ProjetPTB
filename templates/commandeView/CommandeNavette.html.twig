@@ -37,7 +37,7 @@
         }
     }    
 </style>
-    <h1>Génération de Commande Billets PTB</h1>
+    <h1>Génération de Commande Billets Navette</h1>
     
     <div class="box box-default">
           <div class="box-header with-border">
@@ -59,7 +59,7 @@
         <thead>
             <tr>
                 <th>Guichet</th>
-                <th>Section</th>
+                <th>Classe</th>
                 <th>Trajet</th>
                 <th>Nombre de billets</th>
                 <th>Total</th>
@@ -78,7 +78,7 @@
                 <td>
                     <div class="form-group ">
                     <select class="form-control SectionId" >
-                        <option  id='0' selected disabled>Section</option>
+                        <option  id='0' selected disabled>Classe</option>
                     </select>
                     </div>  
                 </td>
@@ -128,7 +128,7 @@
     </div>
     
     
-<script src="{{ asset('jslog/commandePtb.js') }}"></script>
+<script src="{{ asset('jslog/commandeNavette.js') }}"></script>
     
 {% endblock %}
 

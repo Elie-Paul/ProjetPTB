@@ -26,7 +26,6 @@ class AppFixtures extends Fixture
         $user->setNom("THERA");
         $user->setPrenom("THERA");
         $user->setEmail("taalr@taalr.com");
-        $user->setEmail("taalr@taalr.com");
         $user->setFilename("taalr");
         $user->setCreatedAt(new \DateTime());
         $user->setUpdateAt(new \DateTime());
