@@ -1,0 +1,4 @@
+{{ form_start(form, {'attr': {'id': 'form_section'}, 'action': path('section_event_new')}  ) }}
+    {{ form_widget(form) }}
+<button id="btnSection" class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
