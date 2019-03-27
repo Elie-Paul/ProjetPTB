@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\BilletPtb;
 use App\Entity\BilletNavette;
 use App\Entity\CommandePtb;
+use App\Entity\CommandeNavette;
 use App\Entity\BilletTaxe;
 use App\Entity\Vignette;
 use App\Entity\User;
@@ -131,16 +132,7 @@ class ImpressionController extends AbstractController
             }
             $a++;
         }
-        /*$tracabilite = new Tracabilite();
-        $tracabilite->setUser($user);
-        $tracabilite->setPtb($billet->getPtb());
-        $tracabilite->setType("Ptb");
-        $tracabilite->setMotif($motif);
-        $tracabilite->setNumDepart($depart);
-        $tracabilite->setNumFin(end($array));
-        $tracabilite->setCreatedAt(new \DateTime());
-        $tracabilite->setUpdatedAt(new \DateTime());
-        $entityManager->persist($tracabilite);*/
+        
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/index.html.twig', [
@@ -164,7 +156,13 @@ class ImpressionController extends AbstractController
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
-        
+         $commnadesNavettes = $entityManager->getRepository(CommandeNavette::class)->findBy
+         (
+             [
+                'billet' => $billet,
+             ],
+             ['dateCommande' =>'ASC']
+         );
          $array=array();
          $j =0;
          for( $i=$depart;;$i++)
@@ -197,18 +195,41 @@ class ImpressionController extends AbstractController
                 break;
          }
         $billet->setNumeroDernierBillet(end($array));
-        
-        
-        /*$tracabilite = new Tracabilite();
-        $tracabilite->setUser($user);
-        $tracabilite->setNavette($billet->getNavette());
-        $tracabilite->setType("Navette");
-        $tracabilite->setMotif($motif);
-        $tracabilite->setNumDepart($depart);
-        $tracabilite->setNumFin(end($array));
-        $tracabilite->setCreatedAt(new \DateTime());
-        $tracabilite->setUpdatedAt(new \DateTime());
-        $entityManager->persist($tracabilite);*/
+
+        $a=0;
+        $d=0;
+        $test=array();
+        while ($a<count($commnadesNavettes)) 
+        {
+            for ($d;$d<$num;$d++) 
+            {
+                if($commnadesNavettes[$a]->getEtatCommande() == 0 )
+                {
+                    array_push($test, $commnadesNavettes[$a]->getId());
+                    break;
+                }
+                else
+                {
+                    if($commnadesNavettes[$a]->getNombreBilletRealise()== $commnadesNavettes[$a]->getNombreBillet())
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        $commnadesNavettes[$a]->setNombreBilletRealise(
+                            $commnadesNavettes[$a]->getNombreBilletRealise()+1
+                        );
+                    }
+                    
+                    
+                    
+                   
+                    
+                }
+            }
+            $a++;
+        }
+   
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/index2.html.twig', [
