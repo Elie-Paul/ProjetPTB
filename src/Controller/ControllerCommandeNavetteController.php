@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\JsonController;
+namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,32 +8,29 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Guichet;
 use App\Entity\Trajet;
-use App\Entity\Section;
-use App\Entity\BilletPtb;
-use App\Entity\Ptb;
-use App\Entity\CommandePtb;
+use App\Entity\Classe;
+use App\Entity\BilletNavette;
+use App\Entity\Navette;
+use App\Entity\CommandeNavette;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
-class Controller extends AbstractController
+class ControllerCommandeNavetteController extends AbstractController
 {
     /**
-     * @Route("/json/controller/", name="json_controller_")
+     * @Route("/commande/navette", name="controller_commande_navette")
      */
     public function index()
     {
-        return $this->render('billet_taxe/index.html.twig', [
-            'billet_taxes' => $billetTaxeRepository->findAll(),
-        ]);
+        return $this->render('commandeView/CommandeNavette.html.twig');
     }
     /**
-     * @Route("/totalbillet/{id}", name="totalBillet")
+     * @Route("/totalbilletNavette/{id}", name="totalBilletNavette")
      */
     public function totalBillet($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
-        $commnadesPTB = $entityManager->getRepository(CommandePtb::class)->findBy
+        $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
+        $commnadesNavette = $entityManager->getRepository(CommandeNavette::class)->findBy
         (
             [
                 'billet' => $billet,
@@ -42,51 +39,51 @@ class Controller extends AbstractController
         );
         $i=0;
         $nBillet=0;
-        for ($i=0; $i < count($commnadesPTB); $i++) 
+        for ($i=0; $i < count($commnadesNavette); $i++) 
         { 
-            if($commnadesPTB[$i]->getEtatCommande()==1)
+            if($commnadesNavette[$i]->getEtatCommande()==1)
             {
-                $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
+                $diff=$commnadesNavette[$i]->getNombreBillet()-$commnadesNavette[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
             }
         }
         return new response(''.$nBillet);
     }    
     /**
-     * @Route("/listCommande", name="showAllCommandePTB")
+     * @Route("/listCommandeNavette", name="showAllCommandeNavette")
      */
-    public function showAllCommandePTB()
+    public function showAllCommandeNavette()
     {
-        return $this->render('commandeView/validerCommandePTB.html.twig');
+        return $this->render('commandeView/validerCommandeNavette.html.twig');
     }
      /**
-     * @Route("/Json/listCommande", name="getAllCommandePTB")
+     * @Route("/Json/listCommandeNavette", name="getAllCommandeNavette")
      */
-    public function getAllCommandePTB()
+    public function getAllCommandeNavette()
     {
-        $repository = $this->getDoctrine()->getRepository(CommandePtb::class);
-        $commandePtbs = $repository->findAll();
+        $repository = $this->getDoctrine()->getRepository(CommandeNavette::class);
+        $commandeNavettes = $repository->findAll();
         $data = array();
-        foreach ($commandePtbs as $key => $variable) 
+        foreach ($commandeNavettes as $key => $variable) 
         {
             $myarray = array
             (
                 'id' => $variable->getId(),
 
-                'section' => $variable
+                'classe' => $variable
                 ->getBillet()
-                ->getPtb()
-                ->getSection(),
+                ->getNavette()
+                ->getClasse(),
 
                 'depart' => $variable
                 ->getBillet()
-                ->getPtb()->getTrajet()
+                ->getNavette()->getTrajet()
                 ->getDepart()
                 ->getLibelle(),
 
                 'arrivee' => $variable
                 ->getBillet()
-                ->getPtb()->getTrajet()
+                ->getNavette()->getTrajet()
                 ->getArrivee()
                 ->getLibelle(),
 
@@ -107,13 +104,13 @@ class Controller extends AbstractController
                 'etat' => $variable
                 ->getEtatCommande(),
 
-                'section' => $variable
+                'classe' => $variable
                 ->getBillet()
-                ->getPtb()
-                ->getSection()
+                ->getNavette()
+                ->getClasse()
                 ->getLibelle(),
                 'dateCommandeValider' => $variable
-                ->getDateCommandeValider()
+                ->getDateComnandeValider()
             );
             array_push($data,$myarray);
         }
@@ -121,14 +118,14 @@ class Controller extends AbstractController
             //return new Response('dddd');
     }
      /**
-     * @Route("/listCommandetoPrint", name="showAllCommandePTBtoPrint")
+     * @Route("/listCommandeNavettetoPrint", name="showAllCommandeNavettetoPrint")
      */
-    public function showAllCommandePTBtoPrint()
+    public function showAllCommandeNavettetoPrint()
     {
-        return $this->render('commandeView/printCommandePTB.html.twig');
+        return $this->render('commandeView/printCommandeNavette.html.twig');
     }
      /**
-     * @Route("/newCommande/", name="newCommande")
+     * @Route("/newCommandeNavette/", name="newCommandeNavette")
      */
     public function newCommande(Request $request)//Request $request
     {
@@ -136,53 +133,51 @@ class Controller extends AbstractController
         $guichet = $this->getDoctrine()
         ->getRepository(Guichet::class)
         ->find(intval($array[0]));
-        $section = $this->getDoctrine()
-        ->getRepository(Section::class)
+        $classe = $this->getDoctrine()
+        ->getRepository(Classe::class)
         ->find(intval($array[1]));
         $trajet = $this->getDoctrine()
         ->getRepository(Trajet::class)
         ->find(intval($array[2]));
-        $ptb = $this->getDoctrine()
-        ->getRepository(Ptb::class)
+        $navette = $this->getDoctrine()
+        ->getRepository(Navette::class)
         ->findOneBy
         (
             [
                 "trajet" => $trajet,
-                "section" => $section
+                "classe" => $classe
             ]
         );
-        $billetPtb = $this->getDoctrine()
-        ->getRepository(BilletPtb::class)
+        $billetNavette = $this->getDoctrine()
+        ->getRepository(BilletNavette::class)
         ->findOneBy
         (
             [
                 "guichet" => $guichet,
-                "ptb" => $ptb,
+                "navette" => $navette,
             ]
         );
-        $commandePtb = new CommandePtb();
-        $commandePtb->setBillet($billetPtb);
-        $commandePtb->setNombreBillet(intval($array[3]));
-        $commandePtb->setNombreBilletRealise(0);
-        $commandePtb->setNombreBilletVendu(0);
+        $commandeNavette = new CommandeNavette();
+        $commandeNavette->setBillet($billetNavette);
+        $commandeNavette->setNombreBillet(intval($array[3]));
+        $commandeNavette->setNombreBilletRealise(0);
+        $commandeNavette->setNombreBilletVendu(0);
         
-        $commandePtb->setEtatCommande(0);
+        $commandeNavette->setEtatCommande(0);
         
-        $commandePtb->setDateCommande(new \DateTime());
-        //$commandePtb->setDateCommandeValider(null);
-        //$commandePtb->setDateCommandeRealiser(null);
+        $commandeNavette->setDateCommande(new \DateTime());
         
-        $commandePtb->setCreatedAt(new \DateTime());
-        $commandePtb->setUpdatedAt(new \DateTime());
+        $commandeNavette->setCreatedAt(new \DateTime());
+        $commandeNavette->setUpdatedAt(new \DateTime());
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($commandePtb);
+        $entityManager->persist($commandeNavette);
         $entityManager->flush();
         return new Response("true");
         //return new Response("<h1>".$ptb->getId()."</h1>");
     }
     /**
-     * @Route("/ValidationCommande", name="ValidationCommande")
+     * @Route("/ValidationCommandeNavette", name="ValidationCommandeNavette")
      */
     public function ValidationCommande(Request $request)
     {
@@ -191,7 +186,7 @@ class Controller extends AbstractController
         ->getDoctrine()
         ->getManager();
         $commande = $entityManager
-        ->getRepository(CommandePTB::class)
+        ->getRepository(CommandeNavette::class)
         ->find($idCommande);
         if($commande->getEtatCommande()==0)
             $commande->setEtatCommande(1);
@@ -200,29 +195,13 @@ class Controller extends AbstractController
         $entityManager->flush();
         return new Response('<h1>'.$commande->getId().'</h1>');
     }
+    
     /**
-     * @Route("/json/guichet/", name="json_controller_guichet")
+     * @Route("/json/classe/", name="json_controller_classe")
      */
-    public function getGuichet()
+    public function getClasse()
     {
-        $repository = $this->getDoctrine()->getRepository(Guichet::class);
-        $variable2 = $repository->findAll();
-        $note = array();
-        foreach ($variable2 as $key => $variable) 
-        {
-            $myarray = array('id' => "".$variable->getId()."",  'nom' => $variable->getNom());
-            array_push($note,$myarray);
-        }
-        $data = [
-            'notes' => $note];
-            return new Response(json_encode($note));
-    }
-    /**
-     * @Route("/json/section/", name="json_controller_section")
-     */
-    public function getSection()
-    {
-        $repository = $this->getDoctrine()->getRepository(Section::class);
+        $repository = $this->getDoctrine()->getRepository(Classe::class);
         $variable2 = $repository->findAll();
         $note = array();
         foreach ($variable2 as $key => $variable) 
@@ -236,26 +215,26 @@ class Controller extends AbstractController
 
     }
     /**
-     * @Route("/json/trajet/{id}", name="json_controller_Trajet")
+     * @Route("/json/trajetNavette/{id}", name="json_controller_Trajet_Navette")
      */
     public function getTrajet($id)
     {
         $idGuichet=intval(explode('+',$id)[0]);
-        $idSection=intval(explode('+',$id)[1]);
+        $idClasse=intval(explode('+',$id)[1]);
         $repository1 = $this->getDoctrine()->getRepository(Guichet::class);
-        $repository2 = $this->getDoctrine()->getRepository(Section::class);
+        $repository2 = $this->getDoctrine()->getRepository(Classe::class);
         //$repository = $this->getDoctrine()->getRepository(Trajet::class);
         $guichet = $repository1->find($idGuichet);
-        $section = $repository2->find($idSection);
-        $array   = $guichet->getBilletPtbs();
+        $classe = $repository2->find($idClasse);
+        $array   = $guichet->getBilletNavettes();
         $note = array();
         foreach ($array as $key => $variable) 
         {
-            if ($variable->getPtb()->getSection() == $section) 
+            if ($variable->getNavette()->getClasse() == $classe) 
             {
-                $myarray = array('id' => "".$variable->getPtb()->getTrajet()->getId(),  
-                'Depart' => $variable->getPtb()->getTrajet()->getDepart()->getLibelle(),
-                'Arrivee' => $variable->getPtb()->getTrajet()->getArrivee()->getLibelle());
+                $myarray = array('id' => "".$variable->getNavette()->getTrajet()->getId(),  
+                'Depart' => $variable->getNavette()->getTrajet()->getDepart()->getLibelle(),
+                'Arrivee' => $variable->getNavette()->getTrajet()->getArrivee()->getLibelle());
                 array_push($note,$myarray);  
             }
             
@@ -265,5 +244,5 @@ class Controller extends AbstractController
             return new Response(json_encode($note));
     
     }
-}
 
+}

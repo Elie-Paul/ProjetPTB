@@ -1,6 +1,6 @@
 let index=0;
 let selectedrow=0;
-const   cmbSections = document.getElementsByClassName('form-control SectionId');
+const   cmbClasses = document.getElementsByClassName('form-control SectionId');
 const   cmbGuichets = document.getElementsByClassName('form-control GuichetId');
 const   cmbTrajets = document.getElementsByClassName('form-control TrajetId');
 const   Nbres = document.getElementsByClassName('form-control nbreBillet');
@@ -37,9 +37,9 @@ function addRow()
         trows[index].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
        // cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));    
        getJson("http://localhost:8000/json/guichet/",1);
-       getJson("http://localhost:8000/json/section/",2);
+       getJson("http://localhost:8000/json/classe/",2);
        cmbGuichets[index].addEventListener("change",getJson3);
-       cmbSections[index].addEventListener("change",getJson3);
+       cmbClasses[index].addEventListener("change",getJson3);
        Nbres[index].addEventListener("change",setTotal);
        
        
@@ -54,8 +54,8 @@ function checkforEmpty()
         for (let i = 0; i < index; i++) 
         {
             let idGuichet = cmbGuichets[i].options[cmbGuichets[i].selectedIndex].id;
-            let idSection = cmbSections[i].options[cmbSections[i].selectedIndex].id;
-            if(Nbres[i].value =="" && idGuichet=='0' && idSection=='0')
+            let idClasse= cmbClasses[i].options[cmbClasses[i].selectedIndex].id;
+            if(Nbres[i].value =="" && idGuichet=='0' && idClasse=='0')
             {
                 
                 tbody.removeChild(tbody.children[i]);
@@ -99,7 +99,7 @@ function removeRow()
                     setGuichet(response);
                     break;
                 case 2:
-                    setSection(response);
+                    setClasse(response);
                     break;                    
                 case 3:
                     setTrajet(response,trajetid);
@@ -115,7 +115,7 @@ function removeRow()
 function getJson3()
  {
     let idGuichet = cmbGuichets[selectedrow].options[cmbGuichets[selectedrow].selectedIndex].id;
-    let idSection = cmbSections[selectedrow].options[cmbSections[selectedrow].selectedIndex].id;
+    let idClasse = cmbClasses[selectedrow].options[cmbClasses[selectedrow].selectedIndex].id;
    if(cmbTrajets[selectedrow].children.length>1)
    {
         for(let i=1; i<cmbTrajets[selectedrow].children.length;i++)
@@ -123,9 +123,9 @@ function getJson3()
             cmbTrajets[selectedrow].removeChild(cmbTrajets[selectedrow].children[i]);
         }
    }
-    let link =`http://localhost:8000/json/trajet/${idGuichet}+${idSection}`;
+    let link =`http://localhost:8000/json/trajetNavette/${idGuichet}+${idClasse}`;
     console.log(link);
-    if (idGuichet!='0' && idSection!='0')
+    if (idGuichet!='0' && idClasse!='0')
     {
         getJson(link,3,selectedrow);
     } 
@@ -147,7 +147,7 @@ function getJson3()
       }
       
  }
- function setSection(array)
+ function setClasse(array)
  {
      
      //var array=getJson("http://localhost:8000/json/guichet/");
@@ -160,7 +160,7 @@ function getJson3()
            let t = document.createTextNode(`${array[i].libelle}`);
            //-${array[i].Arrivee}
            option.appendChild(t);
-           cmbSections[index].appendChild(option);
+           cmbClasses[index].appendChild(option);
     }
     
  }
@@ -195,9 +195,9 @@ function getJson3()
     total.innerText=""+tot;
  } 
  getJson("http://localhost:8000/json/guichet/",1);
- getJson("http://localhost:8000/json/section/",2);
+ getJson("http://localhost:8000/json/classe/",2);
  cmbGuichets[index].addEventListener("change",getJson3);
- cmbSections[index].addEventListener("change",getJson3);
+ cmbClasses[index].addEventListener("change",getJson3);
  //cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));
  Nbres[index].addEventListener("click",addRow);
  Nbres[index].addEventListener("keyup",checkforEmpty);
@@ -211,46 +211,36 @@ function getJson3()
     for (let i = 0; i <= index; i++) 
     {
         let idGuichet = cmbGuichets[i].options[cmbGuichets[i].selectedIndex].id;
-        let idSection = cmbSections[i].options[cmbSections[i].selectedIndex].id;
+        let idClasse = cmbClasses[i].options[cmbClasses[i].selectedIndex].id;
         let idTrajet  = cmbTrajets[i].options[cmbTrajets[i].selectedIndex].id;    
         let xhttp=new XMLHttpRequest();
-     /*xhttp.onreadystatechange = function()
-     {
-         if (this.readyState == 4 && this.status == 200)
-         {
-             //let response = JSON.parse();
-             alert(xhttp.responseText);
-             
-             
-         }
-     }*/
-     let a= 0;
-     xhttp.onload = function ()
-     {
-        if ( this.status == 200)
+        let a= 0;
+        xhttp.onload = function ()
         {
-            //let response = JSON.parse();
-            //alert(xhttp.responseText);
-            ///a++;
-            spansSuccess[i].style.display = "block";
-            
-            
+            if ( this.status == 200)
+            {
+                //let response = JSON.parse();
+                //alert(xhttp.responseText);
+                ///a++;
+                spansSuccess[i].style.display = "block";
+                
+                
+            }
         }
-     }
-     let link ="http://localhost:8000/newCommande/";
-     let params =`${idGuichet}+${idSection}+${idTrajet}+${Nbres[i].value}`;
-     console.log(params);
-     if(Nbres[i].value !="" && idGuichet!='0' && idSection!='0'&& idTrajet!='0')
-     {
-        xhttp.open("POST",link,true);
-        xhttp.send(params);  
-     }
-     
-     if(i==index)
-     {
-        setTimeout(function(){ document.location.href = "http://localhost:8000/commande/ptb/";}
-        , index*600); 
-     }
+        let link ="http://localhost:8000/newCommandeNavette/";
+        let params =`${idGuichet}+${idClasse}+${idTrajet}+${Nbres[i].value}`;
+        console.log(params);
+        if(Nbres[i].value !="" && idGuichet!='0' && idClasse!='0'&& idTrajet!='0')
+        {
+            xhttp.open("POST",link,true);
+            xhttp.send(params);  
+        }
+        
+        if(i==index)
+        {
+            setTimeout(function(){ document.location.href = "http://localhost:8000/commande/Navette/";}
+            , index*600); 
+        }
     } 
     
      

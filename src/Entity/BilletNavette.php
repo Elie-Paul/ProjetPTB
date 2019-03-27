@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +44,16 @@ class BilletNavette
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandeNavette", mappedBy="billet")
+     */
+    private $commandeNavettes;
+
+    public function __construct()
+    {
+        $this->commandeNavettes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +116,37 @@ class BilletNavette
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandeNavette[]
+     */
+    public function getCommandeNavettes(): Collection
+    {
+        return $this->commandeNavettes;
+    }
+
+    public function addCommandeNavette(CommandeNavette $commandeNavette): self
+    {
+        if (!$this->commandeNavettes->contains($commandeNavette)) {
+            $this->commandeNavettes[] = $commandeNavette;
+            $commandeNavette->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeNavette(CommandeNavette $commandeNavette): self
+    {
+        if ($this->commandeNavettes->contains($commandeNavette)) {
+            $this->commandeNavettes->removeElement($commandeNavette);
+            // set the owning side to null (unless already changed)
+            if ($commandeNavette->getBillet() === $this) {
+                $commandeNavette->setBillet(null);
+            }
+        }
 
         return $this;
     }
