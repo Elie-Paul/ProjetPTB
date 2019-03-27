@@ -37,14 +37,13 @@ class LieuxController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {        
-            $mailer->send($message);
             $lieux->setCreatedAt(new \DateTime());
             $lieux->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($lieux);
             $entityManager->flush();
 
-            return $this->redirectToRoute('lieux_index');
+            return $this->redirectToRoute('lieux_new');
         }
 
         return $this->render('lieux/new.html.twig', [
@@ -54,7 +53,7 @@ class LieuxController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="lieux_show", methods={"GET"})
+     * @Route("/show/{id}", name="lieux_show", methods={"GET"})
      */
     public function show(Lieux $lieux): Response
     {

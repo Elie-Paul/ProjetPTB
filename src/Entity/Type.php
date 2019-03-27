@@ -39,9 +39,15 @@ class Type
      */
     private $section;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Vignette", mappedBy="type")
+     */
+    private $vignettes;
+
     public function __construct()
     {
         $this->abonnements = new ArrayCollection();
+        $this->vignettes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,6 +123,37 @@ class Type
     public function setSection(string $section): self
     {
         $this->section = $section;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vignette[]
+     */
+    public function getVignettes(): Collection
+    {
+        return $this->vignettes;
+    }
+
+    public function addVignette(Vignette $vignette): self
+    {
+        if (!$this->vignettes->contains($vignette)) {
+            $this->vignettes[] = $vignette;
+            $vignette->setType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVignette(Vignette $vignette): self
+    {
+        if ($this->vignettes->contains($vignette)) {
+            $this->vignettes->removeElement($vignette);
+            // set the owning side to null (unless already changed)
+            if ($vignette->getType() === $this) {
+                $vignette->setType(null);
+            }
+        }
 
         return $this;
     }

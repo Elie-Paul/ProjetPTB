@@ -38,7 +38,7 @@ class Abonnement
      * @Vich\UploadableField(mapping="client_image", fileNameProperty="filename")
      * @var File
      * @Assert\Image(
-     *     mimeTypes="image/jpeg"
+     *     mimeTypes="image/*"
      * )
      */
     private $imageFile;
@@ -82,6 +82,16 @@ class Abonnement
      * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="abonnement")
      */
     private $payments;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nombreCarte;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $expiration;
 
     public function __construct()
     {
@@ -254,6 +264,30 @@ class Abonnement
     public function __toString()
     {
         return $this->getNom().'  '.$this->getPrenom().' '.$this->getAdresse();
+    }
+
+    public function getNombreCarte(): ?int
+    {
+        return $this->nombreCarte;
+    }
+
+    public function setNombreCarte(?int $nombreCarte): self
+    {
+        $this->nombreCarte = $nombreCarte;
+
+        return $this;
+    }
+
+    public function getExpiration(): ?\DateTimeInterface
+    {
+        return $this->expiration;
+    }
+
+    public function setExpiration(?\DateTimeInterface $expiration): self
+    {
+        $this->expiration = $expiration;
+
+        return $this;
     }
 
 

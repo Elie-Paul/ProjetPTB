@@ -10,6 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 
 class UserType extends AbstractType
@@ -17,25 +19,41 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageFile', FileType::class, [
-                'required' => true,
-                'label' => "L'image doit être de type jpeg"
+            ->add('imageFile', FileType::class, [                
+                'label' => "Image",
+                'attr' => [                    
+                    'class' => 'form-control',
+                    'required' => true                  
+                    ]             
             ])
             ->add('nom')            
             ->add('prenom')
             ->add('email')
-            ->add('username')
+            ->add('username',TextType::class,[
+                'required' => true,
+                'label'=> "Utilisateur"
+            ])
             ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'utilisateur' => 'ROLE_USER',
-                    'Administrateur' => 'ROLE_ADMIN',
-                    'Superviseur' => 'ROLE_SUPER_ADMIN',
+                'choices' => [                    
+                    'Billetteur' => 'ROLE_BILLETTEUR',
+                    'Administrateur' => 'ROLE_ADMINISTRATEUR',
+                    'Superviseur' => 'ROLE_SUPERVISEUR',
+                    'Validateur' => 'ROLE_VALIDATEUR'
                 ],
-                'expanded' => true,
+                'label'=> "Rôles",
+                'expanded' => false,
                 'multiple' => true
             ])            
-            ->add('password',PasswordType::class)
-            ->add('confirme_password',PasswordType::class)
+            ->add('password',PasswordType::class,[
+                'label'=> "Mot de Passe",
+                'required' => true
+                
+            ])
+            ->add('confirme_password',PasswordType::class,[
+                'label'=> "Confirmation de Mot de Passe",
+                'required' => true
+                
+            ])
         ;
     }
 

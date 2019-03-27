@@ -20,6 +20,7 @@
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 {% block stylesheets %}{% endblock %}
 <style>
 .modal {
@@ -96,13 +97,15 @@
               <li class="user-header">
                 <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
                 <p>
-                  {{ app.user.username|capitalize }}                  
+                  {{ app.user.username|capitalize }}</br>
+                  {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize }}
+
                 </p>
               </li>              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
+                  <a href="{{ path('user_show', {'id': app.user.id}) }}" class="btn btn-primary btn-flat"><i class="glyphicon glyphicon-user"></i>&nbsp;Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ path('security_logout') }}" class="btn btn-danger btn-flat"><i class="glyphicon glyphicon-off"></i>&nbsp;Deconnexion</a>
@@ -133,29 +136,15 @@
       <!-- Sidebar user panel -->     
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header"></li>
-        {% if is_granted('ROLE_ADMIN') %}
+        <h1></h1>
         <li>
           <a active href="{{ path('home') }}">
             <i class="fa fa-dashboard"></i> 
             <span>Tableau de Bord</span>
           </a>
         </li>
-        {% endif %}
-        <li class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-folder-open"></i>
-            <span>Billet</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">2</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>
-            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>            
-          </ul>
-        </li>
+        <!--== false-->
+         {% if is_granted('ROLE_BILLETTEUR') %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-text-background"></i>
@@ -169,6 +158,37 @@
             <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>       
         </li>
+        {% endif %}
+        {% if is_granted('ROLE_BILLETTEUR') %}
+        <!--li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-folder-open"></i>
+            <span>Billet</span>
+            <span class="pull-right-container">
+              <span class="label label-primary pull-right">2</span>
+            </span>
+          </a>
+          <ul class="treeview-menu"-->
+          
+            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-train"></i>Billet PTB</a></li>          
+            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-subway"></i>Billet Autorail</a></li>
+            <li><a href="#"><i class="fa fa-credit-card"></i>Taxe</a></li>            
+          <!--/ul>
+        </li-->        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-cart-arrow-down"></i>
+            <span>Commande</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">          
+            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>          
+            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                        
+          </ul>
+        </li>
+        {% endif %}        
 
         <li class="treeview">
           <a href="#">
@@ -178,6 +198,7 @@
             </span>
           </a>        
         </li>
+        {% if is_granted('ROLE_ADMINISTRATEUR') %} 
         <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-credit-card"></i> 
@@ -229,7 +250,20 @@
             <li><a href="{{ path('classe_new') }}"><i class="fa fa-circle-o"></i>Nouvelle</a></li>            
             <li><a href="{{ path('classe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>
-        </li>  
+        </li> 
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-user"></i>
+            <span>Utilisateur</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ path('user_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
+            <li><a href="{{ path('user_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li> 
+          </ul>
+        </li>         
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-wrench"></i>
@@ -238,15 +272,14 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>                        
-            <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>                             
+          <ul class="treeview-menu">                                                                          
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
             <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
             <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Traçabilité</a></li>    
           </ul>
-        </li>                                              
+        </li>
+        {% endif %}                                              
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -258,7 +291,8 @@
    </div>
 <!-- /.content-wrapper -->
           
- 
+ <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
 <script src="{{ asset('jslog/jscolor.js') }}"></script> 
 <script src="{{ asset('jslog/commandePtb.js') }}"></script>          
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -282,6 +316,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 </body>
 {% block javascripts %}{% endblock %}
 </html> 

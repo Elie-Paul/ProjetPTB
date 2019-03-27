@@ -54,10 +54,16 @@ class Guichet
      */
     private $billetNavettes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Vignette", mappedBy="guichet")
+     */
+    private $vignettes;
+
     public function __construct()
     {
         $this->billetPtbs = new ArrayCollection();
         $this->billetNavettes = new ArrayCollection();
+        $this->vignettes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -181,6 +187,37 @@ class Guichet
             // set the owning side to null (unless already changed)
             if ($billetNavette->getGuichet() === $this) {
                 $billetNavette->setGuichet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Vignette[]
+     */
+    public function getVignettes(): Collection
+    {
+        return $this->vignettes;
+    }
+
+    public function addVignette(Vignette $vignette): self
+    {
+        if (!$this->vignettes->contains($vignette)) {
+            $this->vignettes[] = $vignette;
+            $vignette->setGuichet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVignette(Vignette $vignette): self
+    {
+        if ($this->vignettes->contains($vignette)) {
+            $this->vignettes->removeElement($vignette);
+            // set the owning side to null (unless already changed)
+            if ($vignette->getGuichet() === $this) {
+                $vignette->setGuichet(null);
             }
         }
 
