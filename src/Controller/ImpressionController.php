@@ -143,11 +143,11 @@ class ImpressionController extends AbstractController
         $entityManager->persist($tracabilite);*/
         $entityManager->flush();
         $date=new \DateTime();
-        /* return $this->render('impression/index.html.twig', [
+         return $this->render('impression/index.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date
-         ]);*/
+         ]);
          
-         return new Response(var_dump($test));
+        // return new Response(var_dump($test));
     }
     /**
     * @Route("/impressionAutorail/{id}/{numDepartMotif}",name="impressionAutorail_process")
