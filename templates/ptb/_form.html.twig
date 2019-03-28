@@ -100,7 +100,7 @@
         {
           var libelle = document.getElementById("libelle").value;
           var prix = document.getElementById("prix").value;
-          var prix = parseInt(prix.innerHTML, 10);
+          var prix = parseInt(prix, 10);
           modal.style.display = "none";
           document.location.href = `http://localhost:8000/addSection/${libelle}/${prix}`;
           //swal("Good job!", "Vous avez ajouté une section", "success");  

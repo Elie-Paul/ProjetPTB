@@ -33,7 +33,7 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addLieuTrajet/{libelle}", name="lieux_addTrajet")
+     * @Route("/addLieuTrajet/{libelle}", name="lieux_addTLieurajet")
      */
     public function addLieuTrajet($libelle)
     {        
@@ -78,7 +78,7 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addSection/{libelle}/{prix}", name="lieux_addGuichet")
+     * @Route("/addSection/{libelle}/{prix}", name="lieux_addSection")
      */
     public function addSection($libelle, $prix)
     {        
@@ -102,19 +102,25 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addTrajet/{depart}/{arrivee}", name="lieux_addGuichet")
+     * @Route("/addTrajet/{depart}/{arrivee}", name="lieux_addTrajet")
      */
     public function addTrajet($depart, $arrivee)
     {        
         $trajet = new Trajet();
+        $lieux = new Lieux();
         $ptb = new Ptb();
         $form = $this->createForm(PtbType::class, $ptb);
+
+        $depart = $lieux->setLibelle($depart);
+        $arrivee = $lieux->setLibelle($arrivee);
+
 
         $trajet->setDepart($depart);
         $trajet->setArrivee($arrivee);
         $trajet->setCreatedAt(new \DateTime());
         $trajet->setUpdatedAt(new \DateTime());
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
         $entityManager->persist($trajet);
         $entityManager->flush();
 
