@@ -1,6 +1,7 @@
-
+<!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="myModal" class="modal" role="dialog">
 
   <!-- Modal content -->
   <div class="modal-content">
@@ -63,16 +64,16 @@
 
 {{ form_start(form) }}
 <div class="row">
-    <div class="col-xs-10">{{ form_row(form.prix) }}</div>
-    </div>
-<div class="row">
     <div class="col-xs-10">{{ form_row(form.trajet) }}</div>
     <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode2()"><i class="glyphicon glyphicon-plus"></i></a></div>
     </div>
-<div class="row">
+  <div class="row">
     <div class="col-xs-10">{{ form_row(form.classe) }}</div>
     <div class="col-xs-2 cs2"><a type="button" class="btn btn-warning" id="myBBtn2" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
 </div>
+<div class="row">
+    <div class="col-xs-10">{{ form_row(form.prix) }}</div>
+    </div>
     <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
 
@@ -212,6 +213,8 @@ function setLieuxArrivee(array)
     combLieuxArrivee.appendChild(option);
   }
 }
-        
+
         
 </script>
+
+

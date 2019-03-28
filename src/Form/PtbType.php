@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Ptb;
-use App\Entity\Trajet;
+//use App\Entity\Guichet;
 use App\Entity\Section;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +23,21 @@ class PtbType extends AbstractType
                 'choice_label' => 'libelle'
             ])
         ;
+
+       /* 
+       
+            ->add('guichet', EntityType::class,[
+                'class' => 'App\Entity\Guichet',
+                'placeholder' => 'Guichet',
+                'mapped' => false,
+            ])
+       
+       $builder->get('guichet')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event){
+                $form = $event->getForm();
+            }
+        );*/
     }
 
     public function configureOptions(OptionsResolver $resolver)

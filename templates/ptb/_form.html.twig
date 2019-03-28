@@ -1,4 +1,4 @@
-
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -78,7 +78,19 @@
     <div class="col-xs-10">{{ form_row(form.section) }}</div>
     <div class="col-xs-2 cs2"><a type="button" class="btn btn-warning" id="myBBtn2" onclick="mode2()"><i class="glyphicon glyphicon-plus"></i></a></div>
 </div>
-    <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
+<div class="row">
+    <div class="col-xs-10">{{ form_rest(form) }}</div>
+</div>
+<!--div class="row">
+  <div class="col-xs-10">
+    <label for="guichet">Guichet</label>
+      <select class="form-control" id="guichet">
+        <option id="g" selected disabled>Guichet</option>
+      </select>
+  </div>
+</div>
+<br-->
+    <button onclick="add()" class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
 
 <style>
@@ -144,6 +156,13 @@
           swal("Good job!", "Vous avez ajouté une gare", "success");          
         }
 
+        /*function add()
+        {
+          var guichet = document.getElementById('g');
+          alert(guichet);
+          document.location.href = `http://localhost:8000/ptb/new/${guichet}`;
+        }*/
+
         function ajoutLieu()
         {
           var lib = document.getElementById("libLieux").value;
@@ -162,6 +181,8 @@
 
 const combLieuxDepart = document.getElementById('sel1');
 const combLieuxArrivee = document.getElementById('sel2');
+
+//const combGuichet = document.getElementById('guichet');
       
 
 function getJson(link,id)
@@ -180,6 +201,9 @@ function getJson(link,id)
           break;
         case 2:
           setLieuxArrivee(response);
+          break;
+        case 3:
+          setGuichet(response);
           break;
       }
     }
@@ -212,5 +236,18 @@ function setLieuxArrivee(array)
     combLieuxArrivee.appendChild(option);
   }
 }
+
+/*function setGuichet(array)
+{
+  for(let i=0; i<array.length; i++){
+    let option=document.createElement('option');
+    option.id = `${array[i].id}`;
+    let t = document.createTextNode(`${array[i].nom}`);
+    option.appendChild(t);
+    combGuichet.appendChild(option);
+  }
+}
+
+getJson("http://localhost:8000/json/guichet/",3);*/
    
 </script>
