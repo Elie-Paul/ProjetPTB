@@ -222,7 +222,7 @@ class User implements UserInterface
     {
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile) {
-            $this->updateAt = new \DateTimeImmutable();
+            $this->updateAt = new \DateTime('now');
         }
         return $this;
     }

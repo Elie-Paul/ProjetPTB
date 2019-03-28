@@ -193,6 +193,6 @@ class Lieux
 
     public function __toString()
     {
-        # code...
+        return (string)$this->libelle;
     }
 }

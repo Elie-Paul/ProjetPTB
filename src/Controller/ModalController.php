@@ -16,6 +16,9 @@ use App\Repository\TrajetRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Section;
+use App\Entity\Ptb;
+use App\Form\PtbType;
 
 class ModalController extends AbstractController
 {
@@ -30,7 +33,7 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addLieuTrajet/{libelle}", name="lieux_addTrajet")
+     * @Route("/addLieuTrajet/{libelle}", name="lieux_addTLieurajet")
      */
     public function addLieuTrajet($libelle)
     {        
@@ -74,6 +77,59 @@ class ModalController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/addSection/{libelle}/{prix}", name="lieux_addSection")
+     */
+    public function addSection($libelle, $prix)
+    {        
+        $section = new Section();
+        $prix = intval($prix);
+        $ptb = new Ptb();
+        $form = $this->createForm(PtbType::class, $ptb);
+
+        $section->setLibelle($libelle);
+        $section->setPrix($prix);
+        $section->setCreatedAt(new \DateTime());
+        $section->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($section);
+        $entityManager->flush();
+
+        return $this->render('ptb/new.html.twig', [
+            'ptb' => $ptb,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addTrajet/{depart}/{arrivee}", name="lieux_addTrajet")
+     */
+    public function addTrajet($depart, $arrivee)
+    {        
+        $trajet = new Trajet();
+        $lieux = new Lieux();
+        $ptb = new Ptb();
+        $form = $this->createForm(PtbType::class, $ptb);
+
+        $depart = $lieux->setLibelle($depart);
+        $arrivee = $lieux->setLibelle($arrivee);
+
+
+        $trajet->setDepart($depart);
+        $trajet->setArrivee($arrivee);
+        $trajet->setCreatedAt(new \DateTime());
+        $trajet->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
+        $entityManager->persist($trajet);
+        $entityManager->flush();
+
+        return $this->render('ptb/new.html.twig', [
+            'ptb' => $ptb,
+            'form' => $form->createView(),
+        ]);
+    }
+
      /**
      * @Route("/addTypeAbonne/{libelle}/{section}/{prix}", name="type_addAbonne")
      */
@@ -95,4 +151,5 @@ class ModalController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

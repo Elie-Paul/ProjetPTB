@@ -1,4 +1,148 @@
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
+
+    <div class="modal-body">
+        <form>
+        <div class="form-group">
+            <label for="nomGare"><big>Libelle</big></label>
+            <input type="text"
+              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une gare">
+          </div>
+        </form>
+    </div>
+
+    <div class="modal-footer left">
+        <button  id="submit" onclick="ajouter1()" class="btn btn-primary"><big>Ajouter</big></button>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="sel1">Depart</label>
+        <select class="form-control" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sel1">Arrivée</label>
+        <select class="form-control" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary">Ajouter</button>
+    </div>
+  </div>
+  
+
+</div>
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="row">
+    <div class="col-xs-10">{{ form_row(form.prix) }}</div>
+    </div>
+<div class="row">
+    <div class="col-xs-10">{{ form_row(form.trajet) }}</div>
+    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode2()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    </div>
+<div class="row">
+    <div class="col-xs-10">{{ form_row(form.classe) }}</div>
+    <div class="col-xs-2 cs2"><a type="button" class="btn btn-warning" id="myBBtn2" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
+</div>
     <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+
+<style>
+    .cs{
+       position: relative;
+       top: 1.55em;
+       left: 2em; 
+    }
+
+    .cs2{
+       position: relative;
+       top: 1.55em;
+       left: 2em; 
+    }
+</style>
+
+<script>
+        
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementsByClassName('modal')[0];
+
+        span.onclick = function() 
+        {
+          modal.style.display = "none";
+        }
+
+       /*function ajouter1()
+        {
+          var libelle = document.getElementById("libelle").value;
+          var prix = document.getElementById("prix").value;
+          var prix = parseInt(prix.innerHTML, 10);
+          modal.style.display = "none";
+          document.location.href = `http://localhost:8000/addSection/${libelle}/${prix}`;
+          //swal("Good job!", "Vous avez ajouté une section", "success");  
+          alert("Section ajouter");
+        }*/
+        
+        function mode()
+        {
+          modal.style.display = "block";          
+        }
+        
+        
+
+        
+        var span1 = document.getElementsByClassName("close")[1];
+        var modal1 = document.getElementsByClassName('modal')[1];
+        
+        span1.onclick = function() 
+        {
+            modal1.style.display = "none";
+        }
+
+        
+        /*function ajouter(){
+          var libelle = document.getElementById("libelle").value;
+          modal1.style.display = "none";
+          document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success");
+          
+        }*/
+        
+        function mode2()
+        {
+          modal1.style.display = "block";          
+        }
+
+        /* window.onclick = function(event) 
+        {            
+          modal.style.display = "none";
+          modal1.style.display = "none";
+        }*/
+        
+        
+</script>
