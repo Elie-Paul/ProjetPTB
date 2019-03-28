@@ -33,6 +33,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
      */
     public function new(Request $request,UserPasswordEncoderInterface $encoder): Response
     {
@@ -75,6 +78,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function edit(Request $request, User $user,UserPasswordEncoderInterface $encoder): Response
     {
@@ -93,16 +99,13 @@ class UserController extends AbstractController
             'required' => true,
             'label'=> "Utilisateur"          
         ])
-        /*,
-        'attr'=>[
-            'disabled' => true
-        ]*/
         ->add('roles', ChoiceType::class, [
             'choices' => [                    
                 'Billetteur' => 'ROLE_BILLETTEUR',
                 'Validateur' => 'ROLE_VALIDATEUR',
                 'Administrateur' => 'ROLE_ADMINISTRATEUR',
                 'Superviseur' => 'ROLE_SUPERVISEUR',
+                'Responsable de Vente' => 'ROLE_RESPONSABLE_DE_VENTE',
             ],
             'label'=> "Rôles",
             'expanded' => false,
@@ -133,6 +136,44 @@ class UserController extends AbstractController
         ]);
     }
 
+
+      /**
+     * @Route("/{id}/modifier", name="user_modifier", methods={"GET","POST"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function modifier(Request $request, User $user,UserPasswordEncoderInterface $encoder): Response
+    {
+        $form = $this->createFormBuilder($user)
+        ->add('nom')            
+        ->add('prenom')
+        ->add('email')
+        ->add('password',PasswordType::class,[
+            'label'=> "Mot de Passe",
+            
+        ])        
+        ->getForm();
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setCreatedAt(new \DateTime());
+            $user->setUpdateAt(new \DateTime());
+            $hash=$encoder->encodePassword($user, $user->getPassword());  
+            $user->setPassword($hash);
+            $this->getDoctrine()->getManager()->flush();            
+            return $this->redirectToRoute('user_index', [
+                'id' => $user->getId(),
+            ]);
+        }
+            
+
+        return $this->render('user/modification.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+    
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      */
@@ -146,11 +187,12 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+    
 
  /**
-  * Require ROLE_ADMIN for *every* controller method in this class.
+  * Require ROLE_ADMINISTRATEUR for *every* controller method in this class.
   *
-  * @IsGranted("ROLE_ADMIN")
+  * @IsGranted("ROLE_ADMINISTRATEUR")
   */
   public function adminDashboard()
 {

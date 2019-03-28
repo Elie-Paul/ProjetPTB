@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CommandePtbRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CommandeNavetteRepository")
  */
-class CommandePtb
+class CommandeNavette
 {
     /**
      * @ORM\Id()
@@ -17,7 +17,7 @@ class CommandePtb
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\BilletPtb", inversedBy="commandePtbs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\BilletNavette", inversedBy="commandeNavettes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $billet;
@@ -40,7 +40,7 @@ class CommandePtb
     /**
      * @ORM\Column(type="datetime",nullable=true)
      */
-    private $dateCommandeValider;
+    private $dateComnandeValider;
 
     /**
      * @ORM\Column(type="datetime",nullable=true)
@@ -48,14 +48,9 @@ class CommandePtb
     private $dateCommandeRealiser;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="integer")
      */
-    private $updatedAt;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
+    private $nombreBilletVendu;
 
     /**
      * @ORM\Column(type="integer")
@@ -63,21 +58,26 @@ class CommandePtb
     private $nombreBilletRealise;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="datetime")
      */
-    private $nombreBilletVendu;
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getBillet(): ?BilletPtb
+    public function getBillet(): ?BilletNavette
     {
         return $this->billet;
     }
 
-    public function setBillet(?BilletPtb $billet): self
+    public function setBillet(?BilletNavette $billet): self
     {
         $this->billet = $billet;
 
@@ -120,14 +120,14 @@ class CommandePtb
         return $this;
     }
 
-    public function getDateCommandeValider(): ?\DateTimeInterface
+    public function getDateComnandeValider(): ?\DateTimeInterface
     {
-        return $this->dateCommandeValider;
+        return $this->dateComnandeValider;
     }
 
-    public function setDateCommandeValider(\DateTimeInterface $dateCommandeValider): self
+    public function setDateComnandeValider(\DateTimeInterface $dateComnandeValider): self
     {
-        $this->dateCommandeValider = $dateCommandeValider;
+        $this->dateComnandeValider = $dateComnandeValider;
 
         return $this;
     }
@@ -144,26 +144,14 @@ class CommandePtb
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getNombreBilletVendu(): ?int
     {
-        return $this->updatedAt;
+        return $this->nombreBilletVendu;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function setNombreBilletVendu(int $nombreBilletVendu): self
     {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
+        $this->nombreBilletVendu = $nombreBilletVendu;
 
         return $this;
     }
@@ -180,14 +168,26 @@ class CommandePtb
         return $this;
     }
 
-    public function getNombreBilletVendu(): ?int
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->nombreBilletVendu;
+        return $this->createdAt;
     }
 
-    public function setNombreBilletVendu(int $nombreBilletVendu): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->nombreBilletVendu = $nombreBilletVendu;
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

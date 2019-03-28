@@ -12,53 +12,22 @@
   background-color: transparent;
   color: white;
   left: 0;
-  -webkit-animation: mymove 0s infinite; /* Chrome, Safari, Opera */
-  animation: mymove 5s infinite;
+  -webkit-animation: mymove 0s ; /* Chrome, Safari, Opera */
+  animation: mymove 10s;  
 }
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes mymove {
-  50% {left: 200px;}
-  50% {box-shadow: 15px 20px 30px blue;}
+  50% {left: 200px;}  
 }
 
 /* Standard syntax */
 @keyframes mymove {
   50% {left: 200px;}
-  50% {box-shadow: 15px 20px 30px blue;}
 }
 </style>
 {% endblock %}
 {% block body %}
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form>
-        <div class="form-group">
-            <label for="nomGare"><big>Libelle</big></label>
-            <input type="text"
-              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer le type d'abonnement">
-          </div>
-          <div class="form-group">
-            <label for="section"><big>Section</big></label>
-            <input type="text"
-              class="form-control" name="" id="section" aria-describedby="helpId" placeholder="Entrer Section">
-          </div>
-          <div class="form-group">
-            <label for="prix"><big>Prix</big></label>
-            <input type="number"
-              class="form-control" name="" id="prix" aria-describedby="helpId" placeholder="Entrer le prix">
-          </div>
-    </form>
-    <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Ajouter</big></button>
-  </div>
-  
-
-</div>
     <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
@@ -79,63 +48,4 @@
     {{ include('abonnement/_form.html.twig') }}
     </div>
 </div>
-{% endblock %}
-{% block javascripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  
-
-  <script>
-        
-        var span = document.getElementsByClassName("close")[0];
-        var modal = document.getElementById('myModal');
-        span.onclick = function() 
-        {
-            modal.style.display = "none";
-        }
-        window.onclick = function(event) 
-        {
-            if (event.target == modal) 
-            {
-                modal.style.display = "none";                
-            }
-                  
-        }
-
-        function ajouter(){
-          var libelle = document.getElementById("libelle").value;
-          var section = document.getElementById("section").value;
-          var prix = document.getElementById("prix").value;
-          modal.style.display = "none";
-          document.location.href = `http://localhost:8000/addTypeAbonne/${libelle}/${section}/${prix}`;          
-          
-         /*Swal.fire({
-                  title: 'Custom animation with Animate.css',
-                  animation: false,
-                  customClass: {
-                  popup: 'animated tada'
-                    }
-                    })*/
-         /* swal({
-                title: "Etes vous sûr ?",
-                text: "Cliquez sur ok pour un réabonnement ou cancel pour annuler!",
-                icon: "warning",
-                buttons: true,
-                // dangerMode: true,
-            })*/
-          
-
-        }
-        
-        function print()
-        {
-            var modal = document.getElementById('myModal');
-
-            modal.style.display = "block";                      
-        }
-        
-        
-    </script>
-
 {% endblock %}

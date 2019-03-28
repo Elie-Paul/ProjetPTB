@@ -3,13 +3,38 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form>
+        <div class="form-group">
+            <label for="nomGare"><big>Libelle</big></label>
+            <input type="file"
+              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer le type d'abonnement">
+          </div>
+    </form>
+    <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Ajouter</big></button>
+  </div>
+  
+
+</div>
+
+
+
+
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
-            <h4></h4>
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Information sur Mon Profil </big></h4>
           </div>
           <div class="col-md-6 text-right">
+          {% if is_granted('ROLE_ADMINISTRATEUR') %}
             <a class="btn btn-info" href="{{ path('user_index') }}"><i class="fa fa-list"></i>&nbsp;Liste des Utilisateurs</a>
+          {% endif %}
           </div>
           </div>
           <!-- /.box-body -->
@@ -21,8 +46,9 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src="{{asset('clients/images/')}}{{user.filename}}" alt="User profile picture">
-
+            <a href="#" type="file">
+              <img class="profile-user-img img-responsive img-circle" src="{{asset('clients/images/')}}{{user.filename}}" onclick="" alt="User profile picture">              
+            </a>
               <h3 class="profile-username text-center">{{ user.nom|capitalize }} {{ user.prenom|capitalize }}</h3>
 
               <p class="text-muted text-center">{{ user.roles ? user.roles[0]|slice(5)|replace({"_": ' '}) }}</p>
@@ -42,7 +68,7 @@
                 </li>                
               </ul>
 
-              <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-warning btn-block"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+              <a href="{{ path('user_modifier', {'id': user.id}) }}" class="btn btn-warning btn-block"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -138,19 +164,12 @@
                     </div>
                   </div>             
                   <div class="form-group">
-                    <label for="inputExperience" class="col-sm-2 control-label">Rôle</label>
+                    <label for="inputExperience" class="col-sm-2 control-label">Fonction</label>
 
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputExperience" placeholder="Rôle" value="{{ user.roles ? user.roles[0]}}" disabled>
+                      <input type="text" class="form-control" id="inputExperience" placeholder="Rôle" value="{{ user.roles ? user.roles[0]|slice(5)|replace({"_": ' '}) }}" disabled>
                     </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputSkills" class="col-sm-2 control-label">Mot de Passe</label>
-
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills" value="{{ user.password}}" disabled>
-                    </div>
-                  </div>                                    
+                  </div>                                                     
                 </form>
               
                 
@@ -168,3 +187,62 @@
     {{ include('user/_delete_form.html.twig') }}
     {% endif %}
 {% endblock %}
+
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+
+  <script>
+        
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById('myModal');
+        span.onclick = function() 
+        {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) 
+        {
+            if (event.target == modal) 
+            {
+                modal.style.display = "none";                
+            }
+                  
+        }
+
+        function ajouter(){
+          var libelle = document.getElementById("libelle").value;
+          modal.style.display = "none";
+          document.location.href = `http://localhost:8000/modifierImage/${libelle}`;          
+          
+         /*Swal.fire({
+                  title: 'Custom animation with Animate.css',
+                  animation: false,
+                  customClass: {
+                  popup: 'animated tada'
+                    }
+                    })*/
+         /* swal({
+                title: "Etes vous sûr ?",
+                text: "Cliquez sur ok pour un réabonnement ou cancel pour annuler!",
+                icon: "warning",
+                buttons: true,
+                // dangerMode: true,
+            })*/
+          
+
+        }
+        
+        function print()
+        {
+            var modal = document.getElementById('myModal');
+
+            modal.style.display = "block";                      
+        }
+        
+        
+    </script>
+
+{% endblock %}
+

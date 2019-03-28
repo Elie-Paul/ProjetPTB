@@ -248,4 +248,5 @@ class ModalController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

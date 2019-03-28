@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Guichet;
 use App\Entity\Trajet;
 use App\Entity\Section;
+use App\Entity\BilletPtb;
+use App\Entity\Ptb;
+use App\Entity\CommandePtb;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Lieux;
 
@@ -20,14 +23,183 @@ class Controller extends AbstractController
      */
     public function index()
     {
-        
+        return $this->render('billet_taxe/index.html.twig', [
+            'billet_taxes' => $billetTaxeRepository->findAll(),
+        ]);
+    }
+    /**
+     * @Route("/totalbillet/{id}", name="totalBillet")
+     */
+    public function totalBillet($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
+        $commnadesPTB = $entityManager->getRepository(CommandePtb::class)->findBy
+        (
+            [
+                'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
+        $i=0;
+        $nBillet=0;
+        for ($i=0; $i < count($commnadesPTB); $i++) 
+        { 
+            if($commnadesPTB[$i]->getEtatCommande()==1)
+            {
+                $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
+                $nBillet=$nBillet+$diff;
+            }
+        }
+        return new response(''.$nBillet);
+    }    
+    /**
+     * @Route("/listCommande", name="showAllCommandePTB")
+     */
+    public function showAllCommandePTB()
+    {
+        return $this->render('commandeView/validerCommandePTB.html.twig');
     }
      /**
-     * @Route("/newCommande/", name="json_controller_")
+     * @Route("/Json/listCommande", name="getAllCommandePTB")
      */
-    public function newCommande(Request $request)
+    public function getAllCommandePTB()
     {
-        return new Response("<h1>".$request->getContent()."</h1>");
+        $repository = $this->getDoctrine()->getRepository(CommandePtb::class);
+        $commandePtbs = $repository->findAll();
+        $data = array();
+        foreach ($commandePtbs as $key => $variable) 
+        {
+            $myarray = array
+            (
+                'id' => $variable->getId(),
+
+                'section' => $variable
+                ->getBillet()
+                ->getPtb()
+                ->getSection(),
+
+                'depart' => $variable
+                ->getBillet()
+                ->getPtb()->getTrajet()
+                ->getDepart()
+                ->getLibelle(),
+
+                'arrivee' => $variable
+                ->getBillet()
+                ->getPtb()->getTrajet()
+                ->getArrivee()
+                ->getLibelle(),
+
+                'guichet' => $variable
+                ->getBillet()
+                ->getGuichet()
+                ->getNom(),
+
+                'nombreDeBilletCommander' => $variable
+                ->getNombreBillet(),
+                
+                'nombreBilletRealiser' => $variable
+                ->getNombreBilletRealise(),
+
+                'nombreBilletVendu' => $variable
+                ->getNombreBilletVendu(),
+
+                'etat' => $variable
+                ->getEtatCommande(),
+
+                'section' => $variable
+                ->getBillet()
+                ->getPtb()
+                ->getSection()
+                ->getLibelle(),
+                'dateCommandeValider' => $variable
+                ->getDateCommandeValider()
+            );
+            array_push($data,$myarray);
+        }
+            return new Response(json_encode($data));
+            //return new Response('dddd');
+    }
+     /**
+     * @Route("/listCommandetoPrint", name="showAllCommandePTBtoPrint")
+     */
+    public function showAllCommandePTBtoPrint()
+    {
+        return $this->render('commandeView/printCommandePTB.html.twig');
+    }
+     /**
+     * @Route("/newCommande/", name="newCommande")
+     */
+    public function newCommande(Request $request)//Request $request
+    {
+        $array=explode('+',$request->getCOntent());//
+        $guichet = $this->getDoctrine()
+        ->getRepository(Guichet::class)
+        ->find(intval($array[0]));
+        $section = $this->getDoctrine()
+        ->getRepository(Section::class)
+        ->find(intval($array[1]));
+        $trajet = $this->getDoctrine()
+        ->getRepository(Trajet::class)
+        ->find(intval($array[2]));
+        $ptb = $this->getDoctrine()
+        ->getRepository(Ptb::class)
+        ->findOneBy
+        (
+            [
+                "trajet" => $trajet,
+                "section" => $section
+            ]
+        );
+        $billetPtb = $this->getDoctrine()
+        ->getRepository(BilletPtb::class)
+        ->findOneBy
+        (
+            [
+                "guichet" => $guichet,
+                "ptb" => $ptb,
+            ]
+        );
+        $commandePtb = new CommandePtb();
+        $commandePtb->setBillet($billetPtb);
+        $commandePtb->setNombreBillet(intval($array[3]));
+        $commandePtb->setNombreBilletRealise(0);
+        $commandePtb->setNombreBilletVendu(0);
+        
+        $commandePtb->setEtatCommande(0);
+        
+        $commandePtb->setDateCommande(new \DateTime());
+        //$commandePtb->setDateCommandeValider(null);
+        //$commandePtb->setDateCommandeRealiser(null);
+        
+        $commandePtb->setCreatedAt(new \DateTime());
+        $commandePtb->setUpdatedAt(new \DateTime());
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($commandePtb);
+        $entityManager->flush();
+        return new Response("true");
+        //return new Response("<h1>".$ptb->getId()."</h1>");
+    }
+    /**
+     * @Route("/ValidationCommande", name="ValidationCommande")
+     */
+    public function ValidationCommande(Request $request)
+    {
+        $idCommande = intVal($request->getContent());
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $commande = $entityManager
+        ->getRepository(CommandePTB::class)
+        ->find($idCommande);
+        if($commande->getEtatCommande()==0)
+            $commande->setEtatCommande(1);
+        else
+            $commande->setEtatCommande(0);
+        $entityManager->flush();
+        return new Response('<h1>'.$commande->getId().'</h1>');
     }
     /**
      * @Route("/json/guichet/", name="json_controller_guichet")
@@ -82,7 +254,7 @@ class Controller extends AbstractController
         {
             if ($variable->getPtb()->getSection() == $section) 
             {
-                $myarray = array('id' => "".$variable->getId()."",  
+                $myarray = array('id' => "".$variable->getPtb()->getTrajet()->getId(),  
                 'Depart' => $variable->getPtb()->getTrajet()->getDepart()->getLibelle(),
                 'Arrivee' => $variable->getPtb()->getTrajet()->getArrivee()->getLibelle());
                 array_push($note,$myarray);  
