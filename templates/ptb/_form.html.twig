@@ -7,6 +7,15 @@
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
 
     <div class="modal-body">
+      <div class="row">
+        <div class="from-group">
+          <label for="lib">Libelle</label>            
+          <input id="libLieux" type="text" class="form-control" name="msg" placeholder="Saisir une gare si possible">
+          <br>
+          <button type="button" id="submit" onclick="ajoutLieu()" class="btn btn-primary">Ajouter</button>
+        </div>
+      </div>
+      <hr>
       <div class="form-group">
         <label for="sel1">Depart</label>
         <select class="form-control DepartId" id="sel1">
@@ -132,10 +141,18 @@
           var arrivee = document.getElementById("sel2").value;
           modal1.style.display = "none";
           document.location.href = `http://localhost:8000/addTrajet/${depart}/${arrivee}`;
-          swal("Good job!", "Vous avez ajouté une gare", "success");
-          
+          swal("Good job!", "Vous avez ajouté une gare", "success");          
         }
-        
+
+        function ajoutLieu()
+        {
+          var lib = document.getElementById("libLieux").value;
+          modal1.style.display = "none";
+          document.location.href = `http://localhost:8000/addLieuTrajetPtb/${lib}`;
+          getJson('http://localhost:8000/json/lieu/depart',1);
+          getJson('http://localhost:8000/json/lieu/arrivee',2);
+        }
+
         function mode2()
         {
           modal1.style.display = "block";          
