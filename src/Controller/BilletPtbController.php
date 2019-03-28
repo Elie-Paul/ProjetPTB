@@ -52,6 +52,8 @@ class BilletPtbController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $billetPtb->setCreatedAt(new \DateTime());
+            $billetPtb->setUpdateAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($billetPtb);
             $entityManager->flush();

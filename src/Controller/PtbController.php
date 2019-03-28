@@ -33,8 +33,6 @@ class PtbController extends AbstractController
     public function new(Request $request): Response
     {
         $ptb = new Ptb();
-        $billetPTB = new BilletPtb();
-        $repository = $this->getDoctrine()->getRepository(Guichet::class);
         $form = $this->createForm(PtbType::class, $ptb);
         $form->handleRequest($request);
 
@@ -43,13 +41,6 @@ class PtbController extends AbstractController
             $ptb->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($ptb);
-            $guichet = $repository->findOneBy(['lieu'=>$ptb->getTrajet()->getDepart()]);
-            $billetPTB->setPtb($ptb);
-            $billetPTB->setGuichet($guichet);
-            $billetPTB->setNumeroDernierBillets(0);
-            $billetPTB->setCreatedAt(new \DateTime());
-            $billetPTB->setUpdateAt(new \DateTime());
-            $entityManager->persist($billetPTB);
             $entityManager->flush();
 
             /// Message de confirmation

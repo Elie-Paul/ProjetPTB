@@ -13,8 +13,6 @@ class BilletPtbType extends AbstractType
     {
         $builder
             ->add('numeroDernierBillets')
-            ->add('createdAt')
-            ->add('updateAt')
             ->add('ptb')
             ->add('guichet')
         ;
