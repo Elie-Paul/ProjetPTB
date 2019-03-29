@@ -38,6 +38,11 @@ class TrajetEvent
      */
     private $section;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\BilletEvent", mappedBy="trajet", cascade={"persist", "remove"})
+     */
+    private $billetEvent;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -98,6 +103,23 @@ class TrajetEvent
     public function setSection($section): void
     {
         $this->section = $section;
+    }
+
+    public function getBilletEvent(): ?BilletEvent
+    {
+        return $this->billetEvent;
+    }
+
+    public function setBilletEvent(BilletEvent $billetEvent): self
+    {
+        $this->billetEvent = $billetEvent;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $billetEvent->getTrajet()) {
+            $billetEvent->setTrajet($this);
+        }
+
+        return $this;
     }
 
 }

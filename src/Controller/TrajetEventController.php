@@ -42,18 +42,21 @@ class TrajetEventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if($trajetEvent->getArrivee() === $trajetEvent->getDepart() || strcmp(strtoupper($trajetEvent->getDepart()), strtoupper($trajetEvent->getArrivee())) === 0)
             {
+                //CETTE FONCTION VERIFIE SI LES DEUX INFOS NE SONT PAS EGALES
                 return $this->render('trajet_event/new.html.twig', [
                     'trajet_event' => $trajetEvent,
                     'error' => "Le depart doit être différent de l'arrivée",
                     'form' => $form->createView(),
                 ]);
             }
+            //VERIFIE SI LE TRAJET EXISTE
             $trajet = $trajetRepo->findOneBy([
                 'depart' => $trajetEvent->getDepart(),
                 'arrivee' => $trajetEvent->getArrivee(),
                 'evenement' => $trajetEvent->getEvenement(),
 //                'section' => $trajetEvent->getSection()
             ]);
+            //SI LE TRAJET N'EXISTE PAS ON AJOUTE  SINON NOTHING
             if(!$trajet)
             {
                 $entityManager = $this->getDoctrine()->getManager();

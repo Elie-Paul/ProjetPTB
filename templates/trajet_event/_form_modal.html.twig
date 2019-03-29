@@ -1,7 +1,4 @@
-{{ form_start(formtr, {'attr': {'id': 'form_trajet'}, 'action': path('trajet_event_new')}  ) }}
-    {{ form_widget(formtr) }}
-<button class="btn">{{ button_label|default('Enregistrer') }}</button>
-{{ form_end(formtr) }}
-
-
-
+{{ form_start(formTrajet, {'action': path('evenement_index')} ) }}
+    {{ form_widget(formTrajet) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(formTrajet) }}

@@ -2,23 +2,22 @@
 
 namespace App\Form;
 
-use App\Entity\Evenement;
+use App\Entity\BilletEvent;
+use App\Entity\Guichet;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class EvenementType extends AbstractType
+class BilletEventType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('libelle')
-            ->add('dateEvent', DateType::class, [
-                'widget' => 'single_text'
-            ])
-            ->add('finEvent', DateType::class, [
-                'widget' => 'single_text'
+            ->add('trajet')
+            ->add('guichet', EntityType::class, [
+                'class' => Guichet::class,
+                'choice_label' => 'nom'
             ])
         ;
     }
@@ -26,7 +25,7 @@ class EvenementType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Evenement::class,
+            'data_class' => BilletEvent::class,
         ]);
     }
 }
