@@ -3,6 +3,7 @@
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,7 @@ class Trajet
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Lieux", inversedBy="trajetsDepart")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotEqualTo(propertyPath="arrivee", message="Le lieu de depart doit être different du lieu d'arrivé !!!")
      */
     private $depart;
 
