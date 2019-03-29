@@ -22,15 +22,15 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $user=new User();
-        $user->setUsername("elie");
-        $user->setNom("Elie");
-        $user->setPrenom("Paul");
-        $user->setEmail("eliepaulmoubotouto@gmail.com");
-        $user->setUpdateAt(new \DateTime());
+        $user->setUsername("thera");
+        $user->setNom("THERA");
+        $user->setPrenom("THERA");
+        $user->setEmail("taalr@taalr.com");
+        $user->setFilename("taalr");
         $user->setCreatedAt(new \DateTime());
-        $user->setFilename("elie.jpg");
+        $user->setUpdateAt(new \DateTime());
 
-        $roles [] = "admin";
+        $roles [] = "Administrateur";
         //$user->setRoles($roles[0]);
         $user->setPassword($this->passwordEncoder->encodePassword(
                          $user,

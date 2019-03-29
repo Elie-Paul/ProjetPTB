@@ -1,4 +1,3 @@
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -7,31 +6,28 @@
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
 
     <div class="modal-body">
-      <div class="row">
-        <div class="from-group">
-          <label for="lib">Libelle</label>            
-          <input id="libLieux" type="text" class="form-control" name="msg" placeholder="Saisir une gare si possible">
-          <br>
-          <button type="button" id="submit" onclick="ajoutLieu()" class="btn btn-primary">Ajouter</button>
-        </div>
-      </div>
-      <hr>
       <div class="form-group">
         <label for="sel1">Depart</label>
-        <select class="form-control DepartId" id="sel1">
-          <option id="0" selected disabled>Depart</option>
+        <select class="form-control" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
         </select>
       </div>
       <div class="form-group">
         <label for="sel1">Arrivée</label>
-        <select class="form-control ArriveeId" id="sel2">
-          <option id="0" selected disabled>Arrivée</option>
+        <select class="form-control" id="sel1">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
         </select>
       </div>
     </div>
 
     <div class="modal-footer">
-      <button type="button" id="submit" onclick="ajouter2()" class="btn btn-primary">Ajouter</button>
+      <button type="button" class="btn btn-primary">Ajouter</button>
     </div>
   </div>
   
@@ -50,18 +46,18 @@
     <div class="modal-body">
       <div class="input-group">
         <span class="input-group-addon"><big>Libelle</big></span>
-        <input id="libelle" type="text" class="form-control" name="msg" placeholder="Saisir un libelle">
+        <input id="msg" type="text" class="form-control" name="msg" placeholder="Saisir un libelle">
       </div>
       <br>
       <div class="input-group">
         <span class="input-group-addon"><big>Prix</big></span>
-        <input id="prix" type="number" class="form-control" name="msg" placeholder="Saisir un prix">
+        <input id="msg" type="number" class="form-control" name="msg" placeholder="Saisir un prix">
       </div>
 
     </div>
 
     <div class="modal-footer">
-      <button id="submit" onclick="ajouter1()" class="btn btn-primary">Ajouter</button>
+      <button type="button" class="btn btn-primary">Ajouter</button>
     </div>
   </div>
   
@@ -78,19 +74,7 @@
     <div class="col-xs-10">{{ form_row(form.section) }}</div>
     <div class="col-xs-2 cs2"><a type="button" class="btn btn-warning" id="myBBtn2" onclick="mode2()"><i class="glyphicon glyphicon-plus"></i></a></div>
 </div>
-<div class="row">
-    <div class="col-xs-10">{{ form_rest(form) }}</div>
-</div>
-<!--div class="row">
-  <div class="col-xs-10">
-    <label for="guichet">Guichet</label>
-      <select class="form-control" id="guichet">
-        <option id="g" selected disabled>Guichet</option>
-      </select>
-  </div>
-</div>
-<br-->
-    <button onclick="add()" class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
+    <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
 
 <style>
@@ -117,23 +101,17 @@
           modal.style.display = "none";
         }
 
-       function ajouter1()
+       function ajouter()
         {
           var libelle = document.getElementById("libelle").value;
-          var prix = document.getElementById("prix").value;
-          var prix = parseInt(prix, 10);
           modal.style.display = "none";
-          document.location.href = `http://localhost:8000/addSection/${libelle}/${prix}`;
-          //swal("Good job!", "Vous avez ajouté une section", "success");  
-          alert("Section ajouter");
+          document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success");          
         }
         
         function mode()
         {
-          modal.style.display = "block";   
-         getJson('http://localhost:8000/json/lieu/depart',1);
-         getJson('http://localhost:8000/json/lieu/arrivee',2);
-          
+          modal.style.display = "block";          
         }
         
         
@@ -148,106 +126,24 @@
         }
 
         
-        function ajouter2(){
-          var depart = document.getElementById("sel1").value;
-          var arrivee = document.getElementById("sel2").value;
+        /*function ajouter(){
+          var libelle = document.getElementById("libelle").value;
           modal1.style.display = "none";
-          document.location.href = `http://localhost:8000/addTrajet/${depart}/${arrivee}`;
-          swal("Good job!", "Vous avez ajouté une gare", "success");          
-        }
-
-        /*function add()
-        {
-          var guichet = document.getElementById('g');
-          alert(guichet);
-          document.location.href = `http://localhost:8000/ptb/new/${guichet}`;
+          document.location.href = `http://localhost:8000/addLieuTrajet/${libelle}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success");
+          
         }*/
-
-        function ajoutLieu()
-        {
-          var lib = document.getElementById("libLieux").value;
-          modal1.style.display = "none";
-          document.location.href = `http://localhost:8000/addLieuTrajetPtb/${lib}`;
-          getJson('http://localhost:8000/json/lieu/depart',1);
-          getJson('http://localhost:8000/json/lieu/arrivee',2);
-        }
-
+        
         function mode2()
         {
           modal1.style.display = "block";          
         }
 
-/* ----------------Remplire Combo----------------- */
-
-const combLieuxDepart = document.getElementById('sel1');
-const combLieuxArrivee = document.getElementById('sel2');
-
-//const combGuichet = document.getElementById('guichet');
-      
-
-function getJson(link,id)
-{
-  let xhttp=new XMLHttpRequest();
-  
-  xhttp.onreadystatechange = function()
-  {
-    if(this.readyState == 4 && this.status == 200)
-    {
-      let response = JSON.parse(xhttp.responseText);
-      
-      switch(id){
-        case 1:
-          setLieuxDepart(response);
-          break;
-        case 2:
-          setLieuxArrivee(response);
-          break;
-        case 3:
-          setGuichet(response);
-          break;
-      }
-    }
-  }
-  
-  xhttp.open("GET",link,true);
-  xhttp.send();
-
-}       
-
-
-function setLieuxDepart(array)
-{
-  for(let i=0; i<array.length; i++){
-    let option=document.createElement('option');
-    option.id = `${array[i].id}`;
-    let t = document.createTextNode(`${array[i].libelle}`);
-    option.appendChild(t);
-    combLieuxDepart.appendChild(option);
-  }
-}
-
-function setLieuxArrivee(array)
-{
-  for(let i=0; i<array.length; i++){
-    let option=document.createElement('option');
-    option.id = `${array[i].id}`;
-    let t = document.createTextNode(`${array[i].libelle}`);
-    option.appendChild(t);
-    combLieuxArrivee.appendChild(option);
-  }
-}
-
-/*function setGuichet(array)
-{
-  for(let i=0; i<array.length; i++){
-    let option=document.createElement('option');
-    option.id = `${array[i].id}`;
-    let t = document.createTextNode(`${array[i].nom}`);
-    option.appendChild(t);
-    combGuichet.appendChild(option);
-  }
-}
-
-getJson("http://localhost:8000/json/guichet/",3);*/
-   
+         window.onclick = function(event) 
+        {            
+          modal.style.display = "none";
+          modal1.style.display = "none";
+        }
+        
+        
 </script>
