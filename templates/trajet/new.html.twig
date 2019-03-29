@@ -4,6 +4,15 @@
 
 {% block body %}
 
+<div class="row">
+  {% if error is defined %}
+    <div class="container">
+      {{ error }}
+    </div>
+
+  {% endif %}
+</div>
+
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
