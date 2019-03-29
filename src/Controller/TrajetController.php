@@ -33,6 +33,16 @@ class TrajetController extends AbstractController
         $trajet = new Trajet();
         $form = $this->createForm(TrajetType::class, $trajet);
         $form->handleRequest($request);
+        dump($trajet);
+        $repository = $this->getDoctrine()->getRepository(Trajet::class);
+        $repo = $repository->findAll();
+
+       /* foreach ($repo as $key => $var) {
+            if ($var->getDepart() == $trajet->getDepart() || $var->getArrivee() == $trajet->getArrivee()) {
+                echo "Trajet deja creer";
+            }
+        }*/
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $trajet->setCreatedAt(new \DateTime());

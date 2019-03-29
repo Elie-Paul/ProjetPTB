@@ -27,10 +27,10 @@
 
 {{ form_start(form) }}
 <div class="row">
-    <div class="col-xs-10">{{ form_row(form.code) }}</div>
+    <div class="col-xs-10">{{ form_row(form.code, {attr : {'placeholder': "Exemple: C0123"}}) }}</div>
 </div>
 <div class="row">
-    <div class="col-xs-10">{{ form_row(form.nom) }}</div>
+    <div class="col-xs-10">{{ form_row(form.nom, {attr : {'placeholder': "Exemple: Elie Paul"}}) }}</div>
 </div>
 <div class="row">
     <div class="col-xs-10">{{ form_row(form.lieu) }}</div>
