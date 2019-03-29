@@ -59,11 +59,17 @@ class Guichet
      */
     private $vignettes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BilletEvent", mappedBy="guichet", orphanRemoval=true)
+     */
+    private $billetEvents;
+
     public function __construct()
     {
         $this->billetPtbs = new ArrayCollection();
         $this->billetNavettes = new ArrayCollection();
         $this->vignettes = new ArrayCollection();
+        $this->billetEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +224,37 @@ class Guichet
             // set the owning side to null (unless already changed)
             if ($vignette->getGuichet() === $this) {
                 $vignette->setGuichet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BilletEvent[]
+     */
+    public function getBilletEvents(): Collection
+    {
+        return $this->billetEvents;
+    }
+
+    public function addBilletEvent(BilletEvent $billetEvent): self
+    {
+        if (!$this->billetEvents->contains($billetEvent)) {
+            $this->billetEvents[] = $billetEvent;
+            $billetEvent->setGuichet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBilletEvent(BilletEvent $billetEvent): self
+    {
+        if ($this->billetEvents->contains($billetEvent)) {
+            $this->billetEvents->removeElement($billetEvent);
+            // set the owning side to null (unless already changed)
+            if ($billetEvent->getGuichet() === $this) {
+                $billetEvent->setGuichet(null);
             }
         }
 

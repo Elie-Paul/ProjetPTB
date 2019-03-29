@@ -30,7 +30,7 @@ class AppFixtures extends Fixture
         $user->setCreatedAt(new \DateTime());
         $user->setUpdateAt(new \DateTime());
 
-        $roles [] = "Administrateur";
+        $roles [] = '""ROLE_ADMINISTRATEUR"';
         //$user->setRoles($roles[0]);
         $user->setPassword($this->passwordEncoder->encodePassword(
                          $user,

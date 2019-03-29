@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BilletEvent index{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('evenement/app.css') }}">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('evenement/app.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>BilletEvent index</h1>
+    {% if success is defined %}
+        <div class="panel panel-success">
+            {{ success }}
+        </div>
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Depart</th>
+                        <th>Arrivée</th>
+                        <th>Evenement</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for billet_event in billet_events %}
+                        <tr>
+                            <td>{{ billet_event.id }}</td>
+                            <td>{{ billet_event.trajet.depart }}</td>
+                            <td>{{ billet_event.trajet.arrivee }}</td>
+                            <td>{{ billet_event.guichet.nom }}</td>
+                            <td>{{ billet_event.trajet.evenement.libelle }}</td>
+                            <td>
+                                <a href="{{ path('billet_event_show', {'id': billet_event.id}) }}">show</a>
+                                <a href="{{ path('billet_event_edit', {'id': billet_event.id}) }}">edit</a>
+                                <a class="btn btn-primary" href="#">Imprimer</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <a href="{{ path('evenement_index') }}">Liste des evenements</a>
+            </div>
+            <div class="col-sm-4">
+                <a id="btnAddBilletEvent" class="btn btn-primary" href="#">Ajouter un billet</a>
+                <div id="billet">
+                    <div class="bordure">
+                        {{ include('billet_event/_form_modal.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

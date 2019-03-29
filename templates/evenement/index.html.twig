@@ -2,45 +2,89 @@
 
 {% block title %}Evenement index{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('evenement/app.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('evenement/app.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <h1>Evenement index</h1>
-    <dv class="container">
-        <a href="{{ path('section_event_new') }}" class="btn btn-primary">Ajouter une section</a>
-    </dv>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>DateEvent</th>
-                <th>FinEvent</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for evenement in evenements %}
-            <tr>
-                <td>{{ evenement.id }}</td>
-                <td>{{ evenement.libelle }}</td>
-                <td>{{ evenement.dateEvent ? evenement.dateEvent|date('Y-m-d') : '' }}</td>
-                <td>{{ evenement.finEvent ? evenement.finEvent|date('Y-m-d') : '' }}</td>
-                <td>{{ evenement.createdAt ? evenement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ evenement.UpdatedAt ? evenement.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('evenement_show', {'id': evenement.id}) }}">show</a>
-                    <a href="{{ path('evenement_edit', {'id': evenement.id}) }}">edit</a>
-                    <a href="{{ path('evenement_edit', {'id': evenement.id}) }}">Ajouter des trajets</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if error is defined %}
+        <div class="container">
+            <div class="panel panel-warning">
+                {{ error }}
+            </div>
+        </div>
+    {% endif %}
+    {% if success is defined %}
+        <div class="container">
+            <div class="panel panel-warning">
+                {{ success }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5 col-xs-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Libelle</th>
+                        <th>DateEvent</th>
+                        <th>FinEvent</th>
+                        <th>CreatedAt</th>
+                        <th>UpdatedAt</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for evenement in evenements %}
+                        <tr>
+                            <td>{{ evenement.id }}</td>
+                            <td>{{ evenement.libelle }}</td>
+                            <td>{{ evenement.dateEvent ? evenement.dateEvent|date('Y-m-d') : '' }}</td>
+                            <td>{{ evenement.finEvent ? evenement.finEvent|date('Y-m-d') : '' }}</td>
+                            <td>{{ evenement.createdAt ? evenement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ evenement.UpdatedAt ? evenement.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
+                                <a href="{{ path('evenement_show', {'id': evenement.id}) }}">show</a>
+                                <a href="{{ path('evenement_edit', {'id': evenement.id}) }}">edit</a>
+                                {#<a href="{{ path('evenement_edit', {'id': evenement.id}) }}">Ajouter des trajets</a>#}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
 
-    <a href="{{ path('evenement_new') }}">Create new</a>
+                <a href="{{ path('evenement_new') }}">Créer nouvel evenment</a>
+                <a href="#">Liste des billet</a>
+                <a href="#">Liste des sections</a>
+                <a href="#">Liste des trajets</a>
+            </div>
+            <div class="col-sm-3">
+                <a class="btn btn-primary form" id="btnSection" href="#">Ajouter section</a>
+                <div id="section">
+                    <div class="bordure">
+                        {{ include('section_event/_form_modal.html.twig') }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <a class="btn btn-primary form" id="btnTrajet" href="#">Ajouter trajet</a>
+                <div id="trajet">
+                    <div class="bordure">
+                        {{ include('trajet_event/_form_modal.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

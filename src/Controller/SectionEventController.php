@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\SectionEvent;
+use App\Entity\TrajetEvent;
 use App\Form\SectionEventType;
+use App\Form\TrajetEventType;
+use App\Repository\EvenementRepository;
 use App\Repository\SectionEventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,6 +52,42 @@ class SectionEventController extends AbstractController
         return $this->render('section_event/new.html.twig', [
             'section_event' => $sectionEvent,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/modal/new", name="section_event_modal_new", methods={"GET","POST"})
+     * @param Request $request
+     * @param EvenementRepository $evenementRepository
+     * @return Response
+     */
+    public function newModal(Request $request, EvenementRepository $evenementRepository): Response
+    {
+        $sectionEvent = new SectionEvent();
+        $trajetEvent = new TrajetEvent();
+        $formTrajet = $this->createForm(TrajetEventType::class, $trajetEvent);
+        $formSection = $this->createForm(SectionEventType::class, $sectionEvent);
+        $formSection->handleRequest($request);
+
+        if ($formSection->isSubmitted() && $formSection->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($sectionEvent);
+            $entityManager->flush();
+
+            return $this->render('evenement/index.html.twig', [
+                'section_event' => $sectionEvent,
+                'evenements' => $evenementRepository->findAll(),
+                'success' => 'La section est ajouté avec success',
+                'formSection' => $formSection->createView(),
+//                'formTrajet' => $formTrajet->createView(),
+            ]);
+        }
+
+        return $this->render('evenement/index.html.twig', [
+            'section_event' => $sectionEvent,
+            'evenements' => $evenementRepository->findAll(),
+            'formSection' => $formSection->createView(),
+            'formTrajet' => $formSection->createView(),
         ]);
     }
 
