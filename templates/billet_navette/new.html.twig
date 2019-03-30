@@ -4,12 +4,22 @@
 
 {% block body %}
 <div class="box box-default">
-          <div class="box-header with-border">
-            <a class="btn btn-info" href="{{ path('billet_navette_index') }}">Retour</a>
-          </div>
-          <!-- /.box-body -->
-        </div>
-    <h1>Create new BilletNavette</h1>
+  <div class="box-header with-border">
+    <!--a class="btn btn-info" href="{{ path('billet_navette_index') }}">Retour</a-->
+    <div class="col-md-6">
+      <h4><i class="fa fa-plus"></i>&nbsp;<big>Créer un billet Autorail</big></h4>
+    </div>
+  </div>
+</div>
+<div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Ajouter des Billets Autorail </h3>   
+    </div>
+    <div class="box-body">
+      <div class="container">
+        {{ include('billet_navette/_form.html.twig') }}
+      </div>
+    </div>
+</div>
 
-    {{ include('billet_navette/_form.html.twig') }}
 {% endblock %}

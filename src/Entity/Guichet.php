@@ -277,4 +277,9 @@ class Guichet
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return (string)$this->code;
+    }
 }
