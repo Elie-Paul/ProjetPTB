@@ -43,12 +43,12 @@ class TrajetController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $trajet = $trajetRepo->findOneBy([
+            $trajet1 = $trajetRepo->findOneBy([
                 'depart' => $trajet->getDepart(),
                 'arrivee' => $trajet->getArrivee()
             ]);
 
-            if (!$trajet) {
+            if (!$trajet1) {
                 $trajet->setCreatedAt(new \DateTime());
                 $trajet->setUpdatedAt(new \DateTime());
                 $entityManager = $this->getDoctrine()->getManager();
@@ -63,7 +63,7 @@ class TrajetController extends AbstractController
 
                 return $this->render('trajet/new.html.twig', [
                     'trajet' => $trajet,
-                    'error' => 'Le trajet existe dejà',
+                    'error' => 'Le trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' existe dejà',
                     'form' => $form->createView(),
                 ]);
             }

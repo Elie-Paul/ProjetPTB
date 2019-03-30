@@ -1,4 +1,26 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div class="row">
+        <div class="col-xs-10">{{ form_row(form.guichet, {attr : {'placeholder': "Exemple: Guichet Dkr"}}) }}</div>
+        <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-10">{{ form_row(form.ptb, {attr : {'placeholder': "Exemple: Ptb"}}) }}</div>
+        <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    </div>
     <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+
+<style>
+    .cs{
+       position: relative;
+       top: 1.55em;
+       left: 1.7em; 
+    }
+
+    .cs2{
+       position: relative;
+       top: 1.55em;
+       left: 1.7em; 
+    }
+</style>
