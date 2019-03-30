@@ -3,11 +3,26 @@
 {% block title %}Edit Evenement{% endblock %}
 
 {% block body %}
-    <h1>Edit Evenement</h1>
+    <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-plus"></i>&nbsp; Modifier Evenement</h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('evenement_index') }}"><i class="fa fa-list"></i>&nbsp; Liste Evenement</a>&nbsp;              
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
 
-    {{ include('evenement/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('evenement_index') }}">back to list</a>
+<div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Modifier l'évènement {{evenement.libelle}}</h3>
+    </div>
+    <div class="box-body">
+    {{ include('evenement/_form.html.twig', {'button_label': 'Modifier'}) }}
+ </div>
+</div>
 
     {{ include('evenement/_delete_form.html.twig') }}
 {% endblock %}
