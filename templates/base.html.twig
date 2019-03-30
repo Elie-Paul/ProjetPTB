@@ -397,13 +397,19 @@
           </a>
         </li>
         {% endif %}
-        {% if is_granted('ROLE_ADMINISTRATEUR') %} 
+        {% if is_granted('ROLE_ADMINISTRATEUR') %}
+        <li>
+              <a href="{{ path('billet_ptb_new') }}"><i class="fa fa-train"></i><span>Billet PTB</span></a>
+        </li>
+        <li>
+              <a href="{{ path('billet_navette_new') }}"><i class="fa fa-subway"></i><span>Billet Autorail</span></a>
+        </li>
         <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-credit-card"></i>
         <span>Guichets</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right fa-spin"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
@@ -416,7 +422,7 @@
         <i class="glyphicon glyphicon-road"></i>
             <span>Trajets</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right fa-spin"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
          </a>
          <ul class="treeview-menu">
@@ -429,33 +435,20 @@
         <i class="glyphicon glyphicon-map-marker"></i>
         <span>Gares</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right fa-spin"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
             <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
             <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
           </ul>
-        </li>
-        <li class="treeview">
-        <a href="#">
-        <i class="glyphicon glyphicon-certificate"></i>
-          <span>Classes</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right fa-spin"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="{{ path('classe_new') }}"><i class="fa fa-circle-o"></i>Nouvelle</a></li>
-            <li><a href="{{ path('classe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
-          </ul>
-        </li>
+        </li>       
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-user"></i>
             <span>Utilisateur</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right fa-spin"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -469,23 +462,28 @@
             <i class="glyphicon glyphicon-wrench"></i>
             <span>Paramètre</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right fa-spin"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li> 
-          <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-user-plus"></i> Agent</a></li>
-            <li><a href="{{ path('user_index') }}"><i class="glyphicon glyphicon-user"></i>Utilisateur</a></li>
+            <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-certificate"></i>
+          <span>Classes</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('classe_new') }}"><i class="fa fa-circle-o"></i>Nouvelle</a></li>
+            <li><a href="{{ path('classe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+          </ul>
+        </li>                            
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li>
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
             <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
-            <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Traçabilité</a></li>
-          </ul>
-        </li>
-        {#{% endif %}#}
-            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
-          </ul>
+            <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Audit</a></li>
+          </ul>                
         </li>
         {% endif %}
         {% if is_granted('ROLE_SUPERVISEUR') %}
