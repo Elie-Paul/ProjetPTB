@@ -1,0 +1,23 @@
+.form {
+    margin-bottom: 20px;
+}
+
+.bordure {
+    border-style: ridge;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+#trajet {
+    display: none;
+}
+
+#section {
+    display: none;
+}
+
+#billet {
+    padding: 5px;
+    border-radius: 15px;
+    display: none;
+}

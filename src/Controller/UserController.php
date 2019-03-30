@@ -156,8 +156,7 @@ class UserController extends AbstractController
         ->getForm();
         $form->handleRequest($request);
         
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setCreatedAt(new \DateTime());
+        if ($form->isSubmitted() && $form->isValid()) {            
             $user->setUpdateAt(new \DateTime());
             $hash=$encoder->encodePassword($user, $user->getPassword());  
             $user->setPassword($hash);
@@ -173,7 +172,7 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    
+
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
      */

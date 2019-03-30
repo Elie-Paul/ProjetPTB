@@ -6,6 +6,9 @@ use App\Entity\Lieux;
 use App\Entity\Trajet;
 use App\Entity\Type;
 use App\Form\TypeType;
+use App\Entity\User;
+use App\Form\UserType;
+use App\Repository\UserRepository;
 use App\Entity\Abonnement;
 use App\Form\AbonnementType;
 use App\Form\TrajetType;
@@ -13,9 +16,11 @@ use App\Entity\Guichet;
 use App\Form\GuichetType;
 use App\Repository\AbonnementRepository;
 use App\Repository\TrajetRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\Section;
 use App\Entity\Ptb;
 use App\Form\PtbType;
@@ -248,5 +253,37 @@ class ModalController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/{id}/ModifierimageUser", name="img_ModiUser", methods={"GET","POST"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function ModifierimageUser(Request $request, User $user): Response
+    {        
+        $form = $this->createFormBuilder($user)
+        ->add('imageFile', FileType::class, [                
+            'label' => "Image",
+            'attr' => [                    
+                'class' => 'form-control',
+                'required' => true                  
+                ]             
+        ])
+        ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdateAt(new \DateTime());           
+            $this->getDoctrine()->getManager()->flush();            
+            return $this->redirectToRoute('user_show', [
+                'id' => $user->getId(),
+            ]);
+        }
+        return $this->render('user/modificationimage.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
 
 }

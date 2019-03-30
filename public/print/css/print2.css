@@ -3,9 +3,9 @@
         size: landscape;
 
     }
-    .inset {border-style: inset;
+    .inset {border-style: groove;
         float: none; page-break-before: always}
-    .inset2 {border-style: inset;}
+    .inset2 {border-style: groove;}
     .premiere-page {
         float: none;
     }
@@ -124,6 +124,11 @@
 
     .principal-content {
         margin-left: 50px;
+        font-size: 18px;
+    }
+
+    #recommendationDate {
+        font-weight: bold;
     }
 
 

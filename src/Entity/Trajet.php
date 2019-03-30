@@ -51,6 +51,11 @@ class Trajet
      */
     private $ptb;
     private $trajetlib;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="trajetEvent")
+     */
+    private $evenement;
     public function __construct()
     {
         $this->navette = new ArrayCollection();
@@ -145,6 +150,18 @@ class Trajet
     public function __toString()
     {
         return (string)$this->depart->getLibelle().'-'.$this->arrivee->getLibelle();
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
+
+        return $this;
     }
 
     

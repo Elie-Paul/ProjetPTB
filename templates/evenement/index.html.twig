@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement index{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('evenement/app.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('evenement/app.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+     <div class="box box-default">
+        <div class="box-header with-border">
+            <div class="col-md-6">
+                <h4>
+                    <i class="fa fa-list"></i>&nbsp;<big>Liste des Evenements</big>&nbsp;&nbsp;
+                    <a class="btn btn-primary form" id="btnSection" href="#"><i class="glyphicon glyphicon-plus"></i>Ajouter section</a>
+                <div id="section">
+                    <div class="bordure">
+                        {{ include('section_event/_form_modal.html.twig') }}
+                    </div>
+                </div>
+                </h4>                
+            </div>
+            <div class="col-md-6 text-right">
+                <a class="btn btn-primary pull-right" href="{{ path('evenement_new') }}">
+                    <i class="glyphicon glyphicon-plus"></i>Nouveau Evenement</a>
+                <a class="btn btn-primary form" id="btnTrajet" href="#"><i class="glyphicon glyphicon-plus"></i>Ajouter trajet</a>&nbsp;
+                <div id="trajet">
+                    <div class="bordure">
+                        {{ include('trajet_event/_form_modal.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    {% if error is defined %}
+        <div class="container">
+            <div class="panel panel-warning">
+                {{ error }}
+            </div>
+        </div>
+    {% endif %}
+    {% if success is defined %}
+        <div class="container">
+            <div class="panel panel-warning">
+                {{ success }}
+            </div>
+        </div>
+    {% endif %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+            <div class="box box-primary">
+            <div class="box-header">
+                <h1 class="box-title">Liste des evenements</h1>
+            </div>
+            <div class="box-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Libelle</th>
+                        <th>Date D'Evenement</th>
+                        <th>Fin Evenement</th>
+                        <th>Mise à jour</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for evenement in evenements %}
+                        <tr>
+                            <td>{{ evenement.id }}</td>
+                            <td>{{ evenement.libelle }}</td>
+                            <td>{{ evenement.dateEvent ? evenement.dateEvent|date('Y-m-d') : '' }}</td>
+                            <td>{{ evenement.finEvent ? evenement.finEvent|date('Y-m-d') : '' }}</td>                            
+                            <td>{{ evenement.UpdatedAt ? evenement.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
+                                <a class="btn btn-info" role="button" href="{{ path('evenement_show', {'id': evenement.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
+                                <a class="btn btn-warning" role="button" href="{{ path('evenement_edit', {'id': evenement.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
+                                {#<a href="{{ path('evenement_edit', {'id': evenement.id}) }}">Ajouter des trajets</a>#}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="#">Liste des billet</a>&nbsp;&nbsp;
+                <a href="#">Liste des sections</a>&nbsp;&nbsp;
+                <a href="#">Liste des trajets</a>
+            </div>
+            </div>
+            </div>            
+        </div>
+    </div>
+{% endblock %}

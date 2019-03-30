@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SectionEvent index{% endblock %}
+
+{% block body %}
+    <h1>SectionEvent index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for section_event in section_events %}
+            <tr>
+                <td>{{ section_event.id }}</td>
+                <td>{{ section_event.libelle }}</td>
+                <td>{{ section_event.prix }}</td>
+                <td>
+                    <a href="{{ path('section_event_show', {'id': section_event.id}) }}">show</a>
+                    <a href="{{ path('section_event_edit', {'id': section_event.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('section_event_new') }}">Create new</a>
+{% endblock %}
