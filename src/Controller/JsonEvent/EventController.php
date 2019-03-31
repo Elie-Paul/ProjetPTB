@@ -122,7 +122,7 @@ class EventController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newModalBillet(Request $request, BilletEventRepository $billetEventRepository): Response
+    public function newModalBillet(Request $request): Response
     {
         $billetEvent = new BilletEvent();
         $form = $this->createForm(BilletEventType::class, $billetEvent);
@@ -147,7 +147,7 @@ class EventController extends AbstractController
                 return new JsonResponse([
                     'status' => 'success',
                     'message' => 'Le billet du trajet '.$billetEvent->getTrajet().' est crée pour le guichet '.$billetEvent->getGuichet()->getNom(),
-                    'billets' => $billetEventRepository->findAll()
+//                    'billets' => $billetEventRepository->findAll()
                 ]);
             }
         }
