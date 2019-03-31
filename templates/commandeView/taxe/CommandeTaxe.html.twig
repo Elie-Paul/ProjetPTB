@@ -37,7 +37,7 @@
         }
     }    
 </style>
-    <h1>Génération de Commande Billets Navette</h1>
+    <h1>Génération de Commande Billets Taxe</h1>
     
     <div class="box box-default">
           <div class="box-header with-border">
@@ -58,62 +58,17 @@
     <table class="table table-hover table-striped dataTable" id="example1">
         <thead>
             <tr>
+                <th>Prix</th>
                 <th>Guichet</th>
-                <th>Classe</th>
-                <th>Trajet</th>
                 <th>Nombre de billets</th>
-                <th>Total</th>
+                
                 
             </tr>
         </thead>
         <tbody id="tbody">
-            <tr  class="rowsss" id="0">
-                <td>
-                    <div class="form-group">
-                    <select id="g" class="form-control GuichetId" >
-                        <option id="0" selected disabled>Guichet</option>
-                    </select>
-                    </div>   
-                </td>
-                <td>
-                    <div class="form-group ">
-                    <select class="form-control SectionId" >
-                        <option  id='0' selected disabled>Classe</option>
-                    </select>
-                    </div>  
-                </td>
-                <td>
-                    <div class="form-group">
-                    <select class="form-control TrajetId">
-                        <option  id='0' selected disabled>Trajet</option>
-                    </select>
-                    </div>  
-                </td>
-                <td>
-                    <div class="form-group">
-                    <input type="number"  class="form-control nbreBillet"  placeholder="nombre de billet">
-                    </div>  
-                </td>
-                <td>
-                    <span style='display:none;'  class="label label-success">Success</span>
-                    <span style='display:none;' class="label label-danger">echec</span>
-                </td>
-            </tr>
           
        
         </tbody>
-          <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><span id="total"></span> billets</td>
-        </tr>
-         <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
         <button class="btn btn-warning" id="commander" onclick="passerCommande();">commander</button>
         </tr>
     </table>
@@ -128,7 +83,7 @@
     </div>
     
     
-<script src="{{ asset('jslog/commandeNavette.js') }}"></script>
+<script src="{{ asset('jslog/commandeTaxe.js') }}"></script>
     
 {% endblock %}
 

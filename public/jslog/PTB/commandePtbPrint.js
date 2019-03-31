@@ -1,10 +1,4 @@
 
-
-/**
- * Code design interface row adding 
- * */      
-
-//<button type="button" class="btn btn-success">Success</button>
 function addRow(array) 
 {
     while (tbody.firstChild) 
@@ -72,10 +66,11 @@ function createRowElement(commande)
     pdiv.appendChild(pdiv2)
     realisation.appendChild(pdiv);
     array.push(realisation);
-
-    /*let numDepart = document.createElement('td');
-   
-    array.push(numDepart);*/
+    let stock = document.createElement('td');
+    let stockContent = document.createTextNode(`${commande.nombreBilletRealiser-commande.nombreBilletVendu}`);
+    stock.appendChild(stockContent);
+    array.push(stock);
+    
     return array;
 }
 

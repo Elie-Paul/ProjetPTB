@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,16 @@ class BilletTaxe
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandeTaxe", mappedBy="billet")
+     */
+    private $commandeTaxes;
+
+    public function __construct()
+    {
+        $this->commandeTaxes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,6 +97,37 @@ class BilletTaxe
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandeTaxe[]
+     */
+    public function getCommandeTaxes(): Collection
+    {
+        return $this->commandeTaxes;
+    }
+
+    public function addCommandeTax(CommandeTaxe $commandeTax): self
+    {
+        if (!$this->commandeTaxes->contains($commandeTax)) {
+            $this->commandeTaxes[] = $commandeTax;
+            $commandeTax->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeTax(CommandeTaxe $commandeTax): self
+    {
+        if ($this->commandeTaxes->contains($commandeTax)) {
+            $this->commandeTaxes->removeElement($commandeTax);
+            // set the owning side to null (unless already changed)
+            if ($commandeTax->getBillet() === $this) {
+                $commandeTax->setBillet(null);
+            }
+        }
 
         return $this;
     }

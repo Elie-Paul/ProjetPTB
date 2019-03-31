@@ -62,7 +62,7 @@ function createRowElement(commande)
     let span = document.createElement('span');
     if(commande.etat===0)
     {
-        let spanContent = document.createTextNode('pas encore validé');
+        let spanContent = document.createTextNode('non validé');
         span.classList.add('label');
         span.classList.add('label-warning');
         span.appendChild(spanContent);
@@ -70,7 +70,7 @@ function createRowElement(commande)
     }
     else
     {
-        let spanContent = document.createTextNode('commande deja validé');
+        let spanContent = document.createTextNode('commande validé');
         span.classList.add('label');
         span.classList.add('label-success');
         span.appendChild(spanContent);
@@ -87,13 +87,14 @@ function createRowElement(commande)
     if(commande.etat===0)
     {
         button.classList.add('btn-success');
-        button.classList.remove('btn-danger');
+        button.classList.remove('btn-info');
         button.innerText="valider";
     }
     else
     {
-        button.classList.add('btn-danger');
-        button.innerText="Annuler";
+        button.classList.add('btn-info');
+        button.innerText="Commande Validé";
+        button.disabled=true;
         button.classList.remove('btn-success');
     }
     button.addEventListener('click',(e) => validationAction(e.target));

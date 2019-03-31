@@ -65,23 +65,14 @@ function checkforEmpty()
    }
    
 }
-function removeRow()
+/*function reset()
 {
-    /*if (selectedrow!=0) 
+    for(let i=1;i<tbody.children;i++)
     {
-        let idGuichet = cmbGuichets[selectedrow-1].options[cmbGuichets[selectedrow-1].selectedIndex].id;
-        let idSection = cmbSections[selectedrow-1].options[cmbSections[selectedrow-1].selectedIndex].id;
-        if(Nbres[selectedrow-1].value =="" && idGuichet=='0' && idSection=='0')
-        {
-            
-            tbody.removeChild(tbody.children[selectedrow-1]);
-            index--;
-            Nbres[index].addEventListener("click",addRow);
-            addRow();
-        }    
-    } */
+        tbody.children[i].remove(children.)
+    }
     
-}
+}*/
 
 
  function getJson(link,id,trajetid)
@@ -203,7 +194,33 @@ function getJson3()
  Nbres[index].addEventListener("keyup",checkforEmpty);
  //Nbres[index].addEventListener("focus",removeRow);
  Nbres[index].addEventListener("change",setTotal);
- 
+ function controlPasserCommande()
+ {
+    swal({
+        title: "Etes vous sûr ?",
+        text: "souhaitez-vous passer ces commandes",
+        icon: "warning",
+        buttons: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                passerCommande();
+            }
+        });
+ }
+ function afterCommande()
+ {
+    swal({
+        title: "commande envoyé",
+        text: "Toute vos commande on été envoyé",
+        icon: "success",
+        
+    })
+        .then((value) => {
+            document.location.href="http://localhost:8000/commande/ptb";
+            
+        });
+ } 
  
  function passerCommande() 
  {
@@ -248,7 +265,10 @@ function getJson3()
      
      if(i==index)
      {
-        setTimeout(function(){ document.location.href = "http://localhost:8000/commande/ptb/";}
+        setTimeout(function()
+        {   
+            afterCommande();
+        }
         , index*600); 
      }
     } 

@@ -114,7 +114,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <button class="btn btn-warning" id="commander" onclick="passerCommande();">commander</button>
+        <button class="btn btn-warning" id="commander" onclick="controlPasserCommande();">commander</button>
         </tr>
     </table>
         
@@ -127,8 +127,8 @@
             {{ app.user.id }}
     </div>
     
-    
-<script src="{{ asset('jslog/commandePtb.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
+<script src="{{ asset('jslog/PTB/commandePtb.js') }}"></script>
     
 {% endblock %}
 
