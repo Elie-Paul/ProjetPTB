@@ -2,8 +2,10 @@
 
 
 namespace App\Controller\JsonEvent;
+use App\Entity\BilletEvent;
 use App\Entity\SectionEvent;
 use App\Entity\TrajetEvent;
+use App\Form\BilletEventType;
 use App\Form\SectionEventType;
 use App\Form\TrajetEventType;
 use App\Repository\EvenementRepository;
@@ -121,6 +123,31 @@ class EventController extends AbstractController
      */
     public function newModalBillet(Request $request): Response
     {
-
+        $billetEvent = new BilletEvent();
+        $form = $this->createForm(BilletEventType::class, $billetEvent);
+        $form->handleRequest($request);
+        if($request->isXmlHttpRequest())
+        {
+            if ($form->isSubmitted())
+            {
+                $billet = $this->getDoctrine()->getRepository(BilletEvent::class)->findOneBy([
+                    'trajet' => $billetEvent->getTrajet()
+                ]);
+                if($billet)
+                {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => 'Il existe dejà un billet pour le trajet '.$billetEvent->getTrajet()
+                    ]);
+                }
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($billetEvent);
+                $entityManager->flush();
+                return new JsonResponse([
+                    'status' => 'success',
+                    'message' => 'Le billet du trajet '.$billetEvent->getTrajet().' est crée pour le guichet '.$billetEvent->getGuichet()->getNom()
+                ]);
+            }
+        }
     }
 }
