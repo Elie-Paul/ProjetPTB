@@ -6,9 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GuichetRepository")
+ * @UniqueEntity("code")
  */
 class Guichet
 {
@@ -27,6 +29,7 @@ class Guichet
      *      minMessage = "Votre code doit avoir au minimum {{ limit }} charactère de longueur"
      * )
      * @Assert\Type("string")
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9 ]+$/", match=true, message="Les caractères spéciaux sont interdits dans le titre")
      */
     private $code;
 
@@ -38,6 +41,7 @@ class Guichet
      *      minMessage = "Votre nom doit avoir au minimum 2 charactère de longueur"
      * )
      * @Assert\Type("string")
+     * @Assert\Regex(pattern="/^[a-zA-Z]+$/", match=true, message="Les caractères spéciaux sont interdits dans le titre")
      */
     private $nom;
 
@@ -272,5 +276,10 @@ class Guichet
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return (string)$this->code;
     }
 }
