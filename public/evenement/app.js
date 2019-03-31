@@ -78,6 +78,7 @@ $(document).ready(function () {
                     default:
                         swal("Errer", data.message, "error");
                 }
+                $('.box-body').load('http://localhost:8000/billet/event/ .box-body');
             },
             error: function (error) {
                 alert('Erreur '+error);

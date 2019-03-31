@@ -8,6 +8,7 @@ use App\Entity\TrajetEvent;
 use App\Form\BilletEventType;
 use App\Form\SectionEventType;
 use App\Form\TrajetEventType;
+use App\Repository\BilletEventRepository;
 use App\Repository\EvenementRepository;
 use App\Repository\SectionEventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -121,7 +122,7 @@ class EventController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newModalBillet(Request $request): Response
+    public function newModalBillet(Request $request, BilletEventRepository $billetEventRepository): Response
     {
         $billetEvent = new BilletEvent();
         $form = $this->createForm(BilletEventType::class, $billetEvent);
@@ -145,7 +146,8 @@ class EventController extends AbstractController
                 $entityManager->flush();
                 return new JsonResponse([
                     'status' => 'success',
-                    'message' => 'Le billet du trajet '.$billetEvent->getTrajet().' est crée pour le guichet '.$billetEvent->getGuichet()->getNom()
+                    'message' => 'Le billet du trajet '.$billetEvent->getTrajet().' est crée pour le guichet '.$billetEvent->getGuichet()->getNom(),
+                    'billets' => $billetEventRepository->findAll()
                 ]);
             }
         }
