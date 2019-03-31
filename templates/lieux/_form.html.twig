@@ -1,5 +1,6 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.libelle, {attr : {'placeholder': "Exemple: Fass Mbao"}}) }}
 
     <button class="btn btn-info"><big>{{ button_label|default('Enregistrer') }}</big></button>
 

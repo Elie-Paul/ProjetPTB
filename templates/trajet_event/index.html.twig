@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TrajetEvent index{% endblock %}
+
+{% block body %}
+    <h1>TrajetEvent index</h1>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Depart</th>
+                <th>Arrivee</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for trajet_event in trajet_events %}
+            <tr>
+                <td>{{ trajet_event.id }}</td>
+                <td>{{ trajet_event.depart }}</td>
+                <td>{{ trajet_event.arrivee }}</td>
+                <td>
+                    <a href="{{ path('trajet_event_show', {'id': trajet_event.id}) }}">show</a>
+                    <a href="{{ path('trajet_event_edit', {'id': trajet_event.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('trajet_event_new') }}">Create new</a>
+{% endblock %}

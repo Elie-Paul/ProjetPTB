@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 
@@ -20,10 +21,11 @@ class UserType extends AbstractType
     {
         $builder
             ->add('imageFile', FileType::class, [                
-                'label' => "Image",
-                'attr' => [                    
+                'label' => "Image",                
+                'required' => true,
+                'attr' => [                                      
                     'class' => 'form-control',
-                    'required' => true                  
+                    'required' => true     
                     ]             
             ])
             ->add('nom')            

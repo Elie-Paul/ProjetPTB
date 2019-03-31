@@ -1,0 +1,4 @@
+{{ form_start(formSection, {'action': path('evenement_index')}) }}
+    {{ form_widget(formSection) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(formSection) }}

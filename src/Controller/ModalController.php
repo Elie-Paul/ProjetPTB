@@ -6,6 +6,9 @@ use App\Entity\Lieux;
 use App\Entity\Trajet;
 use App\Entity\Type;
 use App\Form\TypeType;
+use App\Entity\User;
+use App\Form\UserType;
+use App\Repository\UserRepository;
 use App\Entity\Abonnement;
 use App\Form\AbonnementType;
 use App\Form\TrajetType;
@@ -13,9 +16,17 @@ use App\Entity\Guichet;
 use App\Form\GuichetType;
 use App\Repository\AbonnementRepository;
 use App\Repository\TrajetRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use App\Entity\Section;
+use App\Entity\Ptb;
+use App\Form\PtbType;
+use App\Entity\Classe;
+use App\Entity\Navette;
+use App\Form\NavetteType;
 
 class ModalController extends AbstractController
 {
@@ -30,7 +41,29 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addLieuTrajet/{libelle}", name="lieux_addTrajet")
+     * @Route("/addClasse/{libelle}", name="lieux_addClasse")
+     */
+    public function addClasse($libelle)
+    {    
+        $classe = new Classe();
+        $navette = new Navette();
+        $form = $this->createForm(NavetteType::class, $navette);
+
+        $classe->setLibelle($libelle);
+        $classe->setCreatedAt(new \DateTime());
+        $classe->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($classe);
+        $entityManager->flush();
+
+        return $this->render('navette/new.html.twig', [
+            'navette' => $navette,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addLieuTrajet/{libelle}", name="lieux_addTLieurajet")
      */
     public function addLieuTrajet($libelle)
     {        
@@ -49,7 +82,50 @@ class ModalController extends AbstractController
             'trajet' => $trajet,
             'form' => $form->createView(),
         ]);
-        //return new Response('/trajet');
+    }
+
+    /**
+     * @Route("/addLieuTrajetPtb/{libelle}", name="lieux_addTLieurajetPtb")
+     */
+    public function addLieuTrajetPtb($libelle)
+    {        
+        $lieux = new Lieux();
+        $ptb = new Ptb();
+        $form = $this->createForm(PtbType::class, $ptb);
+
+        $lieux->setLibelle($libelle);
+        $lieux->setCreatedAt(new \DateTime());
+        $lieux->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
+        $entityManager->flush();
+
+        return $this->render('ptb/new.html.twig', [
+            'ptb' => $ptb,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addLieuTrajetNavette/{libelle}", name="lieux_addLieuTrajetNavette")
+     */
+    public function addLieuTrajetNavette($libelle)
+    {        
+        $lieux = new Lieux();
+        $navette = new Navette();
+        $form = $this->createForm(NavetteType::class, $navette);
+
+        $lieux->setLibelle($libelle);
+        $lieux->setCreatedAt(new \DateTime());
+        $lieux->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
+        $entityManager->flush();
+
+        return $this->render('navette/new.html.twig', [
+            'navette' => $navette,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -70,6 +146,88 @@ class ModalController extends AbstractController
 
         return $this->render('guichet/new.html.twig', [
             'guichet' => $guichet,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addSection/{libelle}/{prix}", name="lieux_addSection")
+     */
+    public function addSection($libelle, $prix)
+    {        
+        $section = new Section();
+        $prix = intval($prix);
+        $ptb = new Ptb();
+        $form = $this->createForm(PtbType::class, $ptb);
+
+        $section->setLibelle($libelle);
+        $section->setPrix($prix);
+        $section->setCreatedAt(new \DateTime());
+        $section->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($section);
+        $entityManager->flush();
+
+        return $this->render('ptb/new.html.twig', [
+            'ptb' => $ptb,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addTrajet/{depart}/{arrivee}", name="lieux_addTrajet")
+     */
+    public function addTrajet($depart, $arrivee)
+    {        
+        $trajet = new Trajet();
+        $lieux = new Lieux();
+        $ptb = new Ptb();
+        $form = $this->createForm(PtbType::class, $ptb);
+
+        $depart = $lieux->setLibelle($depart);
+        $arrivee = $lieux->setLibelle($arrivee);
+
+
+        $trajet->setDepart($depart);
+        $trajet->setArrivee($arrivee);
+        $trajet->setCreatedAt(new \DateTime());
+        $trajet->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
+        $entityManager->persist($trajet);
+        $entityManager->flush();
+
+        return $this->render('ptb/new.html.twig', [
+            'ptb' => $ptb,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addTrajetNavette/{depart}/{arrivee}", name="lieux_addTrajetNavette")
+     */
+    public function addTrajetNavette($depart, $arrivee)
+    {        
+        $trajet = new Trajet();
+        $lieux = new Lieux();
+        $navette = new Navette();
+        $form = $this->createForm(NavetteType::class, $navette);
+
+        $depart = $lieux->setLibelle($depart);
+        $arrivee = $lieux->setLibelle($arrivee);
+
+
+        $trajet->setDepart($depart);
+        $trajet->setArrivee($arrivee);
+        $trajet->setCreatedAt(new \DateTime());
+        $trajet->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
+        $entityManager->persist($trajet);
+        $entityManager->flush();
+
+        return $this->render('navette/new.html.twig', [
+            'navette' => $navette,
             'form' => $form->createView(),
         ]);
     }
@@ -95,4 +253,37 @@ class ModalController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/{id}/ModifierimageUser", name="img_ModiUser", methods={"GET","POST"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
+    public function ModifierimageUser(Request $request, User $user): Response
+    {        
+        $form = $this->createFormBuilder($user)
+        ->add('imageFile', FileType::class, [                
+            'label' => "Image",
+            'attr' => [                    
+                'class' => 'form-control',
+                'required' => true                  
+                ]             
+        ])
+        ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdateAt(new \DateTime());           
+            $this->getDoctrine()->getManager()->flush();            
+            return $this->redirectToRoute('user_show', [
+                'id' => $user->getId(),
+            ]);
+        }
+        return $this->render('user/modificationimage.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
 }

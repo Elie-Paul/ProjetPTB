@@ -1,0 +1,4 @@
+{{ form_start(formTrajet, {'action': path('evenement_index')} ) }}
+    {{ form_widget(formTrajet) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(formTrajet) }}

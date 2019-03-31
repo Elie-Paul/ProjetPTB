@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GuichetRepository")
@@ -20,11 +21,23 @@ class Guichet
 
     /**
      * @ORM\Column(type="string", length=5)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 5,
+     *      minMessage = "Votre code doit avoir au minimum {{ limit }} charactère de longueur"
+     * )
+     * @Assert\Type("string")
      */
     private $code;
 
     /**
      * @ORM\Column(type="string", length=30)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "Votre nom doit avoir au minimum 2 charactère de longueur"
+     * )
+     * @Assert\Type("string")
      */
     private $nom;
 
@@ -59,11 +72,17 @@ class Guichet
      */
     private $vignettes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BilletEvent", mappedBy="guichet", orphanRemoval=true)
+     */
+    private $billetEvents;
+
     public function __construct()
     {
         $this->billetPtbs = new ArrayCollection();
         $this->billetNavettes = new ArrayCollection();
         $this->vignettes = new ArrayCollection();
+        $this->billetEvents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -218,6 +237,37 @@ class Guichet
             // set the owning side to null (unless already changed)
             if ($vignette->getGuichet() === $this) {
                 $vignette->setGuichet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BilletEvent[]
+     */
+    public function getBilletEvents(): Collection
+    {
+        return $this->billetEvents;
+    }
+
+    public function addBilletEvent(BilletEvent $billetEvent): self
+    {
+        if (!$this->billetEvents->contains($billetEvent)) {
+            $this->billetEvents[] = $billetEvent;
+            $billetEvent->setGuichet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBilletEvent(BilletEvent $billetEvent): self
+    {
+        if ($this->billetEvents->contains($billetEvent)) {
+            $this->billetEvents->removeElement($billetEvent);
+            // set the owning side to null (unless already changed)
+            if ($billetEvent->getGuichet() === $this) {
+                $billetEvent->setGuichet(null);
             }
         }
 

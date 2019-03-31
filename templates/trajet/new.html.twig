@@ -4,27 +4,6 @@
 
 {% block body %}
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form>
-        <div class="form-group">
-            <label for="nomGare"><big>Libelle</big></label>
-            <input type="text"
-              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une gare">
-          </div>
-    </form>
-    <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Ajouter</big></button>
-  </div>
-  
-
-</div>
-
-
-
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
@@ -35,14 +14,15 @@
             <button type="button" class="btn btn-warning" id="myBBtn" onclick="mode()"><i class="glyphicon glyphicon-plus"></i><big> Ajouter une gare</button>
           </div>
           </div>
-          <!-- /.box-body -->
         </div>
 <div class="box box-solid box-primary">
     <div class="box-header">
         <h3 class="box-title">Ajouter un nouveau trajet</h3>   
     </div>
     <div class="box-body">
+      <div class="container">
         {{ include('trajet/_form.html.twig') }}
+      </div>
     </div>
 </div> 
 

@@ -13,6 +13,7 @@ use App\Entity\BilletPtb;
 use App\Entity\Ptb;
 use App\Entity\CommandePtb;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Lieux;
 
 
 class Controller extends AbstractController
@@ -312,6 +313,44 @@ class Controller extends AbstractController
             'notes' => $note];
             return new Response(json_encode($note));
     
+    }
+
+    /**
+     * @Route("/json/lieu/depart", name="json_controller_lieu_depart")
+     */
+    public function getLieuxDepart()
+    {
+        $repository = $this->getDoctrine()->getRepository(Lieux::class);
+        $variable2 = $repository->findAll();
+        $note = array();
+        foreach ($variable2 as $key => $variable) 
+        {
+            $myarray = array('id' => "".$variable->getId()."",  'libelle' => $variable->getLibelle());
+            array_push($note,$myarray);
+        }
+        $data = [
+            'notes' => $note];
+            return new Response(json_encode($note));
+
+    }
+
+    /**
+     * @Route("/json/lieu/arrivee", name="json_controller_lieu_arrivee")
+     */
+    public function getLieuxArrivee()
+    {
+        $repository = $this->getDoctrine()->getRepository(Lieux::class);
+        $variable2 = $repository->findAll();
+        $note = array();
+        foreach ($variable2 as $key => $variable) 
+        {
+            $myarray = array('id' => "".$variable->getId()."",  'libelle' => $variable->getLibelle());
+            array_push($note,$myarray);
+        }
+        $data = [
+            'notes' => $note];
+            return new Response(json_encode($note));
+
     }
 }
 

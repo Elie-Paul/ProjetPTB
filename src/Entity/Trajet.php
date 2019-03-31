@@ -3,6 +3,7 @@
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,7 @@ class Trajet
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Lieux", inversedBy="trajetsDepart")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotEqualTo(propertyPath="arrivee", message="Le lieu de depart doit être different du lieu d'arrivé !!!")
      */
     private $depart;
 
@@ -49,6 +51,11 @@ class Trajet
      */
     private $ptb;
     private $trajetlib;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="trajetEvent")
+     */
+    private $evenement;
     public function __construct()
     {
         $this->navette = new ArrayCollection();
@@ -143,6 +150,18 @@ class Trajet
     public function __toString()
     {
         return (string)$this->depart->getLibelle().'-'.$this->arrivee->getLibelle();
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
+
+        return $this;
     }
 
     

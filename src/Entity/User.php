@@ -12,11 +12,12 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @Vich\Uploadable()
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -88,14 +89,10 @@ class User implements UserInterface
      */
     public $confirme_password;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Audit", mappedBy="user")
-     */
-    private $audits;
 
     public function __construct()
     {
-        $this->audits = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -234,7 +231,7 @@ class User implements UserInterface
     {
         $this->imageFile = $imageFile;
         if ($this->imageFile instanceof UploadedFile) {
-            $this->updateAt = new \DateTimeImmutable();
+            $this->updateAt = new \DateTime('now');
         }
         return $this;
     }
@@ -271,34 +268,46 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+
     /**
-     * @return Collection|Audit[]
+     * String representation of object
+     * @link https://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
      */
-    public function getAudits(): Collection
+    public function serialize()
     {
-        return $this->audits;
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->nom,
+            $this->prenom
+            // see section on salt below
+            // $this->salt,
+        ));
     }
 
-    public function addAudit(Audit $audit): self
+    /**
+     * Constructs the object
+     * @link https://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     * The string representation of the object.
+     * </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized)
     {
-        if (!$this->audits->contains($audit)) {
-            $this->audits[] = $audit;
-            $audit->setUser($this);
-        }
-
-        return $this;
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->nom,
+            $this->prenom
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized, array('allowed_classes' => false));
     }
 
-    public function removeAudit(Audit $audit): self
-    {
-        if ($this->audits->contains($audit)) {
-            $this->audits->removeElement($audit);
-            // set the owning side to null (unless already changed)
-            if ($audit->getUser() === $this) {
-                $audit->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }

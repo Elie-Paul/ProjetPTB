@@ -1,4 +1,220 @@
+<!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- The Modal -->
+<div id="myModal" class="modal" role="dialog">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
+
+    <div class="modal-body">
+        <form>
+        <div class="form-group">
+            <label for="nomGare"><big>Libelle</big></label>
+            <input type="text"
+              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une gare">
+          </div>
+        </form>
+    </div>
+
+    <div class="modal-footer left">
+        <button  id="submit" onclick="ajouter1()" class="btn btn-primary"><big>Ajouter</big></button>
+    </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
+
+    <div class="modal-body">
+      <div class="row">
+        <div class="from-group">
+          <label for="lib">Libelle</label>            
+          <input id="libLieux" type="text" class="form-control" name="msg" placeholder="Saisir une gare si possible">
+          <br>
+          <button type="button" id="submit" onclick="ajoutLieu()" class="btn btn-primary">Ajouter</button>
+        </div>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label for="sel1">Depart</label>
+        <select class="form-control DepartId" id="sel1">
+          <option id="0" selected disabled>Depart</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sel1">Arrivée</label>
+        <select class="form-control ArriveeId" id="sel2">
+          <option id="0" selected disabled>Arrivée</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" id="submit" onclick="ajouter2()" class="btn btn-primary">Ajouter</button>
+    </div>
+  </div>
+  
+
+</div>
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="row">
+    <div class="col-xs-10">{{ form_row(form.trajet) }}</div>
+    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode2()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    </div>
+  <div class="row">
+    <div class="col-xs-10">{{ form_row(form.classe) }}</div>
+    <div class="col-xs-2 cs2"><a type="button" class="btn btn-warning" id="myBBtn2" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
+</div>
+<div class="row">
+    <div class="col-xs-10">{{ form_row(form.prix) }}</div>
+    </div>
     <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+
+<style>
+    .cs{
+       position: relative;
+       top: 1.55em;
+       left: 2em; 
+    }
+
+    .cs2{
+       position: relative;
+       top: 1.55em;
+       left: 2em; 
+    }
+</style>
+
+<script>
+        
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementsByClassName('modal')[0];
+
+        span.onclick = function() 
+        {
+          modal.style.display = "none";
+        }
+
+       function ajouter1()
+        {
+          var libelle = document.getElementById("libelle").value;
+          modal.style.display = "none";
+          document.location.href = `http://localhost:8000/addClasse/${libelle}`;
+          //swal("Good job!", "Vous avez ajouté une section", "success");  
+          alert("Section ajouter");
+        }
+        
+        function mode()
+        {
+          modal.style.display = "block";          
+        }
+        
+        
+
+        
+        var span1 = document.getElementsByClassName("close")[1];
+        var modal1 = document.getElementsByClassName('modal')[1];
+        
+        span1.onclick = function() 
+        {
+            modal1.style.display = "none";
+        }
+
+        
+        function ajouter2(){
+          var depart = document.getElementById("sel1").value;
+          var arrivee = document.getElementById("sel2").value;
+          modal1.style.display = "none";
+          document.location.href = `http://localhost:8000/addTrajetNavette/${depart}/${arrivee}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success"); 
+          
+        }
+        
+        function mode2()
+        {
+          modal1.style.display = "block"; 
+          getJson('http://localhost:8000/json/lieu/depart',1);
+          getJson('http://localhost:8000/json/lieu/arrivee',2);         
+        }
+
+        function ajoutLieu()
+        {
+          var lib = document.getElementById("libLieux").value;
+          modal1.style.display = "none";
+          document.location.href = `http://localhost:8000/addLieuTrajetNavette/${lib}`;
+          getJson('http://localhost:8000/json/lieu/depart',1);
+          getJson('http://localhost:8000/json/lieu/arrivee',2);
+        }
+
+        /* window.onclick = function(event) 
+        {            
+          modal.style.display = "none";
+          modal1.style.display = "none";
+        }*/
+
+
+      /* ----------------Remplire Combo----------------- */
+
+const combLieuxDepart = document.getElementById('sel1');
+const combLieuxArrivee = document.getElementById('sel2');
+      
+
+function getJson(link,id)
+{
+  let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.responseText);
+      
+      switch(id){
+        case 1:
+          setLieuxDepart(response);
+          break;
+        case 2:
+          setLieuxArrivee(response);
+          break;
+      }
+    }
+  }
+  
+  xhttp.open("GET",link,true);
+  xhttp.send();
+
+}       
+
+
+function setLieuxDepart(array)
+{
+  for(let i=0; i<array.length; i++){
+    let option=document.createElement('option');
+    option.id = `${array[i].id}`;
+    let t = document.createTextNode(`${array[i].libelle}`);
+    option.appendChild(t);
+    combLieuxDepart.appendChild(option);
+  }
+}
+
+function setLieuxArrivee(array)
+{
+  for(let i=0; i<array.length; i++){
+    let option=document.createElement('option');
+    option.id = `${array[i].id}`;
+    let t = document.createTextNode(`${array[i].libelle}`);
+    option.appendChild(t);
+    combLieuxArrivee.appendChild(option);
+  }
+}
+
+        
+</script>
+
+
