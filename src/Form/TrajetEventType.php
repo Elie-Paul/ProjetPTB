@@ -19,10 +19,12 @@ class TrajetEventType extends AbstractType
             ->add('arrivee')
             ->add('evenement', EntityType::class, [
                 'class' => Evenement::class,
+                'required' => true,
                 'choice_label' => 'libelle'
             ])
             ->add('section', EntityType::class, [
                 'class' => SectionEvent::class,
+                'required' => true,
                 'choice_label' => 'libelle'
             ])
         ;

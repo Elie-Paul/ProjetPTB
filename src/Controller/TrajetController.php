@@ -34,13 +34,6 @@ class TrajetController extends AbstractController
         $form = $this->createForm(TrajetType::class, $trajet);
         $form->handleRequest($request);
 
-       /* foreach ($repo as $key => $var) {
-            if ($var->getDepart() == $trajet->getDepart() || $var->getArrivee() == $trajet->getArrivee()) {
-                echo "Trajet deja creer";
-            }
-        }*/
-
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $trajet1 = $trajetRepo->findOneBy([
@@ -56,9 +49,12 @@ class TrajetController extends AbstractController
                 $entityManager->flush();
 
                 /// Message de confirmation
-                $this->addFlash('success','Trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' a été créer');
+                //$this->addFlash('info','Trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' a été créer');
 
-                return $this->redirectToRoute('trajet_index');
+                return $this->render('trajet/index.html.twig', [
+                    'success' => 'Trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' a été créer',
+                    'trajets' => $trajetRepo->findAll(),
+                ]);
             }else {
 
                 return $this->render('trajet/new.html.twig', [

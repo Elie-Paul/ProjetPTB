@@ -6,9 +6,11 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('evenement/app.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {% endblock %}
 
 {% block body %}
+    <div id="billet_refresh_table" style="display: none"></div>
 <div class="box box-default">
         <div class="box-header with-border">
         <div class="col-sm-6">

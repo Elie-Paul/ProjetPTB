@@ -28,22 +28,39 @@ class ClasseController extends AbstractController
     /**
      * @Route("/new", name="classe_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ClasseRepository $classeRepository): Response
     {
         $classe = new Classe();
         $form = $this->createForm(ClasseType::class, $classe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $classe->setCreatedAt(new \DateTime());
-            $classe->setUpdatedAt(new \DateTime());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($classe);
-            $entityManager->flush();
 
-            $this->addFlash('success','La classe '.$classe->getLibelle().' créée');
+            $classe1 = $classeRepository->findOneBy([
+                'libelle' => $classe->getLibelle(),
+            ]);
 
-            return $this->redirectToRoute('classe_index');
+            if (!$classe1) {
+                $classe->setCreatedAt(new \DateTime());
+                $classe->setUpdatedAt(new \DateTime());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($classe);
+                $entityManager->flush();
+
+                //$this->addFlash('info','La classe '.$classe->getLibelle().' créée');
+
+                return $this->render('classe/index.html.twig', [
+                    'classes' => $classeRepository->findAll(),
+                    'success' => 'La classe '.$classe->getLibelle().' créée',
+                ]);
+            }else{
+                return $this->render('classe/new.html.twig', [
+                    'classe' => $classe,
+                    'form' => $form->createView(),
+                    'error' => 'La classe '.$classe->getLibelle().' existe déjà',
+                ]);
+            }
+            
         }
 
         return $this->render('classe/new.html.twig', [

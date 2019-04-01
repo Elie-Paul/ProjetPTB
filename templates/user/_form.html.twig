@@ -1,4 +1,58 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
+
+
+
+<style>
+    .cs{
+       position: relative;
+       top: 1.55em;
+       left: 1.7em; 
+    }
+
+    .cs2{
+       position: relative;
+       top: 1.55em;
+       left: 1.7em; 
+    }
+</style>
+
+  <script>
+        
+        var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById('myModal');
+        span.onclick = function() 
+        {
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) 
+        {
+            if (event.target == modal) 
+            {
+                modal.style.display = "none";
+            }
+        }
+
+        function ajouter(){
+          var libelle = document.getElementById("libelle").value;
+          modal.style.display = "none";
+          document.location.href = `http://localhost:8000/ModifierimageUser/${libelle}`;
+          swal("Good job!", "Vous avez ajouté une gare", "success");
+          
+
+        }
+        
+        function mode()
+        {
+            var modal = document.getElementById('myModal');
+
+            modal.style.display = "block";
+          
+        }
+        
+        
+    </script>

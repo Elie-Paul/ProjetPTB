@@ -35,7 +35,7 @@ class CommandeTaxeController extends AbstractController
         return $this->render('commandeView/taxe/venteCommandeTaxe.html.twig');
     }
     /**
-     * @Route("/commande/taxe/suivi", name="=commande_taxe_suivi")
+     * @Route("/commande/taxe/suivi", name="commande_taxe_suivi")
      */
     public function showAllCommandeTaxeSuivi()
     {

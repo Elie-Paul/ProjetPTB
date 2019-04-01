@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ asset('evenement/app.js') }}"></script>
 {% endblock %}
 
@@ -75,9 +76,9 @@
                         <tr>
                             <td>{{ evenement.id }}</td>
                             <td>{{ evenement.libelle }}</td>
-                            <td>{{ evenement.dateEvent ? evenement.dateEvent|date('Y-m-d') : '' }}</td>
-                            <td>{{ evenement.finEvent ? evenement.finEvent|date('Y-m-d') : '' }}</td>                            
-                            <td>{{ evenement.UpdatedAt ? evenement.UpdatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ evenement.dateEvent ? evenement.dateEvent|date('d-m-Y') : '' }}</td>
+                            <td>{{ evenement.finEvent ? evenement.finEvent|date('d-m-Y') : '' }}</td>
+                            <td>{{ evenement.UpdatedAt ? evenement.UpdatedAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('evenement_show', {'id': evenement.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('evenement_edit', {'id': evenement.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>

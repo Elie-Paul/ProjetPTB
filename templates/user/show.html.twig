@@ -24,8 +24,12 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-            <a href="{{ path('img_ModiUser', {'id': user.id}) }}" type="file">
-              <img class="profile-user-img img-responsive img-circle" src="{{asset('clients/images/')}}{{user.filename}}" onclick="" alt="User profile picture">              
+            <a href="{{ path('img_ModiUser', {'id': user.id}) }}" id="myBBtn" onclick="mode()">
+              {% if user.filename == "null" %}
+                  <img src="{{asset('img/userlogin.jpg')}}" class="profile-user-img img-responsive img-circle" alt="User Image">
+              {% else %}
+              <img class="profile-user-img img-responsive img-circle" src="{{asset('clients/images/')}}{{user.filename}}" onclick="" alt="User profile picture">
+              {% endif %}                            
             </a>
               <h3 class="profile-username text-center">{{ user.nom|capitalize }} {{ user.prenom|capitalize }}</h3>
 
@@ -170,6 +174,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 {% endblock %}
 
