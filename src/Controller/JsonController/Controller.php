@@ -71,7 +71,7 @@ class Controller extends AbstractController
         return $this->render('commandeView/PTB/validerCommandePTB.html.twig');
     }
     /**
-     * @Route("/commande/ptb/suivi", name="=commande_ptb_suivi")
+     * @Route("/commande/ptb/suivi", name="commande_ptb_suivi")
      */
     public function showAllCommandePTBSuivi()
     {

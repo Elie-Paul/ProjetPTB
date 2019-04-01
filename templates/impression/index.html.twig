@@ -17,7 +17,23 @@
         top :45px;
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
-        width: 100%;
+        width: 100%;   /**
+     * @Route("/audit/impression", name="audit_controller")
+     */
+    public function newImpression(Request $request)
+    {
+        explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $nombreDebillet = intval($array[1]);
+        $nombredeDepart = intval($array[2]);
+        $text="impresionn de billet du N4 au N5";
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(intval(1));
+        
+    }
         grid-row-gap:20px;
             
     }
@@ -99,13 +115,24 @@
 </html>
 <script>
     
-    //var main = document.getElementById('main');
-    /*main.style.backgroundColor="#"{{color}};*/
     window.print();
+
+    let param="{{ app.user.id }}+impression billet PTB {{billet.ptb}} pour le Guichet {{billet.guichet.nom }} du  Numero {{nDepart}} au numero {{nLast}}";
+    alert(param);
     window.onafterprint = 
     function(event) 
     { 
-       document.location.href = "http://localhost:8000/billet/ptb/";
+        let xhr=new XMLHttpRequest();
+        xhr.onload=function ()
+        {
+            if(this.status == 200)
+            {
+                alert(this.responseText);
+            }
+        }
+        xhr.open("POST","http://localhost:8000/audit/impression",false);
+        xhr.send(param);
+        //document.location.href = "http://localhost:8000/billet/ptb/";
 
     };
 </script>

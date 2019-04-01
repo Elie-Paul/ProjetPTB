@@ -130,6 +130,7 @@ function ajoutVente(element)
         
     
 }
+
 function getAllCommande()
 {
     let xhr=new XMLHttpRequest();
