@@ -30,29 +30,40 @@ class NavetteController extends AbstractController
     /**
      * @Route("/new", name="navette_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, NavetteRepository $navetteRepository): Response
     {
         $navette = new Navette();
-        $billetNavette = new BilletNavette();
-        $repository = $this->getDoctrine()->getRepository(Guichet::class);
         $form = $this->createForm(NavetteType::class, $navette);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $navette->setCreatedAt(new \DateTime());
-            $navette->setUpdatedAt(new \DateTime());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($navette);
-            $guichet = $repository->findOneBy(['lieu'=>$navette->getTrajet()->getDepart()]);
-            $billetNavette->setNumeroDernierBillet(0);
-            $billetNavette->setNavette($navette);
-            $billetNavette->setGuichet($guichet);
-            $billetNavette->setCreatedAt(new \DateTime());
-            $billetNavette->setUpdatedAt(new \DateTime());
-            $entityManager->persist($billetNavette);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('navette_index');
+            $navette1 = $navetteRepository->findOneBy([
+                'trajet' => $navette->getTrajet(),
+                'classe' => $navette->getClasse()
+            ]);
+
+            if (!$navette1) {
+                $navette->setCreatedAt(new \DateTime());
+                $navette->setUpdatedAt(new \DateTime());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($navette);            
+                $entityManager->flush();
+                //$this->addFlash('info','Le train Autorail ayant le trajet '.$navette->getTrajet().' et de '.$navette->getClasse()->getLibelle().' a été créer');
+                return $this->render('navette/index.html.twig', [
+                    'navettes' => $navetteRepository->findAll(),
+                    'success' => 'Le train Autorail ayant le trajet '.$navette->getTrajet().' et de '.$navette->getClasse()->getLibelle().' a été créer',
+                ]);
+            }else{
+                return $this->render('navette/new.html.twig', [
+                    'navette' => $navette,
+                    'error' => 'Le train Autorail ayant le trajet '.$navette->getTrajet().' et de '.$navette->getClasse()->getLibelle().' existe déjà',
+                    'form' => $form->createView(),
+                ]);
+            }
+            
+
+            
         }
 
         return $this->render('navette/new.html.twig', [

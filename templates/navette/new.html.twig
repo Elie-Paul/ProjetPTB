@@ -25,3 +25,11 @@
     </div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+  <script>
+    {% if error is defined %}
+    swal("Attention", "Ce train Autorail existe déjà", "warning");
+  {% endif %}
+  </script>
+{% endblock %}

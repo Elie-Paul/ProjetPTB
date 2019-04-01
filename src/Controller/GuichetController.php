@@ -28,23 +28,40 @@ class GuichetController extends AbstractController
     /**
      * @Route("/new", name="guichet_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, GuichetRepository $guichetRepository): Response
     {
         $guichet = new Guichet();
         $form = $this->createForm(GuichetType::class, $guichet);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $guichet->setCreatedAt(new \DateTime());
-            $guichet->setUpdatedAt(new \DateTime());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($guichet);
-            $entityManager->flush();
 
-            /// Message de confirmation
-            $this->addFlash('success','Guichet '.$guichet->getNom().' a été créer');
+            $guichet1 = $guichetRepository->findOneBy([
+                'nom' => $guichet->getNom(),
+            ]);
 
-            return $this->redirectToRoute('guichet_index');
+            if (!$guichet1) {
+                $guichet->setCreatedAt(new \DateTime());
+                $guichet->setUpdatedAt(new \DateTime());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($guichet);
+                $entityManager->flush();
+
+                /// Message de confirmation
+                //$this->addFlash('info','Guichet '.$guichet->getNom().' a été créer');
+
+                return $this->render('guichet/index.html.twig', [
+                    'guichets' => $guichetRepository->findAll(),
+                    'success' => 'Guichet '.$guichet->getNom().' a été créer',
+                ]);
+            }else {
+                return $this->render('guichet/new.html.twig', [
+                    'guichet' => $guichet,
+                    'form' => $form->createView(),
+                    'error' => 'Guichet '.$guichet->getNom().' existe déjà',
+                ]);
+            }
+            
         }
 
         return $this->render('guichet/new.html.twig', [

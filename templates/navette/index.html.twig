@@ -77,6 +77,9 @@
     <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
     <script>
+    {% if success is defined %}
+        swal("Bon travail", "Vous aviez ajouté un nouveau train Autorail", "success");
+    {% endif %}
         $(function () {
             $('#example1').DataTable({
                 "reponsive": true,

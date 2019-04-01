@@ -22,3 +22,10 @@
     </div>
 </div>
 {% endblock %}
+{% block javascripts %}
+  <script>
+    {% if error is defined %}
+    swal("Attention", "Ce billet PTB existe déjà", "warning");
+  {% endif %}
+  </script>
+{% endblock %}

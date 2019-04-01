@@ -29,23 +29,39 @@ class LieuxController extends AbstractController
     /**
      * @Route("/new", name="lieux_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, LieuxRepository $lieuxRepository): Response
     {        
         $lieux = new Lieux();
         $form = $this->createForm(LieuxType::class, $lieux);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {        
-            //$mailer->send($message);
-            $lieux->setCreatedAt(new \DateTime());
-            $lieux->setUpdatedAt(new \DateTime());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($lieux);
-            $entityManager->flush();
-           /// Message de confirmation
-            $this->addFlash('success','Lieu '.$lieux->getLibelle().' a été créer');
-           
-            return $this->redirectToRoute('lieux_index');
+        if ($form->isSubmitted() && $form->isValid()) {  
+            
+            $lieux1 = $lieuxRepository->findOneBy([
+                'libelle' => $lieux->getLibelle()
+            ]);
+
+            if (!$lieux1) {
+                $lieux->setCreatedAt(new \DateTime());
+                $lieux->setUpdatedAt(new \DateTime());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($lieux);
+                $entityManager->flush();
+            /// Message de confirmation
+            // $this->addFlash('info','Lieu '.$lieux->getLibelle().' a été créer');
+            
+                return $this->render('lieux/index.html.twig', [
+                    'lieuxes' => $lieuxRepository->findAll(),
+                    'success' => 'Lieu '.$lieux->getLibelle().' a été créer',
+                ]);
+            }else {
+                return $this->render('lieux/new.html.twig', [
+                    'lieux' => $lieux,
+                    'form' => $form->createView(),
+                    'error' => 'Lieu '.$lieux->getLibelle().' existe déjà',
+                ]);
+            }
+            
         }
 
         return $this->render('lieux/new.html.twig', [

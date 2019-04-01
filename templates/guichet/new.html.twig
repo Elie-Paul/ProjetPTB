@@ -28,3 +28,10 @@
 </div>
     
 {% endblock %}
+{% block javascripts %}
+  <script>
+    {% if error is defined %}
+    swal("Attention", "Ce nom de guichet existe déjà", "warning");
+  {% endif %}
+  </script>
+{% endblock %}
