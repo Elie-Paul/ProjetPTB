@@ -12,9 +12,6 @@ class BilletNavetteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numeroDernierBillet')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('navette')
             ->add('guichet')
         ;

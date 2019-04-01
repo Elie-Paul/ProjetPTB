@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -86,6 +88,12 @@ class User implements UserInterface, \Serializable
      * @Assert\EqualTo(propertyPath="password",message="mot de passe n'est pas identique")
      */
     public $confirme_password;
+
+
+    public function __construct()
+    {
+       
+    }
 
     public function getId(): ?int
     {

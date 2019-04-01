@@ -4,6 +4,15 @@
 
 {% block body %}
 
+  {% if error is defined %}
+  <div class="box box-solid">
+    <div class="alert alert-danger">
+      <big style="text-align: center;">{{ error }}</big>
+    </div>
+  </div>
+
+  {% endif %}
+
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">

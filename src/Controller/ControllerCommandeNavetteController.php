@@ -17,11 +17,40 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ControllerCommandeNavetteController extends AbstractController
 {
     /**
-     * @Route("/commande/navette", name="controller_commande_navette")
+     * @Route("/commande/navette", name="commande_navette")
      */
     public function index()
     {
-        return $this->render('commandeView/CommandeNavette.html.twig');
+        return $this->render('commandeView/navette/CommandeNavette.html.twig');
+    }
+    /**
+     * @Route("/commande/navette/suivi", name="=commande_navette_suivi")
+     */
+    public function showAllCommandePTBSuivi()
+    {
+        return $this->render('commandeView/navette/listCommandeNavette.html.twig');
+    }
+    /**
+     * @Route("/commande/navette/vente", name="commande_navette_vente")
+     */
+    public function showCommandePTBVente()
+    {
+        return $this->render('commandeView/navette/venteCommandeNavette.html.twig');
+    }
+    /**
+     * @Route("/commande/navette/valider", name="commande_navette_valider")
+     */
+    public function showAllCommandeNavette()
+    {
+        return $this->render('commandeView/navette/validerCommandeNavette.html.twig');
+    }
+    
+    /**
+     * @Route("/commande/navette/imprimer", name="commande_navette_imprimer")
+     */
+    public function showAllCommandeNavettetoPrint()
+    {
+        return $this->render('commandeView/navette/printCommandeNavette.html.twig');
     }
     /**
      * @Route("/totalbilletNavette/{id}", name="totalBilletNavette")
@@ -48,14 +77,25 @@ class ControllerCommandeNavetteController extends AbstractController
             }
         }
         return new response(''.$nBillet);
-    }    
-    /**
-     * @Route("/listCommandeNavette", name="showAllCommandeNavette")
-     */
-    public function showAllCommandeNavette()
-    {
-        return $this->render('commandeView/validerCommandeNavette.html.twig');
     }
+     /**
+     * @Route("/addVenteNavette/{id}/{nvente}", name="VenteNavette")
+     */
+    public function VenteCommande($id,$nvente)
+    {
+        $idCommande = intVal($id);
+        $vente = intVal($nvente);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $commande = $entityManager
+        ->getRepository(CommandeNavette::class)
+        ->find($idCommande);
+        $commande->setNombreBilletVendu($commande->getNombreBilletVendu()+$vente);
+        $entityManager->flush();
+        return new Response('<h1>'.$commande->getId().'</h1>');
+    }    
+    
      /**
      * @Route("/Json/listCommandeNavette", name="getAllCommandeNavette")
      */
@@ -110,20 +150,16 @@ class ControllerCommandeNavetteController extends AbstractController
                 ->getClasse()
                 ->getLibelle(),
                 'dateCommandeValider' => $variable
-                ->getDateComnandeValider()
+                ->getDateComnandeValider(),
+                'dateCommande' => $variable
+                ->getDateCommande(),
             );
             array_push($data,$myarray);
         }
             return new Response(json_encode($data));
             //return new Response('dddd');
     }
-     /**
-     * @Route("/listCommandeNavettetoPrint", name="showAllCommandeNavettetoPrint")
-     */
-    public function showAllCommandeNavettetoPrint()
-    {
-        return $this->render('commandeView/printCommandeNavette.html.twig');
-    }
+     
      /**
      * @Route("/newCommandeNavette/", name="newCommandeNavette")
      */

@@ -45,28 +45,60 @@ class Controller extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesPTB); $i++) 
         { 
-            if($commnadesPTB[$i]->getEtatCommande()==1)
+            if($commnadesPTB[$i]->getEtatCommande()==1 || $commnadesPTB[$i]->getEtatCommande()==2)
             {
                 $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
             }
         }
         return new response(''.$nBillet);
-    }    
+    }   
+    
     /**
-     * @Route("/listCommande", name="showAllCommandePTB")
+     * @Route("/commande/ptb", name="commande_ptb_index", methods={"GET"})
+     */
+    public function show()
+    {
+        return $this->render('commandeView/PTB/commandePTB.html.twig');
+        //return new JsonResponse($commandePtbRepository->findAll());
+        
+    }
+    /**
+     * @Route("/commande/ptb/valider", name="commande_ptb_valider")
      */
     public function showAllCommandePTB()
     {
-        return $this->render('commandeView/validerCommandePTB.html.twig');
+        return $this->render('commandeView/PTB/validerCommandePTB.html.twig');
     }
+    /**
+     * @Route("/commande/ptb/suivi", name="=commande_ptb_suivi")
+     */
+    public function showAllCommandePTBSuivi()
+    {
+        return $this->render('commandeView/PTB/listCommandePTB.html.twig');
+    }
+    /**
+     * @Route("/commande/ptb/vente", name="commande_ptb_vente")
+     */
+    public function showCommandePTBVente()
+    {
+        return $this->render('commandeView/PTB/venteCommandePTB.html.twig');
+    }
+
+     /**
+     * @Route("/commande/ptb/imprimer", name="commande_ptb_imprimer")
+     */
+    public function showAllCommandePTBtoPrint()
+    {
+        return $this->render('commandeView/PTB/printCommandePTB.html.twig');
+    } 
      /**
      * @Route("/Json/listCommande", name="getAllCommandePTB")
      */
     public function getAllCommandePTB()
     {
         $repository = $this->getDoctrine()->getRepository(CommandePtb::class);
-        $commandePtbs = $repository->findAll();
+        $commandePtbs = $repository->findBy(array(), array('dateCommande' => 'DESC'));;
         $data = array();
         foreach ($commandePtbs as $key => $variable) 
         {
@@ -114,20 +146,18 @@ class Controller extends AbstractController
                 ->getSection()
                 ->getLibelle(),
                 'dateCommandeValider' => $variable
-                ->getDateCommandeValider()
+                ->getDateCommandeValider(),
+                'dateCommandeRealiser' => $variable
+                ->getDateCommandeRealiser(),
+                'dateCommande' => $variable
+                ->getDateCommande()
             );
             array_push($data,$myarray);
         }
             return new Response(json_encode($data));
             //return new Response('dddd');
     }
-     /**
-     * @Route("/listCommandetoPrint", name="showAllCommandePTBtoPrint")
-     */
-    public function showAllCommandePTBtoPrint()
-    {
-        return $this->render('commandeView/printCommandePTB.html.twig');
-    }
+    
      /**
      * @Route("/newCommande/", name="newCommande")
      */
@@ -198,6 +228,24 @@ class Controller extends AbstractController
             $commande->setEtatCommande(1);
         else
             $commande->setEtatCommande(0);
+        $entityManager->flush();
+        return new Response('<h1>'.$commande->getId().'</h1>');
+    }
+
+    /**
+     * @Route("/addVentePTB/{id}/{nvente}", name="VentePtb")
+     */
+    public function VenteCommande($id,$nvente)
+    {
+        $idCommande = intVal($id);
+        $vente = intVal($nvente);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $commande = $entityManager
+        ->getRepository(CommandePTB::class)
+        ->find($idCommande);
+        $commande->setNombreBilletVendu($commande->getNombreBilletVendu()+$vente);
         $entityManager->flush();
         return new Response('<h1>'.$commande->getId().'</h1>');
     }

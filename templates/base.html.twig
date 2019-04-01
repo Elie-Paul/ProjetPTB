@@ -198,15 +198,6 @@
             <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>       
         </li>
-        <!--li class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-folder-open"></i>
-            <span>Billet</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">2</span>
-            </span>
-          </a>
-          <ul class="treeview-menu"-->
           
             <li>
               <a href="{{ path('billet_ptb_index') }}"><i class="fa fa-train"></i><span>Billet PTB</span></a>
@@ -238,17 +229,17 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>          
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                        
+            <li><a href="#"><i class="fa fa-circle-o"></i>Nouveau</a></li>          
+            <li><a href="#"><i class="fa fa-circle-o"></i>Lister</a></li>                        
           <ul class="treeview-menu">
-            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Lister</a></li>
           <ul class="treeview-menu">
-            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>          
-            <li><a href="{{ path('controller_commande_navette') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Evenement</a></li>                        
+            <li><a href="#"><i class="fa fa-circle-o"></i>PTB</a></li>          
+            <li><a href="#"><i class="fa fa-circle-o"></i>Autorail</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Vignette</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i>Evenement</a></li>                        
           </ul>
         </li>
         {% endif %}
@@ -523,11 +514,11 @@
  <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
 <script src="{{ asset('jslog/jscolor.js') }}"></script> 
-<script src="{{ asset('jslog/commandePtb.js') }}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
 
 
 <script src="{{ asset('jslog/jscolor.js') }}"></script>
-<script src="{{ asset('jslog/commandePtb.js') }}"></script>
+
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>

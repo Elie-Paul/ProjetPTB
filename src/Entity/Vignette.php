@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -47,6 +49,16 @@ class Vignette
      * @ORM\Column(type="integer")
      */
     private $prix;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandeVignette", mappedBy="billet")
+     */
+    private $commandeVignettes;
+
+    public function __construct()
+    {
+        $this->commandeVignettes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +133,37 @@ class Vignette
     public function setPrix(int $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandeVignette[]
+     */
+    public function getCommandeVignettes(): Collection
+    {
+        return $this->commandeVignettes;
+    }
+
+    public function addCommandeVignette(CommandeVignette $commandeVignette): self
+    {
+        if (!$this->commandeVignettes->contains($commandeVignette)) {
+            $this->commandeVignettes[] = $commandeVignette;
+            $commandeVignette->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeVignette(CommandeVignette $commandeVignette): self
+    {
+        if ($this->commandeVignettes->contains($commandeVignette)) {
+            $this->commandeVignettes->removeElement($commandeVignette);
+            // set the owning side to null (unless already changed)
+            if ($commandeVignette->getBillet() === $this) {
+                $commandeVignette->setBillet(null);
+            }
+        }
 
         return $this;
     }
