@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 {% block stylesheets %}{% endblock %}
-<style>
+<!--style>
 #myModa {
   position: absolute;
   width: 250px;
@@ -47,7 +47,7 @@
   50% {left: 800px;}
   50% {box-shadow: 15px 20px 30px blue;}
 }
-</style>
+</style-->
 <style>
 .modal {
   display: none; /* Hidden by default */
@@ -473,17 +473,17 @@
 
  <div class="content-wrapper">
     <section class="content">
-    {% for message in app.flashes('success') %}
-      <div class="alert alert-success" id="myModa">
-          {{mfessage}}
-      </div>
+    {% for message in app.flashes('info') %}
+      <!--div class="alert alert-info" id="myModa">
+          <big style="text-align: center;">{{message}}</big>
+      </div-->
     {% endfor %}
   {% block body %}{% endblock %}
     </section>
    </div>
 
 <!-- /.content-wrapper -->
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
  <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
 <script src="{{ asset('jslog/jscolor.js') }}"></script> 

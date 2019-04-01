@@ -1,27 +1,4 @@
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
-
-    <div class="modal-body">
-        <form>
-        <div class="form-group">
-            <label for="nomGare"><big>Libelle</big></label>
-            <input type="text"
-              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Selectionner Image">
-          </div>
-        </form>
-    </div>
-
-    <div class="modal-footer left">
-        <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Ajouter</big></button>
-    </div>
-  </div>
-  
-
-</div>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
 {{ form_start(form) }}
     {{ form_widget(form) }}

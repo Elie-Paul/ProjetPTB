@@ -24,3 +24,10 @@
     
 
 {% endblock %}
+{% block javascripts %}
+  <script>
+    {% if error is defined %}
+    swal("Attention", "Cette classe existe déjà", "warning");
+  {% endif %}
+  </script
+{% endblock %}

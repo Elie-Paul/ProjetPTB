@@ -48,7 +48,7 @@ class UserController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function new(Request $request,UserPasswordEncoderInterface $encoder): Response
+    public function new(Request $request,UserPasswordEncoderInterface $encoder, MailController $mail, UserRepository $userRepository): Response
     {
         $user = new User();
         
@@ -56,20 +56,37 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         
 
-        if ($form->isSubmitted() && $form->isValid()) { 
-            $user->setCreatedAt(new \DateTime());
-            $user->setUpdateAt(new \DateTime());
-            $user->setFilename('null');
-            $hash=$encoder->encodePassword($user, $user->getPassword()); 
-            $user->setPassword($hash);           
-            $entityManager = $this->getDoctrine()->getManager();           
-            $entityManager->persist($user);
-            $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user1 = $userRepository->findOneBy([
+                'email' => $user->getEmail(),
+                'username' => $user->getUsername(),
+            ]); 
 
-            /// Message de confirmation
-            $this->addFlash('success','L\'utilisateur '.$user->getNom().' '.$user->getPrenom().' a été créer');
+            if (!$user1) {
+                $mail->sendMail("Elie Paul");
+                $user->setCreatedAt(new \DateTime());
+                $user->setUpdateAt(new \DateTime());              
+                $hash=$encoder->encodePassword($user, $user->getPassword()); 
+                $user->setPassword($hash);           
+                $entityManager = $this->getDoctrine()->getManager();           
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('user_index');
+                /// Message de confirmation
+                //$this->addFlash('success','L\'utilisateur '.$user->getNom().' '.$user->getPrenom().' a été créer');
+
+                return $this->render('user/index.html.twig', [
+                    'users' => $userRepository->findAll(),
+                    'success' => 'L\'utilisateur  '.$user->getNom().' '.$user->getPrenom().' a été créer',
+                ]);
+            }else {
+                return $this->render('user/new.html.twig', [
+                    'user' => $user,
+                    'form' => $form->createView(),
+                    'error' => 'L\'utilisateur '.$user->getNom().' '.$user->getPrenom().' existe déjà',
+                ]);
+            }
+            
         }
 
         return $this->render('user/new.html.twig', [

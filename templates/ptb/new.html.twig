@@ -4,6 +4,15 @@
 
 {% block body %}
 
+{% if error is defined %}
+  <!--div class="box box-solid">
+    <div class="alert alert-danger">
+      <big style="text-align: center;">{{ error }}</big>
+    </div>
+  </div-->
+
+  {% endif %}
+
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
@@ -30,8 +39,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
 
   <script>
+
+  {% if error is defined %}
+    swal("Attention", "Ce train PTB existe déjà", "warning");
+  {% endif %}
         
         var span = document.getElementsByClassName("close")[0];
         var modal = document.getElementById('myModal');

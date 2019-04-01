@@ -86,6 +86,9 @@
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script-->
 
     <script>
+    {% if success is defined %}
+        swal("Bon travail", "Vous aviez ajouté une nouvelle classe", "success");
+    {% endif %}
         $(function () {
             $('#example1').DataTable({
                 "reponsive": true,

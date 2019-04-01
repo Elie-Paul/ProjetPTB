@@ -30,22 +30,41 @@ class PtbController extends AbstractController
     /**
      * @Route("/new", name="ptb_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, PtbRepository $ptbRepo): Response
     {
         $ptb = new Ptb();
         $form = $this->createForm(PtbType::class, $ptb);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $ptb->setCreatedAt(new \DateTime());
-            $ptb->setUpdatedAt(new \DateTime());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($ptb);
-            $entityManager->flush();
 
-            /// Message de confirmation
-            $this->addFlash('success','Le train Ptb ayant le trajet '.$ptb->getTrajet().' et de '.$ptb->getSection()->getLibelle().' a été créer');
-            return $this->redirectToRoute('ptb_index');
+            $ptb1 = $ptbRepo->findOneBy([
+                'trajet' => $ptb->getTrajet(),
+                'section' => $ptb->getSection()
+            ]);
+
+            if(!$ptb1)
+            {
+                $ptb->setCreatedAt(new \DateTime());
+                $ptb->setUpdatedAt(new \DateTime());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($ptb);
+                $entityManager->flush();
+
+                /// Message de confirmation
+                //$this->addFlash('info','Le train Ptb ayant le trajet '.$ptb->getTrajet().' et de '.$ptb->getSection()->getLibelle().' a été créer');
+                return $this->render('ptb/index.html.twig', [
+                    'ptbs' => $ptbRepo->findAll(),
+                    'success' => 'Le train Ptb ayant le trajet '.$ptb->getTrajet().' et de '.$ptb->getSection()->getLibelle().' a été créer',
+                ]);
+            }else{
+                return $this->render('ptb/new.html.twig', [
+                    'ptb' => $ptb,
+                    'error' => 'Le train Ptb ayant le trajet '.$ptb->getTrajet().' et de '.$ptb->getSection()->getLibelle().' existe déjà',
+                    'form' => $form->createView()
+                ]);
+            }
+
         }
 
         return $this->render('ptb/new.html.twig', [

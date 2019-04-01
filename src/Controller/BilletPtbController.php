@@ -45,20 +45,41 @@ class BilletPtbController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, BilletPtbRepository $billetPtbRepository): Response
     {
         $billetPtb = new BilletPtb();
         $form = $this->createForm(BilletPtbType::class, $billetPtb);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $billetPtb->setCreatedAt(new \DateTime());
-            $billetPtb->setUpdateAt(new \DateTime());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($billetPtb);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('billet_ptb_index');
+            $billetPtb1 = $billetPtbRepository->findOneBy([
+                'guichet' => $billetPtb->getGuichet(),
+                'ptb' => $billetPtb->getPtb()
+            ]);
+
+            if (!$billetPtb1) {
+                $billetPtb->setNumeroDernierBillets(0);
+                $billetPtb->setCreatedAt(new \DateTime());
+                $billetPtb->setUpdateAt(new \DateTime());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($billetPtb);
+                $entityManager->flush();
+
+             //$this->addFlash('info','Le train PTB '.$billetPtb->getPtb().' a été créer');
+
+                return $this->render('billet_ptb/index2.html.twig', [
+                    'billet_ptbs' => $billetPtbRepository->findAll(),
+                    'success' => 'Le train PTB '.$billetPtb->getPtb().' a été créer',
+                ]);
+            }else {
+                return $this->render('billet_ptb/new.html.twig', [
+                    'billet_ptb' => $billetPtb,
+                    'form' => $form->createView(),
+                    'error' => 'Le train PTB '.$billetPtb->getPtb().' a été créer',
+                ]);
+            }
+            
         }
 
         return $this->render('billet_ptb/new.html.twig', [
