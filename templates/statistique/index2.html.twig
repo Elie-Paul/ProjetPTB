@@ -25,7 +25,7 @@ window.onload = function ()
             makec(array);
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichetVente/",true);
+    xhr.open("GET","http://localhost:8000/json/billetPTBVente/",true);
     xhr.send();
     function makec(tab)
     {
@@ -41,7 +41,7 @@ window.onload = function ()
 		suffix: "billets"
 	    },
         axisX: {
-		title: "Guichet"
+		title: "PTB"
 	    },
 	    data: [{
 		type: "column", //change type to bar, line, area, pie, etc
@@ -62,7 +62,7 @@ window.onload = function ()
         <thead>
             <tr>
                 
-                <th>Guichet</th>
+                <th>PTB</th>
                 <th>Vente</th>
                 
                 
@@ -123,7 +123,7 @@ let xhr=new XMLHttpRequest();
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichetVente/",true);
+    xhr.open("GET","http://localhost:8000/json/billetPTBVente/",true);
     xhr.send();
 
 </script>

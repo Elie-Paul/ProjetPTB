@@ -43,6 +43,7 @@ class AuditController2Controller extends AbstractController
         ->getRepository(TypeAudit::class)
         ->find(intval(1));
         $audit = new Audit();
+        $audit->setUser($user);
         $audit->setType($type);
         $audit->setDescription($text);
         $audit->setCreatedAt(new \DateTime());

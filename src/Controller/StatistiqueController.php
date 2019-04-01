@@ -19,11 +19,20 @@ use App\Entity\Lieux;
 class StatistiqueController extends AbstractController
 {
     /**
-     * @Route("/statistique", name="statistique")
+     * @Route("/statistique/guichet/vente", name="statistique_guichet_vente")
      */
     public function index()
     {
         return $this->render('statistique/index.html.twig', [
+            'controller_name' => 'StatistiqueController',
+        ]);
+    }
+    /**
+     * @Route("/statistique/ptb/vente", name="statistique_ptb_vente")
+     */
+    public function index2()
+    {
+        return $this->render('statistique/index2.html.twig', [
             'controller_name' => 'StatistiqueController',
         ]);
     }
@@ -53,6 +62,33 @@ class StatistiqueController extends AbstractController
             );
             array_push($note,$myarray);
         }
+        $data = [
+            'notes' => $note];
+            return new Response(json_encode($note));
+    }
+      /**
+     * @Route("/json/billetPTBVente/", name="json_controller_billetPTBVente")
+     */
+    public function getbilletVente()
+    {
+        $repository = $this->getDoctrine()->getRepository(BilletPtb::class);
+        $billetPtbs = $repository->findAll();
+        $note = array();
+        $totalVente=0;
+            foreach($billetPtbs as $key => $billetP) 
+            {
+                foreach($billetP->getCommandePtbs() as $key => $commandeP) 
+                {
+                    $totalVente+=$commandeP->getNombreBilletVendu();
+                }
+                $myarray = array(
+                    'label' => $billetP->getPtb()->__toString(),
+                    'y' => $totalVente
+                );
+                array_push($note,$myarray);
+            }
+            
+        
         $data = [
             'notes' => $note];
             return new Response(json_encode($note));

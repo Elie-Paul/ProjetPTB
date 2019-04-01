@@ -115,14 +115,25 @@
 </html>
 <script>
     
-    window.print();
+    
 
     let param="{{ app.user.id }}+impression billet PTB {{billet.ptb}} pour le Guichet {{billet.guichet.nom }} du  Numero {{nDepart}} au numero {{nLast}}";
     alert(param);
+    let xhr=new XMLHttpRequest();
+        xhr.onload=function ()
+        {
+            if(this.status == 200)
+            {
+                alert(this.responseText);
+                window.print();
+            }
+        }
+        xhr.open("POST","http://localhost:8000/audit/impression",false);
+        xhr.send(param);
     window.onafterprint = 
     function(event) 
     { 
-        let xhr=new XMLHttpRequest();
+       /* let xhr=new XMLHttpRequest();
         xhr.onload=function ()
         {
             if(this.status == 200)
@@ -131,7 +142,7 @@
             }
         }
         xhr.open("POST","http://localhost:8000/audit/impression",false);
-        xhr.send(param);
+        xhr.send(param);*/
         //document.location.href = "http://localhost:8000/billet/ptb/";
 
     };
