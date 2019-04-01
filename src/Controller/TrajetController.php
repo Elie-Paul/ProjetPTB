@@ -28,33 +28,42 @@ class TrajetController extends AbstractController
     /**
      * @Route("/new", name="trajet_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, TrajetRepository $trajetRepo): Response
     {
         $trajet = new Trajet();
         $form = $this->createForm(TrajetType::class, $trajet);
         $form->handleRequest($request);
-        dump($trajet);
-        $repository = $this->getDoctrine()->getRepository(Trajet::class);
-        $repo = $repository->findAll();
-
-       /* foreach ($repo as $key => $var) {
-            if ($var->getDepart() == $trajet->getDepart() || $var->getArrivee() == $trajet->getArrivee()) {
-                echo "Trajet deja creer";
-            }
-        }*/
-
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $trajet->setCreatedAt(new \DateTime());
-            $trajet->setUpdatedAt(new \DateTime());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($trajet);
-            $entityManager->flush();
 
-            /// Message de confirmation
-            $this->addFlash('success','Trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' a été créer');
+            $trajet1 = $trajetRepo->findOneBy([
+                'depart' => $trajet->getDepart(),
+                'arrivee' => $trajet->getArrivee()
+            ]);
 
-            return $this->redirectToRoute('trajet_index');
+            if (!$trajet1) {
+                $trajet->setCreatedAt(new \DateTime());
+                $trajet->setUpdatedAt(new \DateTime());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($trajet);
+                $entityManager->flush();
+
+                /// Message de confirmation
+                //$this->addFlash('info','Trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' a été créer');
+
+                return $this->render('trajet/index.html.twig', [
+                    'success' => 'Trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' a été créer',
+                    'trajets' => $trajetRepo->findAll(),
+                ]);
+            }else {
+
+                return $this->render('trajet/new.html.twig', [
+                    'trajet' => $trajet,
+                    'error' => 'Le trajet '.$trajet->getDepart()->getLibelle().'-'.$trajet->getArrivee()->getLibelle().' existe dejà',
+                    'form' => $form->createView(),
+                ]);
+            }
+            
         }
 
         return $this->render('trajet/new.html.twig', [

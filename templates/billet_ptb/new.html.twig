@@ -4,16 +4,28 @@
 
 {% block body %}
 <div class="box box-default">
-          <div class="box-header with-border">
-            <a class="btn btn-info" href="{{ path('billet_ptb_index') }}">Retour</a>
-          </div>
+  <div class="box-header with-border">
+    <!--a class="btn btn-info" href="{{ path('billet_ptb_index') }}">Retour</a-->
+    <div class="col-md-6">
+      <h4><i class="fa fa-plus"></i>&nbsp;<big>Créer un billet PTB</big></h4>
+    </div>
+  </div>
 </div>
 <div class="box box-solid box-primary">
     <div class="box-header">
-        <h3 class="box-title">Ajouter des Billets Ptb </h3>   
+        <h3 class="box-title">Ajouter des Billets PTB </h3>   
     </div>
     <div class="box-body">
-     {{ include('billet_ptb/_form.html.twig') }}
+      <div class="container">
+        {{ include('billet_ptb/_form.html.twig') }}
+      </div>
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+  <script>
+    {% if error is defined %}
+    swal("Attention", "Ce billet PTB existe déjà", "warning");
+  {% endif %}
+  </script>
 {% endblock %}

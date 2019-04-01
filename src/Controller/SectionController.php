@@ -28,13 +28,17 @@ class SectionController extends AbstractController
     /**
      * @Route("/new", name="section_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SectionRepository $sectionRepository): Response
     {
         $section = new Section();
         $form = $this->createForm(SectionType::class, $section);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $section1 = $sectionRepository->findOneBy([
+                'libelle' => $section->getLibelle(),
+            ]);
             $section->setCreatedAt(new \DateTime());
             $section->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
@@ -42,8 +46,18 @@ class SectionController extends AbstractController
             $entityManager->flush();
 
             /// Message de confirmation
-            $this->addFlash('success','La section '.$section->getLibelle().' a été créer');
-            return $this->redirectToRoute('section_index');
+           // $this->addFlash('success','La section '.$section->getLibelle().' a été créer');
+            return $this->render('section/index.html.twig', [
+                'sections' => $sectionRepository->findAll(),
+                'success' => 'La section '.$section->getLibelle().' a été créer',
+            ]);
+        }
+        else {
+            return $this->render('section/new.html.twig', [
+                'section' => $section,
+                'form' => $form->createView(),
+                'error' => 'La section '.$section->getLibelle().' existe déjà',
+            ]);
         }
 
         return $this->render('section/new.html.twig', [

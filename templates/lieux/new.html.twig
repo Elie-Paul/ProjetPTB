@@ -29,3 +29,10 @@
 </div>
 
 {% endblock %}
+{% block javascripts %}
+    <script>
+        {% if error is defined %}
+            swal("Attention", "Cette gare existe déjà", "warning");
+        {% endif %}
+    </script>
+{% endblock %}
