@@ -17,10 +17,9 @@ function addRow(array)
     {
         tbody.removeChild(tbody.firstChild);
     }
-    if (!a) 
-    {
-        addGuichet();
-    }
+
+   
+
     for (let index = 0; index < array.length; index++) 
     {
         let tr = document.createElement('tr');
@@ -29,37 +28,39 @@ function addRow(array)
         arr.forEach((value) => tr.appendChild(value));
         tbody.appendChild(tr);
     }
-    a=true;
+    if(!a)
+        addGuichet();
+    a=true;   
+    
 }
 
 function createRowElement(commande)
 {
     let array=[];
     
-    let classe = document.createElement('td');
-    let classeContent = document.createTextNode(commande.classe);
-    classe.appendChild(classeContent);
-    array.push(classe);
+    let type = document.createElement('td');
+    let typeContent = document.createTextNode(commande.type);
+    type.appendChild(typeContent);
+    array.push(type);
 
-    let trajet = document.createElement('td');
-    let trajetContent = document.createTextNode(`${commande.depart}-${commande.arrivee}`);
-    trajet.style.width="150px";
-    trajet.appendChild(trajetContent);
-    array.push(trajet);
-
+    let section = document.createElement('td');
+    let sectionContent = document.createTextNode(commande.section);
+    section.appendChild(sectionContent);
+    array.push(section);
+    
     let guichet = document.createElement('td');
     let guichetContent = document.createTextNode(commande.guichet);
     guichet.appendChild(guichetContent);
     array.push(guichet);
 
     let NbreCom = document.createElement('td');
-    NbreCom.style.width="100px";
+    NbreCom.style.width="140px";
     let NbreComContent = document.createTextNode(commande.nombreDeBilletCommander);
     NbreCom.appendChild(NbreComContent);
     array.push(NbreCom);
 
     let NbreReal = document.createElement('td');
-    NbreReal.style.width="100px";
+    NbreReal.style.width="120px";
     let NbreRealContent = document.createTextNode(commande.nombreBilletRealiser);
     NbreReal.appendChild(NbreRealContent);
     array.push(NbreReal);
@@ -81,14 +82,11 @@ function createRowElement(commande)
     array.push(realisation);
     
     let NbreVendu = document.createElement('td');
-    NbreVendu.style.width="100px";
+    NbreVendu.style.width="120px";
     let NbreVenduContent = document.createTextNode(commande.nombreBilletVendu);
     NbreVendu.appendChild(NbreVenduContent);
     array.push(NbreVendu);
     
-    
-    
-
     let DateCommande = document.createElement('td');
     DateCommande.style.width="180px";
     var d = new Date(commande.dateCommande.date);
@@ -97,7 +95,6 @@ function createRowElement(commande)
     let DateCommandeContent = document.createTextNode(`${d.toLocaleDateString('fr-FR', options)}`);
     DateCommande.appendChild(DateCommandeContent);
     array.push(DateCommande);
-
     let button = document.createElement('button');
     let buttonContent = document.createTextNode('Valider');
     button.appendChild(buttonContent);
@@ -156,7 +153,22 @@ function DateCompare(date1,date2)
     }
     return true;
 }
+function getAllCommande()
+{
+    let xhr=new XMLHttpRequest();
+    xhr.onload=function ()
+    {
+        if(this.status == 200)
+        {
+            console.log(JSON.parse(this.responseText));
+            addRow(JSON.parse(this.responseText));
+            tab = JSON.parse(this.responseText); 
+        }
+    }
+    xhr.open("GET","http://localhost:8000/Json/listCommandeVignette",true);
+    xhr.send();
 
+}
 function addGuichet()
 {
     for (let index = 1; index < cmbGuichet.children.length; index++) 
@@ -184,25 +196,13 @@ function addGuichet()
     xhr.send();
     
 }
-function getAllCommande()
-{
-    let xhr=new XMLHttpRequest();
-    xhr.onload=function ()
-    {
-        if(this.status == 200)
-        {
-            console.log(JSON.parse(this.responseText));
-            addRow(JSON.parse(this.responseText));
-            tab = JSON.parse(this.responseText); 
-        }
-    }
-    xhr.open("GET","http://localhost:8000/Json/listCommandeNavette",true);
-    xhr.send();
 
-}
 function updateTab()
 {
+    //let idGuichet = cmbGuichets[selectedrow].options[cmbGuichets[selectedrow].selectedIndex].id;
+    //alert(cmbGuichet.options[cmbGuichet.selectedIndex].value);
   let guichetSelected = cmbGuichet.selectedIndex;
+  /*let dateSelected = cmbDate.selectedIndex;*/
   let etatSelected = cmbEtat.selectedIndex;
   let tab1 = tab;
   if(guichetSelected ==0 && start.value == '' && end.value == '' && etatSelected ==0)
@@ -213,7 +213,6 @@ function updateTab()
   {
         tab1 = tab1.filter((value)=>
         {
-            alert(cmbGuichet.options[cmbGuichet.selectedIndex].value);
             return cmbGuichet.options[cmbGuichet.selectedIndex].value ==value.guichet;
         })
   }

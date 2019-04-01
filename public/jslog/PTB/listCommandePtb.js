@@ -5,10 +5,7 @@ const cmbGuichet = document.getElementById('guichet');
 const today = new Date();
 const start = document.getElementById('start');
 const end = document.getElementById('end');
-
-
 var tab =[];
-//zcmbDate.addEventListener('change',updateTab);
 cmbGuichet.addEventListener('change',updateTab);
 cmbEtat.addEventListener('change',updateTab);
 start.addEventListener('change',updateTab);
@@ -21,14 +18,7 @@ function addRow(array)
         tbody.removeChild(tbody.firstChild);
     }
 
-    if (!a) 
-    {
-        for (let index = 1; index < cmbGuichet.children.length; index++) 
-        {
-            cmbGuichet.removeChild(cmbGuichet.children[index]);
-        }
    
-    }
 
     for (let index = 0; index < array.length; index++) 
     {
@@ -37,14 +27,11 @@ function addRow(array)
         let arr=createRowElement(array[index]);
         arr.forEach((value) => tr.appendChild(value));
         tbody.appendChild(tr);
-        if (!a) 
-        {
-            addGuichet(array[index].guichet);
-             
-        }
-        
     }
+    if(!a)
+        addGuichet();
     a=true;   
+    
 }
 
 function createRowElement(commande)
@@ -183,13 +170,32 @@ function getAllCommande()
     xhr.send();
 
 }
-function addGuichet(name)
+function addGuichet()
 {
-    let option = document.createElement('option');
-    //option.value
-    let optionContent = document.createTextNode(name);
-    option.appendChild(optionContent);
-    cmbGuichet.appendChild(option);
+    for (let index = 1; index < cmbGuichet.children.length; index++) 
+    {
+        cmbGuichet.removeChild(cmbGuichet.children[index]);
+    }
+    let xhr=new XMLHttpRequest();
+    xhr.onload=function ()
+    {
+        if(this.status == 200)
+        {
+            
+            let tabgui = JSON.parse(this.responseText); 
+            for (let index = 0; index < tabgui.length; index++) 
+            {
+                let option = document.createElement('option');
+                let optionContent = document.createTextNode(tabgui[index].nom);
+                option.appendChild(optionContent);
+                cmbGuichet.appendChild(option);
+            }
+            
+        }
+    }
+    xhr.open("GET","http://localhost:8000/json/guichet/",true);
+    xhr.send();
+    
 }
 
 function updateTab()

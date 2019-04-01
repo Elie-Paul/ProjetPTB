@@ -10,7 +10,7 @@ function addRow(array)
     for (let index = 0; index < array.length; index++) 
     {
         
-        if(array[index].etat==1)
+        if(array[index].etat>=2)
         {
             let tr = document.createElement('tr');
             tr.id=array[index].id;
@@ -27,24 +27,22 @@ function createRowElement(commande)
 {
     let array=[];
     
-    let classe = document.createElement('td');
-    let classeContent = document.createTextNode(commande.classe);
-    classe.appendChild(classeContent);
-    array.push(classe);
+    let type = document.createElement('td');
+    let typeContent = document.createTextNode(commande.type);
+    type.appendChild(typeContent);
+    array.push(type);
 
-    let trajet = document.createElement('td');
-    let trajetContent = document.createTextNode(`${commande.depart}-${commande.arrivee}`);
-    //trajet.style.width="150px";
-    trajet.appendChild(trajetContent);
-    array.push(trajet);
-
+    let section = document.createElement('td');
+    let sectionContent = document.createTextNode(commande.section);
+    section.appendChild(sectionContent);
+    array.push(section);
+    
     let guichet = document.createElement('td');
     let guichetContent = document.createTextNode(commande.guichet);
     guichet.appendChild(guichetContent);
     array.push(guichet);
 
     let NbreCom = document.createElement('td');
-   // NbreCom.style.width="100px";
     let NbreComContent = document.createTextNode(commande.nombreDeBilletCommander);
     NbreCom.appendChild(NbreComContent);
     array.push(NbreCom);
@@ -53,6 +51,7 @@ function createRowElement(commande)
    ////NbreReal.style.width="100px";
     let NbreRealContent = document.createTextNode(commande.nombreBilletRealiser);
     NbreReal.appendChild(NbreRealContent);
+    
     array.push(NbreReal);
 
     let realisation = document.createElement('td');
@@ -79,8 +78,8 @@ function createRowElement(commande)
     
     let stock = document.createElement('td');
     let stockContent = document.createTextNode(`${commande.nombreBilletRealiser-commande.nombreBilletVendu}`);
-    stock.appendChild(stockContent);
     stock.id = 'n'+commande.id;
+    stock.appendChild(stockContent);
     array.push(stock);
     
     let nombreVente = document.createElement('td');
@@ -95,7 +94,7 @@ function createRowElement(commande)
     div.appendChild(input);
     nombreVente.appendChild(div);
     array.push(nombreVente);
-    
+
     let resultsaisi = document.createElement('span');
     resultsaisi.classList.add('label');
     resultsaisi.id ="s"+commande.id;
@@ -119,7 +118,7 @@ function ajoutVente(element)
                     getAllCommande()
                }
             }
-            let link =`http://localhost:8000/addVenteNavette/${idb}/${vente}`;
+            let link =`http://localhost:8000/addVenteVignette/${idb}/${vente}`;
             xhttp.open("GET",link,true);
             xhttp.send();
                 
@@ -142,7 +141,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommandeNavette",true);
+    xhr.open("GET","http://localhost:8000/Json/listCommandeVignette",true);
     xhr.send();
 
 }
@@ -167,7 +166,6 @@ function vente()
         let element=inputs[i];
         let idc=element.id.substr(1);
         let stock = document.getElementById("n"+idc).innerText;
-        console.log(stock);
         stock = parseInt(stock,10);
         let vente = parseInt(element.value,10); 
         let span = document.getElementById("s"+idc);
@@ -191,19 +189,22 @@ function vente()
                     }
                     else
                     {
-                       
+                       /*console.log(this.responseText);
+                        span.classList.add('label-danger')
+                        let text = document.createTextNode("echec")
+                        span.appendChild(text);*/
                     }
                 }
-                let link =`http://localhost:8000/addVenteNavette/${idc}/${vente}`;
+                let link =`http://localhost:8000/addVenteVignette/${idc}/${vente}`;
                 xhttp.open("GET",link,true);
                 xhttp.send();
             }
             else
             {
-                console.log(this.responseText);
-                span.classList.add('label-danger');
-                let text = document.createTextNode("echec");
-                span.appendChild(text);
+                        console.log(this.responseText);
+                        span.classList.add('label-danger');
+                        let text = document.createTextNode("echec");
+                        span.appendChild(text);
             }
         }
         

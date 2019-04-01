@@ -9,40 +9,6 @@
 
 {% block body %}
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form>
-        <div class="form-group">
-            <label for="nbreprint">Nombre de billets à imprimer</label>
-            <input type="number" class="form-control" id="nbreprint">
-        </div>
-         <div class="form-group">
-            <label for="color">Couleur billet</label>
-            <input class="jscolor"  id="color" class="form-control" value="fff">
-        </div>
-          <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="modifierdpt">
-          <label class="custom-control-label" for="modifierdpt">Modifier la valeur de depart</label>
-        </div>
-        <div class="form-group test" style="display:none;">
-            <label for="nbredepart">Nombre de depart</label>
-            <input type="number" class="form-control" id="nbredepart">
-        </div>
-        
-        <div class="md-form test" style="display:none;">
-            <label for="form7">Motif</label>
-            <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
-        </div>
-        
-    </form>
-    <button  id="submit" onclick="print2()" class="btn btn-primary">Submit</button>
-  </div>
-
-</div>
     <h1>Commande PTB</h1>
     <div id='pdiv' style='display:none;'class="progress"></div>
   <div id='pdiv2' style='display:none;' class="progress-bar" role="progressbar" aria-valuenow="70"
@@ -75,7 +41,7 @@
                 <th>Nombre Vendu</th>
                 <th>Stock</th>
                 <th>Vente</th>
-                <th>Action</th>
+                <th>resulltats</th>
                 
             </tr>
             
@@ -83,6 +49,7 @@
         <tbody id='tbody'>
 
         </tbody>
+        <button class="btn btn-warning" id="vente" onclick="validerVente();">Validez vente saisi</button>
     </table>
               
             </div>

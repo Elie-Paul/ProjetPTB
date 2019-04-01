@@ -10,7 +10,7 @@ function addRow(array)
     for (let index = 0; index < array.length; index++) 
     {
         
-        if(array[index].etat==1)
+        if(array[index].etat>=2)
         {
             let tr = document.createElement('tr');
             tr.id=array[index].id;
@@ -53,6 +53,7 @@ function createRowElement(commande)
    ////NbreReal.style.width="100px";
     let NbreRealContent = document.createTextNode(commande.nombreBilletRealiser);
     NbreReal.appendChild(NbreRealContent);
+    
     array.push(NbreReal);
 
     let realisation = document.createElement('td');
@@ -79,6 +80,7 @@ function createRowElement(commande)
     
     let stock = document.createElement('td');
     let stockContent = document.createTextNode(`${commande.nombreBilletRealiser-commande.nombreBilletVendu}`);
+    stock.id = 'n'+commande.id;
     stock.appendChild(stockContent);
     array.push(stock);
     
@@ -95,16 +97,11 @@ function createRowElement(commande)
     nombreVente.appendChild(div);
     array.push(nombreVente);
 
-    let button = document.createElement('button');
-    let buttonContent = document.createTextNode('Valider');
-    button.appendChild(buttonContent);
-    button.id = "b"+commande.id;
-    button.type = "button";
-    button.classList.add('btn');
-    button.classList.add('btn-success');
-    button.innerText="saisir";
-    array.push(button);
-    button.addEventListener('click',(e) => ajoutVente(e.target))
+    let resultsaisi = document.createElement('span');
+    resultsaisi.classList.add('label');
+    resultsaisi.id ="s"+commande.id;
+
+    array.push(resultsaisi);
     return array;
 }
 
@@ -149,6 +146,85 @@ function getAllCommande()
     xhr.open("GET","http://localhost:8000/Json/listCommande",true);
     xhr.send();
 
+}
+function validerVente()
+{
+    swal({
+        title: "Validez",
+        text: "souhaitez valider les valeur saisi",
+        icon: "info",
+        buttons: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                vente();
+            }
+        });
+}
+function vente()
+{
+    for(let i=0 ;i<inputs.length ;i++)
+    {
+        let element=inputs[i];
+        let idc=element.id.substr(1);
+        let stock = document.getElementById("n"+idc).innerText;
+        stock = parseInt(stock,10);
+        let vente = parseInt(element.value,10); 
+        let span = document.getElementById("s"+idc);
+        if(element.value != "" && !element.disabled) 
+        {
+            if (vente<=stock) 
+            {
+                span.classList.remove('label-danger');
+                span.innerText="";
+                span.classList.add('label-success');
+                let text1 = document.createTextNode("saisi reussi");
+                span.appendChild(text1);
+                element.disabled = true;
+                let xhttp=new XMLHttpRequest();
+                xhttp.onload = function ()
+                {
+                    if(this.readyState==200)
+                    {
+                        console.log(this.responseText);
+                        
+                    }
+                    else
+                    {
+                       /*console.log(this.responseText);
+                        span.classList.add('label-danger')
+                        let text = document.createTextNode("echec")
+                        span.appendChild(text);*/
+                    }
+                }
+                let link =`http://localhost:8000/addVentePTB/${idc}/${vente}`;
+                xhttp.open("GET",link,true);
+                xhttp.send();
+            }
+            else
+            {
+                        console.log(this.responseText);
+                        span.classList.add('label-danger');
+                        let text = document.createTextNode("echec");
+                        span.appendChild(text);
+            }
+        }
+        
+        
+    };
+    swal({
+        title: "Vente renseigné",
+        text: "cliquez sur annuler pour corriger les potentiels erreurs",
+        icon: "info",
+        buttons: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                getAllCommande();
+            }
+        });
+
+   
 }
 getAllCommande();
 

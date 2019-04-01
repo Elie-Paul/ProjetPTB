@@ -38,6 +38,21 @@ class ControllerCommandeNavetteController extends AbstractController
         return $this->render('commandeView/navette/venteCommandeNavette.html.twig');
     }
     /**
+     * @Route("/commande/navette/valider", name="commande_navette_valider")
+     */
+    public function showAllCommandeNavette()
+    {
+        return $this->render('commandeView/navette/validerCommandeNavette.html.twig');
+    }
+    
+    /**
+     * @Route("/commande/navette/imprimer", name="commande_navette_imprimer")
+     */
+    public function showAllCommandeNavettetoPrint()
+    {
+        return $this->render('commandeView/navette/printCommandeNavette.html.twig');
+    }
+    /**
      * @Route("/totalbilletNavette/{id}", name="totalBilletNavette")
      */
     public function totalBillet($id)
@@ -62,22 +77,25 @@ class ControllerCommandeNavetteController extends AbstractController
             }
         }
         return new response(''.$nBillet);
+    }
+     /**
+     * @Route("/addVenteNavette/{id}/{nvente}", name="VenteNavette")
+     */
+    public function VenteCommande($id,$nvente)
+    {
+        $idCommande = intVal($id);
+        $vente = intVal($nvente);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $commande = $entityManager
+        ->getRepository(CommandeNavette::class)
+        ->find($idCommande);
+        $commande->setNombreBilletVendu($commande->getNombreBilletVendu()+$vente);
+        $entityManager->flush();
+        return new Response('<h1>'.$commande->getId().'</h1>');
     }    
-    /**
-     * @Route("/commande/navette/valider", name="commande_navette_valider")
-     */
-    public function showAllCommandeNavette()
-    {
-        return $this->render('commandeView/navette/validerCommandeNavette.html.twig');
-    }
     
-    /**
-     * @Route("/commande/navette/imprimer", name="commande_navette_imprimer")
-     */
-    public function showAllCommandeNavettetoPrint()
-    {
-        return $this->render('commandeView/navette/printCommandeNavette.html.twig');
-    }
      /**
      * @Route("/Json/listCommandeNavette", name="getAllCommandeNavette")
      */
