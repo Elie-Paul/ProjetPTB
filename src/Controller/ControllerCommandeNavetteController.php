@@ -24,7 +24,7 @@ class ControllerCommandeNavetteController extends AbstractController
         return $this->render('commandeView/navette/CommandeNavette.html.twig');
     }
     /**
-     * @Route("/commande/navette/suivi", name="=commande_navette_suivi")
+     * @Route("/commande/navette/suivi", name="commande_navette_suivi")
      */
     public function showAllCommandePTBSuivi()
     {
