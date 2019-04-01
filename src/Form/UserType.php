@@ -19,15 +19,7 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('imageFile', FileType::class, [                
-                'label' => "Image",                
-                'required' => true,
-                'attr' => [                                      
-                    'class' => 'form-control',
-                    'required' => true     
-                    ]             
-            ])
+        $builder            
             ->add('nom')            
             ->add('prenom')
             ->add('email')
