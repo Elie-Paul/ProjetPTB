@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}BilletPtb{% endblock %}
+
+{% block body %}
+
+<script>
+window.onload = function () 
+{
+
+    let array =[];
+    
+    let xhr=new XMLHttpRequest();
+    xhr.onload=function ()
+    {
+        if(this.status == 200)
+        {
+            console.log(JSON.parse(this.responseText));
+            array = JSON.parse(this.responseText); 
+            makec(array);
+        }
+    }
+    xhr.open("GET","http://localhost:8000/json/guichetVente/",true);
+    xhr.send();
+    function makec(tab)
+    {
+         var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        exportEnabled: true,
+        theme: "light2", // "light1", "light2", "dark1", "dark2"
+        title:{
+            text: "Nombre de Vente par Guichet"
+        },
+        axisY: {
+		title: "Nombre de vente",
+		suffix: "billets"
+	    },
+        axisX: {
+		title: "Guichet"
+	    },
+	    data: [{
+		type: "column", //change type to bar, line, area, pie, etc
+		//indexLabel: "{y}", //Shows y value on all Data Points
+		indexLabelFontColor: "#5A5757",
+		indexLabelPlacement: "outside",
+		dataPoints: tab
+	}]
+    });
+        chart.render();
+    }
+   
+
+}
+</script>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+  <table class="table table-hover table-striped dataTable" id="example1">
+        <thead>
+            <tr>
+                
+                <th>Guichet</th>
+                <th>Vente</th>
+                
+                
+            </tr>
+            
+        </thead>
+        <tbody id='tbody'>
+
+        </tbody>
+</table>
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+
+const   inputs = document.getElementsByTagName('input');
+const tbody = document.getElementById('tbody');
+function addRow(array) 
+{
+    while (tbody.firstChild) 
+    {
+        tbody.removeChild(tbody.firstChild);
+    }
+    for (let index = 0; index < array.length; index++) 
+    {
+        let tr = document.createElement('tr');
+        tr.id=array[index].id;
+        let arr=createRowElement(array[index]);
+        arr.forEach((value) => tr.appendChild(value));
+        tbody.appendChild(tr);
+        ///json/guichetVente/
+    }
+}
+
+function createRowElement(commande)
+{
+    let array=[];
+    
+
+    let guichet = document.createElement('td');
+    let guichetContent = document.createTextNode(commande.label);
+    guichet.appendChild(guichetContent);
+    array.push(guichet)
+
+    let section = document.createElement('td');
+    let sectionContent = document.createTextNode(commande.y);
+    section.appendChild(sectionContent);
+    array.push(section);
+    
+    return array;
+}
+let xhr=new XMLHttpRequest();
+    xhr.onload=function ()
+    {
+        if(this.status == 200)
+        {
+            console.log(JSON.parse(this.responseText));
+            addRow(JSON.parse(this.responseText));
+        }
+    }
+    xhr.open("GET","http://localhost:8000/json/guichetVente/",true);
+    xhr.send();
+
+</script>
+
+{% endblock %}

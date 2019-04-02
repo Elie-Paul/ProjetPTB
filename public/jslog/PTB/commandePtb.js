@@ -259,17 +259,15 @@ function getJson3()
      console.log(params);
      if(Nbres[i].value !="" && idGuichet!='0' && idSection!='0'&& idTrajet!='0')
      {
-        xhttp.open("POST",link,true);
+        xhttp.open("POST",link,false);
         xhttp.send(params);  
      }
      
      if(i==index)
      {
-        setTimeout(function()
-        {   
-            afterCommande();
-        }
-        , index*600); 
+        
+        afterCommande();
+        
      }
     } 
     

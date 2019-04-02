@@ -140,7 +140,7 @@ class ImpressionController extends AbstractController
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/index.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),
          ]);
          
         // return new Response(var_dump($test));
