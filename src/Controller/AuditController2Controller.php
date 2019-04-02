@@ -67,7 +67,7 @@ class AuditController2Controller extends AbstractController
         ->find(intval($array[0]));
         $nombreDebillet = intval($array[1]);
         $nombredeDepart = intval($array[2]);
-        $text="impresionn de billet du N4 au N5";
+        $text="reImpresionn de billet du N4 au N5";
         $type = $this->getDoctrine()
         ->getRepository(TypeAudit::class)
         ->find(intval(2));

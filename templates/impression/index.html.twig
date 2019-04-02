@@ -14,27 +14,11 @@
         grid-template-columns: repeat(4, 190px);
         grid-template-rows: repeat(5, 200px);
         position:relative;
-        top :45px;
+        top :20px;
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
-        width: 100%;   /**
-     * @Route("/audit/impression", name="audit_controller")
-     */
-    public function newImpression(Request $request)
-    {
-        explode('+',$request->getContent());
-        $user = $this->getDoctrine()
-        ->getRepository(User::class)
-        ->find(intval($array[0]));
-        $nombreDebillet = intval($array[1]);
-        $nombredeDepart = intval($array[2]);
-        $text="impresionn de billet du N4 au N5";
-        $type = $this->getDoctrine()
-        ->getRepository(TypeAudit::class)
-        ->find(intval(1));
-        
-    }
-        grid-row-gap:20px;
+        width: 100%;  
+        grid-row-gap:30px;
             
     }
 
@@ -69,7 +53,7 @@
        -webkit-print-color-adjust: exact;
         position: absolute;
         top:0;
-        left: 40px;
+        left: 50px;
         right: 20px;
         width :100%;
     }

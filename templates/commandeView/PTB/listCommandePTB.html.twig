@@ -41,8 +41,8 @@
                 <th>Réalisation</th>
                 <th>Nombre Vendu</th>
                 <th>Date Commande</th>
-                <th>Etat</th>
                 <th>stock</th>
+                <th>Etat</th>
             </tr>
         </thead>
         <tbody id='tbody'>
@@ -62,8 +62,7 @@
             <select class="form-control" id="guichet" style='margin-left:30px; width : 200px; display:inline;'>
                 <option selected>guichet</option>
             </select>
-            <button class="btn btn-danger" id="pdf" style='margin-left:10px;'>Imprimer</button>
-            <button class="btn btn-info" id="excel" style='margin-left:10px;'>exporter vers Excel</button>
+            
         
     </table>
               
@@ -74,9 +73,21 @@
 {% endblock %}
 {% block javascripts %}
     <!-- DataTables -->
-    <script src="{{ asset('jslog/PTB/listCommandePtb.js') }}"></script>
-    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+       <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/js/tableexport.min.js"></script>    
+
+<script src="{{ asset('jslog/jscolor.js') }}"></script>
+<script src="{{ asset('jslog/FileSaver.js')}}"></script>
+<script src="{{ asset('jslog/xlsx.core.min.js')}}"></script>
+<script src="{{ asset('jslog/jhxlsx.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/js/tableexport.min.js"></script>   
+    <script src="{{ asset('jslog/PTB/listCommandePtb.js') }}"></script>
+ 
+
+<script>
+
+</script>
     <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
     
 {% endblock %}
