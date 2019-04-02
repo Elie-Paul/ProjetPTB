@@ -13,6 +13,7 @@ use App\Entity\Abonnement;
 use App\Form\AbonnementType;
 use App\Form\TrajetType;
 use App\Entity\Guichet;
+use App\Form\BilletPtbType;
 use App\Form\GuichetType;
 use App\Repository\AbonnementRepository;
 use App\Repository\TrajetRepository;
@@ -184,14 +185,17 @@ class ModalController extends AbstractController
     {        
         $guichet = new Guichet();
         $billetPtb = new BilletPtb();
-        $form = $this->createForm(BilletPtb::class, $billetPtb);
+        $lieux = new Lieux();
+        $form = $this->createForm(BilletPtbType::class, $billetPtb);
 
         $guichet->setCode($code);
         $guichet->setNom($nom);
+        $lieu = $lieux->setLibelle($lieux);
         $guichet->setLieu($lieu);
         $guichet->setCreatedAt(new \DateTime());
         $guichet->setUpdatedAt(new \DateTime());
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
         $entityManager->persist($guichet);
         $entityManager->flush();
 
@@ -208,14 +212,17 @@ class ModalController extends AbstractController
     {        
         $guichet = new Guichet();
         $billetnavette = new BilletNavette();
+        $lieux = new Lieux();
         $form = $this->createForm(BilletNavetteType::class, $billetnavette);
 
         $guichet->setCode($code);
         $guichet->setNom($nom);
+        $lieu = $lieux->setLibelle($lieux);
         $guichet->setLieu($lieu);
         $guichet->setCreatedAt(new \DateTime());
         $guichet->setUpdatedAt(new \DateTime());
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($lieux);
         $entityManager->persist($guichet);
         $entityManager->flush();
 
@@ -257,7 +264,12 @@ class ModalController extends AbstractController
     {        
         $ptb = new Ptb();
         $billetPtb = new BilletPtb();
-        $form = $this->createForm(BilletPtb::class, $billetPtb);
+        $lieux = new Lieux();
+        $trajets = new Trajet();
+        $sections = new Section();
+        $form = $this->createForm(BilletPtbType::class, $billetPtb);
+
+        //$trajet =  $trajets->setDepart()
 
         $ptb->setTrajet($trajet);
         $ptb->setSection($section);

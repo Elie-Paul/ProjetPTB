@@ -150,7 +150,7 @@
 
    /*------------------------Remplire combo-------------------*/
 
-    const comboLieu = document.getElementById('lieu');
+    const combLieu = document.getElementById('lieu');
 
     const comboTrajet = document.getElementById('trajet');
     const comboSection = document.getElementById('section');
@@ -173,7 +173,7 @@
                 setSection1(response);
                 break;
                 case 3:
-                setTrajet1(resposne);
+                setTrajet1(response);
                 break;
             }
             }
@@ -184,7 +184,7 @@
 
     }
 
-    function setLieu1()
+    function setLieu1(array)
     {
         for(let i=0; i<array.length; i++){
             let option=document.createElement('option');
@@ -195,7 +195,7 @@
         }
     }
 
-    function setSection1()
+    function setSection1(array)
     {
         for(let i=0; i<array.length; i++){
             let option=document.createElement('option');
@@ -206,12 +206,12 @@
         }
     }
 
-    function setTrajet1()
+    function setTrajet1(array)
     {
         for(let i=0; i<array.length; i++){
             let option=document.createElement('option');
             option.id = `${array[i].id}`;
-            let t = document.createTextNode(`${array[i].depart.libelle}`);
+            let t = document.createTextNode(`${array[i].Depart}-${array[i].Arrivee}`);
             option.appendChild(t);
             comboTrajet.appendChild(option);
         }
