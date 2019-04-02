@@ -63,7 +63,7 @@ class UserController extends AbstractController
             ]); 
 
             if (!$user1) {
-                $mail->sendMail("Elie Paul");
+                $mail->sendMail("Elie-Paul");
                 $user->setCreatedAt(new \DateTime());
                 $user->setUpdateAt(new \DateTime());
                 $user->setFilename("null");

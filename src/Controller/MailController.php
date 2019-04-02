@@ -41,7 +41,7 @@ class MailController extends AbstractController
     {
         $message = (new \Swift_Message('Hello Email'))
         ->setFrom('eliepaulmoubotouto@gmail.com')
-        ->setTo('eliepaulmoubotouto@gmail.com')
+        ->setTo('eliemoubotouto@outlook.fr')
         ->setBody(
             $this->renderView(
                 // templates/emails/registration.html.twig

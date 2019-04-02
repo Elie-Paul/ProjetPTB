@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Guichet;
+use App\Entity\Classe;
 use App\Entity\Trajet;
 use App\Entity\Section;
 use App\Entity\BilletPtb;
@@ -284,6 +285,47 @@ class Controller extends AbstractController
             return new Response(json_encode($note));
 
     }
+
+     /**
+     * @Route("/json/classe/", name="json_controller_classe")
+     */
+    public function getClasse()
+    {
+        $repository = $this->getDoctrine()->getRepository(Classe::class);
+        $variable2 = $repository->findAll();
+        $note = array();
+        foreach ($variable2 as $key => $variable) 
+        {
+            $myarray = array('id' => "".$variable->getId()."",  'libelle' => $variable->getLibelle());
+            array_push($note,$myarray);
+        }
+        $data = [
+            'notes' => $note];
+            return new Response(json_encode($note));
+
+    }
+
+    /**
+     * @Route("/json/TrajetBillet/", name="json_controller_TrajetBillet")
+     */
+    public function getTrajetBillet()
+    {
+        $repository = $this->getDoctrine()->getRepository(Trajet::class);
+        $variable2 = $repository->findAll();
+        $note = array();
+        foreach ($variable2 as $key => $variable) 
+        {
+            $myarray = array('id' => "".$variable->getId()."",  
+            'Depart' => $variable->getDepart()->getLibelle(),
+            'Arrivee' => $variable->getArrivee()->getLibelle());
+            array_push($note,$myarray);
+        }
+        $data = [
+            'notes' => $note];
+            return new Response(json_encode($note));
+
+    }
+
     /**
      * @Route("/json/trajet/{id}", name="json_controller_Trajet")
      */

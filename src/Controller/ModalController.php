@@ -27,6 +27,9 @@ use App\Form\PtbType;
 use App\Entity\Classe;
 use App\Entity\Navette;
 use App\Form\NavetteType;
+use App\Entity\BilletPtb;
+use App\Entity\BilletNavette;
+use App\Form\BilletNavetteType;
 
 class ModalController extends AbstractController
 {
@@ -170,6 +173,102 @@ class ModalController extends AbstractController
 
         return $this->render('ptb/new.html.twig', [
             'ptb' => $ptb,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addGuichetPtb/{code}/{nom}/{lieu}", name="lieux_addGuichetPtb")
+     */
+    public function addGuichetPtb($code, $nom, $lieu)
+    {        
+        $guichet = new Guichet();
+        $billetPtb = new BilletPtb();
+        $form = $this->createForm(BilletPtb::class, $billetPtb);
+
+        $guichet->setCode($code);
+        $guichet->setNom($nom);
+        $guichet->setLieu($lieu);
+        $guichet->setCreatedAt(new \DateTime());
+        $guichet->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($guichet);
+        $entityManager->flush();
+
+        return $this->render('billet_ptb/new.html.twig', [
+            'billet_ptbs' => $billetPtb,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addGuichetNavette/{code}/{nom}/{lieu}", name="lieux_addGuichetNavette")
+     */
+    public function addGuichetNavette($code, $nom, $lieu)
+    {        
+        $guichet = new Guichet();
+        $billetnavette = new BilletNavette();
+        $form = $this->createForm(BilletNavetteType::class, $billetnavette);
+
+        $guichet->setCode($code);
+        $guichet->setNom($nom);
+        $guichet->setLieu($lieu);
+        $guichet->setCreatedAt(new \DateTime());
+        $guichet->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($guichet);
+        $entityManager->flush();
+
+        return $this->render('billet_navette/new.html.twig', [
+            'billet_navettes' => $billetnavette,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addNavetteBillet/{trajet}/{classe}/{prix}", name="lieux_addNavetteBillet")
+     */
+    public function addNavetteBillet($trajet, $classe, $prix)
+    {        
+        $navette = new Navette();
+        $prix = intval($prix);
+        $billetnavette = new BilletNavette();
+        $form = $this->createForm(BilletNavetteType::class, $billetnavette);
+
+        $navette->setTrajet($trajet);
+        $navette->setClasse($classe);
+        $navette->setPrix($prix);
+        $navette->setCreatedAt(new \DateTime());
+        $navette->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($navette);
+        $entityManager->flush();
+
+        return $this->render('billet_navette/new.html.twig', [
+            'billet_navettes' => $billetnavette,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addPtbBillet/{trajet}/{section}", name="lieux_addPtbBillet")
+     */
+    public function addPtbBillet($trajet, $section)
+    {        
+        $ptb = new Ptb();
+        $billetPtb = new BilletPtb();
+        $form = $this->createForm(BilletPtb::class, $billetPtb);
+
+        $ptb->setTrajet($trajet);
+        $ptb->setSection($section);
+        $ptb->setCreatedAt(new \DateTime());
+        $ptb->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($ptb);
+        $entityManager->flush();
+
+        return $this->render('billet_ptb/new.html.twig', [
+            'billet_ptbs' => $billetPtb,
             'form' => $form->createView(),
         ]);
     }

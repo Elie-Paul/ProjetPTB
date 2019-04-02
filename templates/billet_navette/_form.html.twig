@@ -1,13 +1,75 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
+<div id="myModal" class="modal" role="dialog">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+        <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
+
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="nomGare">Code</label>
+                    <input type="text"
+                    class="form-control" name="" id="code" aria-describedby="helpId" placeholder="Entrer un code">
+                    <label for="nomGare">Nom</label>
+                    <input type="text"
+                    class="form-control" name="" id="nom" aria-describedby="helpId" placeholder="Entrer un nom">
+                    <label for="sel1">Lieu</label>
+                        <select class="form-control DepartId" id="lieu">
+                            <option id="0" selected disabled>Lieu</option>
+                        </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer left">
+            <button  id="submit" onclick="ajouterGuichet()" class="btn btn-primary"><big>Ajouter</big></button>
+        </div>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="sel1">Trajet</label>
+        <select class="form-control DepartId" id="trajet">
+          <option id="0" selected disabled>Trajet</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="sel1">Classe</label>
+        <select class="form-control ArriveeId" id="classe">
+          <option id="0" selected disabled>Classe</option>
+        </select>
+      </div>
+      <label for="prix">Prix</label>
+      <input type="number"
+      class="form-control" name="" id="prix" aria-describedby="helpId" placeholder="Entrer un prix">
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" id="submit" onclick="ajouterNavette()" class="btn btn-primary">Ajouter</button>
+    </div>
+  </div>
+  
+
+</div>
+
 {{ form_start(form) }}
 <div class="row">
     <div class="col-xs-10">{{ form_row(form.guichet, {attr : {'placeholder': "Exemple: Guichet Dkr"}}) }}</div>
-    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="addGuichet()"><i class="glyphicon glyphicon-plus"></i></a></div>
 </div>
 <div class="row">
     <div class="col-xs-10">{{ form_row(form.navette, {attr : {'placeholder': "Exemple: navette"}}) }}</div>
-    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="addNavette()"><i class="glyphicon glyphicon-plus"></i></a></div>
 </div>
     <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
@@ -26,3 +88,123 @@
     }
 
 </style>
+
+<script>
+    var span = document.getElementsByClassName("close")[0];
+    var modal = document.getElementsByClassName('modal')[0];
+    span.onclick = function() 
+    {
+        modal.style.display = "none";
+    }
+
+    function addGuichet()
+    {
+        modal.style.display = "block";
+        getJson('http://localhost:8000/json/lieu/depart',1);
+    }
+
+    function ajouterGuichet()
+    {
+        var code = document.getElementById('code').value;
+        var nom = document.getElementById('nom').value;
+        var lieu = document.getElementById('lieu').value;
+
+        document.location.href = `http://localhost:8000/addGuichetNavette/${code}/${nom}/${lieu}`;
+    }
+
+    var span1 = document.getElementsByClassName("close")[1];
+    var modal1 = document.getElementsByClassName('modal')[1];
+
+    span1.onclick = function() 
+    {
+        modal1.style.display = "none";
+    }
+
+    function addNavette()
+    {
+        modal1.style.display = "block";
+        getJson("http://localhost:8000/json/classe/",2);
+        getJson("http://localhost:8000/json/TrajetBillet/",3);
+    }
+
+    function ajouterNavette()
+    {
+      var trajet = document.getElementById('trajet').value;
+      var classe = document.getElementById('classe').value;
+      var prix = document.getElementById('prix').value;
+
+      modal1.style.display = "none";
+
+      document.location.href = ``;
+    }
+
+    /*------------------------Remplire combo-------------------*/
+
+    const comboLieu = document.getElementById('lieu');
+
+    const comboTrajet = document.getElementById('trajet');
+    const comboClasse = document.getElementById('classe');
+
+    function getJson(link,id)
+    {
+        let xhttp=new XMLHttpRequest();
+        
+        xhttp.onreadystatechange = function()
+        {
+            if(this.readyState == 4 && this.status == 200)
+            {
+            let response = JSON.parse(xhttp.responseText);
+            
+            switch(id){
+                case 1:
+                setLieu1(response);
+                break;
+                case 2:
+                setClasse1(response);
+                break;
+                case 3:
+                setTrajet1(resposne);
+                break;
+            }
+            }
+        }
+        
+        xhttp.open("GET",link,true);
+        xhttp.send();
+
+    }
+
+    function setLieu1()
+    {
+        for(let i=0; i<array.length; i++){
+          let option=document.createElement('option');
+          option.id = `${array[i].id}`;
+          let t = document.createTextNode(`${array[i].libelle}`);
+          option.appendChild(t);
+          combLieu.appendChild(option);
+        }
+    }
+
+    function setClasse1()
+    {
+        for(let i=0; i<array.length; i++){
+          let option=document.createElement('option');
+          option.id = `${array[i].id}`;
+          let t = document.createTextNode(`${array[i].libelle}`);
+          option.appendChild(t);
+          comboSection.appendChild(option);
+        }
+    }
+
+    function setTrajet1()
+    {
+        for(let i=0; i<array.length; i++){
+          let option=document.createElement('option');
+          option.id = `${array[i].id}`;
+          let t = document.createTextNode(`${array[i].depart.libelle}`);
+          option.appendChild(t);
+          comboTrajet.appendChild(option);
+        }
+    }
+</script>
+
