@@ -222,7 +222,7 @@
           </ul>
         </li>
             <li>            
-              <a href="{{ path('billet_ptb_index') }}"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span></a>
+              <a href="{{ path('billet_event_index') }}"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span></a>
             </li>
             <li>
               <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Vignette</span></a>
@@ -324,7 +324,7 @@
               </a>
                 <ul class="treeview-menu">
                 {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}  
-                <li><a href="#"><i class="fa fa-circle-o"></i>Commande Billet</a></li>
+                <li><a href="{{ path('billet_event_index') }}"><i class="fa fa-circle-o"></i>Commande Billet</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR')%}                               
                   <li><a href="{{ path('evenement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
@@ -345,9 +345,40 @@
               <ul class="treeview-menu">
                   <li><a href="{{ path('billet_taxe_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
                   <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
-              </ul>
+              </ul>          
+          <li>
+          <a href="{{ path('user_mail') }}">
+            <i class="fa fa-envelope"></i>
+            <span>Mail</span>
+          </a>
+        </li>                
         </li>
         <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-wrench"></i>
+            <span>Paramètre</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+          </li>        
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-map-marker"></i>
+        <span>Gares</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+          </ul>
+        </li>
+
+          <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-credit-card"></i>
         <span>Guichets</span>
@@ -373,35 +404,6 @@
             <li><a href="{{ path('trajet_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
           </ul>
          </li>
-        <li class="treeview">
-        <a href="#">
-        <i class="glyphicon glyphicon-map-marker"></i>
-        <span>Gares</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
-          </ul>
-        </li>  
-          <li>
-          <a href="{{ path('user_mail') }}">
-            <i class="fa fa-envelope"></i>
-            <span>Mail</span>
-          </a>
-        </li>                
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-wrench"></i>
-            <span>Paramètre</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
                  
         <li class="treeview">
           <a href="#">
