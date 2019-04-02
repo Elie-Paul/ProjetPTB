@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Mailgun\Mailgun;
@@ -41,7 +43,7 @@ class MailController extends AbstractController
     {
         $message = (new \Swift_Message('Hello Email'))
         ->setFrom('eliepaulmoubotouto@gmail.com')
-        ->setTo('eliepaulmoubotouto@gmail.com')
+        ->setTo('ddthera@gmail.com')
         ->setBody(
             $this->renderView(
                 // templates/emails/registration.html.twig
@@ -50,40 +52,96 @@ class MailController extends AbstractController
             ),
             'text/html'
         )
-        /*
-         * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'emails/registration.txt.twig',
-                    ['name' => $name]
-                ),
-                'text/plain'
-            )
-            */
         ;
 
         $this->mailer->send($message);
     }
 
     /**
-     * @Route("/mail/test", name="mail_test")
+     * @param $username
+     * @param $password
+     * @param $nom
+     * @param $prenom
+     * @param $mail
+     * @param $motif
+     * Le motif permet de savoir dans twig si c'est un changement de mot de passe ou creation de user
+     * @param $vue
      */
-    public function send()
+    public function sendMailToUser($username, $password, $nom, $prenom, $mail, $motif, $vue)
     {
-        # First, instantiate the SDK with your API credentials
-        $mg = Mailgun::create('33ebd2ea7a189e527451398addbeeb41-e51d0a44-3d8c767e');
+        $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
+        ->setFrom('ddthera@gmail.com')
+        ->setTo($mail)
+        ->setBody(
+            $this->renderView('mail/user.html.twig',[
+                    'userNom' => $nom,
+                    'userName' => $username,
+                    'userPassword' => $password,
+                    'userPrenom' => $prenom,
+                    'motif' => $motif
+                ]
+            ),
+            $vue
+        )
+        ;
 
-        # Now, compose and send your message.
-        # $mg->messages()->send($domain, $params);
-        $mg->messages()->send('sandboxa46864eaa2604719b5503ccec7e9aa61.mailgun.org', [
-        'from'    => 'ReadTodev <eliepaulmoubotouto@gmail.com>',
-        'to'      => 'ReadTodev <eliepaulmoubotouto@gmail.com>',
-        'subject' => 'Hello',
-        'text'    => 'Testing some Mailgun awesomness!'
-        ]);
+        $this->mailer->send($message);
+    }
 
-        return $this->render('mail/index.html.twig', [
-            'controller_name' => 'MailController',
-        ]);
+    /**
+     * @param $nom
+     * @param $prenom
+     * @param $typeBillet
+     * @param $motif
+     * Le motif permet de savoir dans twig si c'est un changement de mot de passe ou creation de user
+     */
+    public function sendMailForPrintBillet($nom, $prenom,$mail, $typeBillet, $motif, $vue)
+    {
+        $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
+        ->setFrom('ddthera@gmail.com')
+        ->setTo($mail)
+        ->setBody(
+            $this->renderView('mail/user.html.twig',[
+                    'userNom' => $nom,
+                    'userPrenom' => $prenom,
+                    'typeBillet' => $typeBillet,
+                    'userPassword' => $motif,
+                    'motif' => $motif
+                ]
+            ),
+            $vue
+        )
+        ;
+
+        $this->mailer->send($message);
+    }
+
+    /**
+     * @param $nom
+     * @param $prenom
+     * @param $mail
+     * @param $typeCommande
+     * @param $motif
+     * Le motif permet de savoir dans twig si c'est un changement de mot de passe ou creation de user
+     */
+    public function sendMailForCommande($nom, $prenom,$mail, $typeCommande, $motif, $vue)
+    {
+        $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
+        ->setFrom('ddthera@gmail.com')
+        ->setTo($mail)
+        ->setBody(
+            $this->renderView('mail/user.html.twig',[
+                    'userNom' => $nom,
+                    'userPrenom' => $prenom,
+                    'typeCommande' => $typeCommande,
+                    'userPassword' => $motif,
+                    'motif' => $motif
+                ]
+            ),
+            $vue
+        )
+        ;
+
+        $this->mailer->send($message);
     }
 }

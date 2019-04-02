@@ -52,7 +52,7 @@ class UserController extends AbstractController
             ]); 
 
             if (!$user1) {
-                $mail->sendMail("Elie Paul");
+                $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), 'Creation de nouvel utilisateur');
                 $user->setCreatedAt(new \DateTime());
                 $user->setUpdateAt(new \DateTime());              
                 $hash=$encoder->encodePassword($user, $user->getPassword()); 
