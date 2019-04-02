@@ -30,7 +30,7 @@ $(document).ready(function () {
     $('.form').on('submit', function (e) {
         e.preventDefault();
         var user = $('#selUser').val();
-        var command = $('#selCommande').val();
+        var commande = $('#selCommande').val();
         var impression = $('#selImpression').val();
 
         //AJAX

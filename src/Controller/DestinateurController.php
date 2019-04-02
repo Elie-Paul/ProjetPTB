@@ -64,8 +64,8 @@ class DestinateurController extends AbstractController
                 $destinateur->setNom($nom);
                 $destinateur->setPrenom($prenom);
                 $destinateur->setProcessus('utilisateur');
-                $manager->persist($destinateur);
-                $manager->flush();
+//                $manager->persist($destinateur);
+//                $manager->flush();
                 return new JsonResponse([
                     'status' => 'success',
                     'message' => 'Les emails ont été ajouté',
@@ -85,8 +85,8 @@ class DestinateurController extends AbstractController
                     $destinateur->setEmail($email);
                     $destinateur->setNom($nom);
                     $destinateur->setPrenom($prenom);
-                    $manager->persist($destinateur);
-                    $manager->flush();
+//                    $manager->persist($destinateur);
+//                    $manager->flush();
                 }
                 return new JsonResponse([
                     'status' => 'success',
