@@ -45,8 +45,7 @@ $(document).ready(function () {
                         swal("Erreur", data.message, "error");
                         break;
                     case 'success':
-                        console.log(data.user);
-                        // swal("SUCCES", data.message, "success");
+                        swal("SUCCES", data.message, "success");
                         break;
                     default:
                         swal("Erreur", data.message, "error");

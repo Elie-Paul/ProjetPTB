@@ -66,13 +66,34 @@ class DestinateurController extends AbstractController
                 $destinateur->setProcessus('utilisateur');
 //                $manager->persist($destinateur);
 //                $manager->flush();
-                return new JsonResponse([
-                    'status' => 'success',
-                    'message' => 'Les emails ont été ajouté',
-                    'user' => $email
-                ]);
             }
-            else
+            if(count($dataCommande) == 1)
+            {
+                $user = explode(" ", $dataCommande[0]);
+                $nom = $user[0];
+                $prenom = $user[1];
+                $email = $user[2];
+                $destinateur->setEmail($email);
+                $destinateur->setNom($nom);
+                $destinateur->setPrenom($prenom);
+                $destinateur->setProcessus('commande');
+//                $manager->persist($destinateur);
+//                $manager->flush();
+            }
+            if(count($dataImpression) == 1)
+            {
+                $user = explode(" ", $dataImpression[0]);
+                $nom = $user[0];
+                $prenom = $user[1];
+                $email = $user[2];
+                $destinateur->setEmail($email);
+                $destinateur->setNom($nom);
+                $destinateur->setPrenom($prenom);
+                $destinateur->setProcessus('impression');
+//                $manager->persist($destinateur);
+//                $manager->flush();
+            }
+            if(count($dataUser) != 1)
             {
                 $tab = explode(",", $dataUser[0]);
                 foreach ($tab as $user)
@@ -88,11 +109,47 @@ class DestinateurController extends AbstractController
 //                    $manager->persist($destinateur);
 //                    $manager->flush();
                 }
-                return new JsonResponse([
-                    'status' => 'success',
-                    'message' => 'Les emails ont été ajouté'
-                ]);
             }
+            if(count($dataCommande) != 1)
+            {
+                $tab = explode(",", $dataCommande[0]);
+                foreach ($tab as $user)
+                {
+                    $vals = explode(" ", $user);
+                    $nom = $vals[0];
+                    $prenom = $vals[1];
+                    $email = $vals[2];
+                    $destinateur->setProcessus('commande');
+                    $destinateur->setEmail($email);
+                    $destinateur->setNom($nom);
+                    $destinateur->setPrenom($prenom);
+//                    $manager->persist($destinateur);
+//                    $manager->flush();
+                }
+            }
+            if(count($dataImpression) != 1)
+            {
+                $tab = explode(",", $dataImpression[0]);
+                foreach ($tab as $user)
+                {
+                    $vals = explode(" ", $user);
+                    $nom = $vals[0];
+                    $prenom = $vals[1];
+                    $email = $vals[2];
+                    $destinateur->setProcessus('impression');
+                    $destinateur->setEmail($email);
+                    $destinateur->setNom($nom);
+                    $destinateur->setPrenom($prenom);
+//                    $manager->persist($destinateur);
+//                    $manager->flush();
+                }
+
+            }
+
+            return new JsonResponse([
+                'status' => 'success',
+                'message' => 'Les emails ont été ajouté'
+            ]);
         }
     }
 }
