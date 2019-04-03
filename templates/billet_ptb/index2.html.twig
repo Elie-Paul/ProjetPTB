@@ -16,7 +16,7 @@
             <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Billets PTB</big></h4>
           </div>
             <div class="col-md-6 text-right">
-            <a class="btn btn-primary pull-right" href="{{ path('billet_ptb_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau PTB</a>
+            <a class="btn btn-info pull-right" href="{{ path('billet_ptb_new') }}"><i class="glyphicon glyphicon-plus"></i>  <big>Nouveau billet PTB</big></a>
             </div>
           </div>
           <!-- /.box-body -->
@@ -75,7 +75,7 @@
     <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
     <script>
     {% if success is defined %}
-        swal("Bon travail", "Vous aviez ajouté un nouveau billet pour le train PTB", "success");
+        swal("Bon travail", "Vous avez ajouté un nouveau billet pour le train PTB", "success");
     {% endif %}
         $(function () {
             $('#example1').DataTable({

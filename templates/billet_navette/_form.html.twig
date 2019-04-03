@@ -69,9 +69,9 @@
 </div>
 <div class="row">
     <div class="col-xs-10">{{ form_row(form.navette, {attr : {'placeholder': "Exemple: navette"}}) }}</div>
-    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="addNavette()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    <!--div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="addNavette()"><i class="glyphicon glyphicon-plus"></i></a></div-->
 </div>
-    <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
+    <button class="btn btn-info"><big>{{ button_label|default('Enregistrer') }}</big></button>
 {{ form_end(form) }}
 
 <style>

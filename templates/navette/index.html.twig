@@ -51,8 +51,8 @@
                             <td>{{ navette.trajet.depart.libelle }}-{{ navette.trajet.arrivee.libelle }}</td>
                             <td>{{ navette.classe.libelle }}</td>
                             <td>{{ navette.prix }}</td>
-                            <td>{{ navette.createdAt ? navette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ navette.updatedAt ? navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ navette.createdAt ? navette.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td>{{ navette.updatedAt ? navette.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('navette_show', {'id': navette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
