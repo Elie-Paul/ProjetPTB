@@ -11,6 +11,8 @@ use App\Entity\Trajet;
 use App\Entity\Classe;
 use App\Entity\BilletNavette;
 use App\Entity\Navette;
+use App\Entity\StockNavette;
+use App\Entity\VenteNavette;
 use App\Entity\CommandeNavette;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -83,17 +85,32 @@ class ControllerCommandeNavetteController extends AbstractController
      */
     public function VenteCommande($id,$nvente)
     {
-        $idCommande = intVal($id);
+       
+        $idBillet = intVal($id);
         $vente = intVal($nvente);
         $entityManager = $this
         ->getDoctrine()
         ->getManager();
-        $commande = $entityManager
-        ->getRepository(CommandeNavette::class)
-        ->find($idCommande);
-        $commande->setNombreBilletVendu($commande->getNombreBilletVendu()+$vente);
+        
+        $billet = $entityManager
+        ->getRepository(BilletNavette::class)
+        ->find($idBillet);
+        
+        $venteNavette = new venteNavette();
+        $venteNavette->setBillet($billet);
+        $venteNavette->setCreateAt(new \DateTime());
+        $venteNavette->setUpdatedAt(new \DateTime());
+        $venteNavette->setNbreDeBillet($vente);
+        $stockNavette=$entityManager->getRepository(StockNavette::class)->findOneBy([
+            'billet' => $billet,
+         ],);
+        
+        $stockNavette->setNbre($stockNavette->getNbre()- $vente);
+        
+        $entityManager->persist($venteNavette);
         $entityManager->flush();
-        return new Response('<h1>'.$commande->getId().'</h1>');
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
     }    
     
      /**
@@ -279,6 +296,52 @@ class ControllerCommandeNavetteController extends AbstractController
             'notes' => $note];
             return new Response(json_encode($note));
     
+    }
+    /**
+     * @Route("/Json/navette/billet", name="getAllbilletNavette")
+     */
+    public function getAllbilletNavette()
+    {
+        $billets = $this->getDoctrine()->getRepository(BilletNavette::class)->findAll();
+        $data = array();
+        foreach ($billets as $key => $billet) 
+        {
+            $stock = $this->getDoctrine()
+            ->getRepository(StockNavette::class)->findOneby(
+                [
+                    'billet' =>$billet,
+                ]
+            );
+            $myarray = array
+            (
+                'id' => $billet->getId(),
+
+                'classe' => $billet
+                ->getNavette()
+                ->getClasse()
+                ->getLibelle(),
+
+                'depart' => $billet
+                ->getNavette()
+                ->getTrajet()
+                ->getDepart()
+                ->getLibelle(),
+
+                'arrivee' => $billet
+                ->getNavette()
+                ->getTrajet()
+                ->getArrivee()
+                ->getLibelle(),
+
+                'guichet' =>$billet
+                ->getGuichet()
+                ->getNom(),
+                'stock' => $stock->getNbre(),
+            );
+            array_push($data,$myarray);
+        }
+            return new Response(json_encode($data));
+            //return new Response('dddd');
     }
 
 }

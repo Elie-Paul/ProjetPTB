@@ -8,6 +8,8 @@ use App\Entity\BilletPtb;
 use App\Entity\BilletNavette;
 use App\Entity\CommandePtb;
 use App\Entity\StockPtb;
+use App\Entity\StockVignette;
+use App\Entity\StockNavette;
 use App\Entity\CommandeNavette;
 use App\Entity\CommandeTaxe;
 use App\Entity\CommandeVignette;
@@ -165,6 +167,9 @@ class ImpressionController extends AbstractController
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         $stockNavette=$entityManager->getRepository(StockNavette::class)->findOneBy([
+            'billet' => $billet,
+         ],);
          $commnadesNavettes = $entityManager->getRepository(CommandeNavette::class)->findBy
          (
              [
@@ -204,7 +209,7 @@ class ImpressionController extends AbstractController
                 break;
          }
         $billet->setNumeroDernierBillet(end($array));
-
+        $stockNavette->setNbre( $stockNavette->getNbre() + $num );
         $a=0;
         $d=0;
         $test=array();
@@ -356,6 +361,9 @@ class ImpressionController extends AbstractController
          $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(Vignette::class)->find($id);
+         $stockVignette=$entityManager->getRepository(StockVignette::class)->findOneBy([
+            'billet' => $billet,
+         ],);
          $user = $entityManager->getRepository(User::class)->find($userid);
          $commnadesVignettes = $entityManager->getRepository(CommandeVignette::class)->findBy
          (
@@ -399,6 +407,7 @@ class ImpressionController extends AbstractController
         $a=0;
         $d=0;
         $test=array();
+        $stockVignette->setNbre( $stockVignette->getNbre() + $num );
         while ($a<count($commnadesVignettes)) 
         {
             for ($d;$d<$num;$d++) 
