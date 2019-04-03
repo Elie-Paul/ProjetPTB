@@ -312,7 +312,7 @@
             <li><a href="{{ path('commande_vignette_suivi') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                              
             {% endif %}
             {% if is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_ADMINISTRATEUR') %} 
-            <li><a href="{{ path('commande_taxe_valider') }}"><i class="fa fa-circle-o"></i>Valider</a></li>
+            <li><a href="{{ path('commande_vignette_valider') }}"><i class="fa fa-circle-o"></i>Valider</a></li>
             {% endif %}                      
           </ul>         
         </li>

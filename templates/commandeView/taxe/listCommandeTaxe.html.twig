@@ -58,8 +58,9 @@
                 
             <input type="date" class="form-control" id="start" style=' margin-left:10px; width : 200px; display:inline;'>
             <input type="date" class="form-control" id="end"  style='margin-left:30px; width : 200px; display:inline;' >
-            <button class="btn btn-danger" id="pdf" style='margin-left:10px;'>Imprimer</button>
-            <button class="btn btn-info" id="excel" style='margin-left:10px;'>exporter vers Excel</button>
+            <select class="form-control" id="guichet" style='margin-left:30px; width : 200px; display:inline;'>
+                <option selected>guichet</option>
+            </select>
         
     </table>
               
@@ -69,10 +70,12 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-    <!-- DataTables -->
-    <script src="{{ asset('jslog/taxe/listCommandeTaxe.js') }}"></script>
-    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
+    <!-- DataTables -->  
+    <script src="{{ asset('jslog/taxe/listCommandeTaxe.js') }}"></script>   
+<script src="{{ asset('jslog/jscolor.js') }}"></script>
+<script src="{{ asset('jslog/FileSaver.js')}}"></script>
+<script src="{{ asset('jslog/xlsx.core.min.js')}}"></script>
+<script src="{{ asset('jslog/jhxlsx.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/js/tableexport.min.js"></script>   
     
 {% endblock %}
