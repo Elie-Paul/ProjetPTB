@@ -19,7 +19,7 @@ use App\Entity\Lieux;
 class StatistiqueController extends AbstractController
 {
     /**
-     * @Route("/statistique/guichet/vente", name="statistique_guichet_vente")
+     * @Route("/statistique/venteptb/guichet", name="statistique_venteptb_guichet")
      */
     public function index()
     {
@@ -28,11 +28,30 @@ class StatistiqueController extends AbstractController
         ]);
     }
     /**
-     * @Route("/statistique/ptb/vente", name="statistique_ptb_vente")
+     * @Route("/statistique/ventecommandeptb/guichet", name="statistique_ventecommandeptb_guichet")
+     */
+    public function index3()
+    {
+        return $this->render('statistique/index3.html.twig', [
+            'controller_name' => 'StatistiqueController',
+        ]);
+    }
+    /**
+     * @Route("/statistique/commandeptb/guichet", name="statistique_commandeptb_guichet")
      */
     public function index2()
     {
         return $this->render('statistique/index2.html.twig', [
+            'controller_name' => 'StatistiqueController',
+        ]);
+    }
+
+    /**
+     * @Route("/statistique/ventecommandeptb/billet", name="statistique_ventecommandeptb_billet")
+     */
+    public function index4()
+    {
+        return $this->render('statistique/index4.html.twig', [
             'controller_name' => 'StatistiqueController',
         ]);
     }
@@ -77,7 +96,7 @@ class StatistiqueController extends AbstractController
         foreach ($guichets as $key => $guichet) 
         {
             $data2 = array();
-            $vente = array();
+            $ventes = array();
             foreach($guichet->getBilletPtbs() as $key => $billetP) 
             {
                 
@@ -112,8 +131,8 @@ class StatistiqueController extends AbstractController
               
                 
                 'guichet' => $guichet->getNom(),
-                'commande' => $data2,
-                'vente' => $data2,
+                'commandes' => $data2,
+                'ventes' => $ventes,
             );
             array_push($note,$myarray);
         }
@@ -190,6 +209,7 @@ class StatistiqueController extends AbstractController
                     'id' => $billetP->getId(),
                     'ptb' => $billetP->getPtb()->__toString(),
                     'commandes' => $commandes,
+                    'guichet' => $billetP->getGuichet()->getCode(),
                     'ventes' => $ventes,
                 );
                 array_push($note,$myarray);
