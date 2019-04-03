@@ -190,7 +190,7 @@ class ModalController extends AbstractController
 
         $guichet->setCode($code);
         $guichet->setNom($nom);
-        $lieu = $lieux->setLibelle($lieux);
+        $lieu = $lieux->setLibelle($lieu);
         $guichet->setLieu($lieu);
         $guichet->setCreatedAt(new \DateTime());
         $guichet->setUpdatedAt(new \DateTime());
@@ -217,7 +217,7 @@ class ModalController extends AbstractController
 
         $guichet->setCode($code);
         $guichet->setNom($nom);
-        $lieu = $lieux->setLibelle($lieux);
+        $lieu = $lieux->setLibelle($lieu);
         $guichet->setLieu($lieu);
         $guichet->setCreatedAt(new \DateTime());
         $guichet->setUpdatedAt(new \DateTime());
