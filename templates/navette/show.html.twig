@@ -9,8 +9,8 @@
             <h4></h4>
           </div>
           <div class="col-md-6 text-right">
-            <a class="btn btn-info" href="{{ path('navette_index') }}"><i class="fa fa-list"></i>&nbsp;Liste Navette</a>&nbsp;
-          <a class="btn btn-warning" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+            <a class="btn btn-info" href="{{ path('navette_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste des Navettes</big></a>&nbsp;
+          <a class="btn btn-warning" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;<big>Modifier</big></a>
           </div>
           </div>
           <!-- /.box-body -->
@@ -41,11 +41,11 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{{ navette.createdAt ? navette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ navette.createdAt ? navette.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{{ navette.updatedAt ? navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ navette.updatedAt ? navette.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
                 </tr>
             </tbody>
         </table>

@@ -199,10 +199,11 @@ class ModalController extends AbstractController
         $entityManager->persist($guichet);
         $entityManager->flush();
 
-        return $this->render('billet_ptb/new.html.twig', [
+        /*return $this->render('billet_ptb/new.html.twig', [
             'billet_ptbs' => $billetPtb,
             'form' => $form->createView(),
-        ]);
+        ]);*/
+        return $this->redirectToRoute('billet_ptb_new');
     }
 
     /**
