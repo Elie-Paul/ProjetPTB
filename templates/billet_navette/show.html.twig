@@ -3,32 +3,48 @@
 {% block title %}BilletNavette{% endblock %}
 
 {% block body %}
-    <h1>BilletNavette</h1>
+    <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('billet_navette_index2') }}"><i class="fa fa-list"></i>&nbsp; <big>Liste des billets Autorail</big></a>&nbsp;
+             <a class="btn btn-warning" role="button" href="{{ path('billet_navette_edit', {'id': billet_navette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; <big>Modifier</big></a>
+          </div>
+          </div>
+          <!-- /.box-body -->
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ billet_navette.id }}</td>
-            </tr>
-            <tr>
-                <th>NumeroDernierBillet</th>
-                <td>{{ billet_navette.numeroDernierBillet }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ billet_navette.createdAt ? billet_navette.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ billet_navette.updatedAt ? billet_navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information du billet Autorail  {{billet_navette.navette}}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ billet_navette.id }}</td>
+                </tr>
+                <tr>
+                    <th>Numero du Dernier Billet</th>
+                    <td>{{ billet_navette.numeroDernierBillet }}</td>
+                </tr>
+                <tr>
+                    <th>Date de creation</th>
+                    <td>{{ billet_navette.createdAt ? billet_navette.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de modification</th>
+                    <td>{{ billet_navette.updatedAt ? billet_navette.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table> 
+    </div>
+</div>
 
-    <a href="{{ path('billet_navette_index') }}">back to list</a>
-
-    <a href="{{ path('billet_navette_edit', {'id': billet_navette.id}) }}">edit</a>
 
     {{ include('billet_navette/_delete_form.html.twig') }}
 {% endblock %}

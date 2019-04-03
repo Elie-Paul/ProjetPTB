@@ -213,7 +213,7 @@
               <!-- USERS LIST -->
               <div class="box box-danger">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Les Utilisateurs</h3>
+                  <h3 class="box-title">Les utilisateurs</h3>
 
                   <div class="box-tools pull-right">
                     <span class="label label-danger">8 New Members</span>
@@ -225,10 +225,10 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body no-padding">             
-                  <ul class="users-list clearfix">
+                  <ul class="list-inline">
                   {% for user in users %}                    
                     <li>
-                      <img class="img-circle" src="{{asset('clients/images/')}}{{user.filename}}" alt="User Image" width="100px" height="100px" >
+                      <img class="img-thumbnail" src="{{asset('clients/images/')}}{{user.filename}}" alt="User Image" width="100px" height="100px">
                       <a class="users-list-name" href="#">{{user.nom|capitalize}} {{user.prenom|capitalize}}</a>
                       <span class="users-list-date">{{ user.roles ? user.roles[0]|slice(5)|replace({"_": ' '}) }}</span>
                       <hr> 

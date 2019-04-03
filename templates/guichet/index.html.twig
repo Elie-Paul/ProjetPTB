@@ -18,7 +18,7 @@
                 </h4>
             </div>
             <div class="col-md-6 text-right">
-                <a class="btn btn-primary pull-right" href="{{ path('guichet_new') }}">
+                <a class="btn btn-info pull-right" href="{{ path('guichet_new') }}">
                     <i class="glyphicon glyphicon-plus"></i>
                     Nouveau Guichet</a>
             </div>
@@ -64,9 +64,9 @@
                                         <td>
                                             {{ guichet.nom }}</td>
                                         <td>
-                                            {{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                            {{ guichet.createdAt ? guichet.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                                         <td>
-                                            {{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                            {{ guichet.updatedAt ? guichet.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
                                         <td>
                                             <a class="btn btn-info" role="button" href="{{ path('guichet_show', {'id': guichet.id}) }}">
                                                 <i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>

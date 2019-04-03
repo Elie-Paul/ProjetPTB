@@ -26,20 +26,56 @@ class BilletNavetteController extends AbstractController
     }
 
     /**
+     * @Route("/index2", name="billet_navette_index2", methods={"GET"})
+     */
+    public function index2(BilletNavetteRepository $billetNavetteRepository): Response
+    {
+        return $this->render('billet_navette/index2.html.twig', [
+            'billet_navettes' => $billetNavetteRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/new", name="billet_navette_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, BilletNavetteRepository $billetNavetteRepository): Response
     {
         $billetNavette = new BilletNavette();
         $form = $this->createForm(BilletNavetteType::class, $billetNavette);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($billetNavette);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('billet_navette_index');
+            $billetNavette1 = $billetNavetteRepository->findOneBy([
+                'guichet' => $billetNavette->getGuichet(),
+                'navette' => $billetNavette->getNavette(),
+            ]);
+
+            $billetNavette2 = $billetNavetteRepository->findOneBy([
+                'navette' => $billetNavette->getNavette(),
+            ]);
+
+            if(!$billetNavette1 && !$billetNavette2){
+                $billetNavette->setCreatedAt(new \DateTime());
+                $billetNavette->setUpdatedAt(new \Datetime());
+                $billetNavette->setNumeroDernierBillet(0);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($billetNavette);
+                $entityManager->flush();
+
+                //return $this->redirectToRoute('billet_navette_index');
+                return $this->render('billet_navette/index2.html.twig', [
+                    'billet_navettes' => $billetNavetteRepository->findAll(),
+                    'success' => 'Le train Autorail '.$billetNavette->getNavette().' a été créer',
+                ]);
+            }else{
+                return $this->render('billet_navette/new.html.twig', [
+                    'billet_navette' => $billetNavette,
+                    'form' => $form->createView(),
+                    'error' => 'Le train Autorail '.$billetNavette->getNavette().' existe déjà',
+                ]);
+            }
+            
         }
 
         return $this->render('billet_navette/new.html.twig', [
