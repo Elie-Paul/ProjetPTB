@@ -57,8 +57,11 @@
 {% block javascripts %}
     <!-- DataTables -->
     <script src="{{ asset('jslog/PTB/ventePtb.js') }}"></script>
-    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="{{ asset('jslog/jscolor.js') }}"></script>
+    <script src="{{ asset('jslog/FileSaver.js')}}"></script>
+    <script src="{{ asset('jslog/xlsx.core.min.js')}}"></script>
+    <script src="{{ asset('jslog/jhxlsx.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/js/tableexport.min.js"></script>
     <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
     
 {% endblock %}

@@ -27,9 +27,28 @@ function addRow(array)
         }
         
     }
+<<<<<<< HEAD
     if(!a)
         addGuichet();
     a=true; 
+=======
+
+    $("table").tableExport().remove();
+          
+    $("table").tableExport({
+        headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+        footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+        formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
+        fileName: "idghg",                    // (id, String), filename for the downloaded file
+        bootstrap: true,                   // (Boolean), style buttons using bootstrap
+        position: "top",               // (top, bottom), position of the caption element relative to table
+        ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file(s)
+        ignoreCols: [7,7],                  // (Number, Number[]), column indices to exclude from the exported file(s)
+        ignoreCSS: ".tableexport-ignore",  // (selector, selector[]), selector(s) to exclude from the exported file(s)
+        emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
+        trimWhitespace: false              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
+    });
+>>>>>>> 8bb6e3d2c6ebd79284f378fdfe6faf1e17cee465
 }
 
 function createRowElement(commande)
@@ -108,7 +127,34 @@ function getAllCommande()
         {
             console.log(JSON.parse(this.responseText));
             addRow(JSON.parse(this.responseText));
+<<<<<<< HEAD
             tab = JSON.parse(this.responseText); 
+=======
+            $(function () {
+                $('table').DataTable({
+                    "reponsive": true,
+                    "pageLength": 10,
+                    "language": {
+                        "decimal": "",
+                        "loadingRecords": "Chargement...",
+                        "processing": "En traitement...",
+                        "lengthMenu": "Afficher _MENU_ entrées",
+                        "zeroRecords": "Aucun enregistrements correspondants trouvés",
+                        "emptyTable": "aucune donnée disponible",
+                        "infoFiltered": "(filtré de _MAX_ entrées totales)",
+                        "infoEmpty": "Affiche 0 à 0 sur 0 entrées",
+                        "info": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
+                        "search": "Rechercher : ",
+                        "paginate": {
+                            "first": "Premier",
+                            "last": "Dernier",
+                            "previous": "Précédent",
+                            "next": "Suivant"
+                        }
+                    }
+                })
+            })
+>>>>>>> 8bb6e3d2c6ebd79284f378fdfe6faf1e17cee465
         }
     }
     xhr.open("GET","http://localhost:8000/Json/listCommande",true);

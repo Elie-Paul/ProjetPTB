@@ -196,12 +196,9 @@
                 <td>{{ billet_taxe.prix }}</td>
                 <td>Controleur</td>
                 <td id="dpt{{ billet_taxe.id }}">{{billet_taxe.numeroDernierBillet}}</td>
-                {% if is_granted('ROLE_BILLETTEUR') %}
-                <td>
-                    
+                <td>                    
                     <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_taxe.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
                 </td>
-                 {% endif %}
             </tr>
         {% else %}
             <tr>
