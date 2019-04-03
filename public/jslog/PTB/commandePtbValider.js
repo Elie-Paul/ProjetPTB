@@ -27,11 +27,9 @@ function addRow(array)
         }
         
     }
-<<<<<<< HEAD
     if(!a)
         addGuichet();
     a=true; 
-=======
 
     $("table").tableExport().remove();
           
@@ -48,7 +46,6 @@ function addRow(array)
         emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
         trimWhitespace: false              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
     });
->>>>>>> 8bb6e3d2c6ebd79284f378fdfe6faf1e17cee465
 }
 
 function createRowElement(commande)
@@ -127,34 +124,7 @@ function getAllCommande()
         {
             console.log(JSON.parse(this.responseText));
             addRow(JSON.parse(this.responseText));
-<<<<<<< HEAD
             tab = JSON.parse(this.responseText); 
-=======
-            $(function () {
-                $('table').DataTable({
-                    "reponsive": true,
-                    "pageLength": 10,
-                    "language": {
-                        "decimal": "",
-                        "loadingRecords": "Chargement...",
-                        "processing": "En traitement...",
-                        "lengthMenu": "Afficher _MENU_ entrées",
-                        "zeroRecords": "Aucun enregistrements correspondants trouvés",
-                        "emptyTable": "aucune donnée disponible",
-                        "infoFiltered": "(filtré de _MAX_ entrées totales)",
-                        "infoEmpty": "Affiche 0 à 0 sur 0 entrées",
-                        "info": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
-                        "search": "Rechercher : ",
-                        "paginate": {
-                            "first": "Premier",
-                            "last": "Dernier",
-                            "previous": "Précédent",
-                            "next": "Suivant"
-                        }
-                    }
-                })
-            })
->>>>>>> 8bb6e3d2c6ebd79284f378fdfe6faf1e17cee465
         }
     }
     xhr.open("GET","http://localhost:8000/Json/listCommande",true);
