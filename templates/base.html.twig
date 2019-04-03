@@ -137,13 +137,12 @@
         {% if app.user.filename == "null" %}
             <img src="{{asset('img/userlogin.jpg')}}" class="img-circle" alt="User Image">
         {% else %}
-              <img class="img-circle" src="{{asset('clients/images/')}}{{app.user.filename}}" onclick="" alt="User profile picture">
+              <img class="img-circle" src="{{asset('clients/images/')}}{{app.user.filename}}" onclick="" alt="User profile picture" width="160px" height="160px">
         {% endif %}
-        <!--img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image"-->
         </div>
         <div class="pull-left info">
           <p>{{ app.user.username|capitalize }}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
+          <a href="#"><i class="fa fa-circle text-success"></i>En ligne</a>
         </div>
       </div>
 
@@ -206,9 +205,12 @@
             </li>
             <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-credit-card"></i><span>Taxe</span></a></li>            
             {% endif %}
+            <li>            
+              <a href="{{ path('billet_event_index') }}"><i class="fa fa-folder"></i><span>Billet Evenement</span></a>
+            </li>
             <li class="treeview">
           <a href="#">
-            <i class="fa fa-cart-arrow-down"></i>
+            <i class="fa fa-paper-plane"></i>
             <span>Suivi Commande</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -218,13 +220,9 @@
             <li><a href="{{ path('commande_ptb_imprimer') }}"><i class="fa fa-circle-o"></i>PTB</a></li>          
             <li><a href="{{ path('commande_navette_imprimer') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
             <li><a href="{{ path('commande_taxe_imprimer') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
-            <li><a href="{{ path('commande_vignette_imprimer') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>
-            <li><a href="{{ path('commande_navette_imprimer') }}"><i class="fa fa-circle-o"></i>Evenement</a></li>                        
+            <li><a href="{{ path('commande_vignette_imprimer') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>            
           </ul>
-        </li>
-            <li>            
-              <a href="{{ path('billet_event_index') }}"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span></a>
-            </li>
+        </li>          
             <li>
               <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Vignette</span></a>
             </li>        
@@ -233,7 +231,7 @@
         {% if is_granted('ROLE_BILLETTEUR') == false %}
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-train"></i>
+            <i class="fa fa-cart-arrow-down"></i>
             <span>Commande PTB</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -255,7 +253,7 @@
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-subway"></i>
+            <i class="fa fa-cart-arrow-down"></i>
             <span>Commande Autorail</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -276,7 +274,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-credit-card"></i>
+            <i class="fa fa-cart-arrow-down"></i>
             <span>Commande Taxe</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -297,7 +295,7 @@
         </li> 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-cc-mastercard"></i>
+            <i class="fa fa-cart-arrow-down"></i>
             <span>Commande Vignette</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -338,7 +336,7 @@
         {% endif %}                            
         {% if is_granted('ROLE_ADMINISTRATEUR') %}        
         <li class="treeview">
-              <a href="{{ path('billet_navette_new') }}"><i class="fa fa-subway"></i><span>Taxe</span>
+              <a href="{{ path('billet_navette_new') }}"><i class="fa fa-credit-card"></i><span>Taxe</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>

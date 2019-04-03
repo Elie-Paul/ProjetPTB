@@ -165,7 +165,9 @@
             <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Billets Autorail</big></h4>
           </div>
           <div class="col-md-6 text-right">
+          {% if is_granted('ROLE_ADMINISTRATEUR') %}
             <a class="btn btn-info" href="{{ path('navette_new') }}"><i class="glyphicon glyphicon-plus"></i>&nbsp; Nouvelle Navette</a>
+          {% endif %}
           </div>
           </div>
           <!-- /.box-body -->

@@ -157,7 +157,9 @@
             <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Taxes PTB</big></h4>
           </div>
             <div class="col-md-6 text-right">
+            {% if is_granted('ROLE_ADMINISTRATEUR') %}
             <a class="btn btn-primary pull-right" href="{{ path('ptb_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau PTB</a>
+            {% endif %}
             </div>
           </div>
           <!-- /.box-body -->

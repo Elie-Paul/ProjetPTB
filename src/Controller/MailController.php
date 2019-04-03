@@ -37,6 +37,16 @@ class MailController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/dfmail", name="df_mail")
+     */
+    public function indexDF()
+    {
+        return $this->render('mail/dafmail.html.twig', [
+            'controller_name' => 'MailController',
+        ]);
+    }
+
     public function sendMail($name)
     {
         $message = (new \Swift_Message('Hello Email'))
