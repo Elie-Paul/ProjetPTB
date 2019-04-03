@@ -205,6 +205,9 @@
             </li>
             <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-credit-card"></i><span>Taxe</span></a></li>            
             {% endif %}
+            <li>
+              <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Billet Vignette</span></a>
+            </li>
             <li>            
               <a href="{{ path('billet_event_index') }}"><i class="fa fa-folder"></i><span>Billet Evenement</span></a>
             </li>
@@ -223,9 +226,7 @@
             <li><a href="{{ path('commande_vignette_imprimer') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>            
           </ul>
         </li>          
-            <li>
-              <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Vignette</span></a>
-            </li>        
+                    
         {% endif %}
 
         {% if is_granted('ROLE_BILLETTEUR') == false %}
