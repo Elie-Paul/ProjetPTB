@@ -1,44 +1,15 @@
 $(document).ready(function () {
     $('#selUser, #selCommande, #selImpression').select2({theme: "bootstrap"});
 
-    function checkVal(val) {
-        if(val) {
-            return true;
-        }
-        return false;
-    }
-
-    $('#table').DataTable({
-        "reponsive": true,
-        "pageLength": 10,
-        "language": {
-            "decimal": "",
-            "loadingRecords": "Chargement...",
-            "processing": "En traitement...",
-            "lengthMenu": "Afficher _MENU_ entrées",
-            "zeroRecords": "Aucun enregistrements correspondants trouvés",
-            "emptyTable": "aucune donnée disponible",
-            "infoFiltered": "(filtré de _MAX_ entrées totales)",
-            "infoEmpty": "Affiche 0 à 0 sur 0 entrées",
-            "info": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
-            "search": "Rechercher : ",
-            "paginate": {
-                "first": "Premier",
-                "last": "Dernier",
-                "previous": "Précédent",
-                "next": "Suivant"
-            }
-        }
-    });
 
     $('.form').on('submit', function (e) {
         e.preventDefault();
         var user = $('#selUser').val();
         var commande = $('#selCommande').val();
         var impression = $('#selImpression').val();
-        datas = [];
+        // datas = [];
 
-        if(!checkVal(commande) && !checkVal(commande) && !checkVal(impression)) {
+        if(user || commande || impression) {
             //AJAX
             $.ajax({
                 url: '/destinateur/add/mail',
@@ -66,11 +37,6 @@ $(document).ready(function () {
             return false;
             //END AJAX
         }
-
-        if(checkVal(user))
-            datas.push(user);
-        if(checkVal(commande))
-            datas.
 
     });
 

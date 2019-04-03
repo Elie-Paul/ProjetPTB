@@ -7,6 +7,62 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 {% endblock %}
 {% block javascripts %}
+    <script>
+        function bloquer(email) {
+            console.log(email);
+            $.ajax({
+                url: '/destinateur/bloquer',
+                type: 'post',
+                data: {email: email},
+                dataType: 'json',
+                success: function (data) {
+                    switch (data.status) {
+                        case 'error':
+                            swal("Erreur", data.message, "error");
+                            break;
+                        case 'success':
+                            console.log(data.message);
+                            swal("SUCCES", data.message, "success");
+                            $('.table').load('http://localhost:8000/destinateur .table');
+                            break;
+                        default:
+                            swal("Erreur", data.message, "error");
+                    }
+                },
+                error: function (error) {
+                    alert('Erreur ' + error);
+                }
+            });
+            return false;
+        }
+        function supprimer(email) {
+            console.log(email);
+            $.ajax({
+                url: '/destinateur/supprimer',
+                type: 'post',
+                data: {email: email},
+                dataType: 'json',
+                success: function (data) {
+                    switch (data.status) {
+                        case 'error':
+                            swal("Erreur", data.message, "error");
+                            break;
+                        case 'success':
+                            console.log(data.message);
+                            swal("SUCCES", data.message, "success");
+                            $('.table').load('http://localhost:8000/destinateur .table');
+                            break;
+                        default:
+                            swal("Erreur", data.message, "error");
+                    }
+                },
+                error: function (error) {
+                    alert('Erreur ' + error);
+                }
+            });
+            return false;
+        }
+    </script>
     <script src="{{ asset('mail/app.js') }}"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
@@ -66,11 +122,11 @@
                     <td>{{ destinateur.email }}</td>
                     <td>{{ destinateur.processus }}</td>
                     {% if destinateur.active %}
-                        <td><a class="btn btn-warning" href="#">Bloquer</a></td>
+                        <td><a onclick="bloquer('{{ destinateur.email }}');" class="btn btn-warning" href="#">Bloquer</a></td>
                     {% else %}
-                        <td><a class="btn btn-warning" href="#">Activer</a></td>
+                        <td><a onclick="bloquer('{{ destinateur.email }}');" class="btn btn-primary" href="#">Activer</a></td>
                     {% endif %}
-                    <td><a class="btn btn-danger" href="#">Supprimer</a></td>
+                    <td><a onclick="supprimer('{{ destinateur.email }}')" class="btn btn-danger" href="#">Supprimer</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>
