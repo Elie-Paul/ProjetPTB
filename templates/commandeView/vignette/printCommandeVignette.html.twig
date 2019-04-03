@@ -39,11 +39,26 @@
                 <th>Nombre Commandé</th>
                 <th>Nombre Realisé</th>
                 <th>Réalisation</th>
+                 <th>DateCommande</th>
+                <th>Etat</th>
             </tr>
         </thead>
         <tbody id='tbody'>
 
         </tbody>
+         <select class="form-control" id="etat" style='width : 200px; display:inline;'>
+                <option selected>Etat Commande</option>
+                <option disabled>non validé</option>
+                <option>validé</option>   
+                <option>en cours de traitement</option>
+                <option>traité</option>
+            </select>
+                
+            <input type="date" class="form-control" id="start" style=' margin-left:10px; width : 200px; display:inline;'>
+            <input type="date" class="form-control" id="end"  style='margin-left:30px; width : 200px; display:inline;' >
+            <select class="form-control" id="guichet" style='margin-left:30px; width : 200px; display:inline;'>
+                <option selected>guichet</option>
+            </select>
     </table>
               
             </div>

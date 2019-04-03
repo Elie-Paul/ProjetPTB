@@ -41,7 +41,7 @@ class Ptb
     private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="BilletPtb", mappedBy="ptb", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="BilletPtb", mappedBy="ptb", cascade={"persist", "remove"})
      */
     private $billetPtb;
 
@@ -53,6 +53,7 @@ class Ptb
     public function __construct()
     {
         $this->tracabilites = new ArrayCollection();
+        $this->billetPtb = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -74,17 +74,12 @@ function createRowElement(commande)
     let progress =(commande.nombreBilletRealiser
     /commande.nombreDeBilletCommander)*100;
     pdiv2.style.width = `${progress}%`
-    let realisationContent = document.createTextNode(`${progress}%`);
+    let realisationContent = document.createTextNode(`${progress.toFixed(2)}%`);
     pdiv2.appendChild(realisationContent);
     pdiv.appendChild(pdiv2)
     realisation.appendChild(pdiv);
     array.push(realisation);
-    
-    let NbreVendu = document.createElement('td');
-    NbreVendu.style.width="100px";
-    let NbreVenduContent = document.createTextNode(commande.nombreBilletVendu);
-    NbreVendu.appendChild(NbreVenduContent);
-    array.push(NbreVendu);
+   
     
     
     
@@ -131,10 +126,7 @@ function createRowElement(commande)
     }
     array.push(button);
 
-    let stock = document.createElement('td');
-    let stockContent = document.createTextNode(`${commande.nombreBilletRealiser-commande.nombreBilletVendu}`);
-    stock.appendChild(stockContent);
-    array.push(stock);
+    
     
 
     return array;

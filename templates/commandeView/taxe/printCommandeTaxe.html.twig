@@ -33,17 +33,29 @@
     <table class="table table-hover table-striped dataTable" id="example1">
         <thead>
             <tr>
-                <th>Prix</th>
                 <th>Guichet</th>
+                <th>Prix</th>
                 <th>billets Commandé</th>
                 <th>billets Realisé</th>
                 <th>Réalisation</th>
+                <th>DateCommande</th>
                 <th>Etat</th>
             </tr>
         </thead>
         <tbody id='tbody'>
 
         </tbody>
+         <select class="form-control" id="etat" style='width : 200px; display:inline;'>
+                <option selected>Etat Commande</option>
+                <option disabled>non validé</option>
+                <option>validé</option>   
+                <option>en cours de traitement</option>
+                <option>traité</option>
+            </select>
+                
+            <input type="date" class="form-control" id="start" style=' margin-left:10px; width : 200px; display:inline;'>
+            <input type="date" class="form-control" id="end"  style='margin-left:30px; width : 200px; display:inline;' >
+         
     </table>
               
             </div>

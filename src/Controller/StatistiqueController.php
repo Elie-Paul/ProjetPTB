@@ -77,6 +77,7 @@ class StatistiqueController extends AbstractController
         foreach ($guichets as $key => $guichet) 
         {
             $data2 = array();
+            $vente = array();
             foreach($guichet->getBilletPtbs() as $key => $billetP) 
             {
                 
@@ -84,47 +85,10 @@ class StatistiqueController extends AbstractController
                 {
                     $myarray = array
                     (
-                        'id' => $variable->getId(),
-        
-                        'section' => $variable
-                        ->getBillet()
-                        ->getPtb()
-                        ->getSection(),
-        
-                        'depart' => $variable
-                        ->getBillet()
-                        ->getPtb()->getTrajet()
-                        ->getDepart()
-                        ->getLibelle(),
-        
-                        'arrivee' => $variable
-                        ->getBillet()
-                        ->getPtb()->getTrajet()
-                        ->getArrivee()
-                        ->getLibelle(),
-        
-                        'guichet' => $variable
-                        ->getBillet()
-                        ->getGuichet()
-                        ->getNom(),
-        
-                        'nombreDeBilletCommander' => $variable
-                        ->getNombreBillet(),
-                        
-                        'nombreBilletRealiser' => $variable
-                        ->getNombreBilletRealise(),
-        
-                        'nombreBilletVendu' => $variable
-                        ->getNombreBilletVendu(),
-        
-                        'etat' => $variable
-                        ->getEtatCommande(),
-        
-                        'section' => $variable
-                        ->getBillet()
-                        ->getPtb()
-                        ->getSection()
-                        ->getLibelle(),
+                        'nombreDeBilletCommander' => $variable->getNombreBillet(),
+                        'nombreBilletRealiser' => $variable->getNombreBilletRealise(),
+                        'nombreBilletVendu' => $variable->getNombreBilletVendu(),
+                        'etat' => $variable->getEtatCommande(),
                         'dateCommandeValider' => $variable
                         ->getDateCommandeValider(),
                         'dateCommandeRealiser' => $variable
@@ -134,18 +98,28 @@ class StatistiqueController extends AbstractController
                     );
                     array_push($data2,$myarray);
                 }
+                foreach($billetP->getVentePtbs() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nbre' => $variable->getNbreDeBillet(),
+                        'date' => $variable->getCreateAt(),
+                    );
+                    array_push($ventes,$myarray);
+                }
             }
             $myarray = array(
               
                 
                 'guichet' => $guichet->getNom(),
-                'commande' => $data2
+                'commande' => $data2,
+                'vente' => $data2,
             );
             array_push($note,$myarray);
         }
             return new Response(json_encode($note));
     }
-      /**
+    /**
      * @Route("/json/billetPTBVente/", name="json_controller_billetPTBVente")
      */
     public function getbilletVente()
@@ -173,4 +147,58 @@ class StatistiqueController extends AbstractController
             'notes' => $note];
             return new Response(json_encode($note));
     }
+    /**
+     * @Route("/json/billet/ptb/Vente/", name="json/billet/ptb/Vente")
+     */
+    public function getbilletVente2()
+    {
+        $repository = $this->getDoctrine()->getRepository(BilletPtb::class);
+        $billetPtbs = $repository->findAll();
+        $note = array();
+        
+            foreach($billetPtbs as $key => $billetP) 
+            {
+                $commandes=array();
+                $ventes=array();
+                foreach($billetP->getCommandePtbs() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nombreDeBilletCommander' => $variable->getNombreBillet(),
+                        
+                        'nombreBilletRealiser' => $variable->getNombreBilletRealise(),
+        
+                        'nombreBilletVendu' => $variable->getNombreBilletVendu(),
+        
+                        'etat' => $variable->getEtatCommande(),
+                        'dateCommandeValider' => $variable->getDateCommandeValider(),
+                        'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
+                        'dateCommande' => $variable->getDateCommande()
+                    );
+                    array_push($commandes,$myarray);
+                }
+                foreach($billetP->getVentePtbs() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nbre' => $variable->getNbreDeBillet(),
+                        'date' => $variable->getCreateAt(),
+                    );
+                    array_push($ventes,$myarray);
+                }
+                $myarray = array(
+                    'id' => $billetP->getId(),
+                    'ptb' => $billetP->getPtb()->__toString(),
+                    'commandes' => $commandes,
+                    'ventes' => $ventes,
+                );
+                array_push($note,$myarray);
+                
+            }
+            return new Response(json_encode($note));
+    }
+            
+        
+       
 }
+

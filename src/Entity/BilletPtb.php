@@ -19,7 +19,7 @@ class BilletPtb
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Ptb", inversedBy="billetPtb", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ptb", inversedBy="billetPtb", cascade={"persist", "remove"})
      */
     private $ptb;
 
@@ -49,9 +49,15 @@ class BilletPtb
      */
     private $commandePtbs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VentePtb", mappedBy="billet")
+     */
+    private $ventePtbs;
+
     public function __construct()
     {
         $this->commandePtbs = new ArrayCollection();
+        $this->ventePtbs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,6 +155,37 @@ class BilletPtb
             // set the owning side to null (unless already changed)
             if ($commandePtb->getBillet() === $this) {
                 $commandePtb->setBillet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VentePtb[]
+     */
+    public function getVentePtbs(): Collection
+    {
+        return $this->ventePtbs;
+    }
+
+    public function addVentePtb(VentePtb $ventePtb): self
+    {
+        if (!$this->ventePtbs->contains($ventePtb)) {
+            $this->ventePtbs[] = $ventePtb;
+            $ventePtb->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVentePtb(VentePtb $ventePtb): self
+    {
+        if ($this->ventePtbs->contains($ventePtb)) {
+            $this->ventePtbs->removeElement($ventePtb);
+            // set the owning side to null (unless already changed)
+            if ($ventePtb->getBillet() === $this) {
+                $ventePtb->setBillet(null);
             }
         }
 

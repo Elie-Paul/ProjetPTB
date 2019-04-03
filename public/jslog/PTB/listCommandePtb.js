@@ -92,17 +92,13 @@ function createRowElement(commande)
     let progress =(commande.nombreBilletRealiser
     /commande.nombreDeBilletCommander)*100;
     pdiv2.style.width = `${progress}%`
-    let realisationContent = document.createTextNode(`${progress}%`);
+    let realisationContent = document.createTextNode(`${progress.toFixed(2)}%`);
     pdiv2.appendChild(realisationContent);
     pdiv.appendChild(pdiv2)
     realisation.appendChild(pdiv);
     array.push(realisation);
     
-    let NbreVendu = document.createElement('td');
-    NbreVendu.style.width="120px";
-    let NbreVenduContent = document.createTextNode(commande.nombreBilletVendu);
-    NbreVendu.appendChild(NbreVenduContent);
-    array.push(NbreVendu);
+    
     
     let DateCommande = document.createElement('td');
     DateCommande.style.width="180px";
@@ -113,10 +109,7 @@ function createRowElement(commande)
     DateCommande.appendChild(DateCommandeContent);
     array.push(DateCommande);
 
-    let stock = document.createElement('td');
-    let stockContent = document.createTextNode(`${commande.nombreBilletRealiser-commande.nombreBilletVendu}`);
-    stock.appendChild(stockContent);
-    array.push(stock);
+    
 
     let button = document.createElement('button');
     let buttonContent = document.createTextNode('Valider');
@@ -183,10 +176,7 @@ function getAllCommande()
             console.log(JSON.parse(this.responseText));
             addRow(JSON.parse(this.responseText));
             tab = JSON.parse(this.responseText); 
-            var options = {
-                fileName: "Filekkk"
-            };
-            //Jhxlsx.export(this.responseText, options);
+            
         }
     }
     xhr.open("GET","http://localhost:8000/Json/listCommande",false);
@@ -296,7 +286,5 @@ function updateTab()
   addRow(tab1);
 
 }
-/* Defaults */
 
-//FileSaver.saveAs("https://httpbin.org/image", "image.jpg");
 getAllCommande();
