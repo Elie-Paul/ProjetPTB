@@ -9,7 +9,7 @@
 
 {% block body %}
 
-    <h1>Commande PTB</h1>
+    <h1>Commande Navette</h1>
     <div id='pdiv' style='display:none;'class="progress"></div>
   <div id='pdiv2' style='display:none;' class="progress-bar" role="progressbar" aria-valuenow="70"
   aria-valuemin="0" aria-valuemax="100" style="width:70%">
@@ -37,14 +37,18 @@
                 <th>Trajet</th>
                 <th>Guichet</th>
                 <th>Nombre Commandé</th>
-                <th>Réalisation</th>
-                <th>Validation</th>
+                <th>DateCommande</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody id='tbody'>
 
         </tbody>
+        <input type="date" class="form-control" id="start" style=' margin-left:10px; width : 200px; display:inline;'>
+            <input type="date" class="form-control" id="end"  style='margin-left:30px; width : 200px; display:inline;' >
+            <select class="form-control" id="guichet" style='margin-left:30px; width : 200px; display:inline;'>
+                <option selected>guichet</option>
+            </select>
     </table>
               
             </div>
@@ -55,7 +59,10 @@
 {% block javascripts %}
     <!-- DataTables -->
     <script src="{{ asset('jslog/navette/commandeNavetteValider.js') }}"></script>
-    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="{{ asset('jslog/jscolor.js') }}"></script>
+    <script src="{{ asset('jslog/FileSaver.js')}}"></script>
+    <script src="{{ asset('jslog/xlsx.core.min.js')}}"></script>
+    <script src="{{ asset('jslog/jhxlsx.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/js/tableexport.min.js"></script>
     <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
 {% endblock %}

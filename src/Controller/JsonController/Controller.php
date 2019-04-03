@@ -13,6 +13,8 @@ use App\Entity\Section;
 use App\Entity\BilletPtb;
 use App\Entity\Ptb;
 use App\Entity\CommandePtb;
+use App\Entity\StockPtb;
+use App\Entity\VentePtb;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Lieux;
 
@@ -236,19 +238,33 @@ class Controller extends AbstractController
     /**
      * @Route("/addVentePTB/{id}/{nvente}", name="VentePtb")
      */
-    public function VenteCommande($id,$nvente)
+    public function VenteBillet($id,$nvente)
     {
-        $idCommande = intVal($id);
+        $idBillet = intVal($id);
         $vente = intVal($nvente);
         $entityManager = $this
         ->getDoctrine()
         ->getManager();
-        $commande = $entityManager
-        ->getRepository(CommandePTB::class)
-        ->find($idCommande);
-        $commande->setNombreBilletVendu($commande->getNombreBilletVendu()+$vente);
+        
+        $billet = $entityManager
+        ->getRepository(BilletPtb::class)
+        ->find($idBillet);
+        
+        $ventePtb = new ventePtb();
+        $ventePtb->setBillet($billet);
+        $ventePtb->setCreateAt(new \DateTime());
+        $ventePtb->setUpdatedAt(new \DateTime());
+        $ventePtb->setNbreDeBillet($vente);
+        $stockPtb=$entityManager->getRepository(StockPtb::class)->findOneBy([
+            'billet' => $billet,
+         ],);
+        
+        $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+        
+        $entityManager->persist($ventePtb);
         $entityManager->flush();
-        return new Response('<h1>'.$commande->getId().'</h1>');
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
     }
     /**
      * @Route("/json/guichet/", name="json_controller_guichet")
@@ -394,5 +410,52 @@ class Controller extends AbstractController
             return new Response(json_encode($note));
 
     }
+     /**
+     * @Route("/Json/ptb/billet", name="getAllbilletPTB")
+     */
+    public function getAllbilletPTB()
+    {
+        $billets = $this->getDoctrine()->getRepository(BilletPtb::class)->findAll();
+        $data = array();
+        foreach ($billets as $key => $billet) 
+        {
+            $stock = $this->getDoctrine()
+            ->getRepository(StockPtb::class)->findOneby(
+                [
+                    'billet' =>$billet,
+                ]
+            );
+            $myarray = array
+            (
+                'id' => $billet->getId(),
+
+                'section' => $billet
+                ->getPtb()
+                ->getSection()
+                ->getLibelle(),
+
+                'depart' => $billet
+                ->getPtb()
+                ->getTrajet()
+                ->getDepart()
+                ->getLibelle(),
+
+                'arrivee' => $billet
+                ->getPtb()
+                ->getTrajet()
+                ->getArrivee()
+                ->getLibelle(),
+
+                'guichet' =>$billet
+                ->getGuichet()
+                ->getNom(),
+                'stock' => $stock->getNbre(),
+            );
+            array_push($data,$myarray);
+        }
+            return new Response(json_encode($data));
+            //return new Response('dddd');
+    }
+    
 }
 

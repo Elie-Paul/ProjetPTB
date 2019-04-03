@@ -30,6 +30,22 @@ function addRow(array)
         tbody.appendChild(tr);
     }
     a=true;
+
+    $("table").tableExport().remove();
+          
+    $("table").tableExport({
+        headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+        footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+        formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
+        fileName: "idghg",                    // (id, String), filename for the downloaded file
+        bootstrap: true,                   // (Boolean), style buttons using bootstrap
+        position: "top",               // (top, bottom), position of the caption element relative to table
+        ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file(s)
+        ignoreCols: [7,7],                  // (Number, Number[]), column indices to exclude from the exported file(s)
+        ignoreCSS: ".tableexport-ignore",  // (selector, selector[]), selector(s) to exclude from the exported file(s)
+        emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
+        trimWhitespace: false              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
+    });
 }
 
 function createRowElement(commande)
@@ -74,17 +90,12 @@ function createRowElement(commande)
     let progress =(commande.nombreBilletRealiser
     /commande.nombreDeBilletCommander)*100;
     pdiv2.style.width = `${progress}%`
-    let realisationContent = document.createTextNode(`${progress}%`);
+    let realisationContent = document.createTextNode(`${progress.toFixed(2)}%`);
     pdiv2.appendChild(realisationContent);
     pdiv.appendChild(pdiv2)
     realisation.appendChild(pdiv);
     array.push(realisation);
-    
-    let NbreVendu = document.createElement('td');
-    NbreVendu.style.width="100px";
-    let NbreVenduContent = document.createTextNode(commande.nombreBilletVendu);
-    NbreVendu.appendChild(NbreVenduContent);
-    array.push(NbreVendu);
+   
     
     
     
@@ -131,10 +142,7 @@ function createRowElement(commande)
     }
     array.push(button);
 
-    let stock = document.createElement('td');
-    let stockContent = document.createTextNode(`${commande.nombreBilletRealiser-commande.nombreBilletVendu}`);
-    stock.appendChild(stockContent);
-    array.push(stock);
+    
     
 
     return array;

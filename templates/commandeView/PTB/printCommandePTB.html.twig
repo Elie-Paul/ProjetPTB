@@ -9,41 +9,7 @@
 
 {% block body %}
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form>
-        <div class="form-group">
-            <label for="nbreprint">Nombre de billets à imprimer</label>
-            <input type="number" class="form-control" id="nbreprint">
-        </div>
-         <div class="form-group">
-            <label for="color">Couleur billet</label>
-            <input class="jscolor"  id="color" class="form-control" value="fff">
-        </div>
-          <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="modifierdpt">
-          <label class="custom-control-label" for="modifierdpt">Modifier la valeur de depart</label>
-        </div>
-        <div class="form-group test" style="display:none;">
-            <label for="nbredepart">Nombre de depart</label>
-            <input type="number" class="form-control" id="nbredepart">
-        </div>
-        
-        <div class="md-form test" style="display:none;">
-            <label for="form7">Motif</label>
-            <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
-        </div>
-        
-    </form>
-    <button  id="submit" onclick="print2()" class="btn btn-primary">Submit</button>
-  </div>
-
-</div>
-    <h1>Commande PTB</h1>
+   <h1>Commande PTB</h1>
     <div id='pdiv' style='display:none;'class="progress"></div>
   <div id='pdiv2' style='display:none;' class="progress-bar" role="progressbar" aria-valuenow="70"
   aria-valuemin="0" aria-valuemax="100" style="width:70%">
@@ -72,13 +38,29 @@
                 <th>Nombre Commandé</th>
                 <th>Nombre Realisé</th>
                 <th>Réalisation</th>
-                <th>stock</th>
+                <th>Date Commande</th>
+                <th>Etat</th>
             </tr>
         </thead>
         <tbody id='tbody'>
 
         </tbody>
-       <!-- <button class="btn btn-warning" id="commander" onclick="passerCommande();">commander</button>-->
+        
+            <select class="form-control" id="etat" style='width : 200px; display:inline;'>
+                <option selected>Etat Commande</option>
+                <option disabled>non validé</option>
+                <option>validé</option>   
+                <option>en cours de traitement</option>
+                <option>traité</option>
+            </select>
+                
+            <input type="date" class="form-control" id="start" style=' margin-left:10px; width : 200px; display:inline;'>
+            <input type="date" class="form-control" id="end"  style='margin-left:30px; width : 200px; display:inline;' >
+            <select class="form-control" id="guichet" style='margin-left:30px; width : 200px; display:inline;'>
+                <option selected>guichet</option>
+            </select>
+            
+        
     </table>
               
             </div>
@@ -89,8 +71,11 @@
 {% block javascripts %}
     <!-- DataTables -->
     <script src="{{ asset('jslog/PTB/commandePtbPrint.js') }}"></script>
-    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+     <script src="{{ asset('jslog/jscolor.js') }}"></script>
+    <script src="{{ asset('jslog/FileSaver.js')}}"></script>
+    <script src="{{ asset('jslog/xlsx.core.min.js')}}"></script>
+    <script src="{{ asset('jslog/jhxlsx.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/js/tableexport.min.js"></script>
     <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
     
 {% endblock %}

@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{ asset('bower_components/jvectormap/jquery-jvectormap.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/css/tableexport.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
@@ -222,7 +223,7 @@
           </ul>
         </li>
             <li>            
-              <a href="{{ path('billet_ptb_index') }}"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span></a>
+              <a href="{{ path('billet_event_index') }}"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span></a>
             </li>
             <li>
               <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Vignette</span></a>
@@ -311,7 +312,7 @@
             <li><a href="{{ path('commande_vignette_suivi') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                              
             {% endif %}
             {% if is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_ADMINISTRATEUR') %} 
-            <li><a href="{{ path('commande_taxe_valider') }}"><i class="fa fa-circle-o"></i>Valider</a></li>
+            <li><a href="{{ path('commande_vignette_valider') }}"><i class="fa fa-circle-o"></i>Valider</a></li>
             {% endif %}                      
           </ul>         
         </li>
@@ -324,7 +325,7 @@
               </a>
                 <ul class="treeview-menu">
                 {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}  
-                <li><a href="#"><i class="fa fa-circle-o"></i>Commande Billet</a></li>
+                <li><a href="{{ path('billet_event_index') }}"><i class="fa fa-circle-o"></i>Commande Billet</a></li>
                 {% endif %}
                 {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR')%}                               
                   <li><a href="{{ path('evenement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
@@ -345,9 +346,40 @@
               <ul class="treeview-menu">
                   <li><a href="{{ path('billet_taxe_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
                   <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
-              </ul>
+              </ul>          
+          <li>
+          <a href="{{ path('user_mail') }}">
+            <i class="fa fa-envelope"></i>
+            <span>Mail</span>
+          </a>
+        </li>                
         </li>
         <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-wrench"></i>
+            <span>Paramètre</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+          </li>        
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-map-marker"></i>
+        <span>Gares</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+          </ul>
+        </li>
+
+          <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-credit-card"></i>
         <span>Guichets</span>
@@ -373,35 +405,6 @@
             <li><a href="{{ path('trajet_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
           </ul>
          </li>
-        <li class="treeview">
-        <a href="#">
-        <i class="glyphicon glyphicon-map-marker"></i>
-        <span>Gares</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
-          </ul>
-        </li>  
-          <li>
-          <a href="{{ path('user_mail') }}">
-            <i class="fa fa-envelope"></i>
-            <span>Mail</span>
-          </a>
-        </li>                
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-wrench"></i>
-            <span>Paramètre</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
                  
         <li class="treeview">
           <a href="#">
@@ -471,11 +474,10 @@
 <script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
 <script src="{{ asset('jslog/jscolor.js') }}"></script> 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
-
-
-<script src="{{ asset('jslog/jscolor.js') }}"></script>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- FastClick -->

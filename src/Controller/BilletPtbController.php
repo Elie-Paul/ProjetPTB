@@ -68,7 +68,7 @@ class BilletPtbController extends AbstractController
 
              //$this->addFlash('info','Le train PTB '.$billetPtb->getPtb().' a été créer');
 
-                return $this->render('billet_ptb/index2.html.twig', [
+                return $this->render('billet_ptb/index.html.twig', [
                     'billet_ptbs' => $billetPtbRepository->findAll(),
                     'success' => 'Le train PTB '.$billetPtb->getPtb().' a été créer',
                 ]);
