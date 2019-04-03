@@ -36,6 +36,11 @@ class Destinateur
      */
     private $processus;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +90,18 @@ class Destinateur
     public function setProcessus(string $processus): self
     {
         $this->processus = $processus;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

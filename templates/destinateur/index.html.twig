@@ -4,9 +4,11 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
     <link rel="stylesheet" href="{{ asset('evenement/select.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('mail/app.js') }}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 {% endblock %}
 
@@ -40,6 +42,39 @@
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px;" class="container">
+        <div class="tableau">
+            <table id="table" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th>Processus</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for destinateur in destinateurs %}
+                <tr>
+                    <td>{{ destinateur.nom }}</td>
+                    <td>{{ destinateur.prenom }}</td>
+                    <td>{{ destinateur.email }}</td>
+                    <td>{{ destinateur.processus }}</td>
+                    {% if destinateur.active %}
+                        <td><a class="btn btn-warning" href="#">Bloquer</a></td>
+                    {% else %}
+                        <td><a class="btn btn-warning" href="#">Activer</a></td>
+                    {% endif %}
+                    <td><a class="btn btn-danger" href="#">Supprimer</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}

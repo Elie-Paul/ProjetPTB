@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Destinateur;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -52,7 +53,17 @@ class UserController extends AbstractController
             ]); 
 
             if (!$user1) {
-                $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), 'Creation de nouvel utilisateur');
+                $tab = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
+                    'processus' => 'utilisateur'
+                ]);
+                if($tab)
+                {
+                    foreach ($tab as $email)
+                    {
+                        $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $email->getEmail(),'mail/user.html.twig');
+                    }
+                }
+                $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), 'mail/user.html.twig');
                 $user->setCreatedAt(new \DateTime());
                 $user->setUpdateAt(new \DateTime());              
                 $hash=$encoder->encodePassword($user, $user->getPassword()); 
@@ -60,9 +71,6 @@ class UserController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();           
                 $entityManager->persist($user);
                 $entityManager->flush();
-
-                /// Message de confirmation
-                //$this->addFlash('success','L\'utilisateur '.$user->getNom().' '.$user->getPrenom().' a été créer');
 
                 return $this->render('user/index.html.twig', [
                     'users' => $userRepository->findAll(),

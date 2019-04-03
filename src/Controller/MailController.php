@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Mailgun\Mailgun;
 use Twig\Environment;
 
 class MailController extends AbstractController
@@ -63,53 +60,53 @@ class MailController extends AbstractController
      * @param $nom
      * @param $prenom
      * @param $mail
-     * @param $motif
-     * Le motif permet de savoir dans twig si c'est un changement de mot de passe ou creation de user
      * @param $vue
      */
-    public function sendMailToUser($username, $password, $nom, $prenom, $mail, $motif, $vue)
+    public function sendMailToUser($username, $password, $nom, $prenom, $mail, $vue)
     {
         $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
         ->setFrom('ddthera@gmail.com')
         ->setTo($mail)
         ->setBody(
-            $this->renderView('mail/user.html.twig',[
+//            $this->renderView('mail/user.html.twig',[
+//                    'userNom' => $nom,
+//                    'userName' => $username,
+//                    'userPassword' => $password,
+//                    'userPrenom' => $prenom
+//                ]
+            $this->renderView($vue,[
                     'userNom' => $nom,
                     'userName' => $username,
                     'userPassword' => $password,
-                    'userPrenom' => $prenom,
-                    'motif' => $motif
+                    'userPrenom' => $prenom
                 ]
             ),
-            $vue
+            'text/html'
         )
         ;
 
         $this->mailer->send($message);
     }
 
-    /**
-     * @param $nom
-     * @param $prenom
-     * @param $typeBillet
-     * @param $motif
-     * Le motif permet de savoir dans twig si c'est un changement de mot de passe ou creation de user
-     */
-    public function sendMailForPrintBillet($nom, $prenom,$mail, $typeBillet, $motif, $vue)
+    public function sendMailUserInfo($nom, $prenom, $mailUser, $mailInfo, $vue)
     {
         $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
         ->setFrom('ddthera@gmail.com')
-        ->setTo($mail)
+        ->setTo($mailInfo)
         ->setBody(
-            $this->renderView('mail/user.html.twig',[
+//            $this->renderView('mail/user.html.twig',[
+//                    'userNom' => $nom,
+//                    'userName' => $username,
+//                    'userPassword' => $password,
+//                    'userPrenom' => $prenom
+//                ]
+            $this->renderView($vue,[
                     'userNom' => $nom,
                     'userPrenom' => $prenom,
-                    'typeBillet' => $typeBillet,
-                    'userPassword' => $motif,
-                    'motif' => $motif
+                    'userMail' => $mailUser
                 ]
             ),
-            $vue
+            'text/html'
         )
         ;
 
@@ -120,25 +117,41 @@ class MailController extends AbstractController
      * @param $nom
      * @param $prenom
      * @param $mail
-     * @param $typeCommande
-     * @param $motif
-     * Le motif permet de savoir dans twig si c'est un changement de mot de passe ou creation de user
+     * @param $typeBillet
+     * @param $mailDestinateur
+     * @param $vue
      */
-    public function sendMailForCommande($nom, $prenom,$mail, $typeCommande, $motif, $vue)
+    public function sendMailForPrint($nom, $prenom,$mail, $typeBillet, $mailDestinateur, $vue)
     {
         $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
         ->setFrom('ddthera@gmail.com')
-        ->setTo($mail)
+        ->setTo($mailDestinateur)
         ->setBody(
-            $this->renderView('mail/user.html.twig',[
+            $this->renderView($vue,[
                     'userNom' => $nom,
                     'userPrenom' => $prenom,
-                    'typeCommande' => $typeCommande,
-                    'userPassword' => $motif,
-                    'motif' => $motif
+                    'userPassword' => $mail,
+                    'typeBillet' => $typeBillet
                 ]
             ),
-            $vue
+            'text/html'
+        )
+        ;
+
+        $this->mailer->send($message);
+    }
+
+    public function sendMailForCommande($mailDestinateur, $nom, $prenom, $vue)
+    {
+        $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
+        ->setFrom('ddthera@gmail.com')
+        ->setTo($mailDestinateur)
+        ->setBody(
+            $this->renderView($vue,[
+                'Nom' => $nom,
+                'Prenom' => $prenom
+            ]),
+            'text/html'
         )
         ;
 
