@@ -457,8 +457,15 @@
             <i class="glyphicon glyphicon-signal"></i>
             <span>Statistique</span>
             <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ path('statistique_venteptb_guichet') }}"><i class="fa fa-circle-o"></i>Vente Billet Ptb par Guichet</a></li>
+            <li><a href="{{ path('statistique_ventecommandeptb_guichet') }}"><i class="fa fa-circle-o"></i>Vente et Commande Ptb</a></li>
+            <li><a href="{{ path('statistique_commandeptb_guichet') }}"><i class="fa fa-circle-o"></i>Commande Ptb par Guichet</a></li>
+            <li><a href="{{ path('statistique_ventecommandeptb_billet') }}"><i class="fa fa-circle-o"></i>Vente de Commande par Billet</a></li>
+          </ul>
         </li>
         {% endif %}
       </ul>

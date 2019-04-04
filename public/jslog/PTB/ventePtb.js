@@ -14,8 +14,8 @@ function addRow(array)
         let arr=createRowElement(array[index]);
         arr.forEach((value) => tr.appendChild(value));
         tbody.appendChild(tr);
-        
-        $("table").tableExport().remove();
+    }
+    $("table").tableExport().remove();
           
         $("table").tableExport({
             headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
@@ -30,7 +30,6 @@ function addRow(array)
             emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
             trimWhitespace: false              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
         });
-    }
 }
 
 function createRowElement(billet)
@@ -167,6 +166,9 @@ function vente()
                     else
                     {
                        console.log(this.responseText);
+                       span.classList.remove('label-success');
+                        span.innerText="";
+
                         span.classList.add('label-danger')
                         let text = document.createTextNode("echec")
                         span.appendChild(text);

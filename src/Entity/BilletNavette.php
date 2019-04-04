@@ -50,9 +50,15 @@ class BilletNavette
      */
     private $commandeNavettes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VenteNavette", mappedBy="billet")
+     */
+    private $venteNavettes;
+
     public function __construct()
     {
         $this->commandeNavettes = new ArrayCollection();
+        $this->venteNavettes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,6 +151,37 @@ class BilletNavette
             // set the owning side to null (unless already changed)
             if ($commandeNavette->getBillet() === $this) {
                 $commandeNavette->setBillet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VenteNavette[]
+     */
+    public function getVenteNavettes(): Collection
+    {
+        return $this->venteNavettes;
+    }
+
+    public function addVenteNavette(VenteNavette $venteNavette): self
+    {
+        if (!$this->venteNavettes->contains($venteNavette)) {
+            $this->venteNavettes[] = $venteNavette;
+            $venteNavette->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVenteNavette(VenteNavette $venteNavette): self
+    {
+        if ($this->venteNavettes->contains($venteNavette)) {
+            $this->venteNavettes->removeElement($venteNavette);
+            // set the owning side to null (unless already changed)
+            if ($venteNavette->getBillet() === $this) {
+                $venteNavette->setBillet(null);
             }
         }
 
