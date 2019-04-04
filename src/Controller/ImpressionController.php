@@ -65,6 +65,14 @@ class ImpressionController extends AbstractController
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         if($depart ==$billet->getNumeroDernierBillets()+1)
+         {
+            $testMotif="true";
+         }
+         else
+         {
+            $testMotif="false";
+         }
          $stockPtb=$entityManager->getRepository(StockPtb::class)->findOneBy([
             'billet' => $billet,
          ],);
@@ -147,7 +155,7 @@ class ImpressionController extends AbstractController
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/index.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif,
          ]);
          
         // return new Response(var_dump($test));
@@ -161,12 +169,20 @@ class ImpressionController extends AbstractController
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
-         $depart = intval($arr[2]);
+         $depart = intval($arr[2])+1;
          $userid = intval($arr[3]);
          $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         if($depart ==$billet->getNumeroDernierBillet()+1)
+         {
+            $testMotif="true";
+         }
+         else
+         {
+            $testMotif="false";
+         }
          $stockNavette=$entityManager->getRepository(StockNavette::class)->findOneBy([
             'billet' => $billet,
          ],);
@@ -249,7 +265,7 @@ class ImpressionController extends AbstractController
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/index2.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif,
          ]);
     }
     /**
@@ -274,6 +290,14 @@ class ImpressionController extends AbstractController
             ],
             ['dateCommande' =>'ASC']
         );
+        if($depart ==$billet->getNumeroDernierBillets()+1)
+         {
+            $testMotif="true";
+         }
+         else
+         {
+            $testMotif="false";
+         }
          $array=array();
          $j =0;
          for( $i=$depart;;$i++)
@@ -344,7 +368,7 @@ class ImpressionController extends AbstractController
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/index3taxes.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif
          ]);
     }
     /**
@@ -443,7 +467,7 @@ class ImpressionController extends AbstractController
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/indexvignette.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date ,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif
          ]);
     }
 }

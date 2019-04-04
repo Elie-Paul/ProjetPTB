@@ -60,18 +60,68 @@ class AuditController2Controller extends AbstractController
      * @Route("/audit/reimpression", name="audit_reimpression")
      */
     public function reImpression2(Request $request)
-    {
-        explode('+',$request->getContent());
+    {   
+        
+        $array= explode('+',$request->getContent());
         $user = $this->getDoctrine()
         ->getRepository(User::class)
         ->find(intval($array[0]));
-        $nombreDebillet = intval($array[1]);
-        $nombredeDepart = intval($array[2]);
-        $text="reImpresionn de billet du N4 au N5";
+        $text=$array[1];
         $type = $this->getDoctrine()
         ->getRepository(TypeAudit::class)
         ->find(intval(2));
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription($text);
+        $audit->setCreatedAt(new \DateTime());
+        $audit->setUpdatedAt(new \DateTime());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
         
+    }
+
+     /**
+     * @Route("/Json/audit", name="getAudit")
+     */
+    public function getAudit()
+    {
+        $audits = $this->getDoctrine()->getRepository(Audit::class)->findBy(array(), array('createdAt' => 'DESC'));;
+        $data = array();
+        foreach ($audits as $key => $audit) 
+        {
+            
+            $myarray = array
+            (
+                'id' => $audit->getId(),
+
+                'userName' => $audit
+                ->getUser()
+                ->getUserName(),
+
+                'Prenom' => $audit
+                ->getUser()
+                ->getPrenom(),
+
+                'Nom' => $audit
+                ->getUser()
+                ->getNom(),
+
+                'type' => $audit
+                ->getType()
+                ->getLibelle(),
+                
+                'description' =>$audit
+                ->getDescription(),
+            );
+            array_push($data,$myarray);
+        }
+            return new Response(json_encode($data));
+            //return new Response('dddd');
     }
 
 }

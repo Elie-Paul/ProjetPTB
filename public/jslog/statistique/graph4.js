@@ -103,14 +103,14 @@ function makeGuichetVente(arr,arr1)
        
         
         data: [{
-            type: "bar",
+            type: "column",
             name: "vente billet PTB",
             legendText: "vente billet PTB",
             showInLegend: true, 
             dataPoints:arr
         },
         {
-            type: "bar",	
+            type: "column",	
             name: "Nombre billet PTB realisés",
             legendText: "commande billet PTB",
             
