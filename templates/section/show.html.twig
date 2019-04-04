@@ -10,8 +10,8 @@
             <h4></h4>
           </div>
           <div class="col-md-6 text-right">
-            <a class="btn btn-info" href="{{ path('section_index') }}"><i class="fa fa-list"></i>&nbsp;Liste des Sections</a>&nbsp;
-            <a class="btn btn-warning" role="button" href="{{ path('section_edit', {'id': section.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+            <a class="btn btn-info" href="{{ path('section_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste des Sections</big></a>&nbsp;
+            <a class="btn btn-warning" role="button" href="{{ path('section_edit', {'id': section.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;<big>Modifier</big></a>
           </div>
           </div>
           <!-- /.box-body -->
@@ -39,11 +39,11 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{{ section.createdAt ? section.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ section.createdAt ? section.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{{ section.updatedAt ? section.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ section.updatedAt ? section.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
                 </tr>
             </tbody>
         </table>

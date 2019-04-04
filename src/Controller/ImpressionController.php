@@ -7,7 +7,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\BilletPtb;
 use App\Entity\BilletNavette;
 use App\Entity\CommandePtb;
+use App\Entity\StockPtb;
 use App\Entity\CommandeNavette;
+use App\Entity\CommandeTaxe;
+use App\Entity\CommandeVignette;
 use App\Entity\BilletTaxe;
 use App\Entity\Vignette;
 use App\Entity\User;
@@ -48,7 +51,7 @@ class ImpressionController extends AbstractController
    /**
     * @Route("/impression/{id}/{numDepartMotif}",name="impression_process")
     */
-    public function show2($id,$numDepartMotif)
+    public function show2($id,$numDepartMotif, MailController $mail)
     {
         
          $arr=explode("+",$numDepartMotif);
@@ -60,6 +63,9 @@ class ImpressionController extends AbstractController
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         $stockPtb=$entityManager->getRepository(StockPtb::class)->findOneBy([
+            'billet' => $billet,
+         ],);
          $commnadesPTB = $entityManager->getRepository(CommandePtb::class)->findBy
          (
              [
@@ -102,6 +108,7 @@ class ImpressionController extends AbstractController
         $a=0;
         $d=0;
         $test=array();
+        $stockPtb->setNbre( $stockPtb->getNbre() + $num );
         while ($a<count($commnadesPTB)) 
         {
             for ($d;$d<$num;$d++) 
@@ -113,8 +120,9 @@ class ImpressionController extends AbstractController
                 }
                 else
                 {
-                    if($commnadesPTB[$a]->getNombreBilletRealise()== $commnadesPTB[$a]->getNombreBillet())
+                    if($commnadesPTB[$a]->getNombreBilletRealise() == $commnadesPTB[$a]->getNombreBillet())
                     {
+                        $commnadesPTB[$a]->setEtatCommande(3);
                         break;
                     }
                     else
@@ -122,6 +130,7 @@ class ImpressionController extends AbstractController
                         $commnadesPTB[$a]->setNombreBilletRealise(
                             $commnadesPTB[$a]->getNombreBilletRealise()+1
                         );
+                        $commnadesPTB[$a]->setEtatCommande(2);
                     }
                     
                     
@@ -135,8 +144,9 @@ class ImpressionController extends AbstractController
         
         $entityManager->flush();
         $date=new \DateTime();
+        $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index.html.twig', [
-             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date
+             'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),
          ]);
          
         // return new Response(var_dump($test));
@@ -212,6 +222,7 @@ class ImpressionController extends AbstractController
                 {
                     if($commnadesNavettes[$a]->getNombreBilletRealise()== $commnadesNavettes[$a]->getNombreBillet())
                     {
+                        $commnadesNavettes[$a]->setEtatCommande(3);
                         break;
                     }
                     else
@@ -219,6 +230,7 @@ class ImpressionController extends AbstractController
                         $commnadesNavettes[$a]->setNombreBilletRealise(
                             $commnadesNavettes[$a]->getNombreBilletRealise()+1
                         );
+                        $commnadesNavettes[$a]->setEtatCommande(2);
                     }
                     
                     
@@ -251,6 +263,13 @@ class ImpressionController extends AbstractController
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletTaxe::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         $commnadesTaxes = $entityManager->getRepository(CommandeTaxe::class)->findBy
+         (
+            [
+               'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
          $array=array();
          $j =0;
          for( $i=$depart;;$i++)
@@ -283,16 +302,41 @@ class ImpressionController extends AbstractController
                 break;
          }
         $billet->setNumeroDernierBillet(end($array));
-       /* $tracabilite = new Tracabilite();
-        $tracabilite->setUser($user);
-        $tracabilite->setNavette($billet->getNavette());
-        $tracabilite->setType("Navette");
-        $tracabilite->setMotif($motif);
-        $tracabilite->setNumDepart($depart);
-        $tracabilite->setNumFin(end($array));
-        $tracabilite->setCreatedAt(new \DateTime());
-        $tracabilite->setUpdatedAt(new \DateTime());*/
-       // $entityManager->persist($tracabilite);
+        $a=0;
+        $d=0;
+        $test=array();
+        while ($a<count($commnadesTaxes)) 
+        {
+            for ($d;$d<$num;$d++) 
+            {
+                if($commnadesTaxes[$a]->getEtatCommande() == 0 )
+                {
+                    array_push($test, $commnadesTaxes[$a]->getId());
+                    break;
+                }
+                else
+                {
+                    if($commnadesTaxes[$a]->getNombreBilletRealise()== $commnadesTaxes[$a]->getNombreBillet())
+                    {
+                        $commnadesTaxes[$a]->setEtatCommande(3);
+                        break;
+                    }
+                    else
+                    {
+                        $commnadesTaxes[$a]->setNombreBilletRealise(
+                            $commnadesTaxes[$a]->getNombreBilletRealise()+1
+                        );
+                        $commnadesTaxes[$a]->setEtatCommande(2);
+                    }
+                    
+                    
+                    
+                   
+                    
+                }
+            }
+            $a++;
+        }
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/index3taxes.html.twig', [
@@ -314,6 +358,13 @@ class ImpressionController extends AbstractController
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(Vignette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         $commnadesVignettes = $entityManager->getRepository(CommandeVignette::class)->findBy
+         (
+            [
+               'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
          $array=array();
          $j =0;
          for( $i=$depart;;$i++)
@@ -346,16 +397,41 @@ class ImpressionController extends AbstractController
                 break;
          }
         $billet->setNumeroDernierBillet(end($array));
-       /* $tracabilite = new Tracabilite();
-        $tracabilite->setUser($user);
-        $tracabilite->setNavette($billet->getNavette());
-        $tracabilite->setType("Navette");
-        $tracabilite->setMotif($motif);
-        $tracabilite->setNumDepart($depart);
-        $tracabilite->setNumFin(end($array));
-        $tracabilite->setCreatedAt(new \DateTime());
-        $tracabilite->setUpdatedAt(new \DateTime());*/
-       // $entityManager->persist($tracabilite);
+        $a=0;
+        $d=0;
+        $test=array();
+        while ($a<count($commnadesVignettes)) 
+        {
+            for ($d;$d<$num;$d++) 
+            {
+                if($commnadesVignettes[$a]->getEtatCommande() == 0 )
+                {
+                    array_push($test, $commnadesVignettes[$a]->getId());
+                    break;
+                }
+                else
+                {
+                    if($commnadesVignettes[$a]->getNombreBilletRealise()== $commnadesVignettes[$a]->getNombreBillet())
+                    {
+                        $commnadesVignettes[$a]->setEtatCommande(3);
+                        break;
+                    }
+                    else
+                    {
+                        $commnadesVignettes[$a]->setNombreBilletRealise(
+                            $commnadesVignettes[$a]->getNombreBilletRealise()+1
+                        );
+                        $commnadesVignettes[$a]->setEtatCommande(2);
+                    }
+                    
+                    
+                    
+                   
+                    
+                }
+            }
+            $a++;
+        }
         $entityManager->flush();
         $date=new \DateTime();
          return $this->render('impression/indexvignette.html.twig', [

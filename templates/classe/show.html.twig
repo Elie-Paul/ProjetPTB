@@ -9,8 +9,8 @@
             <h4></h4>
           </div>
           <div class="col-md-6 text-right">
-            <a class="btn btn-info" href="{{ path('classe_index') }}"><i class="fa fa-list"></i>&nbsp; Liste Classe</a>&nbsp;
-             <a class="btn btn-warning" role="button" href="{{ path('classe_edit', {'id': classe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+            <a class="btn btn-info" href="{{ path('classe_index') }}"><i class="fa fa-list"></i>&nbsp; <big>Liste des Classes</big></a>&nbsp;
+             <a class="btn btn-warning" role="button" href="{{ path('classe_edit', {'id': classe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; <big>Modifier</big></a>
           </div>
           </div>
           <!-- /.box-body -->
@@ -33,11 +33,11 @@
                 </tr>
                 <tr>
                     <th>Date de creation</th>
-                    <td>{{ classe.createdAt ? classe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ classe.createdAt ? classe.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{{ classe.updatedAt ? classe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ classe.updatedAt ? classe.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
                 </tr>
             </tbody>
         </table>

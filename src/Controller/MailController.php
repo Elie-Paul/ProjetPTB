@@ -37,6 +37,26 @@ class MailController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/mail/print", name="mail_print")
+     */
+    public function mailPrint()
+    {
+        return $this->render('mail/mailprint.html.twig', [
+            'controller_name' => 'MailController',
+        ]);
+    }
+
+    /**
+     * @Route("/dfmail", name="df_mail")
+     */
+    public function indexDF()
+    {
+        return $this->render('mail/dafmail.html.twig', [
+            'controller_name' => 'MailController',
+        ]);
+    }
+
     public function sendMail($name)
     {
         $message = (new \Swift_Message('Hello Email'))
@@ -63,9 +83,9 @@ class MailController extends AbstractController
      * @param $mail
      * @param $vue
      */
-    public function sendMailToUser($username, $password, $nom, $prenom, $mail, $vue)
+    public function sendMailToUser($username, $password, $nom, $prenom, $mail, $role, $vue)
     {
-        $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
+        $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
         ->setFrom('ptbsaptb@gmail.com')
         ->setTo($mail)
         ->setBody(
@@ -76,10 +96,12 @@ class MailController extends AbstractController
 //                    'userPrenom' => $prenom
 //                ]
             $this->renderView($vue,[
-                    'userNom' => $nom,
-                    'userName' => $username,
-                    'userPassword' => $password,
-                    'userPrenom' => $prenom
+                    'nom' => $nom,
+                    'prenom' => $prenom,
+                    'username' => $username,
+                    'password' => $password,
+                    'mail' => $mail,
+                    'role' => $role,
                 ]
             ),
             'text/html'
@@ -89,7 +111,7 @@ class MailController extends AbstractController
         $this->mailer->send($message);
     }
 
-    public function sendMailUserInfo($nom, $prenom, $mailUser, $vue)
+    public function sendMailUserInfo($nom, $prenom, $mailUser, $role, $vue)
     {
         $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
             'processus' => 'utilisateur'
@@ -105,9 +127,10 @@ class MailController extends AbstractController
                         ->setTo($dest->getEmail())
                         ->setBody(
                             $this->renderView($vue, [
-                                    'userNom' => $nom,
-                                    'userPrenom' => $prenom,
-                                    'userMail' => $mailUser
+                                    'nom' => $nom,
+                                    'prenom' => $prenom,
+                                    'mail' => $mailUser,
+                                    'role' => $role,
                                 ]
                             ),
                             'text/html'
@@ -120,13 +143,11 @@ class MailController extends AbstractController
     }
 
     /**
-     * @param $nom
-     * @param $prenom
-     * @param $mail
-     * @param $typeBillet
+     * @param $depart
+     * @param $arrive
      * @param $vue
      */
-    public function sendMailForPrint($nom, $prenom,$mail, $typeBillet, $vue)
+    public function sendMailForPrint($depart, $arrive, $vue)
     {
         $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
             'processus' => 'impression'
@@ -135,15 +156,17 @@ class MailController extends AbstractController
         {
             foreach ($destinateur as $dest)
             {
-                $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
+                $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
                     ->setFrom('ddthera@gmail.com')
                     ->setTo($dest->getEmail())
                     ->setBody(
                         $this->renderView($vue, [
-                                'userNom' => $nom,
-                                'userPrenom' => $prenom,
-                                'userPassword' => $mail,
-                                'typeBillet' => $typeBillet
+//                                'nom' => $nom,
+//                                'prenom' => $prenom,
+//                                'mail' => $mail,
+//                                'role' => $role,
+                                'depart' => $depart,
+                                'arrivee' => $arrive,
                             ]
                         ),
                         'text/html'

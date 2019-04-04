@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}BilletPtb{% endblock %}
+
+{% block body %}
+
+    <div class="form-group">
+        <input type="date" class="form-control" id="start" style=' margin-left:10px; width : 200px; display:inline;'>
+        <input type="date" class="form-control" id="end"  style='margin-left:30px; width : 200px; display:inline;' >
+    </div>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="{{ asset('jslog/statistique/graph.js') }}"></script>
+
+{% endblock %}

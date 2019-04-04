@@ -34,6 +34,19 @@ class UserController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/mail", name="user_mail", methods={"GET"})
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    public function mail(UserRepository $userRepository): Response
+    {
+        return $this->render('user/usermail.html.twig', [
+            'users' => $userRepository->findAll(),
+        ]);
+    }
+
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      * @param Request $request
@@ -55,14 +68,14 @@ class UserController extends AbstractController
             $user1 = $userRepository->findOneBy([
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
-            ]); 
-
+            ]);
             if (!$user1)
             {
-                $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(),'mail/user.html.twig');
-                $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), 'mail/user.html.twig');
+                $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/dafmail.html.twig');
+                $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/index.html.twig');
                 $user->setCreatedAt(new \DateTime());
-                $user->setUpdateAt(new \DateTime());              
+                $user->setUpdateAt(new \DateTime());
+                $user->setFilename("null");
                 $hash=$encoder->encodePassword($user, $user->getPassword()); 
                 $user->setPassword($hash);           
                 $entityManager = $this->getDoctrine()->getManager();           

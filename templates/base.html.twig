@@ -14,40 +14,25 @@
   <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
   <!-- jvectormap -->
   <link rel="stylesheet" href="{{ asset('bower_components/jvectormap/jquery-jvectormap.css') }}">
+   <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.css') }}">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+  <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css') }}">
+  <!-- Morris chart -->
+  <link rel="stylesheet" href="{{ asset('bower_components/morris.js/morris.css') }}">
+  <link rel="stylesheet" href="{{ asset('bower_components/Ionicons/css/ionicons.min.css') }}">
+  <!-- jvectormap -->
+  <link rel="stylesheet" href="{{ asset('bower_components/jvectormap/jquery-jvectormap.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.13/css/tableexport.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 <link href="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.css" rel="stylesheet">
 {% block stylesheets %}{% endblock %}
-<!--style>
-#myModa {
-  position: absolute;
-  width: 250px;
-  height: 50px;
-  text-align:center;
-  background-color: transparent;
-  text-align: center;
-  color: white;
-  left: 0;
-  -webkit-animation: mymove 0s infinite; /* Chrome, Safari, Opera */
-  animation: mymove 20s infinite;
-}
-
-/* Chrome, Safari, Opera */
-@-webkit-keyframes mymove {
-  50% {left: 800px;}
-  50% {box-shadow: 15px 20px 30px blue;}
-}
-
-/* Standard syntax */
-@keyframes mymove {
-  50% {left: 800px;}
-  50% {box-shadow: 15px 20px 30px blue;}
-}
-</style-->
 <style>
 .modal {
   display: none; /* Hidden by default */
@@ -113,15 +98,23 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
-              <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="user-image" alt="User Image">
+              {% if app.user.filename == "null" %}
+                  <img src="{{asset('img/userlogin.jpg')}}" class="user-image" alt="User Image">
+                  
+                  {% else %}
+              <img class="user-image" src="{{asset('clients/images/')}}{{app.user.filename}}" onclick="" alt="User profile picture">
+              {% endif %}              
 
               <span class="hidden-xs">{{ app.user.username|capitalize}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
+              {% if app.user.filename == "null" %}
+                  <img src="{{asset('img/userlogin.jpg')}}" class="img-circle" alt="User Image">
+                  {% else %}
+              <img class="img-circle" src="{{asset('clients/images/')}}{{app.user.filename}}" onclick="" alt="User profile picture">
+              {% endif %}                
                 <p>
                   {{ app.user.username|capitalize }}</br>
                   {{ app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}
@@ -151,11 +144,15 @@
 
     <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{asset('clients/images/')}}{{app.user.filename}}" class="img-circle" alt="User Image">
+        {% if app.user.filename == "null" %}
+            <img src="{{asset('img/userlogin.jpg')}}" class="img-circle" alt="User Image">
+        {% else %}
+              <img class="img-circle" src="{{asset('clients/images/')}}{{app.user.filename}}" onclick="" alt="User profile picture" width="160px" height="160px">
+        {% endif %}
         </div>
         <div class="pull-left info">
           <p>{{ app.user.username|capitalize }}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> En ligne</a>
+          <a href="#"><i class="fa fa-circle text-success"></i>En ligne</a>
         </div>
       </div>
 
@@ -170,13 +167,13 @@
           </a>
         </li>
         <!--== false-->
-         {% if is_granted('ROLE_BILLETTEUR') %}
+         {% if is_granted('ROLE_BILLETTEUR') or is_granted('ROLE_ADMINISTRATEUR') %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-text-background"></i>
             <span>Abonnement</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right fa-spin"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>          
           </a> 
           <ul class="treeview-menu">
@@ -185,16 +182,31 @@
             <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>       
         </li>
-        <!--li class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-folder-open"></i>
-            <span>Billet</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">2</span>
-            </span>
-          </a>
-          <ul class="treeview-menu"-->
-          
+        {% if is_granted('ROLE_ADMINISTRATEUR') %}
+        <li class="treeview">
+              <a href="#"><i class="fa fa-train"></i><span>Billet PTB</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{ path('billet_ptb_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+                  <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+              </ul>
+        </li>
+        <li class="treeview">
+              <a href="#"><i class="fa fa-subway"></i><span>Billet Autorail</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{ path('billet_navette_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+                  <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+              </ul>
+        </li>
+        {% endif %}
+          {% if is_granted('ROLE_BILLETTEUR') %}
             <li>
               <a href="{{ path('billet_ptb_index') }}"><i class="fa fa-train"></i><span>Billet PTB</span></a>
             </li>          
@@ -202,209 +214,181 @@
               <a href="{{ path('billet_navette_index') }}"><i class="fa fa-subway"></i><span>Billet Autorail</span></a>
             </li>
             <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-credit-card"></i><span>Taxe</span></a></li>            
+            {% endif %}
             <li>
-              <a href="{{ path('billet_ptb_index') }}"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span></a>
+              <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Billet Vignette</span></a>
             </li>
-            <li>
-              <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Vignette</span></a>
+            <li>            
+              <a href="{{ path('billet_event_index') }}"><i class="fa fa-folder"></i><span>Billet Evenement</span></a>
             </li>
-          <!--/ul>
-        </li-->        
-          <ul class="treeview-menu">
-            <li><a href="{{ path('billet_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>
-            <li><a href="{{ path('billet_navette_index') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Taxe</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
+            <li class="treeview">
           <a href="#">
-            <i class="fa fa-cart-arrow-down"></i>
-            <span>Commande</span>
+            <i class="fa fa-paper-plane"></i>
+            <span>Suivi Commande</span>
             <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right fa-spin"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>          
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                        
-          <ul class="treeview-menu">
-            <li><a href="{{ path('abonnement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
-          <ul class="treeview-menu">
-            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>PTB</a></li>          
-            <li><a href="{{ path('controller_commande_navette') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Evenement</a></li>                        
+            <li><a href="{{ path('commande_ptb_imprimer') }}"><i class="fa fa-circle-o"></i>PTB</a></li>          
+            <li><a href="{{ path('commande_navette_imprimer') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
+            <li><a href="{{ path('commande_taxe_imprimer') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
+            <li><a href="{{ path('commande_vignette_imprimer') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>            
           </ul>
-        </li>
+        </li>          
+                    
         {% endif %}
 
-        {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_SUPERVISEUR') %}
+        {% if is_granted('ROLE_BILLETTEUR') == false %}
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-train"></i>
+            <i class="fa fa-cart-arrow-down"></i>
             <span>Commande PTB</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}          
+            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or  is_granted('ROLE_ADMINISTRATEUR') %}          
             <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Vente</a></li> 
-            {% endif %}         
-            <li><a href="{{ path('showAllCommandePTB') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                   
+            <li><a href="{{ path('commande_ptb_vente') }}"><i class="fa fa-circle-o"></i>Vente</a></li>
+            {% endif %} 
+             {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or  is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}                     
+            <li><a href="{{ path('commande_ptb_suivi') }}"><i class="fa fa-circle-o"></i>Lister</a></li>             
+            {% endif %}  
+            {% if is_granted('ROLE_VALIDATEUR')  or  is_granted('ROLE_ADMINISTRATEUR') %} 
+            <li><a href="{{ path('commande_ptb_valider') }}"><i class="fa fa-circle-o"></i>valider</a></li>
+            {% endif %}                                              
           </ul>         
         </li>
 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-subway"></i>
+            <i class="fa fa-cart-arrow-down"></i>
             <span>Commande Autorail</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-          {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}           
-            <li><a href="{{ path('controller_commande_navette') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Vente</a></li> 
-          {% endif %}      
-            <li><a href="{{ path('showAllCommandeNavette') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                    
+          {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or  is_granted('ROLE_ADMINISTRATEUR') %}           
+            <li><a href="{{ path('commande_navette') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li><a href="{{ path('commande_navette_vente') }}"><i class="fa fa-circle-o"></i>Vente</a></li>
+          {% endif %}
+            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or  is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}
+            <li><a href="{{ path('commande_navette_suivi') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                     
+          {% endif %}
+          {% if is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_ADMINISTRATEUR') %} 
+            <li><a href="{{ path('commande_navette_valider') }}"><i class="fa fa-circle-o"></i>valider</a></li>
+            {% endif %}                 
           </ul>         
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-credit-card"></i>
+            <i class="fa fa-cart-arrow-down"></i>
             <span>Commande Taxe</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE')  %}        
-            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li> 
-            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Vente</a></li> 
-            {% endif %}    
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                   
+            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or  is_granted('ROLE_ADMINISTRATEUR') %}        
+            <li><a href="{{ path('commande_taxe') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li> 
+            <li><a href="{{ path('commande_taxe_vente') }}"><i class="fa fa-circle-o"></i>Vente</a></li>
+            {% endif %}
+            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or  is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}  
+            <li><a href="{{ path('commande_taxe_suivi') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+            {% endif %}
+            {% if is_granted('ROLE_VALIDATEUR')  or  is_granted('ROLE_ADMINISTRATEUR') %} 
+            <li><a href="{{ path('commande_taxe_valider') }}"><i class="fa fa-circle-o"></i>Valider</a></li>
+            {% endif %}                                                   
           </ul>         
-        </li>
+        </li> 
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-cc-mastercard"></i>
+            <i class="fa fa-cart-arrow-down"></i>
             <span>Commande Vignette</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}          
-            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Vente</a></li>
-            {% endif %}          
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                              
+            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR') %}          
+            <li><a href="{{ path('commande_vignette') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li><a href="{{ path('commande_vignette_vente') }}"><i class="fa fa-circle-o"></i>Vente</a></li>
+            {% endif %}
+            {% if is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_SUPERVISEUR') or  is_granted('ROLE_ADMINISTRATEUR') %}
+            <li><a href="{{ path('commande_vignette_suivi') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                              
+            {% endif %}
+            {% if is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_ADMINISTRATEUR') %} 
+            <li><a href="{{ path('commande_vignette_valider') }}"><i class="fa fa-circle-o"></i>Valider</a></li>
+            {% endif %}                      
           </ul>         
         </li>
+        {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}  
          <li class="treeview">
               <a href="#"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span>
                   <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right fa-spin"></i>
+                    <i class="fa fa-angle-left pull-right"></i>
                   </span>
               </a>
                 <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i>Commande Billet</a></li> 
-                {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}                                   
-                  <li><a href="#"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+                {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}  
+                <li><a href="{{ path('billet_event_index') }}"><i class="fa fa-circle-o"></i>Commande Billet</a></li>
+                {% endif %}
+                {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR')%}                               
+                  <li><a href="{{ path('evenement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
                   <li><a href="#"><i class="fa fa-circle-o"></i>Vente</a></li>
-                  {% endif %}                  
-                  <li><a href="#"><i class="fa fa-circle-o"></i>Lister</a></li>
+                   <li><a href="{{ path('evenement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li> 
+                   {% endif %}                                                  
                 </ul>
-         </li>  
-        {% endif %}      
-        {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_VALIDATEUR')  %}
+         </li>
+          {% endif %}
+        {% endif %}                            
+        {% if is_granted('ROLE_ADMINISTRATEUR') %}        
         <li class="treeview">
-          <a href="#">
-            <i class="fa fa-subway"></i>
-            <span>Commande Autorail</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-          {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}           
-            <li><a href="{{ path('controller_commande_navette') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Vente</a></li> 
-          {% endif %}      
-            <li><a href="{{ path('showAllCommandeNavette') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                    
-          </ul>         
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-credit-card"></i>
-            <span>Commande Taxe</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE')  %}        
-            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li> 
-            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Vente</a></li> 
-            {% endif %}    
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                   
-          </ul>         
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-cc-mastercard"></i>
-            <span>Commande Vignette</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}          
-            <li class="treeview"><a href="{{ path('commande_ptb_index') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Vente</a></li>
-            {% endif %}          
-            <li><a href="{{ path('commande_ptb_new') }}"><i class="fa fa-circle-o"></i>Lister</a></li>                                              
-          </ul>         
-        </li>
-         <li class="treeview">
-              <a href="#"><i class="glyphicon glyphicon-calendar"></i><span>Evenement</span>
-                  <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right fa-spin"></i>
-                  </span>
+              <a href="{{ path('billet_navette_new') }}"><i class="fa fa-credit-card"></i><span>Taxe</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
               </a>
-                <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i>Commande Billet</a></li> 
-                {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}                                   
-                  <li><a href="#"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i>Vente</a></li>
-                  {% endif %}                  
-                  <li><a href="#"><i class="fa fa-circle-o"></i>Lister</a></li>
-                </ul>
-         </li>  
-        {% endif %}      
-        {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_VALIDATEUR')  %}
+              <ul class="treeview-menu">
+                  <li><a href="{{ path('billet_taxe_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+                  <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+              </ul>          
+          <li>
+          <a href="{{ path('user_mail') }}">
+            <i class="fa fa-envelope"></i>
+            <span>Mail</span>
+          </a>
+        </li>                
+        </li>
         <li class="treeview">
           <a href="#">
-            <i class="glyphicon glyphicon-signal"></i>
-            <span>Statistique</span>
+            <i class="glyphicon glyphicon-wrench"></i>
+            <span>Paramètre</span>
             <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-        </li>
-        {% endif %}
-        {% if is_granted('ROLE_ADMINISTRATEUR') %}
-        <li>
-              <a href="{{ path('billet_ptb_new') }}"><i class="fa fa-train"></i><span>Billet PTB</span></a>
-        </li>
-        <li>
-              <a href="{{ path('billet_navette_new') }}"><i class="fa fa-subway"></i><span>Billet Autorail</span></a>
-        </li>
+          <ul class="treeview-menu">
+
+          </li>        
         <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-map-marker"></i>
+        <span>Gares</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+          </ul>
+        </li>
+
+          <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-credit-card"></i>
         <span>Guichets</span>
@@ -430,19 +414,7 @@
             <li><a href="{{ path('trajet_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
           </ul>
          </li>
-        <li class="treeview">
-        <a href="#">
-        <i class="glyphicon glyphicon-map-marker"></i>
-        <span>Gares</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-            <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
-          </ul>
-        </li>       
+                 
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-user"></i>
@@ -455,17 +427,7 @@
             <li><a href="{{ path('user_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>            
             <li><a href="{{ path('user_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li> 
           </ul>
-        </li>         
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="glyphicon glyphicon-wrench"></i>
-            <span>Paramètre</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
+          </li>
             <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-certificate"></i>
@@ -489,12 +451,31 @@
         {% if is_granted('ROLE_SUPERVISEUR') %}
           <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-road"></i><span>&nbsp;Audit</span></a></li>                                       
         {% endif %}
+        {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}
+        <li class="treeview">
+          <a href="#">
+            <i class="glyphicon glyphicon-signal"></i>
+            <span>Statistique</span>
+            <span class="pull-right-container">
+            </span>
+          </a>
+        </li>
+        {% endif %}
       </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
 
  <div class="content-wrapper">
+ <section class="content-header">
+      <h1>
+        Tableau De Bord
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Accueil</a></li>
+        <li class="active">Tableau De Bord</li>
+      </ol>
+    </section>
     <section class="content">
     {% for message in app.flashes('info') %}
       <!--div class="alert alert-info" id="myModa">
@@ -505,37 +486,42 @@
     </section>
    </div>
 
-<!-- /.content-wrapper -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
- <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="//rawgithub.com/indrimuska/jquery-editable-select/master/dist/jquery-editable-select.min.js"></script>
-<script src="{{ asset('jslog/jscolor.js') }}"></script> 
-<script src="{{ asset('jslog/commandePtb.js') }}"></script>
-
-
-<script src="{{ asset('jslog/jscolor.js') }}"></script>
-<script src="{{ asset('jslog/commandePtb.js') }}"></script>
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
 <!-- Bootstrap 3.3.7 -->
-<script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<!-- FastClick -->
-<script src="{{ asset('bower_components/fastclick/lib/fastclick.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<!-- Morris.js charts -->
+<script src="{{ asset('bower_components/raphael/raphael.min.js')}}"></script>
+<script src="{{ asset('bower_components/morris.js/morris.min.js')}}"></script>
 <!-- Sparkline -->
-<script src="{{ asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js') }}"></script>
-<!-- jvectormap  -->
-<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
-<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
-<!-- SlimScroll -->
-<script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
-<!-- ChartJS -->
-<script src="{{ asset('bower_components/chart.js/Chart.js') }}"></script>
+<script src="{{ asset('bower_components/jquery-sparkline/dist/jquery.sparkline.min.js')}}"></script>
+<!-- jvectormap -->
+<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js')}}"></script>
+<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{ asset('bower_components/jquery-knob/dist/jquery.knob.min.js')}}"></script>
+<!-- daterangepicker -->
+<script src="{{ asset('bower_components/moment/min/moment.min.js')}}"></script>
+<script src="{{ asset('bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<!-- datepicker -->
+<script src="{{ asset('bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+<!-- Slimscroll -->
+<script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+<!-- FastClick -->
+<script src="{{ asset('bower_components/fastclick/lib/fastclick.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('dist/js/pages/dashboard2.js') }}"></script>
+<script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 </body>
 {% block javascripts %}{% endblock %}

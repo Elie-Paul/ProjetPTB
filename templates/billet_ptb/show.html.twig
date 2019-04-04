@@ -3,32 +3,47 @@
 {% block title %}BilletPtb{% endblock %}
 
 {% block body %}
-    <h1>BilletPtb</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ billet_ptb.id }}</td>
-            </tr>
-            <tr>
-                <th>NumeroDernierBillets</th>
-                <td>{{ billet_ptb.numeroDernierBillets }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ billet_ptb.createdAt ? billet_ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdateAt</th>
-                <td>{{ billet_ptb.updateAt ? billet_ptb.updateAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('billet_ptb_index') }}">back to list</a>
-
-    <a href="{{ path('billet_ptb_edit', {'id': billet_ptb.id}) }}">edit</a>
+    <!--h1>BilletPtb</h1-->
+    <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('billet_ptb_index2') }}"><i class="fa fa-list"></i>&nbsp; <big>Liste des billets PTB</big></a>&nbsp;
+             <a class="btn btn-warning" role="button" href="{{ path('billet_ptb_edit', {'id': billet_ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; <big>Modifier</big></a>
+          </div>
+          </div>
+          <!-- /.box-body -->
+    </div>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information du billet PTB  {{billet_ptb.ptb}}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ billet_ptb.id }}</td>
+                </tr>
+                <tr>
+                    <th>Numero du Dernier Billet imprimer</th>
+                    <td>{{ billet_ptb.numeroDernierBillets }}</td>
+                </tr>
+                <tr>
+                    <th>Date de creation</th>
+                    <td>{{ billet_ptb.createdAt ? billet_ptb.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Date de modification</th>
+                    <td>{{ billet_ptb.updateAt ? billet_ptb.updateAt|date('d-m-Y H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
     {{ include('billet_ptb/_delete_form.html.twig') }}
 {% endblock %}

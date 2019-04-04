@@ -2,17 +2,22 @@
   <dictionary name="thera">
     <words>
       <w>ajouté</w>
+      <w>bonjour</w>
+      <w>bonne</w>
       <w>changement</w>
       <w>commande</w>
       <w>commandes</w>
       <w>destinateur</w>
       <w>destinateurs</w>
       <w>evenement</w>
+      <w>journée</w>
       <w>permet</w>
       <w>prenom</w>
       <w>processus</w>
       <w>savoir</w>
+      <w>souhaite</w>
       <w>utilisateur</w>
+      <w>vous</w>
     </words>
   </dictionary>
 </component>

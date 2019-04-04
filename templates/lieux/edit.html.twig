@@ -10,7 +10,7 @@
             <h4><i class="fa fa-plus"></i> &nbsp;<big> Ajouter une nouvelle gare</big></h4>
             </div>
             <div class="col-md-6 text-right">
-            <a href="{{ path('lieux_index') }}" class="btn btn-success"><i class="fa fa-list"></i> <big>Liste Gare</big></a>
+            <a href="{{ path('lieux_index') }}" class="btn btn-info"><i class="fa fa-list"></i> <big>Liste des Gares</big></a>
             </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
         <h3 class="box-title">Modifier le lieux {{lieux.libelle}}</h3>   
     </div>
     <div class="box-body">
-        {{ include('lieux/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('lieux/_form.html.twig', {'button_label': 'Modifier'}) }}
     </div>
 </div>
 

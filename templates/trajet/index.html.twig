@@ -58,8 +58,8 @@
                         <tr>                            
                             <td>{{ trajet.depart.libelle }}</td>
                             <td>{{ trajet.arrivee.libelle }}</td>
-                            <td>{{ trajet.createdAt ? trajet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ trajet.updatedAt ? trajet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ trajet.createdAt ? trajet.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td>{{ trajet.updatedAt ? trajet.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td>
 
                                 <a class="btn btn-info" role="button" href="{{ path('trajet_show', {'id': trajet.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>

@@ -15,6 +15,7 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
+    <h1>Nombre total de billet  Commandé:<span id="total"></span></h1>
     <form>
         <div class="form-group">
             <label for="nbreprint">Nombre de billets à imprimer</label>
@@ -47,6 +48,7 @@
     <script>
          idb=0;
          dpt=0;
+         total=0;
         function show()
         {
             var test = document.getElementsByClassName("test")[0];
@@ -93,6 +95,17 @@
         function print(id)
         {
             idb=id;
+             let xhr=new XMLHttpRequest();
+            xhr.onload=function ()
+            {
+                if(this.status == 200)
+                {
+                    document.getElementById('total').innerText=this.responseText;
+                    total= parseInt(this.responseText);
+                }
+            }
+            xhr.open("GET","http://localhost:8000/totalbilletVignette/"+idb,true);
+            xhr.send();
             var modal = document.getElementById('myModal');
             var td = document.getElementById('dpt'+idb);
             dpt=parseInt(td.innerHTML,10)
@@ -106,7 +119,11 @@
             var color = document.getElementById("color").value;
             var checkbox = document.getElementById("modifierdpt");
             var userid = parseInt(document.getElementById("userid").innerHTML, 10);
-            var motif = "";  
+            var motif = ""; 
+            if(parseInt(nbreprint)>total)
+            {
+                alert("Vous essayez d'imprimer un nombre de billet superieur au nombre commandé")
+            } 
             if(checkbox.checked)
             {
                 motif = document.getElementById("form7").value;  
@@ -114,12 +131,27 @@
             }
             else
             {
-                motif="pas de changement";
+                if(checkbox.checked)
+                {
+                    motif = document.getElementById("form7").value;  
+                    dpt = parseInt(document.getElementById('nbredepart').value, 10);
+                }
+                else
+                {
+                    motif="pas de changement";
+                }
+                if(checkbox.checked && motif==='')
+                {
+                    alert("veuillez indiquez le motif ")
+                }
+                else
+                {
+                    var modal = document.getElementById('myModal');
+                    modal.style.display = "none";
+                    document.location.href = `http://localhost:8000/impressionvignette/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
+                }
+                
             }
-            var modal = document.getElementById('myModal');
-            modal.style.display = "none";
-            document.location.href = `http://localhost:8000/impressionvignette/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
-            
                 
                 
             //document.location.href = `http://localhost:8000/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;

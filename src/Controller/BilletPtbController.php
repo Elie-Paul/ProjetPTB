@@ -22,7 +22,7 @@ class BilletPtbController extends AbstractController
      */
     public function index(BilletPtbRepository $billetPtbRepository, \Swift_Mailer $mailer, Request $request): Response
     {
-            $message = (new \Swift_Message('Hello Email'))
+           /* $message = (new \Swift_Message('Hello Email'))
                 ->setFrom('send@example.com')
                 ->setTo('recipient@example.com')
                 ->setReplyTo('napalousmanadda@gmail.com')
@@ -32,10 +32,27 @@ class BilletPtbController extends AbstractController
                 ),
                 'text/html');
         
-            $mailer->send($message);
+            $mailer->send($message);*/
         
 
         return $this->render('billet_ptb/index.html.twig', [
+            'billet_ptbs' => $billetPtbRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/index2", name="billet_ptb_index2", methods={"GET"})
+     * @param BilletPtbRepository $billetPtbRepository
+     * @return Response
+     */
+    public function index2(BilletPtbRepository $billetPtbRepository, \Swift_Mailer $mailer, Request $request): Response
+    {
+        $billetPtb = new BilletPtb();
+
+        /*$billetPtb = $billetPtbRepository->findBy([
+            'createdAt' => 'DESC',
+        ]);*/
+        return $this->render('billet_ptb/index2.html.twig', [
             'billet_ptbs' => $billetPtbRepository->findAll(),
         ]);
     }
@@ -76,7 +93,7 @@ class BilletPtbController extends AbstractController
                 return $this->render('billet_ptb/new.html.twig', [
                     'billet_ptb' => $billetPtb,
                     'form' => $form->createView(),
-                    'error' => 'Le train PTB '.$billetPtb->getPtb().' a été créer',
+                    'error' => 'Le train PTB '.$billetPtb->getPtb().' existe déjà',
                 ]);
             }
             
@@ -112,6 +129,7 @@ class BilletPtbController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $billetPtb->setUpdateAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('billet_ptb_index', [

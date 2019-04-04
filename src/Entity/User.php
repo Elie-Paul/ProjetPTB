@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -86,6 +88,17 @@ class User implements UserInterface, \Serializable
      * @Assert\EqualTo(propertyPath="password",message="mot de passe n'est pas identique")
      */
     public $confirme_password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Audit", mappedBy="user")
+     */
+    private $audits;
+
+
+    public function __construct()
+    {
+        $this->audits = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -300,6 +313,37 @@ class User implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    /**
+     * @return Collection|Audit[]
+     */
+    public function getAudits(): Collection
+    {
+        return $this->audits;
+    }
+
+    public function addAudit(Audit $audit): self
+    {
+        if (!$this->audits->contains($audit)) {
+            $this->audits[] = $audit;
+            $audit->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAudit(Audit $audit): self
+    {
+        if ($this->audits->contains($audit)) {
+            $this->audits->removeElement($audit);
+            // set the owning side to null (unless already changed)
+            if ($audit->getUser() === $this) {
+                $audit->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 }

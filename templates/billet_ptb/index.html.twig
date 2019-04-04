@@ -115,7 +115,7 @@
         }
         function print2()
         {
-            window.location.href = "/billet/ptb/#";
+            
             var nbreprint = document.getElementById("nbreprint").value;
             var color = document.getElementById("color").value;
             var checkbox = document.getElementById("modifierdpt");
@@ -164,7 +164,9 @@
             <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Billets PTB</big></h4>
           </div>
             <div class="col-md-6 text-right">
+            {% if is_granted('ROLE_ADMINISTRATEUR') %}
             <a class="btn btn-primary pull-right" href="{{ path('billet_ptb_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau PTB</a>
+            {% endif %}
             </div>
           </div>
           <!-- /.box-body -->

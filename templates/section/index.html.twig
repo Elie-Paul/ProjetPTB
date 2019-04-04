@@ -49,8 +49,8 @@
                         <tr>
                             <td>{{ section.libelle }}</td>
                             <td>{{ section.prix }}</td>
-                            <td>{{ section.createdAt ? section.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                            <td>{{ section.updatedAt ? section.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ section.createdAt ? section.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                            <td>{{ section.updatedAt ? section.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('section_show', {'id': section.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('section_edit', {'id': section.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
