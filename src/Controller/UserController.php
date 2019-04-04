@@ -57,12 +57,16 @@ class UserController extends AbstractController
         
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $user1 = $userRepository->findOneBy([
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
             ]); 
+            $user2 = $userRepository->findOneBy([
+                'email' => $user->getEmail(),
+            ]); 
 
-            if (!$user1) {
+            if (!$user1 && $user2) {
                 $mail->sendMail("Elie-Paul");
                 $user->setCreatedAt(new \DateTime());
                 $user->setUpdateAt(new \DateTime());

@@ -13,7 +13,7 @@
             <h4><i class="fa fa-list"></i>&nbsp;<big>Liste de Type des Abonnement</big></h4>
           </div>
             <div class="col-md-6 text-right">
-                <a class="btn btn-info" href="{{ path('type_new') }}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nouveau Type</a>
+                <a class="btn btn-info" href="{{ path('type_new') }}"><i class="glyphicon glyphicon-plus"></i>&nbsp;<big>Nouveau Type</big></a>
             </div>
           </div>
           <!-- /.box-body -->
@@ -41,13 +41,13 @@
                 <td>{{ type.section }}</td>
                 <td>{{ type.prix }}</td>
                 <td>
-                    <a class="btn btn-warning" role="button" href="{{ path('type_show', {'id': type.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>
-                    <a class="btn btn-info" role="button" href="{{ path('type_edit', {'id': type.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+                    <a class="btn btn-warning" role="button" href="{{ path('type_show', {'id': type.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;<big>Voir</big></a>
+                    <a class="btn btn-info" role="button" href="{{ path('type_edit', {'id': type.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;<big>Modifier</big></a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>

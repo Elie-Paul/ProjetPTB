@@ -16,6 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @Vich\Uploadable()
+ * @UniqueEntity("email")
  */
 class User implements UserInterface, \Serializable
 {
