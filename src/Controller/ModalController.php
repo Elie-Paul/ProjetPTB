@@ -148,10 +148,7 @@ class ModalController extends AbstractController
         $entityManager->persist($lieux);
         $entityManager->flush();
 
-        return $this->render('guichet/new.html.twig', [
-            'guichet' => $guichet,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('guichet_new');
     }
 
     /**
@@ -172,10 +169,7 @@ class ModalController extends AbstractController
         $entityManager->persist($section);
         $entityManager->flush();
 
-        return $this->render('ptb/new.html.twig', [
-            'ptb' => $ptb,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('ptb_new');
     }
 
     /**

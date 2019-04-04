@@ -13,6 +13,8 @@ use App\Entity\Section;
 use App\Entity\BilletPtb;
 use App\Entity\Ptb;
 use App\Entity\Vignette;
+use App\Entity\StockVignette;
+use App\Entity\VenteVignette;
 use App\Entity\CommandePtb;
 use App\Entity\CommandeVignette;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -108,17 +110,31 @@ class CommandeVignetteController extends AbstractController
      */
     public function VenteCommande($id,$nvente)
     {
-        $idCommande = intVal($id);
+        $idBillet = intVal($id);
         $vente = intVal($nvente);
         $entityManager = $this
         ->getDoctrine()
         ->getManager();
-        $commande = $entityManager
-        ->getRepository(CommandeVignette::class)
-        ->find($idCommande);
-        $commande->setNombreBilletVendu($commande->getNombreBilletVendu()+$vente);
+        
+        $billet = $entityManager
+        ->getRepository(Vignette::class)
+        ->find($idBillet);
+        
+        $venteVignette = new venteVignette();
+        $venteVignette->setBillet($billet);
+        $venteVignette->setCreateAt(new \DateTime());
+        $venteVignette->setUpdatedAt(new \DateTime());
+        $venteVignette->setNbreDeBillet($vente);
+        $stockVignette=$entityManager->getRepository(StockVignette::class)->findOneBy([
+            'billet' => $billet,
+         ],);
+        
+        $stockVignette->setNbre($stockVignette->getNbre()- $vente);
+        
+        $entityManager->persist($venteVignette);
         $entityManager->flush();
-        return new Response('<h1>'.$commande->getId().'</h1>');
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
     }
      /**
      * @Route("/newCommandeVignette/", name="newCommandeVignette")
@@ -224,5 +240,40 @@ class CommandeVignetteController extends AbstractController
             }
         }
         return new response(''.$nBillet);
+    }
+     /**
+     * @Route("/Json/vignette/billet", name="getAllbilletVignette")
+     */
+    public function getAllbilletVignette()
+    {
+        $billets = $this->getDoctrine()->getRepository(Vignette::class)->findAll();
+        $data = array();
+        foreach ($billets as $key => $billet) 
+        {
+            $stock = $this->getDoctrine()
+            ->getRepository(StockVignette::class)->findOneby(
+                [
+                    'billet' =>$billet,
+                ]
+            );
+            $myarray = array
+            (
+               'id' => $billet->getId(),
+
+                'section' => $billet
+                ->getType()
+                ->getSection(),
+                'type' => $billet
+                ->getType()
+                ->getLibelle(),
+                'guichet' =>$billet
+                ->getGuichet()
+                ->getNom(),
+                'stock' => $stock->getNbre(),
+            );
+            array_push($data,$myarray);
+        }
+            return new Response(json_encode($data));
+            //return new Response('dddd');
     }   
 }

@@ -1,11 +1,12 @@
 let array =[];
 const tbody = document.getElementById('tbody');
+const start = document.getElementById('start');
+const end = document.getElementById('end');
 window.onload = function () 
 {
     
     let xhr=new XMLHttpRequest();
-    const start = document.getElementById('start');
-    const end = document.getElementById('end');
+   
     start.addEventListener('change',updateTab);
     end.addEventListener('change',updateTab);
     xhr.onload=function ()
@@ -55,9 +56,21 @@ function DateCompare(date1,date2)
             let venteGuichet={y:total,label:""+element.guichet};
             graphData.push(venteGuichet);  
        });
-       
-       makeGuichetVente(graphData);
-       //addRow(tabData);
+       let graphData1=[];
+       let tabData1=[];
+     
+        array.forEach(element => 
+       {
+            let total = 0;
+            element.commandes.forEach(commande =>
+            {
+                total+=commande.nombreBilletRealiser;
+                tabData1.push({guichet:element.guichet,date:commande.dateCommande,nbre:commande.nombreBilletRealiser});
+            });
+            let commandeGuichet={y:total,label:""+element.guichet};
+            graphData1.push(commandeGuichet);  
+       });
+       makeGuichetVente(graphData,graphData1);
    }
    function addRow(array) 
 {
@@ -98,34 +111,49 @@ function DateCompare(date1,date2)
     return array;
 }
 }
-function makeGuichetVente(tab)
+function makeGuichetVente(arr,arr1)
 {
     var chart = new CanvasJS.Chart("chartContainer", {
-    animationEnabled: true,
-    exportEnabled: true,
-    theme: "light2", // "light1", "light2", "dark1", "dark2"
-    title:
-    {
-        text: " Vente billetPTB par Guichet "+start.value+"   "+end.value
-    },
-    axisY: 
-    {
-		suffix: "billets"
-	},
-        axisX: 
-    {
-		title: "Guichet"
-	},
-    data: 
-    [
+        animationEnabled: true,
+        
+        exportEnabled: true,
+        title:{
+            text: "vente/commande billet PTB"
+        },	
+        axisY: {
+            title: "billet PTB",
+            titleFontColor: "#4F81BC",
+            lineColor: "#4F81BC",
+            labelFontColor: "#4F81BC",
+            tickColor: "#4F81BC"
+        },
+        axisY: {
+            title: "billet PTB",
+            titleFontColor: "#C0504E",
+            lineColor: "#C0504E",
+            labelFontColor: "#C0504E",
+            tickColor: "#C0504E"
+        },	
+        toolTip: {
+            shared: true
+        },
+       
+        
+        data: [{
+            type: "column",
+            name: "vente billet PTB",
+            legendText: "vente billet PTB",
+            showInLegend: true, 
+            dataPoints:arr
+        },
         {
-		type: "column", //change type to bar, line, area, pie, etc
-		//indexLabel: "{y}", //Shows y value on all Data Points
-		indexLabelFontColor: "#5A5757",
-		indexLabelPlacement: "outside",
-		dataPoints: tab
-        }
-    ]    
+            type: "column",	
+            name: "commande billet PTB",
+            legendText: "commande billet PTB",
+          
+            showInLegend: true,
+            dataPoints:arr1,
+        }]
     });
     chart.render();
 }
@@ -142,7 +170,9 @@ function updateTab()
         let dstart = new Date(start.value);
         let dend = new Date(end.value);
         let graphData=[];
+        let graphData1=[];
         let tabData=[];
+        let tab2=tab1
         tab1 = tab1.filter((value1)=>
         {
             let total=0;
@@ -182,7 +212,47 @@ function updateTab()
 
                 
         });
-        makeGuichetVente(graphData);
+        tab2 = tab2.filter((value1)=>
+        {
+            let total=0;
+            value1.commandes.filter((value) =>
+            {
+                var date = new Date(value.dateCommande.date);
+                if(DateCompare(date,dstart))
+                {
+                    console.log("true");
+                    total+=value.nombreBilletRealiser;
+                    tabData.push({guichet:value1.guichet,date:value.dateCommande,nbre:value.nombreBilletRealiser});
+                    return true;
+                }
+                else if(DateCompare(date,dend))
+                {
+                    console.log("true");
+                    total+=value.nombreBilletRealiser;
+                    tabData.push({guichet:value1.guichet,date:value.dateCommande,nbre:value.nombreBilletRealiser});
+                    return true;
+                }
+                else if(date > dstart && date < dend)
+                {
+                    console.log("true");
+                    total+=value.nombreBilletRealiser;
+                    tabData.push({guichet:value1.guichet,date:value.dateCommande,nbre:value.nombreBilletRealiser});
+                    return true;
+                }
+                else
+                {
+                    console.log("false");
+                    return false;
+                } 
+
+            });
+            let venteGuichet={y:total,label:""+value1.guichet};
+            graphData1.push(venteGuichet);  
+
+                
+        });
+        
+        makeGuichetVente(graphData,graphData1);
         //addRow(tabData);
 
     }

@@ -159,6 +159,6 @@ class Ptb
 
     public function __toString()
     {
-        return (string)$this->trajet->getDepart()->getLibelle().'-'.$this->trajet->getArrivee()->getLibelle().'     '.$this->section->getLibelle();
+        return (string)$this->trajet->getDepart()->getLibelle().'-'.$this->trajet->getArrivee()->getLibelle().'-'.$this->section->getLibelle();
     }
 }

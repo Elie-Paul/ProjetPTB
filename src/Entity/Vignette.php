@@ -55,9 +55,15 @@ class Vignette
      */
     private $commandeVignettes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VenteVignette", mappedBy="billet")
+     */
+    private $venteVignettes;
+
     public function __construct()
     {
         $this->commandeVignettes = new ArrayCollection();
+        $this->venteVignettes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,37 @@ class Vignette
             // set the owning side to null (unless already changed)
             if ($commandeVignette->getBillet() === $this) {
                 $commandeVignette->setBillet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VenteVignette[]
+     */
+    public function getVenteVignettes(): Collection
+    {
+        return $this->venteVignettes;
+    }
+
+    public function addVenteVignette(VenteVignette $venteVignette): self
+    {
+        if (!$this->venteVignettes->contains($venteVignette)) {
+            $this->venteVignettes[] = $venteVignette;
+            $venteVignette->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVenteVignette(VenteVignette $venteVignette): self
+    {
+        if ($this->venteVignettes->contains($venteVignette)) {
+            $this->venteVignettes->removeElement($venteVignette);
+            // set the owning side to null (unless already changed)
+            if ($venteVignette->getBillet() === $this) {
+                $venteVignette->setBillet(null);
             }
         }
 
