@@ -29,7 +29,7 @@
 {% block javascripts %}
 <script>
   {% if error is defined %}
-    swal("Attention", "Ce Nom d'utilisateur existe", "warning");
+    swal("Attention", "Ce nom ou adresse mail existent déjà", "warning");
   {% endif %}
 </script>
 {% endblock %}
