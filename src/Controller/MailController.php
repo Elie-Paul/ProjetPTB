@@ -124,7 +124,6 @@ class MailController extends AbstractController
      * @param $prenom
      * @param $mail
      * @param $typeBillet
-     * @param $mailDestinateur
      * @param $vue
      */
     public function sendMailForPrint($nom, $prenom,$mail, $typeBillet, $vue)
