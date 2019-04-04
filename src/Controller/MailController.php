@@ -32,7 +32,7 @@ class MailController extends AbstractController
      */
     public function index()
     {
-        return $this->render('mail/index.html.twig', [
+        return $this->render('mail/mailprint.html.twig', [
             'controller_name' => 'MailController',
         ]);
     }
