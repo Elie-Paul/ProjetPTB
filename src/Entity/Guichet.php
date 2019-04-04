@@ -41,7 +41,7 @@ class Guichet
      *      minMessage = "Votre nom doit avoir au minimum 2 charactère de longueur"
      * )
      * @Assert\Type("string")
-     * @Assert\Regex(pattern="/^[a-zA-Z]+$/", match=true, message="Les caractères spéciaux sont interdits dans le titre")
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9]+$/", match=true, message="Les caractères spéciaux sont interdits dans le titre")
      */
     private $nom;
 
@@ -280,6 +280,6 @@ class Guichet
 
     public function __toString()
     {
-        return (string)$this->code;
+        return (string)$this->nom;
     }
 }

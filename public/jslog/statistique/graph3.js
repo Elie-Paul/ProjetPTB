@@ -253,7 +253,7 @@ function updateTab()
         });
         
         makeGuichetVente(graphData,graphData1);
-        addRow(tabData);
+        //addRow(tabData);
 
     }
   

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BilletPtb;
 use App\Form\BilletPtbType;
+use App\Entity\StockPtb;
 use App\Repository\BilletPtbRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,6 +66,7 @@ class BilletPtbController extends AbstractController
     public function new(Request $request, BilletPtbRepository $billetPtbRepository): Response
     {
         $billetPtb = new BilletPtb();
+        $stockPtb = new StockPtb();
         $form = $this->createForm(BilletPtbType::class, $billetPtb);
         $form->handleRequest($request);
 
@@ -81,6 +83,11 @@ class BilletPtbController extends AbstractController
                 $billetPtb->setUpdateAt(new \DateTime());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($billetPtb);
+                $stockPtb->setBillet($billetPtb);
+                $stockPtb->setNbre(0);
+                $stockPtb->setCreatedAt(new \DateTime());
+                $stockPtb->setUpdatedAt(new \DateTime());
+                $entityManager->persist($stockPtb);
                 $entityManager->flush();
 
              //$this->addFlash('info','Le train PTB '.$billetPtb->getPtb().' a été créer');

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\BilletNavette;
+use App\Entity\StockNavette;
 use App\Form\BilletNavetteType;
 use App\Repository\BilletNavetteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,6 +42,7 @@ class BilletNavetteController extends AbstractController
     public function new(Request $request, BilletNavetteRepository $billetNavetteRepository): Response
     {
         $billetNavette = new BilletNavette();
+        $stockNavette = new StockNavette();
         $form = $this->createForm(BilletNavetteType::class, $billetNavette);
         $form->handleRequest($request);
 
@@ -61,6 +63,11 @@ class BilletNavetteController extends AbstractController
                 $billetNavette->setNumeroDernierBillet(0);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($billetNavette);
+                $stockNavette->setBillet($billetNavette);
+                $stockNavette->setNbre(0);
+                $stockNavette->setCreatedAt(new \DateTime());
+                $stockNavette->setUpdatedAt(new \DateTime());
+                $entityManager->persist($stockNavette);
                 $entityManager->flush();
 
                 //return $this->redirectToRoute('billet_navette_index');

@@ -57,7 +57,7 @@ function DateCompare(date1,date2)
        });
        
        makeGuichetVente(graphData);
-       addRow(tabData);
+       //addRow(tabData);
    }
    function addRow(array) 
 {
@@ -183,7 +183,7 @@ function updateTab()
                 
         });
         makeGuichetVente(graphData);
-        addRow(tabData);
+        //addRow(tabData);
 
     }
   

@@ -60,7 +60,7 @@ function DateCompare(date1,date2)
        });
       // console.log(graphData);
       makeGuichetCommande(graphData);
-       addRow2(tabData);
+     //  addRow2(tabData);
    }
    function addRow2(array) 
 {
