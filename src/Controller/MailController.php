@@ -66,11 +66,11 @@ class MailController extends AbstractController
     public function sendMailToUser($username, $password, $nom, $prenom, $mail, $vue)
     {
         $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
-        ->setFrom('ddthera@gmail.com')
+        ->setFrom('ptbsaptb@gmail.com')
         ->setTo($mail)
         ->setBody(
 //            $this->renderView('mail/user.html.twig',[
-//                    'userNom' => $nom,
+//                    'userNomptbsaptb@gmail.com' => $nom,
 //                    'userName' => $username,
 //                    'userPassword' => $password,
 //                    'userPrenom' => $prenom
@@ -98,20 +98,23 @@ class MailController extends AbstractController
         {
             foreach ($destinateur as $dest)
             {
-                $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
-                    ->setFrom('ddthera@gmail.com')
-                    ->setTo($dest->getEmail())
-                    ->setBody(
-                        $this->renderView($vue, [
-                                'userNom' => $nom,
-                                'userPrenom' => $prenom,
-                                'userMail' => $mailUser
-                            ]
-                        ),
-                        'text/html'
-                    );
+                if($dest->getActive())
+                {
+                    $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
+                        ->setFrom('ptbsaptb@gmail.com')
+                        ->setTo($dest->getEmail())
+                        ->setBody(
+                            $this->renderView($vue, [
+                                    'userNom' => $nom,
+                                    'userPrenom' => $prenom,
+                                    'userMail' => $mailUser
+                                ]
+                            ),
+                            'text/html'
+                        );
 
-                $this->mailer->send($message);
+                    $this->mailer->send($message);
+                }
             }
         }
     }

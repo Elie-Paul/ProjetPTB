@@ -52,17 +52,9 @@ class UserController extends AbstractController
                 'username' => $user->getUsername(),
             ]); 
 
-            if (!$user1) {
-                $tab = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
-                    'processus' => 'utilisateur'
-                ]);
-                if($tab)
-                {
-                    foreach ($tab as $email)
-                    {
-                        $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $email->getEmail(),'mail/user.html.twig');
-                    }
-                }
+            if (!$user1)
+            {
+                $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(),'mail/user.html.twig');
                 $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), 'mail/user.html.twig');
                 $user->setCreatedAt(new \DateTime());
                 $user->setUpdateAt(new \DateTime());              
@@ -76,7 +68,9 @@ class UserController extends AbstractController
                     'users' => $userRepository->findAll(),
                     'success' => 'L\'utilisateur  '.$user->getNom().' '.$user->getPrenom().' a été créer',
                 ]);
-            }else {
+            }
+            else
+            {
                 return $this->render('user/new.html.twig', [
                     'user' => $user,
                     'form' => $form->createView(),
