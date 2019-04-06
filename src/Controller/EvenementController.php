@@ -11,6 +11,7 @@ use App\Form\TrajetEventType;
 use App\Repository\EvenementRepository;
 use App\Repository\TrajetEventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -115,29 +116,54 @@ class EvenementController extends AbstractController
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
         $toDay = new \DateTime();
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            if(strcmp( $evenement->getDateEvent()->format('Y/m/d') , $toDay->format('Y/m/d')) < 0)
+        if ($form->isSubmitted())
+        {
+            if($request->isXmlHttpRequest())
             {
-                return $this->render('evenement/new.html.twig', [
-                    'evenement' => $evenement,
-                    'error' => "La date de l'evement n'est pas valide",
-                    'form' => $form->createView(),
+                $event = $this->getDoctrine()->getRepository(Evenement::class)->findOneBy([
+                    'libelle' => $evenement->getLibelle()
+                ]);
+                if($event)
+                {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => "L'evenement existe dejà"
+                    ]);
+                }
+                if (strcmp($evenement->getDateEvent()->format('Y/m/d'), $toDay->format('Y/m/d')) < 0)
+                {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => "La date de l'evenement n'est pas valide"
+                    ]);
+//                return $this->render('evenement/new.html.twig', [
+//                    'evenement' => $evenement,
+//                    'error' => "La date de l'evement n'est pas valide",
+//                    'form' => $form->createView(),
+//                ]);
+                }
+                if (strcmp($evenement->getDateEvent()->format('Y/m/d'), $evenement->getFinEvent()->format('Y/m/d')) > 0)
+                {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => "La date de fin de l'evenement n'est pas valide"
+                    ]);
+//                return $this->render('evenement/new.html.twig', [
+//                    'evenement' => $evenement,
+//                    'error' => "La date de fin de l'evenement n'est pas valide",
+//                    'form' => $form->createView(),
+//                ]);
+                }
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($evenement);
+                $entityManager->flush();
+                return new JsonResponse([
+                    'status' => 'success',
+                    'message' => "L'evenement " . $evenement->getLibelle() . " a été ajouté avec succès"
                 ]);
             }
-            if(strcmp( $evenement->getDateEvent()->format('Y/m/d') , $evenement->getFinEvent()->format('Y/m/d'))  > 0)
-            {
-                return $this->render('evenement/new.html.twig', [
-                    'evenement' => $evenement,
-                    'error' => "La date de fin de l'evenement n'est pas valide",
-                    'form' => $form->createView(),
-                ]);
-            }
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($evenement);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('evenement_index');
+//            return $this->redirectToRoute('evenement_index');
         }
 
         return $this->render('evenement/new.html.twig', [

@@ -14,6 +14,7 @@ $(document).ready(function () {
                         break;
                     case 'success':
                         swal("SUCCES", data.message, "success");
+                        $('.foTrajet').load('http://localhost:8000/evenement/ .foTrajet');
                         break;
                     default:
                         swal("Errer", data.message, "error");
@@ -21,6 +22,33 @@ $(document).ready(function () {
             },
             error: function (error) {
                 alert('Erreur '+error);
+            }
+        });
+        return false;
+    });
+
+    $('.form_new_event').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function (data) {
+                switch(data.status) {
+                    case 'error':
+                        swal("Erreur", data.message, "error");
+                        break;
+                    case 'success':
+                        swal("SUCCES", data.message, "success");
+                        // $('.foTrajet').load('http://localhost:8000/evenement/ .foTrajet');
+                        break;
+                    default:
+                        swal("Erreur", data.message, "error");
+                }
+            },
+            error: function (error) {
+                console.log('Erreur '+error);
             }
         });
         return false;

@@ -64,7 +64,7 @@ class Abonnement
     private $telephone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="abonnements")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedtrueBy="abonnements")
      */
     private $type;
 

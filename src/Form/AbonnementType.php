@@ -18,11 +18,11 @@ class AbonnementType extends AbstractType
     {
         $builder
             ->add('imageFile', FileType::class, [
-                'required' => true,                
+                'required' => false,
                 'label' => "Image",
                 'attr' => [                    
                     'class' => 'form-control',
-                    'required' => true                  
+                    'required' => false
                     ] 
             ])
             ->add('nom')
