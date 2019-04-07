@@ -46,6 +46,10 @@
             })
                 .then((willDelete) => {
                     if (willDelete) {
+                        if(!navigator.onLine) {
+                            swal("ERREUR", "Désolé, Vous n'êtes pas connecté à l'internet", "error");
+                            return false;
+                        }
                         window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
                     }
                 });
@@ -54,6 +58,10 @@
 
         function printContent(id, nom, prenom, type, section, filename, expiration) {
             //LA PARTIE AFFICHAGE DES INFORMATIONS DE L'ABONNE SUR LA CARTE
+            if(!navigator.onLine) {
+                swal("ERREUR", "Désolé, Vous n'êtes pas connecté à l'internet", "error");
+                return false;
+            }
             window.location.href = "http://localhost:8000/abonnement/valider/" + id;
             let image = document.getElementById('photop');
             let idp = id;

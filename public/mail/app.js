@@ -49,6 +49,10 @@ $(document).ready(function () {
     //ENVOI DE MAIL DANS LE DASHBOARD
     $('.envoiMesMails').on('submit', function (e) {
         e.preventDefault();
+        if(!navigator.onLine) {
+            swal("ERREUR", "Désolé, Vous n'êtes pas connecté à l'internet", "error");
+            return false;
+        }
         var mails = $('#select').val();
         var objet = $('#objet').val();
         var message = $('#message').val();
