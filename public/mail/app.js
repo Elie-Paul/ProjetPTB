@@ -68,9 +68,7 @@ $(document).ready(function () {
                             swal("Erreur", data.message, "error");
                             break;
                         case 'success':
-                            console.log(data.message);
                             swal("SUCCES", data.message, "success");
-                            $('.table').load('http://localhost:8000/destinateur .table');
                             break;
                         default:
                             swal("Erreur", data.message, "error");

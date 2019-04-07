@@ -36,6 +36,17 @@ class MailPersonnel extends AbstractController
                     'message' => "Votre message est envoyé avec succès à ".$email
                 ]);
             }
+            else
+            {
+                foreach ($mails as $email)
+                {
+                    $envoi->mailPersonnel($emetteur, $email, $objet, $message);
+                }
+                return new JsonResponse([
+                    'status' => 'success',
+                    'message' => "Tous les destinataires ont reçu votre message"
+                ]);
+            }
         }
     }
 }
