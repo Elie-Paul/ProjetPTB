@@ -39,13 +39,18 @@ class AbonnementController extends AbstractController
         $abonnement = new Abonnement();
         $form = $this->createForm(AbonnementType::class, $abonnement);
         $form->handleRequest($request);
-        $abonnement->setCreatedAt(new \DateTime());
-        $abonnement->setUpdateAt(new \DateTime());
+        $date = new \DateTime();
+        $date->setTimezone(new \DateTimeZone('GMT'));
+        $abonnement->setCreatedAt($date);
+        $abonnement->setUpdateAt($date);
         $expiration = new \DateTime();
+        $expiration->setTimezone(new \DateTimeZone('GMT'));
         $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
 
 
-        if ($form->isSubmitted() && $form->isValid()) {           
+        if ($form->isSubmitted() && $form->isValid()) {
+            if(empty($abonnement->getFilename()))
+                $abonnement->setFilename('userlogin.jpg');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($abonnement);
             $entityManager->flush();

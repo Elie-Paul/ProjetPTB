@@ -111,8 +111,10 @@ class EvenementController extends AbstractController
     public function new(Request $request): Response
     {
         $evenement = new Evenement();
-        $evenement->setCreatedAt(new \DateTime());
-        $evenement->setUpdatedAt(new \DateTime());
+        $date = new \DateTime();
+        $date->setTimezone(new \DateTimeZone('GMT'));
+        $evenement->setCreatedAt($date);
+        $evenement->setUpdatedAt($date);
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
         $toDay = new \DateTime();

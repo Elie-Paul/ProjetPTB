@@ -30,7 +30,7 @@ class Abonnement
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filename;
 
@@ -64,7 +64,7 @@ class Abonnement
     private $telephone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedtrueBy="abonnements")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="abonnements")
      */
     private $type;
 
