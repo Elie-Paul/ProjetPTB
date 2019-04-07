@@ -43,9 +43,9 @@ class AbonnementController extends AbstractController
         $date->setTimezone(new \DateTimeZone('GMT'));
         $abonnement->setCreatedAt($date);
         $abonnement->setUpdateAt($date);
-        $expiration = new \DateTime();
-        $expiration->setTimezone(new \DateTimeZone('GMT'));
-        $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
+//        $expiration = new \DateTime();
+//        $expiration->setTimezone(new \DateTimeZone('GMT'));
+//        $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
 
 
         if ($form->isSubmitted() && $form->isValid()) {

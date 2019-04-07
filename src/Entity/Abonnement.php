@@ -59,7 +59,7 @@ class Abonnement
     private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=9)
+     * @ORM\Column(type="string", length=12)
      */
     private $telephone;
 
