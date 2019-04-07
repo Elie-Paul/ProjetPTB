@@ -75,6 +75,35 @@ class MailController extends AbstractController
         $this->mailer->send($message);
     }
 
+//    ENVOI DE MAIL PRIVEE DEPUIS LE DASHBOARD
+
+    /**
+     * @param $emetteur
+     * @param $destinateur
+     * @param $objet
+     * @param $message
+     * @param $vue
+     */
+    public function mailPersonnel($emetteur ,$destinateur, $objet, $message)
+    {
+        $message = (new \Swift_Message($objet))
+            ->setFrom('ptbsaptb@gmail.com')
+            ->setTo($destinateur)
+            ->setBody(
+                $this->renderView('mail/personnel.html.twig',[
+                        'emetteur' => $emetteur,
+                        'destinateur' => $destinateur,
+                        'objet' => $objet,
+                        'message' => $message
+                    ]
+                ),
+                'text/html'
+            )
+        ;
+
+        $this->mailer->send($message);
+    }
+
     /**
      * @param $username
      * @param $password
