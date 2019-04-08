@@ -1,5 +1,5 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-{{ form_start(form) }}
+{{ form_start(form, { 'attr': {'class': 'foAbonne'}}) }}
     {{ form_widget(form) }}
     <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
     <a class="btn btn-primary" href="{{ path('type_index')}}">Créer un nouveau type</a>

@@ -4,6 +4,10 @@
 {% block stylesheets %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
 {% endblock %}
+{% block javascripts %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ asset('evenement/app.js') }}"></script>
+{% endblock %}
 {% block body %}
     <div class="box box-default">
           <div class="box-header with-border">
