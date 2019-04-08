@@ -119,7 +119,7 @@ class EvenementController extends AbstractController
 
             if(strcmp( $evenement->getDateEvent()->format('Y/m/d') , $toDay->format('Y/m/d')) < 0)
             {
-                return $this->render('evenement/index.html.twig', [
+                return $this->render('evenement/new.html.twig', [
                     'evenement' => $evenement,
                     'error' => "La date de l'evement n'est pas valide",
                     'form' => $form->createView(),
@@ -127,7 +127,7 @@ class EvenementController extends AbstractController
             }
             if(strcmp( $evenement->getDateEvent()->format('Y/m/d') , $evenement->getFinEvent()->format('Y/m/d'))  > 0)
             {
-                return $this->render('evenement/index.html.twig', [
+                return $this->render('evenement/new.html.twig', [
                     'evenement' => $evenement,
                     'error' => "La date de fin de l'evenement n'est pas valide",
                     'form' => $form->createView(),

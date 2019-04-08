@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
         //$user->setRoles($roles[0]);
         $user->setPassword($this->passwordEncoder->encodePassword(
                          $user,
-                         '123456'
+                         'passer'
                     ));
         $manager->persist($user);
         $manager->flush();

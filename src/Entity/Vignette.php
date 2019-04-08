@@ -45,10 +45,6 @@ class Vignette
      */
     private $updatedAt;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $prix;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CommandeVignette", mappedBy="billet")
