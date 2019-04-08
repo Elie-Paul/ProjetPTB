@@ -21,7 +21,7 @@ class ClasseController extends AbstractController
     public function index(ClasseRepository $classeRepository): Response
     {
         return $this->render('classe/index.html.twig', [
-            'classes' => $classeRepository->findAll(),
+            'classes' => $classeRepository->findBy(array(), array('createdAt' => 'DESC')),
         ]);
     }
 

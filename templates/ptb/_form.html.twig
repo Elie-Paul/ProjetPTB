@@ -48,22 +48,21 @@
       <span class="close" style="color: red;">&times;</span>
     </div>
 
-    <div class="modal-body">
-      <div class="input-group">
-        <span class="input-group-addon"><big>Libelle</big></span>
-        <input id="lib" type="text" class="form-control" name="msg" placeholder="Saisir un libelle">
-      </div>
-      <br>
-      <div class="input-group">
-        <span class="input-group-addon"><big>Prix</big></span>
-        <input id="prix" type="number" class="form-control" name="msg" placeholder="Saisir un prix">
+    <form id="enregistrer">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for=""><big>Libelle</big></label>
+          <input id="lib" type="text" class="form-control" name="msg" placeholder="Saisir un libelle">
+          <label for=""><big>Prix</big></label>
+          <input id="prix" type="number" class="form-control" name="msg" placeholder="Saisir un prix">
+        </div>
+
       </div>
 
-    </div>
-
-    <div class="modal-footer">
-      <button type="submit" onclick="ajouter1()"  class="btn btn-primary">Ajouter</button>
-    </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+      </div>
+    </form>
   </div>
   
 
@@ -107,13 +106,13 @@
         }
 
 
-        function ajouter1()
+        /*function ajouter1()
         {
           var libelle = document.getElementById("lib").value;
           var prix = document.getElementById("prix").value;
           modal.style.display = "none";
           document.location.href = `http://localhost:8000/addSection/${libelle}/${prix}`;
-        }
+        }*/
        /*function ajouter()
         {
           var libelle = document.getElementById("libelle").value;
@@ -230,6 +229,31 @@ function setLieuxArrivee(array)
     combLieuxArrivee.appendChild(option);
   }
 }
+
+//-----------------------Traitement du Modal Section--------------------------//
+
+document.getElementById("enregistrer").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  var data = new FormData(this);
+
+  let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.responseText);
+      console.log(response);
+      
+    }
+  }
+  
+  xhttp.open("GET","",true);
+  xhttp.send(data);  
+
+  return false;
+});
         
         
 </script> 
