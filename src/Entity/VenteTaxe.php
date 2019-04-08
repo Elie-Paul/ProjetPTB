@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StockTaxeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\VenteTaxeRepository")
  */
-class StockTaxe
+class VenteTaxe
 {
     /**
      * @ORM\Id()
@@ -17,7 +17,7 @@ class StockTaxe
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\BilletTaxe", inversedBy="stockTaxes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\BilletTaxe", inversedBy="venteTaxes")
      * @ORM\JoinColumn(nullable=false)
      */
     private $billet;
@@ -25,12 +25,12 @@ class StockTaxe
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbre;
+    private $nbreDeBillet;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private $createAt;
 
     /**
      * @ORM\Column(type="datetime")
@@ -54,26 +54,26 @@ class StockTaxe
         return $this;
     }
 
-    public function getNbre(): ?int
+    public function getNbreDeBillet(): ?int
     {
-        return $this->nbre;
+        return $this->nbreDeBillet;
     }
 
-    public function setNbre(int $nbre): self
+    public function setNbreDeBillet(int $nbreDeBillet): self
     {
-        $this->nbre = $nbre;
+        $this->nbreDeBillet = $nbreDeBillet;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreateAt(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->createAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreateAt(\DateTimeInterface $createAt): self
     {
-        $this->createdAt = $createdAt;
+        $this->createAt = $createAt;
 
         return $this;
     }

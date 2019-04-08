@@ -110,19 +110,90 @@ function createRowElement(commande)
     array.push(DateCommande);
 
     
-
+    let buttonTd = document.createElement('td');
+    buttonTd.style.width="20px";
     let button = document.createElement('button');
     let buttonContent = document.createTextNode('Valider');
     button.appendChild(buttonContent);
-    button.id = ""+commande.id;
+    button.id = "";
     button.type = "button";
     button.disabled = false;
     button.classList.add('btn');
+    /**
+     * <i class="fa fa-circle-o"></i>
+     */
+    let modifierTd = document.createElement('td');
+    let modifier = document.createElement('i');
+    modifier.classList.add('glyphicon');
+    modifier.classList.add('glyphicon-edit');
+    modifier.classList.add('popup');
+    modifier.id = commande.id;
+    modifierTd.style.width="10px"
+    modifier.style.fontSize = "25px";
+    modifier.style.color = '#5cb85c';
+    let popspan = document.createElement('span');
+    popspan.classList.add('popuptext');
+    popspan.appendChild(document.createTextNode('modifier'));
+    modifier.appendChild(popspan);
+    if(commande.etat ===0)
+    {
+        modifier.addEventListener('mouseover',(e)=> 
+        {
+            e.target.style.transform ='scale(1.5, 1.5)';
+            e.target.firstChild.classList.toggle("show");
+            e.target.firstChild.style.fontSize="10px";
+        }
+        
+        );
+        modifier.addEventListener('mouseout',(e)=> 
+        {
+            e.target.style.transform ='scale(1, 1)';
+            e.target.firstChild.classList.toggle("show");
+            
+        }
+        
+        );
+        modifier.addEventListener('click',(e)=> modifierCommande(e.target));
+    }    
+    let removeTd = document.createElement('td');
+    ;
+    let remove = document.createElement('i');
+    remove.classList.add('glyphicon');
+    remove.classList.add('glyphicon-remove');
+    remove.classList.add('popup');
+    remove.style.fontSize = "25px";
+    remove.style.color = '#d9534f';
+    let popspan2 = document.createElement('span');
+    popspan2.classList.add('popuptext');
+    popspan2.appendChild(document.createTextNode('annuler'));
+    remove.appendChild(popspan2);
+    if(commande.etat === 0)
+    {
+
+    
+        remove.addEventListener('mouseover',(e)=> 
+        {
+            e.target.style.transform ='scale(1.5, 1.5)';
+            e.target.firstChild.classList.toggle("show");
+            e.target.firstChild.style.fontSize="10px";
+        }
+        
+        );
+        remove.addEventListener('mouseout',(e)=> 
+        {
+            e.target.style.transform ='scale(1, 1)';
+            e.target.firstChild.classList.toggle("show");
+            
+        }
+        
+        );
+    }
     if(commande.etat===1)
     {
         button.classList.add('btn-success');
         button.classList.remove('btn-danger');
         button.innerText="validé";
+
     }
     else if(commande.etat===0)
     {
@@ -142,11 +213,12 @@ function createRowElement(commande)
         button.innerText="traité";
         button.classList.remove('btn-success');
     }
-    array.push(button);
-
-
-    
-
+    buttonTd.appendChild(button);
+    modifierTd.appendChild(modifier);
+    removeTd.appendChild(remove);
+    array.push(buttonTd);
+    array.push(modifierTd);
+    array.push(removeTd);
     return array;
 }
 function DateCompare(date1,date2)
@@ -285,6 +357,31 @@ function updateTab()
   
   addRow(tab1);
 
+}
+function modifierCommande(element)
+{
+    let id = element.id;
+    swal("Nombre de billet a commander:", 
+    {
+        content: "input",
+    })
+    .then((value) => 
+    {
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function()
+        {
+            if(this.status == 200)
+            {
+                swal({
+                    icon: "success",
+                  });
+            }
+        }
+        xhr.open("GET",`http://localhost:8000/commande/ptb/modifier/${id}/${value}`,true);
+        xhr.send();
+        getAllCommande();
+        updateTab();
+    });
 }
 
 getAllCommande();

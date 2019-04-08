@@ -22,7 +22,7 @@ class LieuxController extends AbstractController
     public function index(LieuxRepository $lieuxRepository): Response
     {
         return $this->render('lieux/index.html.twig', [
-            'lieuxes' => $lieuxRepository->findAll(),
+            'lieuxes' => $lieuxRepository->findBy(array(), array('createdAt' => 'DESC')),
         ]);
     }
 

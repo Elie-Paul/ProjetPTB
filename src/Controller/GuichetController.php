@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Guichet;
 use App\Form\GuichetType;
+use App\Entity\Lieux;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Repository\GuichetRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +23,7 @@ class GuichetController extends AbstractController
     public function index(GuichetRepository $guichetRepository): Response
     {        
         return $this->render('guichet/index.html.twig', [
-            'guichets' => $guichetRepository->findAll(),
+            'guichets' => $guichetRepository->findBy(array(), array('createdAt' => 'DESC')),
         ]);
     }
 
@@ -85,7 +87,15 @@ class GuichetController extends AbstractController
      */
     public function edit(Request $request, Guichet $guichet): Response
     {
-        $form = $this->createForm(GuichetType::class, $guichet);
+        //$form = $this->createForm(GuichetType::class, $guichet);
+        $form = $this->createFormBuilder($guichet)
+                ->add('code')
+                ->add('nom')
+            ->add('lieu', EntityType::class, [
+                'class' => Lieux::class,
+                'choice_label' => 'libelle'
+            ])
+            ->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

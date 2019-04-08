@@ -23,7 +23,7 @@ class NavetteController extends AbstractController
     public function index(NavetteRepository $navetteRepository): Response
     {
         return $this->render('navette/index.html.twig', [
-            'navettes' => $navetteRepository->findAll(),
+            'navettes' => $navetteRepository->findBy(array(), array('createdAt' => 'DESC')),
         ]);
     }
 

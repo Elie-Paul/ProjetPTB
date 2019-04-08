@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BilletPtb;
 use App\Form\BilletPtbType;
 use App\Entity\StockPtb;
+use App\Controller\JsonController\Controller;
 use App\Repository\BilletPtbRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ class BilletPtbController extends AbstractController
      * @param BilletPtbRepository $billetPtbRepository
      * @return Response
      */
-    public function index(BilletPtbRepository $billetPtbRepository, \Swift_Mailer $mailer, Request $request): Response
+    public function index(BilletPtbRepository $billetPtbRepository, \Swift_Mailer $mailer, Request $request,Controller $controller): Response
     {
            /* $message = (new \Swift_Message('Hello Email'))
                 ->setFrom('send@example.com')
@@ -34,10 +35,20 @@ class BilletPtbController extends AbstractController
                 'text/html');
         
             $mailer->send($message);*/
+            
+            $array = array();
+            foreach ($billetPtbRepository->findAll() as $key => $value) 
+            {
+                $arr = array();
+                $id = $value->getId();
+                $total = intVal($controller->totalBillet2($id));
+                $arr = ['billet' => $value,'total' => $total];
+                array_push($array,$arr);
+            }
         
 
         return $this->render('billet_ptb/index.html.twig', [
-            'billet_ptbs' => $billetPtbRepository->findAll(),
+            'billet_ptbs' =>$array,
         ]);
     }
 
