@@ -55,6 +55,29 @@ class Controller extends AbstractController
             }
         }
         return new response(''.$nBillet);
+    }
+    public function totalBillet2($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
+        $commnadesPTB = $entityManager->getRepository(CommandePtb::class)->findBy
+        (
+            [
+                'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
+        $i=0;
+        $nBillet=0;
+        for ($i=0; $i < count($commnadesPTB); $i++) 
+        { 
+            if($commnadesPTB[$i]->getEtatCommande()>=1 || $commnadesPTB[$i]->getEtatCommande()==2)
+            {
+                $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
+                $nBillet=$nBillet+$diff;
+            }
+        }
+       return $nBillet;
     }   
     
     /**

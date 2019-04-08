@@ -111,6 +111,7 @@ function createRowElement(commande)
 
     
     let buttonTd = document.createElement('td');
+    buttonTd.style.width="20px";
     let button = document.createElement('button');
     let buttonContent = document.createTextNode('Valider');
     button.appendChild(buttonContent);
@@ -127,7 +128,7 @@ function createRowElement(commande)
     modifier.classList.add('glyphicon-edit');
     modifier.classList.add('popup');
     modifier.id = commande.id;
-    
+    modifierTd.style.width="10px"
     modifier.style.fontSize = "25px";
     modifier.style.color = '#5cb85c';
     let popspan = document.createElement('span');
@@ -155,6 +156,7 @@ function createRowElement(commande)
         modifier.addEventListener('click',(e)=> modifierCommande(e.target));
     }    
     let removeTd = document.createElement('td');
+    ;
     let remove = document.createElement('i');
     remove.classList.add('glyphicon');
     remove.classList.add('glyphicon-remove');
@@ -217,10 +219,6 @@ function createRowElement(commande)
     array.push(buttonTd);
     array.push(modifierTd);
     array.push(removeTd);
-
-
-    
-
     return array;
 }
 function DateCompare(date1,date2)
