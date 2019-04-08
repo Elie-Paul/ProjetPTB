@@ -362,11 +362,8 @@ class ModalController extends AbstractController
 
     /**
      * @Route("/{id}/ModifierimageUser/{libelle}", name="img_ModiUser", methods={"GET","POST"})
-     * @param Request $request
-     * @param User $user
-     * @return Response
      */
-    public function ModifierimageUser($libelle): Response
+    public function ModifierimageUser($libelle)
     {       
             $user=new User();
             $user->setFilename($libelle);
