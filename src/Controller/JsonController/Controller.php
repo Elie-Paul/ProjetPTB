@@ -456,6 +456,29 @@ class Controller extends AbstractController
             return new Response(json_encode($data));
             //return new Response('dddd');
     }
+
+    /**
+     * @Route("/commande/ptb/modifier/{id}/{cmd}", name="commande_ptb_modifier")
+     */
+    public function modifierCommande($id,$cmd)
+    {
+        $id = intVal($id);
+        $nbreCommande = intVal($cmd);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandePtb = $entityManager
+        ->getRepository(CommandePtb::class)
+        ->find($id);
+        
+        $commandePtb->setNombreBillet($cmd);
+        
+        $entityManager->persist($commandePtb);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
+    }
     
 }
 
