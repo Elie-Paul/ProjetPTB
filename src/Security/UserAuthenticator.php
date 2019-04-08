@@ -46,7 +46,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     {
         $credentials = [
             'username' => $request->request->get('username'),
-            'password' => $request->request->get('password'),
+            'password' => $request->request->get('password'),            
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(

@@ -1,6 +1,6 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
-{{ form_start(form) }}
+{{ form_start(form, {'attr': {'class': 'form_new_event'}} ) }}
     {{ form_widget(form) }}
-    <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
+    <button id="btn_add_event" class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

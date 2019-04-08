@@ -21,10 +21,7 @@
         <h3 class="box-title">Modification de l'utilisateur {{user.username|capitalize}}</h3>   
     </div>
     <div class="box-body">
-    {{ form_start(form) }}
-    <div class="row">
-        <div class="col-xs-12">{{ form_row(form.imageFile) }}</div>        
-    </div>
+    {{ form_start(form) }}    
     <div class="row">
         <div class="col-xs-12">{{ form_row(form.username) }}</div>        
     </div>
@@ -40,6 +37,9 @@
 {% if is_granted('ROLE_ADMINISTRATEUR') %} 
 <div class="row">
     <div class="col-xs-12">{{ form_row(form.roles) }}</div>    
+</div>
+<div class="row">
+        <div class="col-xs-12">{{ form_row(form.active) }}</div>        
 </div>
 {% endif %} 
 <div class="row">

@@ -53,7 +53,7 @@ class ImpressionController extends AbstractController
    /**
     * @Route("/impression/{id}/{numDepartMotif}",name="impression_process")
     */
-    public function show2($id,$numDepartMotif)
+    public function show2($id,$numDepartMotif, MailController $mail)
     {
         
          $arr=explode("+",$numDepartMotif);
@@ -154,6 +154,7 @@ class ImpressionController extends AbstractController
         
         $entityManager->flush();
         $date=new \DateTime();
+        $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif,
          ]);

@@ -192,6 +192,9 @@
       {% if is_granted('ROLE_ADMINISTRATEUR') %}
     {{ include('user/_delete_form.html.twig') }}
     {% endif %}
+    <div id="userid" style="display:none;">
+        {{ user.id }}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -231,10 +234,15 @@
         }
 
         function ajouter(){
+          var modal = document.getElementById('myModal');
           var libelle = document.getElementById("img").value;
+          var n=libelle.lenght;
+          var id = document.getElementById("userid").value;
+
           modal.style.display = "none";
-          document.location.href = `http://localhost:8000/${id}/ModifierimageUser`;
-          swal("Modification Réussie!", "Vous avez changé votre photo", "success");
+          console.log(n);
+          //document.location.href = `http://localhost:8000/${id}/ModifierimageUser/${libelle}`;
+          //swal("Modification Réussie!", "Vous avez changé votre photo", "success");
           
 
         }

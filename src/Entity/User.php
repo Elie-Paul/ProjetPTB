@@ -117,7 +117,6 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -288,7 +287,8 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password,
             $this->nom,
-            $this->prenom
+            $this->prenom,
+            $this->active
             // see section on salt below
             // $this->salt,
         ));
@@ -310,7 +310,8 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password,
             $this->nom,
-            $this->prenom
+            $this->prenom,
+            $this->active
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));

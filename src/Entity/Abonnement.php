@@ -30,7 +30,7 @@ class Abonnement
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filename;
 
@@ -59,7 +59,7 @@ class Abonnement
     private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=9)
+     * @ORM\Column(type="string", length=12)
      */
     private $telephone;
 
