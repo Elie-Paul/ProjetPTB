@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Destinateur;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -23,6 +24,8 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/", name="user_index", methods={"GET"})
+     * @param UserRepository $userRepository
+     * @return Response
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -34,6 +37,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/mail", name="user_mail", methods={"GET"})
+     * @param UserRepository $userRepository
+     * @return Response
      */
     public function mail(UserRepository $userRepository): Response
     {
@@ -45,6 +50,9 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param MailController $mail
+     * @param UserRepository $userRepository
      * @return Response
      * @throws \Exception
      */
@@ -61,10 +69,15 @@ class UserController extends AbstractController
             $user1 = $userRepository->findOneBy([
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
-            ]); 
-            $user2 = $userRepository->findOneBy([
-                'email' => $user->getEmail(),
-            ]); 
+            ]);
+            if (!$user1) {
+                $mail->sendMailUserInfo($user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/dafmail.html.twig');
+                $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/index.html.twig');
+                $user->setCreatedAt(new \DateTime());
+                $user2 = $userRepository->findOneBy([
+                    'email' => $user->getEmail(),
+                ]);
+            }
 
             if (!$user1 && $user2) {
                 $mail->sendMail("Elie-Paul");
@@ -77,14 +90,13 @@ class UserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                /// Message de confirmation
-                //$this->addFlash('success','L\'utilisateur '.$user->getNom().' '.$user->getPrenom().' a été créer');
-
                 return $this->render('user/index.html.twig', [
                     'users' => $userRepository->findAll(),
                     'success' => 'L\'utilisateur  '.$user->getNom().' '.$user->getPrenom().' a été créer',
                 ]);
-            }else {
+            }
+            else
+            {
                 return $this->render('user/new.html.twig', [
                     'user' => $user,
                     'form' => $form->createView(),
@@ -114,7 +126,9 @@ class UserController extends AbstractController
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
+     * @param UserPasswordEncoderInterface $encoder
      * @return Response
+     * @throws \Exception
      */
     public function edit(Request $request, User $user,UserPasswordEncoderInterface $encoder): Response
     {
@@ -171,11 +185,13 @@ class UserController extends AbstractController
     }
 
 
-      /**
+    /**
      * @Route("/{id}/modifier", name="user_modifier", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
+     * @param UserPasswordEncoderInterface $encoder
      * @return Response
+     * @throws \Exception
      */
     public function modifier(Request $request, User $user,UserPasswordEncoderInterface $encoder): Response
     {
@@ -209,6 +225,9 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function delete(Request $request, User $user): Response
     {
