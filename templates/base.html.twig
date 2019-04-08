@@ -6,6 +6,7 @@
   <title>PTB</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="icon" type="image/png" href="{{ asset('img/favicon.ico') }}"/>
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
@@ -168,6 +169,7 @@
         </li>
         <!--== false-->
          {% if is_granted('ROLE_BILLETTEUR') or is_granted('ROLE_ADMINISTRATEUR') %}
+         {% if is_granted('ROLE_ADMINISTRATEUR') %}
         <li class="treeview">
           <a href="#">
             <i class="glyphicon glyphicon-text-background"></i>
@@ -181,8 +183,7 @@
             <li><a href="{{ path('type_index') }}"><i class="fa fa-circle-o"></i>Type</a></li>            
             <li><a href="{{ path('abonnement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>            
           </ul>       
-        </li>
-        {% if is_granted('ROLE_ADMINISTRATEUR') %}
+        </li>        
         <li class="treeview">
               <a href="#"><i class="fa fa-train"></i><span>Billet PTB</span>
                 <span class="pull-right-container">
@@ -336,10 +337,12 @@
                 {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}  
                 <li><a href="{{ path('billet_event_index') }}"><i class="fa fa-circle-o"></i>Commande Billet</a></li>
                 {% endif %}
-                {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR')%}                               
+                {% if is_granted('ROLE_ADMINISTRATEUR')%}                               
                   <li><a href="{{ path('evenement_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
-                  <li><a href="#"><i class="fa fa-circle-o"></i>Vente</a></li>
-                   <li><a href="{{ path('evenement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li> 
+                   <li><a href="{{ path('evenement_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+                  {% endif %}
+                  {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_ADMINISTRATEUR') %} 
+                  <li><a href="#"><i class="fa fa-circle-o"></i>Vente</a></li>                   
                    {% endif %}                                                  
                 </ul>
          </li>
@@ -474,15 +477,7 @@
   </aside>
 
  <div class="content-wrapper">
- <section class="content-header">
-      <h1>
-        Tableau De Bord
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Accueil</a></li>
-        <li class="active">Tableau De Bord</li>
-      </ol>
-    </section>
+
     <section class="content">
     {% for message in app.flashes('info') %}
       <!--div class="alert alert-info" id="myModa">

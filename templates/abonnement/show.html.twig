@@ -25,19 +25,15 @@
     <table class="table table-bordered">
         <tbody>
             <tr>
-                <th>#</th>
-                <td>{{ abonnement.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom du photo</th>
-                <td>{{ abonnement.filename }}</td>
+                <th>Photo</th>
+                <td><img class="img-circle" src="{{asset('clients/images/')}}{{abonnement.filename}}" alt="User profile picture" width="60px" height="60px"></td>
             </tr>
             <tr>
                 <th>Nom</th>
                 <td>{{ abonnement.nom }}</td>
             </tr>
             <tr>
-                <th>Prenom</th>
+                <th>Prénom</th>
                 <td>{{ abonnement.prenom }}</td>
             </tr>
             <tr>
@@ -45,11 +41,11 @@
                 <td>{{ abonnement.adresse }}</td>
             </tr>
             <tr>
-                <th>Telephone</th>
+                <th>Téléphone</th>
                 <td>+221: {{ abonnement.telephone }}</td>
             </tr>
             <tr>
-                <th>Date de creation</th>
+                <th>Date de création</th>
                 <td>{{ abonnement.createdAt ? abonnement.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>

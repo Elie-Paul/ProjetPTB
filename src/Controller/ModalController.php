@@ -366,8 +366,10 @@ class ModalController extends AbstractController
      * @param User $user
      * @return Response
      */
-    public function ModifierimageUser(Request $request, User $user): Response
-    {        
+    public function ModifierimageUser(): Response
+    {       
+        $request=new Request();
+        $user=new User();
         $form = $this->createFormBuilder($user)
         ->add('imageFile', FileType::class, [                
             'label' => "Image",
