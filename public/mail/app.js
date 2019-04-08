@@ -1,10 +1,13 @@
 $(document).ready(function () {
     $('#selUser, #selCommande, #selImpression').select2({theme: "bootstrap"});
+<<<<<<< HEAD
     $('#select').select2({
         theme: "classic",
         placeholder: "Emails",
         allowClear: true
     });
+=======
+>>>>>>> 85dafd267f889e88174917daab098aac533eb0b2
 
 
     $('.form').on('submit', function (e) {
@@ -45,6 +48,7 @@ $(document).ready(function () {
 
     });
 
+<<<<<<< HEAD
 
     //ENVOI DE MAIL DANS LE DASHBOARD
     $('.envoiMesMails').on('submit', function (e) {
@@ -91,4 +95,6 @@ $(document).ready(function () {
 
     });
 
+=======
+>>>>>>> 85dafd267f889e88174917daab098aac533eb0b2
 });

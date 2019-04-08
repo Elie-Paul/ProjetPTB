@@ -127,6 +127,24 @@ class DestinateurController extends AbstractController
                     'status' => 'error',
                     'message' => 'Tous less champs sont vides'
                 ]);
+//            $impressions = $_POST['impression'];
+//            $commandes = $_POST['commande'];
+//            $users = $_POST['user'];
+//            $dataUser = [];
+//            $dataCommande = [];
+//            $dataImpression = [];
+//            foreach ($users as $user)
+//            {
+//                $dataUser[] = $user;
+//            }
+//            foreach ($commandes as $commande)
+//            {
+//                $dataCommande[] = $commande;
+//            }
+//            foreach ($impressions as $impression)
+//            {
+//                $dataImpression[] = $impression;
+//            }
             if(isset($_POST['user']))
             {
                 $users = $_POST['user'];

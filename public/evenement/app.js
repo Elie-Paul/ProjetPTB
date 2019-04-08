@@ -44,11 +44,11 @@ $(document).ready(function () {
                         swal("SUCCES", data.message, "success");
                         break;
                     default:
-                        swal("Errer", data.message, "error");
+                        swal("Erreur", data.message, "error");
                 }
             },
             error: function (error) {
-                alert('Erreur '+error);
+                swal("SUCCES", "Il existe déjà un abonné pour ce numéro", "error");
             }
         });
         return false;
@@ -98,7 +98,7 @@ $(document).ready(function () {
                         swal("SUCCES", data.message, "success");
                         break;
                     default:
-                        swal("Errer", data.message, "error");
+                        swal("Erreur", data.message, "error");
                 }
             },
             error: function (error) {

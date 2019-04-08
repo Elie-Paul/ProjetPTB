@@ -1,7 +1,8 @@
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 {{ form_start(form, { 'attr': {'class': 'foAbonne'}}) }}
     {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
-    <a class="btn btn-primary" href="{{ path('type_index')}}">Créer un nouveau type</a>
+    <button class="btn btn-primary"><big>{{ button_label|default('Enregistrer') }}</big></button>
+    <a class="btn btn-primary" href="{{ path('type_new')}}"><big>Créer un nouveau type</big></a>
 {{ form_end(form) }}
 <!--href="{{ path('type_index') }}"-->
