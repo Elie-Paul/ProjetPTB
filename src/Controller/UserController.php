@@ -126,7 +126,6 @@ class UserController extends AbstractController
     public function edit(Request $request, User $user,UserPasswordEncoderInterface $encoder): Response
     {
         $form = $this->createFormBuilder($user)
-        ->add('active')
         ->add('nom')            
         ->add('prenom')
         ->add('email')
