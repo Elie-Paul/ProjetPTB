@@ -43,9 +43,21 @@ class BilletTaxe
      */
     private $commandeTaxes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\StockTaxe", mappedBy="billet")
+     */
+    private $stockTaxes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\VenteTaxe", mappedBy="billet")
+     */
+    private $venteTaxes;
+
     public function __construct()
     {
         $this->commandeTaxes = new ArrayCollection();
+        $this->stockTaxes = new ArrayCollection();
+        $this->venteTaxes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,6 +138,68 @@ class BilletTaxe
             // set the owning side to null (unless already changed)
             if ($commandeTax->getBillet() === $this) {
                 $commandeTax->setBillet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StockTaxe[]
+     */
+    public function getStockTaxes(): Collection
+    {
+        return $this->stockTaxes;
+    }
+
+    public function addStockTax(StockTaxe $stockTax): self
+    {
+        if (!$this->stockTaxes->contains($stockTax)) {
+            $this->stockTaxes[] = $stockTax;
+            $stockTax->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStockTax(StockTaxe $stockTax): self
+    {
+        if ($this->stockTaxes->contains($stockTax)) {
+            $this->stockTaxes->removeElement($stockTax);
+            // set the owning side to null (unless already changed)
+            if ($stockTax->getBillet() === $this) {
+                $stockTax->setBillet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VenteTaxe[]
+     */
+    public function getVenteTaxes(): Collection
+    {
+        return $this->venteTaxes;
+    }
+
+    public function addVenteTax(VenteTaxe $venteTax): self
+    {
+        if (!$this->venteTaxes->contains($venteTax)) {
+            $this->venteTaxes[] = $venteTax;
+            $venteTax->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVenteTax(VenteTaxe $venteTax): self
+    {
+        if ($this->venteTaxes->contains($venteTax)) {
+            $this->venteTaxes->removeElement($venteTax);
+            // set the owning side to null (unless already changed)
+            if ($venteTax->getBillet() === $this) {
+                $venteTax->setBillet(null);
             }
         }
 

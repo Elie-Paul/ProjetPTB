@@ -233,7 +233,7 @@ class CommandeVignetteController extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesVignette); $i++) 
         { 
-            if($commnadesVignette[$i]->getEtatCommande()==1 || $commnadesVignette[$i]->getEtatCommande()==2)
+            if($commnadesVignette[$i]->getEtatCommande()>=1 || $commnadesVignette[$i]->getEtatCommande()==2)
             {
                 $diff=$commnadesVignette[$i]->getNombreBillet()-$commnadesVignette[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;

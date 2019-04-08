@@ -30,9 +30,7 @@ function createRowElement(commande)
     guichet.appendChild(guichetContent);
     array.push(guichet);
 
-    /*<div class=length"form-group">
-    <input type="number"  class="form-control nbreBillet"  placeholder="nombre de billet">
-    </div> </div>*/
+    
     let nombreCommande = document.createElement('td');
     let div= document.createElement('div');
     div.classList.add('form-group');
@@ -46,10 +44,47 @@ function createRowElement(commande)
     nombreCommande.appendChild(div);
     array.push(nombreCommande);
 
+      
+    let button = document.createElement('button');
+    let buttonContent = document.createTextNode('Valider');
+    button.appendChild(buttonContent);
+    button.id = "b"+commande.id;
+    button.type = "button";
+    button.disabled = false;
+    button.style.display = 'none';
+    button.classList.add('btn');
+
+    array.push(button);
     return array;
 }
 
-
+function controlPasserCommande()
+ {
+    swal({
+        title: "Etes vous sûr ?",
+        text: "souhaitez-vous passer ces commandes",
+        icon: "warning",
+        buttons: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                passerCommande();
+            }
+        });
+ }
+ function afterCommande()
+ {
+    swal({
+        title: "commande envoyé",
+        text: "Toute vos commande on été envoyé",
+        icon: "success",
+        
+    })
+        .then((value) => {
+            document.location.href="http://localhost:8000/commande/taxe";
+            
+        });
+ }
  function passerCommande() 
  {
     
@@ -57,18 +92,31 @@ function createRowElement(commande)
     for (let i = 0; i < inputs.length; i++) 
     {
         let xhttp=new XMLHttpRequest();
+        let button=document.getElementById('b'+inputs[i].id)
         xhttp.onload = function ()
         {
-            if(this.readyState==200)
+            if(this.status==200)
             {
                 console.log(this.responseText);
+                button.classList.add('btn-success');
+                button.classList.remove('btn-danger');
+                button.innerText="validé";
+                button.style.display='block';
             }
         }
         let link ="http://localhost:8000/newCommandeTaxe/";
         let params =`${inputs[i].value}`;
-       
+
+        if (parseInt(params,10)>0 ) 
+        {
             xhttp.open("POST",link,true);
             xhttp.send(params);  
+        }
+        else
+        {
+            alert ('error');
+        }
+        afterCommande();    
         
         
        /* if(i==inputs.length)

@@ -10,14 +10,11 @@ function addRow(array)
     for (let index = 0; index < array.length; index++) 
     {
         
-        if(array[index].etat>=2)
-        {
-            let tr = document.createElement('tr');
-            tr.id=array[index].id;
-            let arr=createRowElement(array[index]);
-            arr.forEach((value) => tr.appendChild(value));
-            tbody.appendChild(tr);
-        }
+        let tr = document.createElement('tr');
+        tr.id=array[index].id;
+        let arr=createRowElement(array[index]);
+        arr.forEach((value) => tr.appendChild(value));
+        tbody.appendChild(tr);
         
        
     }
@@ -55,43 +52,10 @@ function createRowElement(commande)
     array.push(prix);
 
 
-    let NbreCom = document.createElement('td');
-   // NbreCom.style.width="100px";
-    let NbreComContent = document.createTextNode(commande.nombreDeBilletCommander);
-    NbreCom.appendChild(NbreComContent);
-    array.push(NbreCom);
 
-    let NbreReal = document.createElement('td');
-   ////NbreReal.style.width="100px";
-    let NbreRealContent = document.createTextNode(commande.nombreBilletRealiser);
-    NbreReal.appendChild(NbreRealContent);
-    
-    array.push(NbreReal);
-
-    let realisation = document.createElement('td');
-    
-    let pdiv =document.getElementById('pdiv').cloneNode(true);
-    pdiv.style.display='block';
-    
-    let pdiv2 =document.getElementById('pdiv2').cloneNode(true);
-    pdiv2.style.display = 'block';
-    let progress =(commande.nombreBilletRealiser
-    /commande.nombreDeBilletCommander)*100;
-    pdiv2.style.width = `${progress}%`
-    let realisationContent = document.createTextNode(`${progress}%`);
-    pdiv2.appendChild(realisationContent);
-    pdiv.appendChild(pdiv2)
-    realisation.appendChild(pdiv);
-    array.push(realisation);
-    
-    let NbreVendu = document.createElement('td');
-    //NbreVendu.style.width="100px";
-    let NbreVenduContent = document.createTextNode(commande.nombreBilletVendu);
-    NbreVendu.appendChild(NbreVenduContent);
-    array.push(NbreVendu);
     
     let stock = document.createElement('td');
-    let stockContent = document.createTextNode(`${commande.nombreBilletRealiser-commande.nombreBilletVendu}`);
+    let stockContent = document.createTextNode(commande.stock);
     stock.id = 'n'+commande.id;
     stock.appendChild(stockContent);
     array.push(stock);
@@ -117,33 +81,7 @@ function createRowElement(commande)
     return array;
 }
 
-function ajoutVente(element)
-{
-    
-    let idb=element.id.substr(1);
-    let input=document.getElementById("i"+idb)
-    let xhttp=new XMLHttpRequest();
-    let vente = input.value;            
-            xhttp.onload = function ()
-            {
-                if(this.readyState==200)
-                {
-                    console.log(this.responseText);
-                    getAllCommande()
-               }
-            }
-            let link =`http://localhost:8000/addVentePTB/${idb}/${vente}`;
-            xhttp.open("GET",link,true);
-            xhttp.send();
-                
-            console.log(link);
-            
-        
-        
-         
-        
-    
-}
+
 function getAllCommande()
 {
     let xhr=new XMLHttpRequest();
@@ -155,7 +93,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommandeTaxe",true);
+    xhr.open("GET","http://localhost:8000/Json/taxe/billet",true);
     xhr.send();
 
 }
@@ -187,18 +125,28 @@ function vente()
         {
             if (vente<=stock) 
             {
-                span.classList.remove('label-danger');
-                span.innerText="";
-                span.classList.add('label-success');
-                let text1 = document.createTextNode("saisi reussi");
-                span.appendChild(text1);
-                element.disabled = true;
+               
                 let xhttp=new XMLHttpRequest();
                 xhttp.onload = function ()
                 {
-                    if(this.readyState==200)
+                    if(this.status==200)
                     {
                         console.log(this.responseText);
+                        span.classList.remove('label-danger');
+                        span.innerText="";
+                        span.classList.add('label-success');
+                        let text1 = document.createTextNode("saisi reussi");
+                        span.appendChild(text1);
+                        element.disabled = true;
+                    }
+                    else
+                    {
+                        console.log(this.responseText);
+                        span.classList.remove('label-success');
+                        span.innerText="";
+                        span.classList.add('label-danger')
+                        let text = document.createTextNode("echec")
+                        span.appendChild(text);
                     }
                 }
                 let link =`http://localhost:8000/addVenteTaxe/${idc}/${vente}`;

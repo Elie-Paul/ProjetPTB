@@ -48,7 +48,7 @@ class Controller extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesPTB); $i++) 
         { 
-            if($commnadesPTB[$i]->getEtatCommande()==1 || $commnadesPTB[$i]->getEtatCommande()==2)
+            if($commnadesPTB[$i]->getEtatCommande()>=1 || $commnadesPTB[$i]->getEtatCommande()==2)
             {
                 $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
