@@ -22,17 +22,13 @@
     <!-- /.box-header -->
     <div class="box-body">
         <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <th>#</th>
-                    <td>{{ classe.id }}</td>
-                </tr>
+            <tbody>                
                 <tr>
                     <th>Libelle</th>
                     <td>{{ classe.libelle }}</td>
                 </tr>
                 <tr>
-                    <th>Date de creation</th>
+                    <th>Date de création</th>
                     <td>{{ classe.createdAt ? classe.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                 </tr>
                 <tr>

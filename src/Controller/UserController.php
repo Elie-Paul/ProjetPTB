@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +33,50 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
+    }
+
+    /**
+     * @Route("/bloquer", name="user_bloquer", methods={"GET","POST"})
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    public function bloquer(Request $request, UserRepository $userRepository): Response
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $id = $_POST['id'];
+            $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+            if($user)
+            {
+                if($user->getActive())
+                {
+                    $user->setActive(false);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($user);
+                    $em->flush();
+                    return new JsonResponse([
+                        'status' => 'success',
+                        'message' => "L'utilisateur est bloqué"
+                    ]);
+                }
+                else
+                {
+                    $user->setActive(true);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($user);
+                    $em->flush();
+                    return new JsonResponse([
+                        'status' => 'success',
+                        'message' => "L'utilisateur est activé"
+                    ]);
+                }
+            }
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => "L'utilisateur n'existe pas"
+            ]);
+        }
     }
 
 
@@ -70,17 +115,10 @@ class UserController extends AbstractController
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
             ]);
-            if (!$user1) {
-                $mail->sendMailUserInfo($user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/dafmail.html.twig');
+            if (!$user1)
+            {
+                $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/dafmail.html.twig');
                 $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/index.html.twig');
-                $user->setCreatedAt(new \DateTime());
-                $user2 = $userRepository->findOneBy([
-                    'email' => $user->getEmail(),
-                ]);
-            }
-
-            if (!$user1 && $user2) {
-                $mail->sendMail("Elie-Paul");
                 $user->setCreatedAt(new \DateTime());
                 $user->setUpdateAt(new \DateTime());
                 $user->setFilename("null");

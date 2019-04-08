@@ -23,11 +23,7 @@
     <!-- /.box-header -->
     <div class="box-body">
         <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <th>#</th>
-                    <td>{{ guichet.id }}</td>
-                </tr>
+            <tbody>                
                 <tr>
                     <th>Code</th>
                     <td>{{ guichet.code }}</td>
@@ -41,7 +37,7 @@
                     <td>{{ guichet.lieu.libelle }}</td>
                 </tr>
                 <tr>
-                    <th>Date de creation</th>
+                    <th>Date de création</th>
                     <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 </tr>
                 <tr>

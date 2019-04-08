@@ -38,7 +38,9 @@ class UserType extends AbstractType
                 'label'=> "Rôles",
                 'expanded' => false,
                 'multiple' => true
-            ])            
+            ])  
+            
+            ->add('active')
             ->add('password',PasswordType::class,[
                 'label'=> "Mot de Passe",
                 'required' => true

@@ -33,6 +33,11 @@ class User implements UserInterface, \Serializable
     private $nom;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
+    /**
      * @ORM\Column(type="string", length=25)
      */
     private $prenom;
@@ -116,7 +121,6 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-
 
     public function getEmail(): ?string
     {
@@ -344,6 +348,24 @@ class User implements UserInterface, \Serializable
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     * @return User
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
         return $this;
     }
 

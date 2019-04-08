@@ -361,34 +361,20 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/ModifierimageUser", name="img_ModiUser", methods={"GET","POST"})
+     * @Route("/{id}/ModifierimageUser/{libelle}", name="img_ModiUser", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
      * @return Response
      */
-    public function ModifierimageUser(Request $request, User $user): Response
-    {        
-        $form = $this->createFormBuilder($user)
-        ->add('imageFile', FileType::class, [                
-            'label' => "Image",
-            'attr' => [                    
-                'class' => 'form-control',
-                'required' => true                  
-                ]             
-        ])
-        ->getForm();
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+    public function ModifierimageUser($libelle): Response
+    {       
+            $user=new User();
+            $user->setFilename($libelle);
             $user->setUpdateAt(new \DateTime());           
             $this->getDoctrine()->getManager()->flush();            
             return $this->redirectToRoute('user_show', [
                 'id' => $user->getId(),
             ]);
-        }
-        return $this->render('user/modificationimage.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
     }
 
 
