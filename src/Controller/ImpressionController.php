@@ -390,6 +390,14 @@ class ImpressionController extends AbstractController
             'billet' => $billet,
          ],);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         if($depart ==$billet->getNumeroDernierBillet()+1)
+         {
+            $testMotif="true";
+         }
+         else
+         {
+            $testMotif="false";
+         }
          $commnadesVignettes = $entityManager->getRepository(CommandeVignette::class)->findBy
          (
             [

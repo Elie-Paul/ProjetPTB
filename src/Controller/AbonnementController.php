@@ -6,6 +6,7 @@ use App\Entity\Abonnement;
 use App\Form\AbonnementType;
 use App\Repository\AbonnementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,6 +30,18 @@ class AbonnementController extends AbstractController
     }
 
     /**
+     * @Route("/statistique", name="abonnement_statistique", methods={"GET"})
+     * @param AbonnementRepository $abonnementRepository
+     * @return Response
+     */
+    public function statistique(AbonnementRepository $abonnementRepository): Response
+    {
+        return $this->render('abonnement/statistique.html.twig', [
+            'abonnements' => $abonnementRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/new", name="abonnement_new", methods={"GET","POST"})
      * @param Request $request
      * @return Response
@@ -43,14 +56,43 @@ class AbonnementController extends AbstractController
         $date->setTimezone(new \DateTimeZone('GMT'));
         $abonnement->setCreatedAt($date);
         $abonnement->setUpdateAt($date);
+        $toDay = new \DateTime();
 //        $expiration = new \DateTime();
 //        $expiration->setTimezone(new \DateTimeZone('GMT'));
 //        $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            if(empty($abonnement->getFilename()))
-                $abonnement->setFilename('userlogin.jpg');
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            if($request->isXmlHttpRequest())
+            {
+                if(strcmp($abonnement->getExpiration()->format('Y/m/d'), $toDay->format('Y/m/d')) <= 0)
+                {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => "La date d'expiration n'est pas valide"
+                    ]);
+                }
+                $abonne = $this->getDoctrine()->getRepository(Abonnement::class)->findOneBy([
+                    'telephone' => $abonnement->getTelephone()
+                ]);
+                if($abonne)
+                {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => "Il existe déjà un abonné avec ce numéro",
+                        'tel' => $abonnement->getTelephone()
+                    ]);
+                }
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($abonnement);
+                $entityManager->flush();
+                return new JsonResponse([
+                    'status' => 'success',
+                    'message' => "L'abonné est ajouté avec succès",
+                    'tel' => $abonnement->getTelephone()
+                ]);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($abonnement);
             $entityManager->flush();

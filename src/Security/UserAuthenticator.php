@@ -70,6 +70,10 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
         }
+        if (!$user->getActive()) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException("Votre compte est bloqué, veuillez contacter l'administrateur.");
+        }
 
         return $user;
     }
