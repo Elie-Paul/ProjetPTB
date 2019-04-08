@@ -48,13 +48,36 @@ class Controller extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesPTB); $i++) 
         { 
-            if($commnadesPTB[$i]->getEtatCommande()==1 || $commnadesPTB[$i]->getEtatCommande()==2)
+            if($commnadesPTB[$i]->getEtatCommande()>=1 || $commnadesPTB[$i]->getEtatCommande()==2)
             {
                 $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
             }
         }
         return new response(''.$nBillet);
+    }
+    public function totalBillet2($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
+        $commnadesPTB = $entityManager->getRepository(CommandePtb::class)->findBy
+        (
+            [
+                'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
+        $i=0;
+        $nBillet=0;
+        for ($i=0; $i < count($commnadesPTB); $i++) 
+        { 
+            if($commnadesPTB[$i]->getEtatCommande()>=1 || $commnadesPTB[$i]->getEtatCommande()==2)
+            {
+                $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
+                $nBillet=$nBillet+$diff;
+            }
+        }
+       return $nBillet;
     }   
     
     /**
@@ -455,6 +478,29 @@ class Controller extends AbstractController
         }
             return new Response(json_encode($data));
             //return new Response('dddd');
+    }
+
+    /**
+     * @Route("/commande/ptb/modifier/{id}/{cmd}", name="commande_ptb_modifier")
+     */
+    public function modifierCommande($id,$cmd)
+    {
+        $id = intVal($id);
+        $nbreCommande = intVal($cmd);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandePtb = $entityManager
+        ->getRepository(CommandePtb::class)
+        ->find($id);
+        
+        $commandePtb->setNombreBillet($cmd);
+        
+        $entityManager->persist($commandePtb);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
     }
     
 }

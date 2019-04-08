@@ -236,13 +236,13 @@
 																			<tr>
 																				<td align="center" class="textContent">																																										
 																					<div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
-																						<p>Bonjour Mr/Mme {{app.user.nom|capitalize}} {{app.user.prenom|capitalize}} Nous vous informons que l'utilisateur :</p>
-																						<p>Mr/Mme {{app.user.nom|capitalize}} {{app.user.prenom|capitalize}} pour fonction {{app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}, <a>{{app.user.email}}</a> vient</br>
-                                                                                         d'imprimer:</br>
-                                                                                         <p>50 billet ptb de section 1<p>                                                                                          
-                                                                                         <p>50 billet ptb de section 2</p> 
-                                                                                         <p>50 billet Autorail de classe 1</p> 
-                                                                                         50 billet Autorail de classe 2                                                                                     
+																						<p>Bonjour, nous vous informons que l'utilisateur :</p>
+																						<p>{{app.user.nom|capitalize}} {{app.user.prenom|capitalize}} pour fonction {{app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}, <a>{{app.user.email}}</a> vient</br>
+                                                                                         d'imprimer un billet commançant :</br>
+                                                                                         <p>de <p>
+                                                                                         <p>{{ depart }}</p>
+                                                                                         <p>à</p>
+                                                                                         {{ arrivee }}
                                                                                         </p>
 																					</div>																																																																																				
 																					</br></br>

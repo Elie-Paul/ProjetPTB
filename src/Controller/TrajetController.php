@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Trajet;
 use App\Form\TrajetType;
+use App\Entity\Lieux;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Repository\TrajetRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +23,7 @@ class TrajetController extends AbstractController
     public function index(TrajetRepository $trajetRepository): Response
     {
         return $this->render('trajet/index.html.twig', [
-            'trajets' => $trajetRepository->findAll(),
+            'trajets' => $trajetRepository->findBy(array(), array('createdAt' => 'DESC'))
         ]);
     }
 
@@ -87,7 +89,20 @@ class TrajetController extends AbstractController
      */
     public function edit(Request $request, Trajet $trajet): Response
     {
-        $form = $this->createForm(TrajetType::class, $trajet);
+        //$form = $this->createForm(TrajetType::class, $trajet);
+        //$form->handleRequest($request);
+
+        $form = $this->createFormBuilder($trajet)
+                ->add('depart', EntityType::class, [
+                    'class' => Lieux::class,
+                    'choice_label' => 'libelle'
+                ])
+                ->add('arrivee', EntityType::class, [
+                    'class' => Lieux::class,
+                    'choice_label' => 'libelle'
+                ])
+                ->getForm();
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

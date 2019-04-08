@@ -236,15 +236,15 @@
 																			<tr>
 																				<td align="center" class="textContent">																																										
 																					<div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
-																						<p>Bonjour Mr/Mme {{app.user.nom|capitalize}} {{app.user.prenom|capitalize}} votre Compte Billetterie PTB a été créé.</p>
-																						<p>Votre Nom : {{app.user.nom|capitalize}}</p>
-																						<p>Votre Prenom : {{app.user.prenom|capitalize}}</p>
-																						<p>Nom d'utilisation : {{app.user.username}}</p>
-																						<p>Votre Mot de passe : {{app.user.password}}</p>
-																						<p>Votre mail : {{app.user.email}}</p>
-																						<p>Votre Fonction : {{app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}</p>
+																						<p>Bonjour {{nom|capitalize}} {{prenom|capitalize}} votre Compte Billetterie PTB a été créé.</p>
+																						<p>Votre Nom : {{nom|capitalize}}</p>
+																						<p>Votre Prenom : {{prenom|capitalize}}</p>
+																						<p>Nom d'utilisation : {{username}}</p>
+																						<p>Votre Mot de passe : {{password}}</p>
+																						<p>Votre mail : {{mail}}</p>
+																						<p>Votre Fonction : {{role ? role[0]|slice(5)|capitalize|replace({"_": ' '}) }}</p>
 																						<p>Si vous souhaitez vous connecter,
-																						<a href="#">Cliquez ici</a>
+																						<a href="{{ path('app_login') }}">Cliquez ici</a>
 																						</p>
 																					</div>																																																																																				
 																					</br></br>

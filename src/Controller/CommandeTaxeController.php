@@ -7,6 +7,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\BilletTaxe;
+use App\Entity\StockTaxe;
+use App\Entity\VenteTaxe;
 use App\Entity\CommandeTaxe;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -98,7 +100,7 @@ class CommandeTaxeController extends AbstractController
     public function getAllCommandeTaxe()
     {
         $repository = $this->getDoctrine()->getRepository(CommandeTaxe::class);
-        $commandeTaxes = $repository->findAll();
+        $commandeTaxes = $repository->findBy(array(), array('dateCommande' => 'DESC'));
         $data = array();
         foreach ($commandeTaxes as $key => $variable) 
         {
@@ -157,17 +159,32 @@ class CommandeTaxeController extends AbstractController
      */
     public function VenteCommande($id,$nvente)
     {
-        $idCommande = intVal($id);
+        
+        $idBillet = intVal($id);
         $vente = intVal($nvente);
         $entityManager = $this
         ->getDoctrine()
         ->getManager();
-        $commande = $entityManager
-        ->getRepository(CommandeTaxe::class)
-        ->find($idCommande);
-        $commande->setNombreBilletVendu($commande->getNombreBilletVendu()+$vente);
+        
+        $billet = $entityManager
+        ->getRepository(BilletTaxe::class)
+        ->find($idBillet);
+        
+        $venteTaxe = new venteTaxe();
+        $venteTaxe->setBillet($billet);
+        $venteTaxe->setCreateAt(new \DateTime());
+        $venteTaxe->setUpdatedAt(new \DateTime());
+        $venteTaxe->setNbreDeBillet($vente);
+        $stockTaxe=$entityManager->getRepository(StockTaxe::class)->findOneBy([
+            'billet' => $billet,
+         ],);
+        
+        $stockTaxe->setNbre($stockTaxe->getNbre()- $vente);
+        
+        $entityManager->persist($venteTaxe);
         $entityManager->flush();
-        return new Response('<h1>'.$commande->getId().'</h1>');
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
     }
     /**
      * @Route("/totalbilletTaxe/{id}", name="totalBilletTaxe")
@@ -187,7 +204,7 @@ class CommandeTaxeController extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commandesTaxe); $i++) 
         { 
-            if($commandesTaxe[$i]->getEtatCommande()==1)
+            if($commandesTaxe[$i]->getEtatCommande()>=1)
             {
                 $diff=$commandesTaxe[$i]->getNombreBillet()-$commandesTaxe[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
@@ -195,4 +212,31 @@ class CommandeTaxeController extends AbstractController
         }
         return new response(''.$nBillet);
     }
+         /**
+     * @Route("/Json/taxe/billet", name="getAllbilletTaxe")
+     */
+    public function getAllbilletTaxe()
+    {
+        $billets = $this->getDoctrine()->getRepository(BilletTaxe::class)->findAll();
+        $data = array();
+        foreach ($billets as $key => $billet) 
+        {
+            $stock = $this->getDoctrine()
+            ->getRepository(StockTaxe::class)->findOneby(
+                [
+                    'billet' =>$billet,
+                ]
+            );
+            $myarray = array
+            (
+               'id' => $billet->getId(),
+                'guichet' =>'controlleur',
+                'stock' => $stock->getNbre(),
+                'prix' => $billet->getPrix()
+            );
+            array_push($data,$myarray);
+        }
+            return new Response(json_encode($data));
+            //return new Response('dddd');
+    }   
 }

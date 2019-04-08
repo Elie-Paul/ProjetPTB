@@ -72,7 +72,7 @@ class ControllerCommandeNavetteController extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesNavette); $i++) 
         { 
-            if($commnadesNavette[$i]->getEtatCommande()==1)
+            if($commnadesNavette[$i]->getEtatCommande()>=1)
             {
                 $diff=$commnadesNavette[$i]->getNombreBillet()-$commnadesNavette[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;

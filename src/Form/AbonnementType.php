@@ -6,6 +6,7 @@ use App\Entity\Abonnement;
 use App\Entity\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,11 +19,11 @@ class AbonnementType extends AbstractType
     {
         $builder
             ->add('imageFile', FileType::class, [
-                'required' => true,                
+                'required' => false,
                 'label' => "Image",
                 'attr' => [                    
                     'class' => 'form-control',
-                    'required' => true                  
+                    'required' => false
                     ] 
             ])
             ->add('nom')
@@ -32,6 +33,10 @@ class AbonnementType extends AbstractType
                 'attr' => [
                     'placeholder' => "+221"
                 ]
+            ])
+            ->add('expiration', DateType::class, [
+                'widget' => 'single_text',
+                'label' => "Date d'expiration"
             ])
             ->add('type', EntityType::class, [
                 'class' => Type::class,

@@ -26,11 +26,9 @@ function addRow(array)
         }
         
     }
-<<<<<<< HEAD
     if(!a)
         addGuichet();
     a=true;
-=======
 
     $("table").tableExport().remove();
           
@@ -47,7 +45,6 @@ function addRow(array)
         emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
         trimWhitespace: false              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
     });
->>>>>>> 8bb6e3d2c6ebd79284f378fdfe6faf1e17cee465
 }
 
 function createRowElement(commande)

@@ -34,6 +34,10 @@
             let file = filename;
             let image = document.getElementById('photop');
             image.src = ("{{ asset('clients/images/') }}" + file);
+            if(file === "") {
+                image.src = ("{{ asset('clients/images/abonnement_avatar.jpg') }}");
+                // alert(image.src);
+            }
         }
 
         function retablir(id) {
@@ -46,6 +50,10 @@
             })
                 .then((willDelete) => {
                     if (willDelete) {
+                        if(!navigator.onLine) {
+                            swal("ERREUR", "Désolé, Vous n'êtes pas connecté à l'internet", "error");
+                            return false;
+                        }
                         window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
                     }
                 });
@@ -54,6 +62,10 @@
 
         function printContent(id, nom, prenom, type, section, filename, expiration) {
             //LA PARTIE AFFICHAGE DES INFORMATIONS DE L'ABONNE SUR LA CARTE
+            if(!navigator.onLine) {
+                swal("ERREUR", "Désolé, Vous n'êtes pas connecté à l'internet", "error");
+                return false;
+            }
             window.location.href = "http://localhost:8000/abonnement/valider/" + id;
             let image = document.getElementById('photop');
             let idp = id;
@@ -64,6 +76,9 @@
             let file = filename;
             let exp = expiration;
             image.src = ("{{ asset('clients/images/') }}" + file);
+            if(file === "") {
+                image.src = ("{{ asset('clients/images/abonnement_avatar.jpg') }}");
+            }
             let str = "" + idp;
             let pad = "00000";
             let ans = pad.substring(0, pad.length - str.length) + str;

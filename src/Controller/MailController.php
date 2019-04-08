@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Destinateur;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Mailgun\Mailgun;
@@ -32,6 +33,16 @@ class MailController extends AbstractController
      */
     public function index()
     {
+        return $this->render('mail/index.html.twig', [
+            'controller_name' => 'MailController',
+        ]);
+    }
+
+    /**
+     * @Route("/mail/print", name="mail_print")
+     */
+    public function mailPrint()
+    {
         return $this->render('mail/mailprint.html.twig', [
             'controller_name' => 'MailController',
         ]);
@@ -60,40 +71,133 @@ class MailController extends AbstractController
             ),
             'text/html'
         )
-        /*
-         * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'emails/registration.txt.twig',
-                    ['name' => $name]
+        ;
+
+        $this->mailer->send($message);
+    }
+
+//    ENVOI DE MAIL PRIVEE DEPUIS LE DASHBOARD
+
+    /**
+     * @param $emetteur
+     * @param $destinateur
+     * @param $objet
+     * @param $message
+     */
+    public function mailPersonnel($emetteur ,$destinateur, $objet, $message)
+    {
+        $message = (new \Swift_Message($objet))
+            ->setFrom('ptbsaptb@gmail.com')
+            ->setTo($destinateur)
+            ->setBody(
+                $this->renderView('mail/personnel.html.twig',[
+                        'emetteur' => $emetteur,
+                        'destinateur' => $destinateur,
+                        'objet' => $objet,
+                        'message' => $message
+                    ]
                 ),
-                'text/plain'
+                'text/html'
             )
-            */
         ;
 
         $this->mailer->send($message);
     }
 
     /**
-     * @Route("/mail/test", name="mail_test")
+     * @param $username
+     * @param $password
+     * @param $nom
+     * @param $prenom
+     * @param $mail
+     * @param $vue
      */
-    public function send()
+    public function sendMailToUser($username, $password, $nom, $prenom, $mail, $role, $vue)
     {
-        # First, instantiate the SDK with your API credentials
-        $mg = Mailgun::create('33ebd2ea7a189e527451398addbeeb41-e51d0a44-3d8c767e');
+        $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
+        ->setFrom('ptbsaptb@gmail.com')
+        ->setTo($mail)
+        ->setBody(
+//            $this->renderView('mail/user.html.twig',[
+//                    'userNomptbsaptb@gmail.com' => $nom,
+//                    'userName' => $username,
+//                    'userPassword' => $password,
+//                    'userPrenom' => $prenom
+//                ]
+            $this->renderView($vue,[
+                    'nom' => $nom,
+                    'prenom' => $prenom,
+                    'username' => $username,
+                    'password' => $password,
+                    'mail' => $mail,
+                    'role' => $role,
+                ]
+            ),
+            'text/html'
+        )
+        ;
 
-        # Now, compose and send your message.
-        # $mg->messages()->send($domain, $params);
-        $mg->messages()->send('sandboxa46864eaa2604719b5503ccec7e9aa61.mailgun.org', [
-        'from'    => 'ReadTodev <eliepaulmoubotouto@gmail.com>',
-        'to'      => 'ReadTodev <eliepaulmoubotouto@gmail.com>',
-        'subject' => 'Hello',
-        'text'    => 'Testing some Mailgun awesomness!'
-        ]);
+        $this->mailer->send($message);
+    }
 
-        return $this->render('mail/index.html.twig', [
-            'controller_name' => 'MailController',
+    /**
+     * @param $depart
+     * @param $arrive
+     * @param $vue
+     */
+    public function sendMailForPrint($depart, $arrive, $vue)
+    {
+        $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
+            'processus' => 'impression'
         ]);
+        if($destinateur)
+        {
+            foreach ($destinateur as $dest)
+            {
+                $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
+                    ->setFrom('ddthera@gmail.com')
+                    ->setTo($dest->getEmail())
+                    ->setBody(
+                        $this->renderView($vue, [
+//                                'nom' => $nom,
+//                                'prenom' => $prenom,
+//                                'mail' => $mail,
+//                                'role' => $role,
+                                'depart' => $depart,
+                                'arrivee' => $arrive,
+                            ]
+                        ),
+                        'text/html'
+                    );
+
+                $this->mailer->send($message);
+            }
+        }
+
+    }
+
+    public function sendMailForCommande($nom, $prenom, $email, $vue)
+    {
+        $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
+            'processus' => 'commande'
+        ]);
+        if($destinateur)
+        {
+            foreach ($destinateur as $dest)
+            {
+                $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
+                    ->setFrom('ddthera@gmail.com')
+                    ->setTo($dest->getEmail())
+                    ->setBody(
+                        $this->renderView($vue, [
+                            'Nom' => $nom,
+                            'Prenom' => $prenom
+                        ]),
+                        'text/html'
+                    );
+
+                $this->mailer->send($message);
+            }
+        }
     }
 }

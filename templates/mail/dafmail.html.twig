@@ -236,17 +236,17 @@
 																			<tr>
 																				<td align="center" class="textContent">																																										
 																					<div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
-																						<p>Bonjour Mr/Mme {{app.user.nom|capitalize}} {{app.user.prenom|capitalize}} un Compte Billetterie PTB a été créé pour l'utilisation :</p>
-																						<p>Nom : {{app.user.nom|capitalize}}</p>
-																						<p>Prenom : {{app.user.prenom|capitalize}}</p>
-																						<p>Fonction : {{app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}</p>
-																						<p>E-mail : {{app.user.email}}</p>																						
+																						<p>Bonjour, un Compte Billetterie PTB a été crée pour l'utilisation :</p>
+																						<p>Nom : {{nom|capitalize}}</p>
+																						<p>Prenom : {{prenom|capitalize}}</p>
+																						<p>Fonction : {{role ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}</p>
+																						<p>E-mail : {{mail}}</p>
 																					</div>																																																																																				
 																					</br></br>
 																					</br></br>
                                                                                     <p>Adresse : Immeuble Bâtiment, Av Malick SY 3ème étage </p>
 																					<p>BP : 265 Dakar - Sénégal </p>
-																					<p>www.ptb.sn</p>
+																					<p><a href="https://www.ptb.sn">www.ptb.sn</a> </p>
 																				</td>
 																			</tr>
 																		</table>

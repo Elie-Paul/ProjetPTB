@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
 {% block title %}Edit Guichet{% endblock %}
 
 {% block body %}
@@ -20,9 +22,10 @@
         <h3 class="box-title">Modifier le guichet {{guichet.nom}}</h3>
     </div>
     <div class="box-body">
-      <div class="container">
-        {{ include('guichet/_form.html.twig', {'button_label': 'Modifier'}) }}
-      </div>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+            <button class="btn btn-warning"><big>{{ button_label|default('Modifier') }}</big></button>
+        {{ form_end(form) }}
     </div>
 </div>
 

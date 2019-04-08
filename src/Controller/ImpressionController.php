@@ -9,6 +9,7 @@ use App\Entity\BilletNavette;
 use App\Entity\CommandePtb;
 use App\Entity\StockPtb;
 use App\Entity\StockVignette;
+use App\Entity\StockTaxe;
 use App\Entity\StockNavette;
 use App\Entity\CommandeNavette;
 use App\Entity\CommandeTaxe;
@@ -149,11 +150,17 @@ class ImpressionController extends AbstractController
                     
                 }
             }
+            if($commnadesPTB[$a]->getNombreBilletRealise() == $commnadesPTB[$a]->getNombreBillet())
+            {
+                $commnadesPTB[$a]->setEtatCommande(3);
+                    
+            }
             $a++;
         }
         
         $entityManager->flush();
         $date=new \DateTime();
+       // $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif,
          ]);
@@ -277,20 +284,17 @@ class ImpressionController extends AbstractController
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
-         $depart = intval($arr[2]);
+         $depart = intval($arr[2])+1;
          $userid = intval($arr[3]);
          $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletTaxe::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
-         $commnadesTaxes = $entityManager->getRepository(CommandeTaxe::class)->findBy
-         (
-            [
-               'billet' => $billet,
-            ],
-            ['dateCommande' =>'ASC']
-        );
-        if($depart ==$billet->getNumeroDernierBillets()+1)
+         $stockTaxe=$entityManager->getRepository(StockTaxe::class)->findOneBy([
+            'billet' => $billet,
+         ],);
+         $user = $entityManager->getRepository(User::class)->find($userid);
+         if($depart ==$billet->getNumeroDernierBillet()+1)
          {
             $testMotif="true";
          }
@@ -298,6 +302,14 @@ class ImpressionController extends AbstractController
          {
             $testMotif="false";
          }
+         $commnadesTaxes = $entityManager->getRepository(CommandeTaxe::class)->findBy
+         (
+            [
+               'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
+        
          $array=array();
          $j =0;
          for( $i=$depart;;$i++)
@@ -329,6 +341,7 @@ class ImpressionController extends AbstractController
              if( $j == $num)
                 break;
          }
+         $stockTaxe->setNbre( $stockTaxe->getNbre() + $num );
         $billet->setNumeroDernierBillet(end($array));
         $a=0;
         $d=0;
@@ -380,7 +393,7 @@ class ImpressionController extends AbstractController
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
-         $depart = intval($arr[2]);
+         $depart = intval($arr[2])+1;
          $userid = intval($arr[3]);
          $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
@@ -389,6 +402,14 @@ class ImpressionController extends AbstractController
             'billet' => $billet,
          ],);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         if($depart ==$billet->getNumeroDernierBillet()+1)
+         {
+            $testMotif="true";
+         }
+         else
+         {
+            $testMotif="false";
+         }
          $commnadesVignettes = $entityManager->getRepository(CommandeVignette::class)->findBy
          (
             [
