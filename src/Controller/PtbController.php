@@ -23,7 +23,7 @@ class PtbController extends AbstractController
     public function index(PtbRepository $ptbRepository): Response
     {
         return $this->render('ptb/index.html.twig', [
-            'ptbs' => $ptbRepository->findAll(),
+            'ptbs' => $ptbRepository->findBy(array(), array('createdAt' => 'DESC')),
         ]);
     }
 

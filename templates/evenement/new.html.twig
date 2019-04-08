@@ -1,6 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}New Evenement{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('evenement/app.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% endblock %}
 
 {% block body %}
     <div class="box box-default">

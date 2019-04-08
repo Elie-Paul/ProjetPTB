@@ -1,5 +1,13 @@
 $(document).ready(function () {
     $('#selUser, #selCommande, #selImpression').select2({theme: "bootstrap"});
+<<<<<<< HEAD
+    $('#select').select2({
+        theme: "classic",
+        placeholder: "Emails",
+        allowClear: true
+    });
+=======
+>>>>>>> 85dafd267f889e88174917daab098aac533eb0b2
 
 
     $('.form').on('submit', function (e) {
@@ -40,4 +48,53 @@ $(document).ready(function () {
 
     });
 
+<<<<<<< HEAD
+
+    //ENVOI DE MAIL DANS LE DASHBOARD
+    $('.envoiMesMails').on('submit', function (e) {
+        e.preventDefault();
+        if(!navigator.onLine) {
+            swal("ERREUR", "Désolé, Vous n'êtes pas connecté à l'internet", "error");
+            return false;
+        }
+        var mails = $('#select').val();
+        var objet = $('#objet').val();
+        var message = $('#message').val();
+        //L'EMAIL DU DESTINATEUR EST CACHE AVEC CSS IL SE TROUVE JUSTE AVANT FORM QUI ENVOI LE MAIL DEPUIS LE DASHBOARD
+        var emetteur = $('#emailExpediteur').text();
+
+        if(mails && objet && message) {
+            //AJAX
+            $.ajax({
+                url: '/mail/presonnel',
+                type: 'post',
+                data: {mails: mails, objet: objet, message: message, emetteur: emetteur},
+                dataType: 'json',
+                success: function (data) {
+                    switch (data.status) {
+                        case 'error':
+                            swal("Erreur", data.message, "error");
+                            break;
+                        case 'success':
+                            swal("SUCCES", data.message, "success");
+                            break;
+                        default:
+                            swal("Erreur", data.message, "error");
+                    }
+                },
+                error: function (error) {
+                    alert('Erreur ' + error);
+                }
+            });
+            return false;
+            //END AJAX
+        }
+        else {
+            swal("ERREUR", 'Tous les champs sont obligatoires pour envoyer un email', "error");
+        }
+
+    });
+
+=======
+>>>>>>> 85dafd267f889e88174917daab098aac533eb0b2
 });

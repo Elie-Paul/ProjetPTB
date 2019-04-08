@@ -50,8 +50,6 @@ class ModalController extends AbstractController
     public function addClasse($libelle)
     {    
         $classe = new Classe();
-        $navette = new Navette();
-        $form = $this->createForm(NavetteType::class, $navette);
 
         $classe->setLibelle($libelle);
         $classe->setCreatedAt(new \DateTime());
@@ -60,10 +58,7 @@ class ModalController extends AbstractController
         $entityManager->persist($classe);
         $entityManager->flush();
 
-        return $this->render('navette/new.html.twig', [
-            'navette' => $navette,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('navette_new');
     }
 
     /**
@@ -72,8 +67,6 @@ class ModalController extends AbstractController
     public function addLieuTrajet($libelle)
     {        
         $lieux = new Lieux();
-        $trajet = new Trajet();
-        $form = $this->createForm(TrajetType::class, $trajet);
 
         $lieux->setLibelle($libelle);
         $lieux->setCreatedAt(new \DateTime());
@@ -82,10 +75,7 @@ class ModalController extends AbstractController
         $entityManager->persist($lieux);
         $entityManager->flush();
 
-        return $this->render('trajet/new.html.twig', [
-            'trajet' => $trajet,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('trajet_new');
     }
 
     /**
@@ -94,8 +84,6 @@ class ModalController extends AbstractController
     public function addLieuTrajetPtb($libelle)
     {        
         $lieux = new Lieux();
-        $ptb = new Ptb();
-        $form = $this->createForm(PtbType::class, $ptb);
 
         $lieux->setLibelle($libelle);
         $lieux->setCreatedAt(new \DateTime());
@@ -104,10 +92,7 @@ class ModalController extends AbstractController
         $entityManager->persist($lieux);
         $entityManager->flush();
 
-        return $this->render('ptb/new.html.twig', [
-            'ptb' => $ptb,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('ptb_new');
     }
 
     /**
@@ -116,8 +101,6 @@ class ModalController extends AbstractController
     public function addLieuTrajetNavette($libelle)
     {        
         $lieux = new Lieux();
-        $navette = new Navette();
-        $form = $this->createForm(NavetteType::class, $navette);
 
         $lieux->setLibelle($libelle);
         $lieux->setCreatedAt(new \DateTime());
@@ -126,10 +109,7 @@ class ModalController extends AbstractController
         $entityManager->persist($lieux);
         $entityManager->flush();
 
-        return $this->render('navette/new.html.twig', [
-            'navette' => $navette,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('navette_new');
     }
 
     /**
@@ -139,7 +119,6 @@ class ModalController extends AbstractController
     {        
         $lieux = new Lieux();
         $guichet = new Guichet();
-        $form = $this->createForm(GuichetType::class, $guichet);
 
         $lieux->setLibelle($libelle);
         $lieux->setCreatedAt(new \DateTime());
@@ -206,9 +185,7 @@ class ModalController extends AbstractController
     public function addGuichetNavette($code, $nom, $lieu)
     {        
         $guichet = new Guichet();
-        $billetnavette = new BilletNavette();
         $lieux = new Lieux();
-        $form = $this->createForm(BilletNavetteType::class, $billetnavette);
 
         $guichet->setCode($code);
         $guichet->setNom($nom);
@@ -221,10 +198,7 @@ class ModalController extends AbstractController
         $entityManager->persist($guichet);
         $entityManager->flush();
 
-        return $this->render('billet_navette/new.html.twig', [
-            'billet_navettes' => $billetnavette,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('billet_navette_new');
     }
 
     /**
@@ -234,8 +208,6 @@ class ModalController extends AbstractController
     {        
         $navette = new Navette();
         $prix = intval($prix);
-        $billetnavette = new BilletNavette();
-        $form = $this->createForm(BilletNavetteType::class, $billetnavette);
 
         $navette->setTrajet($trajet);
         $navette->setClasse($classe);
@@ -246,10 +218,7 @@ class ModalController extends AbstractController
         $entityManager->persist($navette);
         $entityManager->flush();
 
-        return $this->render('billet_navette/new.html.twig', [
-            'billet_navettes' => $billetnavette,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('billet_navette_new');
     }
 
     /**
@@ -274,10 +243,7 @@ class ModalController extends AbstractController
         $entityManager->persist($ptb);
         $entityManager->flush();
 
-        return $this->render('billet_ptb/new.html.twig', [
-            'billet_ptbs' => $billetPtb,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('billet_ptb_new');
     }
 
     /**
@@ -287,8 +253,6 @@ class ModalController extends AbstractController
     {        
         $trajet = new Trajet();
         $lieux = new Lieux();
-        $ptb = new Ptb();
-        $form = $this->createForm(PtbType::class, $ptb);
 
         $depart = $lieux->setLibelle($depart);
         $arrivee = $lieux->setLibelle($arrivee);
@@ -303,10 +267,7 @@ class ModalController extends AbstractController
         $entityManager->persist($trajet);
         $entityManager->flush();
 
-        return $this->render('ptb/new.html.twig', [
-            'ptb' => $ptb,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('ptb_new');
     }
 
     /**
@@ -316,8 +277,6 @@ class ModalController extends AbstractController
     {        
         $trajet = new Trajet();
         $lieux = new Lieux();
-        $navette = new Navette();
-        $form = $this->createForm(NavetteType::class, $navette);
 
         $depart = $lieux->setLibelle($depart);
         $arrivee = $lieux->setLibelle($arrivee);
@@ -332,10 +291,7 @@ class ModalController extends AbstractController
         $entityManager->persist($trajet);
         $entityManager->flush();
 
-        return $this->render('navette/new.html.twig', [
-            'navette' => $navette,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('navette_new');
     }
 
      /**

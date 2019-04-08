@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Destinateur;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Mailgun\Mailgun;
 use Twig\Environment;
 
 class MailController extends AbstractController
@@ -61,7 +62,7 @@ class MailController extends AbstractController
     {
         $message = (new \Swift_Message('Hello Email'))
         ->setFrom('eliepaulmoubotouto@gmail.com')
-        ->setTo('ddthera@gmail.com')
+        ->setTo('eliemoubotouto@outlook.fr')
         ->setBody(
             $this->renderView(
                 // templates/emails/registration.html.twig
@@ -70,6 +71,34 @@ class MailController extends AbstractController
             ),
             'text/html'
         )
+        ;
+
+        $this->mailer->send($message);
+    }
+
+//    ENVOI DE MAIL PRIVEE DEPUIS LE DASHBOARD
+
+    /**
+     * @param $emetteur
+     * @param $destinateur
+     * @param $objet
+     * @param $message
+     */
+    public function mailPersonnel($emetteur ,$destinateur, $objet, $message)
+    {
+        $message = (new \Swift_Message($objet))
+            ->setFrom('ptbsaptb@gmail.com')
+            ->setTo($destinateur)
+            ->setBody(
+                $this->renderView('mail/personnel.html.twig',[
+                        'emetteur' => $emetteur,
+                        'destinateur' => $destinateur,
+                        'objet' => $objet,
+                        'message' => $message
+                    ]
+                ),
+                'text/html'
+            )
         ;
 
         $this->mailer->send($message);
@@ -109,37 +138,6 @@ class MailController extends AbstractController
         ;
 
         $this->mailer->send($message);
-    }
-
-    public function sendMailUserInfo($nom, $prenom, $mailUser, $role, $vue)
-    {
-        $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
-            'processus' => 'utilisateur'
-        ]);
-        if($destinateur)
-        {
-            foreach ($destinateur as $dest)
-            {
-                if($dest->getActive())
-                {
-                    $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
-                        ->setFrom('ptbsaptb@gmail.com')
-                        ->setTo($dest->getEmail())
-                        ->setBody(
-                            $this->renderView($vue, [
-                                    'nom' => $nom,
-                                    'prenom' => $prenom,
-                                    'mail' => $mailUser,
-                                    'role' => $role,
-                                ]
-                            ),
-                            'text/html'
-                        );
-
-                    $this->mailer->send($message);
-                }
-            }
-        }
     }
 
     /**

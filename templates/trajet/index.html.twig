@@ -3,6 +3,7 @@
 {% block stylesheets %}
     <link href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="dataTables.numericComma.js"></script>
 {% endblock %}
 
 {% block title %}Trajet index{% endblock %}
@@ -43,7 +44,7 @@
                 </div-->
             </div>
             <div class="box-body ">
-                <table class="table table-hover table-striped dataTable" id="example1">
+                <table data-order='[[ 2, "desc" ]]' class="table table-hover table-striped dataTable" id="example1">
                     <thead>
                         <tr>
                             <th>Départ</th>
@@ -85,11 +86,16 @@
     <!-- DataTables -->
     <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/date-de.js" ></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
+
     <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
     <script>
     {% if success is defined %}
     swal("Bon travail", "Vous aviez ajouté un nouveau trajet", "success");
   {% endif %}
+
+    $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
 
         $(function () {
             $('#example1').DataTable({

@@ -69,13 +69,19 @@ class UserController extends AbstractController
             $user1 = $userRepository->findOneBy([
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
-            ]); 
-            $user2 = $userRepository->findOneBy([
-                'email' => $user->getEmail(),
-            ]); 
+            ]);
+            if (!$user1) {
+                $mail->sendMailUserInfo($user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/dafmail.html.twig');
+                $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/index.html.twig');
+                $user->setCreatedAt(new \DateTime());
+                $user2 = $userRepository->findOneBy([
+                    'email' => $user->getEmail(),
+                ]);
+            }
 
             if (!$user1 && $user2) {
-                $mail->sendMail("Elie-Paul");               $user->setCreatedAt(new \DateTime());
+                $mail->sendMail("Elie-Paul");
+                $user->setCreatedAt(new \DateTime());
                 $user->setUpdateAt(new \DateTime());
                 $user->setFilename("null");
                 $hash=$encoder->encodePassword($user, $user->getPassword()); 
