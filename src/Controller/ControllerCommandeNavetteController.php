@@ -80,6 +80,31 @@ class ControllerCommandeNavetteController extends AbstractController
         }
         return new response(''.$nBillet);
     }
+
+    public function totalBillet2($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
+        $commnadesNavette = $entityManager->getRepository(CommandeNavette::class)->findBy
+        (
+            [
+                'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
+        $i=0;
+        $nBillet=0;
+        for ($i=0; $i < count($commnadesNavette); $i++) 
+        { 
+            if($commnadesNavette[$i]->getEtatCommande()>=1 || $commnadesNavette[$i]->getEtatCommande()==2)
+            {
+                $diff=$commnadesNavette[$i]->getNombreBillet()-$commnadesNavette[$i]->getNombreBilletRealise();
+                $nBillet=$nBillet+$diff;
+            }
+        }
+       return $nBillet;
+    }   
+
      /**
      * @Route("/addVenteNavette/{id}/{nvente}", name="VenteNavette")
      */

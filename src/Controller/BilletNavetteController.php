@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BilletNavette;
 use App\Entity\StockNavette;
 use App\Form\BilletNavetteType;
+use App\Controller\ControllerCommandeNavetteController;
 use App\Repository\BilletNavetteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,12 +19,24 @@ class BilletNavetteController extends AbstractController
 {
     /**
      * @Route("/", name="billet_navette_index", methods={"GET"})
+     * @param billetNavetteRepository $billetNavetteRepository
+     * @return Response
      */
-    public function index(BilletNavetteRepository $billetNavetteRepository): Response
+    public function index(BilletNavetteRepository $billetNavetteRepository,Request $request,ControllerCommandeNavetteController $controller): Response
     {
-        return $this->render('billet_navette/index.html.twig', [
-            'billet_navettes' => $billetNavetteRepository->findAll(),
-        ]);
+
+        $array = array();
+        foreach ($billetNavetteRepository->findAll() as $key => $value) 
+        {
+            $arr = array();
+            $id = $value->getId();
+            $total = intVal($controller->totalBillet2($id));
+            $arr = ['billet' => $value,'total' => $total];
+            array_push($array,$arr);
+        }    
+    return $this->render('billet_navette/index.html.twig', [
+        'billet_navettes' =>$array,
+    ]);
     }
 
     /**
