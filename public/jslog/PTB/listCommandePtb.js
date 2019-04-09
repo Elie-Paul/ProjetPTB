@@ -422,3 +422,13 @@ function deleteCommande(element)
 }
 
 getAllCommande();
+/**
+ * DELIMITER $$
+CREATE EVENT reset_usage_count
+ON SCHEDULE EVERY 1 MINUTE
+DO 
+BEGIN
+UPDATE billet_ptb set numero_dernier_billets=0;
+END$$    
+DELIMITER ;
+ */
