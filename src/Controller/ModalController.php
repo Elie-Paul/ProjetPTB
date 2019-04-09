@@ -317,10 +317,11 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/ModifierimageUser", name="img_ModiUser", methods={"GET","POST"})
+     * @Route("/ModifierimageUser/{user}", name="img_ModiUser", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
      * @return Response
+     * @throws \Exception
      */
     public function ModifierimageUser(Request $request, User $user): Response
     {        

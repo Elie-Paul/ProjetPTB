@@ -25,7 +25,7 @@
     </div>
 
     <div class="modal-footer left">
-        <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Valider</big></button>
+        <button  id="submit" onclick="ajouter({{ app.user.id }})" class="btn btn-primary"><big>Valider</big></button>
     </div>
   </div>
 </div>
@@ -233,15 +233,15 @@
             }
         }
 
-        function ajouter(){
+        function ajouter(id){
+            console.log(id);
           var modal = document.getElementById('myModal');
           var lib = document.getElementById("img").value;
           var n=lib.length;
           var libelle =lib.slice(12,n);
-          var id = document.getElementById("userid").value;
           modal.style.display = "none";
           console.log(id);
-          document.location.href = `http://localhost:8000/${id}/ModifierimageUser/${libelle}`;
+          document.location.href = `/ModifierimageUser/${id}`;
           swal("Modification Réussie!", "Vous avez changé votre photo", "success");          
 
         }
