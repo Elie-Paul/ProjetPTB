@@ -45,10 +45,11 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addClasse/{libelle}", name="lieux_addClasse")
+     * @Route("/addClasse", name="lieux_addClasse")
      */
-    public function addClasse($libelle)
+    public function addClasse(Request $request)
     {    
+        $libelle = $request->getContent();
         $classe = new Classe();
 
         $classe->setLibelle($libelle);
@@ -58,7 +59,8 @@ class ModalController extends AbstractController
         $entityManager->persist($classe);
         $entityManager->flush();
 
-        return $this->redirectToRoute('navette_new');
+        return new Response("true");
+        //return $this->redirectToRoute('navette_new');
     }
 
     /**
@@ -155,18 +157,28 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addGuichetPtb/{code}/{nom}/{lieu}", name="lieux_addGuichetPtb")
+     * @Route("/addGuichetPtb", name="lieux_addGuichetPtb")
      */
-    public function addGuichetPtb($code, $nom, $lieu)
+    public function addGuichetPtb(Request $request)
     {        
+        $array = explode("+",$request->getContent());
+
+        $code = $array[0];
+        $nom = $array[1];
+        $lieu1 = $array[2];
+        /*$lieux = $this->getDoctrine()->getRepository(Lieux::class)
+            ->find(intval($array[2]));
+        
+        $lieu = $this->getDoctrine()->getRepository(Lieux::class)
+            ->findOneBy([
+                'id' => $lieux,
+            ]);*/
         $guichet = new Guichet();
-        $billetPtb = new BilletPtb();
         $lieux = new Lieux();
-        $form = $this->createForm(BilletPtbType::class, $billetPtb);
 
         $guichet->setCode($code);
         $guichet->setNom($nom);
-        $lieu = $lieux->setLibelle($lieu);
+        $lieu = $lieux->setLibelle($lieu1);
         $guichet->setLieu($lieu);
         $guichet->setCreatedAt(new \DateTime());
         $guichet->setUpdatedAt(new \DateTime());
@@ -175,11 +187,8 @@ class ModalController extends AbstractController
         $entityManager->persist($guichet);
         $entityManager->flush();
 
-        /*return $this->render('billet_ptb/new.html.twig', [
-            'billet_ptbs' => $billetPtb,
-            'form' => $form->createView(),
-        ]);*/
-        return $this->redirectToRoute('billet_ptb_new');
+        return new Response("true");
+        //return $this->redirectToRoute('billet_ptb_new');
     }
 
     /**
@@ -274,15 +283,18 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addTrajetNavette/{depart}/{arrivee}", name="lieux_addTrajetNavette")
+     * @Route("/addTrajetNavette", name="lieux_addTrajetNavette")
      */
-    public function addTrajetNavette($depart, $arrivee)
-    {        
+    public function addTrajetNavette(Request $request)
+    {   
+        $array = explode("+",$request->getContent());
+        $depart1 = $array[0];
+        $arrivee1 = $array[1];
         $trajet = new Trajet();
         $lieux = new Lieux();
 
-        $depart = $lieux->setLibelle($depart);
-        $arrivee = $lieux->setLibelle($arrivee);
+        $depart = $lieux->setLibelle($depart1);
+        $arrivee = $lieux->setLibelle($arrivee1);
 
 
         $trajet->setDepart($depart);
@@ -294,7 +306,8 @@ class ModalController extends AbstractController
         $entityManager->persist($trajet);
         $entityManager->flush();
 
-        return $this->redirectToRoute('navette_new');
+        return new Response("true");
+       // return $this->redirectToRoute('navette_new');
     }
 
      /**

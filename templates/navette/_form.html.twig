@@ -7,19 +7,20 @@
   <div class="modal-content">
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
 
-    <div class="modal-body">
-        <form>
-        <div class="form-group">
-            <label for="nomGare"><big>Libelle</big></label>
-            <input type="text"
-              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une gare">
-          </div>
-        </form>
-    </div>
 
-    <div class="modal-footer left">
-        <button  id="submit" onclick="ajouter1()" class="btn btn-primary"><big>Ajouter</big></button>
-    </div>
+    <form id="enClasse">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="nomGare"><big>Libelle</big></label>
+          <input type="text"
+            class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une classe">
+        </div>        
+      </div>
+
+      <div class="modal-footer left">
+          <button  id="submit" class="btn btn-primary"><big>Ajouter</big></button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -32,36 +33,38 @@
 
     <div class="modal-body">
       <div class="row">
-        
+        <form id="enLieu">
         <div class="from-group">
-          <form id="formLibTrajet">
+          
             <label for="lib">Libelle</label>            
-            <input id="libLieux" type="text" class="form-control" name="msg" placeholder="Saisir une gare si possible">
+            <input id="libLieux" type="text" class="form-control" name="msg" placeholder="Saisir une station ...">
             <br>
-            <button type="button" id="submit" class="btn btn-primary">Ajouter</button>
-          </form>
+            <button type="button" id="submit1" class="btn btn-primary">Ajouter</button>
         </div>
-        
+        </form>
       </div>
       <hr>
-      <div class="form-group">
-        <label for="sel1">Depart</label>
-        <select class="form-control DepartId" id="sel1">
-          <option id="0" selected disabled>Depart</option>
-        </select>
+  <form id="enTrajet">
+        <div class="form-group">
+          <label for="sel1">Depart</label>
+          <select class="form-control DepartId" id="sel1">
+            <option id="0" selected disabled>Depart</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel1">Arrivée</label>
+          <select class="form-control ArriveeId" id="sel2">
+            <option id="0" selected disabled>Arrivée</option>
+          </select>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="sel1">Arrivée</label>
-        <select class="form-control ArriveeId" id="sel2">
-          <option id="0" selected disabled>Arrivée</option>
-        </select>
-      </div>
-    </div>
 
-    <div class="modal-footer">
-      <button type="button" id="submit" onclick="ajouter2()" class="btn btn-primary">Ajouter</button>
+      <div class="modal-footer">
+        <!--button type="button" id="submit" onclick="ajouter2()" class="btn btn-primary">Ajouter</button-->
+        <button type="button" id="submit2" class="btn btn-primary">Ajouter</button>
+      </div>
+  </form>
     </div>
-  </div>
   
 
 </div>
@@ -105,14 +108,18 @@
           modal.style.display = "none";
         }
 
-       function ajouter1()
+        function test(){
+          alert("test");
+        }
+
+       /*function ajouter1()
         {
           var libelle = document.getElementById("libelle").value;
           modal.style.display = "none";
           document.location.href = `http://localhost:8000/addClasse/${libelle}`;
           //swal("Good job!", "Vous avez ajouté une section", "success");  
           alert("Classe ajouter");
-        }
+        }*/
         
         function mode()
         {
@@ -220,11 +227,11 @@ function setLieuxArrivee(array)
 
 //----------------Traitement du modal Trajet----------------------//
 
-document.getElementById("formLibTrajet").addEventListener("submit", function(e){
+document.getElementById("submit2").addEventListener("click", function(e){
   e.preventDefault();
-  alert("test");
 
-/*var lib = document.getElementById("libLieux").value;
+var depart = document.getElementById("sel1").value;
+var arrivee = document.getElementById("sel2").value;
 
 let xhttp=new XMLHttpRequest();
   
@@ -235,17 +242,63 @@ let xhttp=new XMLHttpRequest();
       let response = JSON.parse(xhttp.response);
       console.log(response);
       
-      /*if(response){
+      if(response){
         swal({
         title: "Succès",
-        text: "Une section a été ajoutée",
+        text: "Un trajet a été ajouté",
         icon: "success",
         
         })
             .then((value) => {
               var modal1 = document.getElementsByClassName('modal')[1];
               modal1.style.display = "none";
-                document.location.href="http://localhost:8000/ptb/new";
+                document.location.href="http://localhost:8000/navette/new";
+                
+            });
+
+      }
+      
+    }
+  }
+  
+  xhttp.open("POST","/addTrajetNavette",true);
+  xhttp.responseType = "json";
+  let parm = `${depart}+${arrivee}`;
+  xhttp.send(parm);  
+
+  return false;
+
+});
+
+////----Ajouter Lieux
+document.getElementById("submit1").addEventListener("click", function(e){
+  e.preventDefault();
+
+  var lib = document.getElementById("libLieux").value;
+
+  let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.response);
+      console.log(response);
+      
+      if(response){
+        swal({
+        title: "Succès",
+        text: "Une station a été ajoutée",
+        icon: "success",
+        
+        })
+            .then((value) => {
+              var modal1 = document.getElementsByClassName('modal')[1];
+              modal1.style.display = "block";
+               // document.location.href="http://localhost:8000/ptb/new";
+              getJson('http://localhost:8000/json/lieu/depart',1);
+              getJson('http://localhost:8000/json/lieu/arrivee',2);
+              document.getElementById("libLieux").innerHTML = " ";
                 
             });
 
@@ -256,11 +309,52 @@ let xhttp=new XMLHttpRequest();
   
   xhttp.open("POST","/addLieuTrajetNavette",true);
   xhttp.responseType = "json";
-  //let parm = `${libelle}+${prix}`;
-  xhttp.send($libelle);  
+  let parm = `${lib}`;
+  xhttp.send(parm);  
 
-  return false;*/
+  return false;
 
+
+});
+
+document.getElementById("enClasse").addEventListener("submit", function(e){
+  e.preventDefault();
+  var libelle = document.getElementById("libelle").value;
+
+alert(libelle);
+let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.response);
+      console.log(response);
+      
+      if(response){
+        swal({
+        title: "Succès",
+        text: "Une Classe a été ajoutée",
+        icon: "success",
+        
+        })
+            .then((value) => {
+              var modal = document.getElementsByClassName('modal')[0];
+              modal.style.display = "none";
+                document.location.href="http://localhost:8000/navette/new";
+                
+            });
+
+      }
+      
+    }
+  }
+  
+  xhttp.open("POST","/addClasse",true);
+  xhttp.responseType = "json";
+  let parm = `${libelle}`;
+  xhttp.send(parm)
+  return false;
 });
 </script>
 
