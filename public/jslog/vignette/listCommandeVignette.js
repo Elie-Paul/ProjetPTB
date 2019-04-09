@@ -243,9 +243,6 @@ function createRowElement(commande)
     array.push(modifierTd);
     array.push(removeTd);
 
-  
-    
-
     return array;
 }
 function DateCompare(date1,date2)
