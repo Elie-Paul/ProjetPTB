@@ -266,6 +266,10 @@ class ImpressionController extends AbstractController
                     
                 }
             }
+            if($commnadesNavettes[$a]->getNombreBilletRealise()== $commnadesNavettes[$a]->getNombreBillet())
+            {
+                        $commnadesNavettes[$a]->setEtatCommande(3);
+            }
             $a++;
         }
    
@@ -376,6 +380,10 @@ class ImpressionController extends AbstractController
                     
                 }
             }
+            if($commnadesTaxes[$a]->getNombreBilletRealise()== $commnadesTaxes[$a]->getNombreBillet())
+                    {
+                        $commnadesTaxes[$a]->setEtatCommande(3);
+                    }
             $a++;
         }
         $entityManager->flush();
@@ -483,6 +491,10 @@ class ImpressionController extends AbstractController
                     
                 }
             }
+            if($commnadesVignettes[$a]->getNombreBilletRealise()== $commnadesVignettes[$a]->getNombreBillet())
+                    {
+                        $commnadesVignettes[$a]->setEtatCommande(3);
+                    }
             $a++;
         }
         $entityManager->flush();

@@ -91,13 +91,36 @@
 </html>
 <script>
     
-    //var main = document.getElementById('main');
-    /*main.style.backgroundColor="#"{{color}};*/
-    window.print();
+    
+
+    let f={{testMotif}};
+    let param="{{ app.user.id }}+impression billet taxe Numero {{nDepart}} au numero {{nLast}}";
+    //alert(param);
+    let xhr=new XMLHttpRequest();
+        xhr.onload=function ()
+        {
+            if(this.status == 200)
+            {
+                window.print();
+            }
+        }
+    if(f)
+    {
+        xhr.open("POST","http://localhost:8000/audit/impression",false);
+        xhr.send(param);
+    }
+    else
+    {
+        xhr.open("POST","http://localhost:8000/audit/reimpression",false);
+        param=param +"pour motif:{{motif}}";
+        xhr.send(param);
+    }
+       
     window.onafterprint = 
     function(event) 
     { 
-       //document.location.href = "http://localhost:8000/billet/navette/";
+       
+        document.location.href = "http://localhost:8000/billet/taxe/";
 
     };
 </script>
