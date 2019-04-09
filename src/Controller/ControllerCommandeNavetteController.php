@@ -344,4 +344,50 @@ class ControllerCommandeNavetteController extends AbstractController
             //return new Response('dddd');
     }
 
+    /**
+     * @Route("/commande/navette/modifier/{id}/{cmd}", name="commande_navette_modifier")
+     */
+    public function modifierCommande($id,$cmd)
+    {
+        $id = intVal($id);
+        $nbreCommande = intVal($cmd);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandeNavette = $entityManager
+        ->getRepository(CommandeNavette::class)
+        ->find($id);
+        
+        $commandeNavette->setNombreBillet($cmd);
+        
+        $entityManager->persist($commandeNavette);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
+    }
+
+    /**
+     * @Route("/commande/navette/delete/{id}", name="commande_navette_delete")
+     */
+    public function deleteCommande($id)
+    {
+        $id = intVal($id);
+        
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandeNavette = $entityManager
+        ->getRepository(CommandeNavette::class)
+        ->find($id);
+        
+        
+        
+        $entityManager->remove($commandeNavette);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
+    }
+
 }

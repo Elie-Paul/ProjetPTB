@@ -502,6 +502,26 @@ class Controller extends AbstractController
         
         return new Response('<h1>ddddd</h1>');
     }
+    /**
+     * @Route("/commande/ptb/delete/{id}", name="commande_ptb_delete")
+     */
+    public function deleteCommande($id)
+    {
+        $id = intVal($id);
+        
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandePtb = $entityManager
+        ->getRepository(CommandePtb::class)
+        ->find($id);
+        
+        $entityManager->remove($commandePtb);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
+    }
     
 }
 

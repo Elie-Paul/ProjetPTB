@@ -276,4 +276,47 @@ class CommandeVignetteController extends AbstractController
             return new Response(json_encode($data));
             //return new Response('dddd');
     }   
+      /**
+     * @Route("/commande/vignette/modifier/{id}/{cmd}", name="commande_vignette_modifier")
+     */
+    public function modifierCommande($id,$cmd)
+    {
+        $id = intVal($id);
+        $nbreCommande = intVal($cmd);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandeVignette = $entityManager
+        ->getRepository(CommandeVignette::class)
+        ->find($id);
+        
+        $commandeVignette->setNombreBillet($cmd);
+        
+        $entityManager->persist($commandeVignette);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
+    }
+     /**
+     * @Route("/commande/vignette/delete/{id}", name="commande_vignette_delete")
+     */
+    public function deleteCommande($id)
+    {
+        $id = intVal($id);
+        
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandeVignette = $entityManager
+        ->getRepository(CommandeVignette::class)
+        ->find($id);
+        
+        $entityManager->remove($commandeVignette);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
+    }
+    
 }
