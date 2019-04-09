@@ -46,7 +46,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
     {
         $credentials = [
             'username' => $request->request->get('username'),
-            'password' => $request->request->get('password'),
+            'password' => $request->request->get('password'),            
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -69,6 +69,10 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Username could not be found.');
+        }
+        if (!$user->getActive()) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException("Votre compte est bloqué, veuillez contacter l'administrateur.");
         }
 
         return $user;
