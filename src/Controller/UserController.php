@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -153,10 +154,27 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
-    public function show(User $user): Response
+    public function show(Request $request, User $user): Response
     {
+        $form = $this->createFormBuilder($user)
+            ->add('imageFile', FileType::class, [
+                'label' => "Image",
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => true
+                ]
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdateAt(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('home');
+        }
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'id' => $user->getId(),
+            'form' => $form->createView()
         ]);
     }
 

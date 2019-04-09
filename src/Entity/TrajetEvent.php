@@ -16,15 +16,15 @@ class TrajetEvent
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $depart;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $arrivee;
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $depart;
+//
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $arrivee;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="trajet")
@@ -42,6 +42,18 @@ class TrajetEvent
      * @ORM\OneToOne(targetEntity="App\Entity\BilletEvent", mappedBy="trajet", cascade={"persist", "remove"})
      */
     private $billetEvent;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Lieux", inversedBy="trajetEventDepart", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $depart;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Lieux", inversedBy="trajetEventArrivee", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $arrivee;
 
     public function getId(): ?int
     {
