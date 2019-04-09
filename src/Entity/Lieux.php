@@ -52,6 +52,16 @@ class Lieux
      */
     private $guichets;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\TrajetEvent", mappedBy="depart", cascade={"persist", "remove"})
+     */
+    private $trajetEventDepart;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\TrajetEvent", mappedBy="arrivee", cascade={"persist", "remove"})
+     */
+    private $trajetEventArrivee;
+
     public function __construct()
     {
         $this->trajetsDepart = new ArrayCollection();
@@ -198,5 +208,39 @@ class Lieux
     public function __toString()
     {
         return (string)$this->libelle;
+    }
+
+    public function getTrajetEventDepart(): ?TrajetEvent
+    {
+        return $this->trajetEventDepart;
+    }
+
+    public function setTrajetEventDepart(TrajetEvent $trajetEventDepart): self
+    {
+        $this->trajetEventDepart = $trajetEventDepart;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $trajetEventDepart->getDepart()) {
+            $trajetEventDepart->setDepart($this);
+        }
+
+        return $this;
+    }
+
+    public function getTrajetEventArrivee(): ?TrajetEvent
+    {
+        return $this->trajetEventArrivee;
+    }
+
+    public function setTrajetEventArrivee(TrajetEvent $trajetEventArrivee): self
+    {
+        $this->trajetEventArrivee = $trajetEventArrivee;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $trajetEventArrivee->getArrivee()) {
+            $trajetEventArrivee->setArrivee($this);
+        }
+
+        return $this;
     }
 }

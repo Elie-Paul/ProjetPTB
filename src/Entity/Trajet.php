@@ -52,10 +52,10 @@ class Trajet
     private $ptb;
     private $trajetlib;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="trajetEvent")
-     */
-    private $evenement;
+//    /**
+//     * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="trajetEvent")
+//     */
+//    private $evenement;
     public function __construct()
     {
         $this->navette = new ArrayCollection();
