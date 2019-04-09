@@ -93,6 +93,30 @@ class CommandeTaxeController extends AbstractController
         }
         return new Response(json_encode($data)); 
     }
+
+    public function totalBillet2($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $billet = $entityManager->getRepository(BilletTaxe::class)->find($id);
+        $commandeTaxe = $entityManager->getRepository(commandeTaxe::class)->findBy
+        (
+            [
+                'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
+        $i=0;
+        $nBillet=0;
+        for ($i=0; $i < count($commandeTaxe); $i++) 
+        { 
+            if($commandeTaxe[$i]->getEtatCommande()>=1 || $commandeTaxe[$i]->getEtatCommande()==2)
+            {
+                $diff=$commandeTaxe[$i]->getNombreBillet()-$commandeTaxe[$i]->getNombreBilletRealise();
+                $nBillet=$nBillet+$diff;
+            }
+        }
+       return $nBillet;
+    }
     
     /**
      * @Route("/Json/listCommandeTaxe", name="getAllCommandeTaxe")

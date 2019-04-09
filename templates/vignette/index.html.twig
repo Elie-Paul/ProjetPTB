@@ -193,20 +193,27 @@
             <tr>
                 <th>Guichet</th>
                 <th>Type</th>
-                <th>Section</th>
+                <th>Section</th>                
                 <th>prix</th>
+                <th>Numéro Dernier Billet</th>
+                <th>Billets Commandés</th>
             </tr>
         </thead>
         <tbody>
         {% for vignette in vignettes %}
             <tr>
-                <td>{{ vignette.guichet.nom }}</td>
-                <td>{{ vignette.type.libelle}}</td>
-                <td>{{ vignette.type.section}}</td>
-                <td>{{ vignette.type.prix}}</td>
-                <td id="dpt{{ vignette.id }}">{{vignette.numeroDernierBillet}}</td>
+                <td>{{ vignette.billet.guichet.nom }}</td>
+                <td>{{ vignette.billet.type.libelle}}</td>
+                <td>{{ vignette.billet.type.section}}</td>
+                <td>{{ vignette.billet.type.prix}}</td>
+                <td id="dpt{{ vignette.billet.id }}">{{vignette.billet.numeroDernierBillet}}</td>
+                <td >{{vignette.total}}</td>
                 <td>
-                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ vignette.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                    {% if vignette.total == "0" %}
+                    <a class="btn btn-warning" id="myBBtn" href="#" disabled><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                    {% else %}
+                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ vignette.billet.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

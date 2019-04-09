@@ -36,6 +36,32 @@ class CommandeVignetteController extends AbstractController
     {
         return $this->render('commandeView/vignette/validerCommandeVignette.html.twig');
     }
+
+    public function totalBillet2($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $billet = $entityManager->getRepository(Vignette::class)->find($id);
+        $commandeVignettes = $entityManager->getRepository(CommandeVignette::class)->findBy
+        (
+            [
+                'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
+        $i=0;
+        $nBillet=0;
+        for ($i=0; $i < count($commandeVignettes); $i++) 
+        { 
+            if($commandeVignettes[$i]->getEtatCommande()>=1 || $commandeVignettes[$i]->getEtatCommande()==2)
+            {
+                $diff=$commandeVignettes[$i]->getNombreBillet()-$commandeVignettes[$i]->getNombreBilletRealise();
+                $nBillet=$nBillet+$diff;
+            }
+        }
+       return $nBillet;
+    }   
+
+
     /**
      * @Route("/commande/vignette/suivi", name="commande_vignette_suivi")
      */
