@@ -52,6 +52,8 @@ function addRow(array)
 
 function createRowElement(commande)
 {
+    let array=[];
+    
     let section = document.createElement('td');
     let sectionContent = document.createTextNode(commande.section);
     section.appendChild(sectionContent);

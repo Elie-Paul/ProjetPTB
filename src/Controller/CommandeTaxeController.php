@@ -238,5 +238,48 @@ class CommandeTaxeController extends AbstractController
         }
             return new Response(json_encode($data));
             //return new Response('dddd');
-    }   
+    }
+    
+    /**
+     * @Route("/commande/taxe/modifier/{id}/{cmd}", name="commande_taxe_modifier")
+     */
+    public function modifierCommande($id,$cmd)
+    {
+        $id = intVal($id);
+        $nbreCommande = intVal($cmd);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandeTaxe = $entityManager
+        ->getRepository(CommandeTaxe::class)
+        ->find($id);
+        
+        $commandeTaxe->setNombreBillet($cmd);
+        
+        $entityManager->persist($commandeTaxe);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
+    }
+      /**
+     * @Route("/commande/taxe/delete/{id}", name="commande_taxe_delete")
+     */
+    public function deleteCommande($id)
+    {
+        $id = intVal($id);
+        
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        
+        $commandeTaxe = $entityManager
+        ->getRepository(CommandeTaxe::class)
+        ->find($id);
+        
+        $entityManager->remove($commandeTaxe);
+        $entityManager->flush();
+        
+        return new Response('<h1>ddddd</h1>');
+    }
 }

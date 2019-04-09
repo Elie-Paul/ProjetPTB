@@ -161,6 +161,7 @@ function createRowElement(commande)
     remove.classList.add('glyphicon');
     remove.classList.add('glyphicon-remove');
     remove.classList.add('popup');
+    remove.id = "r" +commande.id;
     remove.style.fontSize = "25px";
     remove.style.color = '#d9534f';
     let popspan2 = document.createElement('span');
@@ -187,6 +188,7 @@ function createRowElement(commande)
         }
         
         );
+        remove.addEventListener('click',(e)=> deleteCommande(e.target));
     }
     if(commande.etat===1)
     {
@@ -381,6 +383,41 @@ function modifierCommande(element)
         xhr.send();
         getAllCommande();
         updateTab();
+    });
+}
+
+function deleteCommande(element)
+{
+    let id = element.id;
+    id = id.substr(1);
+    swal("Nombre de billet a commander:", 
+    {
+        title: "Etes vous sûr ?",
+        text: "souhaitez-vous supprimer ces commandes",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => 
+    {
+        if(willDelete)
+        {
+
+        
+            let xhr = new XMLHttpRequest();
+            xhr.onload = function()
+            {
+                if(this.status == 200)
+                {
+                    swal({
+                        icon: "success",
+                    });
+                }
+            }
+            xhr.open("GET",`http://localhost:8000/commande/ptb/delete/${id}`,true);
+            xhr.send();
+            getAllCommande();
+            updateTab();
+        }    
     });
 }
 
