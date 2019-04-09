@@ -31,7 +31,10 @@ class Section
     /**
      * @ORM\Column(type="integer")
      * @Assert\Type("integer")
-     * @Assert\Regex(pattern="/^[0-9]+$/", match=true, message="Les caractères spéciaux sont interdits dans le titre")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 5000
+     * )
      */
     private $prix;
 

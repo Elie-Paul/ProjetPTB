@@ -96,10 +96,11 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addLieuTrajetNavette/{libelle}", name="lieux_addLieuTrajetNavette")
+     * @Route("/addLieuTrajetNavette", name="lieux_addLieuTrajetNavette")
      */
-    public function addLieuTrajetNavette($libelle)
-    {        
+    public function addLieuTrajetNavette(Request $request)
+    {   
+        $libelle = $request->getContent();
         $lieux = new Lieux();
 
         $lieux->setLibelle($libelle);
@@ -109,7 +110,8 @@ class ModalController extends AbstractController
         $entityManager->persist($lieux);
         $entityManager->flush();
 
-        return $this->redirectToRoute('navette_new');
+        return new Response("true");
+        //return $this->redirectToRoute('navette_new');
     }
 
     /**
@@ -131,14 +133,14 @@ class ModalController extends AbstractController
     }
 
     /**
-     * @Route("/addSection/{libelle}/{prix}", name="lieux_addSection")
+     * @Route("/addSection", name="lieux_addSection")
      */
-    public function addSection($libelle, $prix)
-    {        
+    public function addSection(Request $request)
+    {   
+        $array = explode("+",$request->getContent());
+        $libelle = $array[0];
         $section = new Section();
-        $prix = intval($prix);
-        $ptb = new Ptb();
-        $form = $this->createForm(PtbType::class, $ptb);
+        $prix = intval($array[1]);
 
         $section->setLibelle($libelle);
         $section->setPrix($prix);
@@ -148,7 +150,8 @@ class ModalController extends AbstractController
         $entityManager->persist($section);
         $entityManager->flush();
 
-        return $this->redirectToRoute('ptb_new');
+        return new Response("true");
+        //return $this->redirectToRoute('ptb_new');
     }
 
     /**

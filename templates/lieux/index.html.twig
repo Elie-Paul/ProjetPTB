@@ -69,9 +69,9 @@
                                     <td>
                                         {{ lieux.libelle }}</td>
                                     <td>
-                                        {{ lieux.createdAt ? lieux.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                                        {{ lieux.createdAt ? lieux.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
                                     <td>
-                                        {{ lieux.updatedAt ? lieux.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                                        {{ lieux.updatedAt ? lieux.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
                                     <td>
                                         <a class="btn btn-info" role="button" href="{{ path('lieux_show', {'id': lieux.id}) }}">
                                             <i class="glyphicon glyphicon-eye-open"></i>
