@@ -17,6 +17,7 @@ use App\Form\BilletPtbType;
 use App\Form\GuichetType;
 use App\Repository\AbonnementRepository;
 use App\Repository\TrajetRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -337,9 +338,11 @@ class ModalController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUpdateAt(new \DateTime());           
-            $this->getDoctrine()->getManager()->flush();            
-            return $this->redirectToRoute('user_show', [
+            $this->getDoctrine()->getManager()->flush();
+            return $this->render('user/show.html.twig', [
+                'user' => $user,
                 'id' => $user->getId(),
+                'form' => $form->createView()
             ]);
         }
         return $this->render('user/modificationimage.html.twig', [

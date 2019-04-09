@@ -15,17 +15,11 @@
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
 
     <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="nomGare"><big>Image</big></label>
-            <input type="file"
-              class="form-control" name="" id="img" name="pic" accept="image/*" aria-describedby="helpId" placeholder="Entrer une gare">
-          </div>
-        </form>
-    </div>
-
-    <div class="modal-footer left">
-        <button  id="submit" onclick="ajouter({{ app.user.id }})" class="btn btn-primary"><big>Valider</big></button>
+        {{ user.id }}
+        {{ form_start(form, {'action': path('img_ModiUser', {'user': user.id}), 'attr': {'class': 'foPhoto'}} ) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">{{ button_label|default('Modifier') }}</button>
+        {{ form_end(form) }}
     </div>
   </div>
 </div>
@@ -231,20 +225,7 @@
             {
                 modal.style.display = "none";
             }
-        }
-
-        function ajouter(id){
-            console.log(id);
-          var modal = document.getElementById('myModal');
-          var lib = document.getElementById("img").value;
-          var n=lib.length;
-          var libelle =lib.slice(12,n);
-          modal.style.display = "none";
-          console.log(id);
-          document.location.href = `/ModifierimageUser/${id}`;
-          swal("Modification Réussie!", "Vous avez changé votre photo", "success");          
-
-        }
+        };
         
         function mode()
         {
