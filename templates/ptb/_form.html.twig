@@ -11,28 +11,28 @@
       <div class="row">
         <div class="from-group">
           <label for="lib">Libelle</label>            
-          <input id="libLieux" type="text" class="form-control" name="msg" placeholder="Saisir une gare si possible">
+          <input id="libLieux" type="text" class="form-control" name="msg" placeholder="Saisir une station">
           <br>
-          <button type="button" id="submit" onclick="ajoutLieu()" class="btn btn-primary">Ajouter</button>
+          <button type="button" id="submit1" class="btn btn-primary">Ajouter</button>
         </div>
       </div>
       <hr>
       <div class="form-group">
-        <label for="sel1">Depart</label>
-        <select class="form-control DepartId" id="sel1">
+          <label for="sel1">Depart</label>
+          <select class="form-control DepartId" id="sel1">
             <option id="0" selected disabled>Depart</option>
           </select>
-      </div>
-      <div class="form-group">
-        <label for="sel2">Arrivée</label>
-        <select class="form-control ArriveeId" id="sel2">
+        </div>
+        <div class="form-group">
+          <label for="sel1">Arrivée</label>
+          <select class="form-control ArriveeId" id="sel2">
             <option id="0" selected disabled>Arrivée</option>
           </select>
-      </div>
+        </div>
     </div>
 
     <div class="modal-footer">
-      <button type="button" id="submit" onclick="ajouter2()" class="btn btn-primary">Ajouter</button>
+      <button type="button" id="submit2" class="btn btn-primary">Ajouter</button>
     </div>
   </div>
   
@@ -72,7 +72,7 @@
 {{ form_start(form) }}
 <div class="row">
     <div class="col-xs-10">{{ form_row(form.trajet) }}</div>
-    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode()"><i class="glyphicon glyphicon-plus"></i></a></div>
+    <div class="col-xs-2 cs"><a type="button" class="btn btn-warning" id="myBBtn" onclick="mode1()"><i class="glyphicon glyphicon-plus"></i></a></div>
     </div>
 <div class="row">
     <div class="col-xs-10">{{ form_row(form.section) }}</div>
@@ -130,7 +130,7 @@
           getJson('http://localhost:8000/json/lieu/arrivee/',2);
         }
         
-        function mode()
+        function mode1()
         {
           modal.style.display = "block";      
           getJson('http://localhost:8000/json/lieu/depart',1);
@@ -164,10 +164,10 @@
         
         function mode2()
         {
-          modal1.style.display = "block";          
+          modal1.style.display = "block";       
         }
 
-         window.onclick = function(event) 
+        window.onclick = function(event) 
         {            
           modal.style.display = "none";
           modal1.style.display = "none";
@@ -273,14 +273,100 @@ document.getElementById("enregistrer").addEventListener("submit", function(e){
 
   return false;
 });
-/*document.getElementById("enregistrer").addEventListener("submit", function(e){
-  e.preventDefault();
-alert('Test reussi');
-});*/
 
 
 //----------------Traitement du modal Trajet----------------------//
 
+document.getElementById("submit2").addEventListener("click", function(e){
+  e.preventDefault();
+
+var depart = document.getElementById("sel1");
+depart = depart.options[depart.selectedIndex].id;
+
+var arrivee = document.getElementById("sel2");
+ arrivee = arrivee.options[arrivee.selectedIndex].id;
+
+let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.response);
+      console.log(response);
+      
+      if(response){
+        swal({
+        title: "Succès",
+        text: "Un trajet a été ajouté",
+        icon: "success",
         
+        })
+            .then((value) => {
+              var modal1 = document.getElementsByClassName('modal')[1];
+              modal1.style.display = "none";
+                document.location.href="http://localhost:8000/ptb/new";
+                
+            });
+
+      }
+      
+    }
+  }
+  
+  xhttp.open("POST","/addTrajetNavette",true);
+  xhttp.responseType = "json";
+  let parm = `${depart}+${arrivee}`;
+  xhttp.send(parm);  
+
+  return false;
+
+});
+
+////----Ajouter Lieux
+document.getElementById("submit1").addEventListener("click", function(e){
+  e.preventDefault();
+
+  var lib = document.getElementById("libLieux").value;
+
+  let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.response);
+      console.log(response);
+      
+      if(response){
+        swal({
+        title: "Succès",
+        text: "Une station a été ajoutée",
+        icon: "success",
         
+        })
+            .then((value) => {
+              var modal = document.getElementsByClassName('modal')[0];
+              modal.style.display = "block";
+               // document.location.href="http://localhost:8000/ptb/new";
+              getJson('http://localhost:8000/json/lieu/depart',1);
+              getJson('http://localhost:8000/json/lieu/arrivee',2);
+              document.getElementById("libLieux").innerHTML = " ";
+                
+            });
+
+      }
+      
+    }
+  }
+  
+  xhttp.open("POST","/addLieuTrajetNavette",true);
+  xhttp.responseType = "json";
+  let parm = `${lib}`;
+  xhttp.send(parm);  
+
+  return false;
+
+
+}); 
 </script> 

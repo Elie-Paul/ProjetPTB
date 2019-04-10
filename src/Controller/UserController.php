@@ -71,7 +71,7 @@ class UserController extends AbstractController
                 'username' => $user->getUsername(),
             ]);
             if (!$user1) {
-                $mail->sendMailUserInfo($user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/dafmail.html.twig');
+                $mail->sendMailUserInfo($user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles());
                 $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/index.html.twig');
                 $user->setCreatedAt(new \DateTime());
                 $user2 = $userRepository->findOneBy([

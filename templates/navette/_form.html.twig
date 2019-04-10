@@ -230,8 +230,11 @@ function setLieuxArrivee(array)
 document.getElementById("submit2").addEventListener("click", function(e){
   e.preventDefault();
 
-var depart = document.getElementById("sel1").value;
-var arrivee = document.getElementById("sel2").value;
+var depart = document.getElementById("sel1");
+depart = depart.options[depart.selectedIndex].id;
+
+var arrivee = document.getElementById("sel2");
+ arrivee = arrivee.options[arrivee.selectedIndex].id;
 
 let xhttp=new XMLHttpRequest();
   
