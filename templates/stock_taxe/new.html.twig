@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New StockTaxe{% endblock %}
+
+{% block body %}
+    <h1>Create new StockTaxe</h1>
+
+    {{ include('stock_taxe/_form.html.twig') }}
+
+    <a href="{{ path('stock_taxe_index') }}">back to list</a>
+{% endblock %}

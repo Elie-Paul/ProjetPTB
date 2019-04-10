@@ -14,18 +14,11 @@
   <div class="modal-content">
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
 
-    <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="nomGare"><big>Image</big></label>
-            <input type="file"
-              class="form-control" name="" id="img" name="pic" accept="image/*" aria-describedby="helpId" placeholder="Entrer une gare">
-          </div>
-        </form>
-    </div>
-
-    <div class="modal-footer left">
-        <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Valider</big></button>
+    <div class="modal-body">        
+        {{ form_start(form, {'action': path('img_ModiUser', {'user': user.id}), 'attr': {'class': 'foPhoto'}} ) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">{{ button_label|default('Modifier') }}</button>
+        {{ form_end(form) }}
     </div>
   </div>
 </div>
@@ -33,7 +26,7 @@
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
-            <h4><i class="fa fa-list"></i>&nbsp;<big>Information sur Mon Profil </big></h4>
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Information sur mon Profil </big></h4>
           </div>
           <div class="col-md-6 text-right">
           {% if is_granted('ROLE_ADMINISTRATEUR') %}
@@ -231,20 +224,7 @@
             {
                 modal.style.display = "none";
             }
-        }
-
-        function ajouter(){
-          var modal = document.getElementById('myModal');
-          var lib = document.getElementById("img").value;
-          var n=lib.length;
-          var libelle =lib.slice(12,n);
-          var id = document.getElementById("userid").value;
-          modal.style.display = "none";
-          console.log(id);
-          document.location.href = `http://localhost:8000/${id}/ModifierimageUser/${libelle}`;
-          swal("Modification Réussie!", "Vous avez changé votre photo", "success");          
-
-        }
+        };
         
         function mode()
         {

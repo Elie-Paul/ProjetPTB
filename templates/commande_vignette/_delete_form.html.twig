@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('commande_vignette_delete', {'id': commande_vignette.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commande_vignette.id) }}">
+    <button class="btn">Delete</button>
+</form>

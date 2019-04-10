@@ -16,15 +16,15 @@ class TrajetEvent
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $depart;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $arrivee;
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $depart;
+//
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $arrivee;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="trajet")
@@ -43,34 +43,60 @@ class TrajetEvent
      */
     private $billetEvent;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Lieux", inversedBy="trajetEventDepart", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $depart;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Lieux", inversedBy="trajetEventArrivee", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $arrivee;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDepart(): ?string
+    /**
+     * @return mixed
+     */
+    public function getDepart()
     {
         return $this->depart;
     }
 
-    public function setDepart(string $depart): self
+    /**
+     * @param mixed $depart
+     * @return TrajetEvent
+     */
+    public function setDepart($depart)
     {
         $this->depart = $depart;
-
         return $this;
     }
 
-    public function getArrivee(): ?string
+    /**
+     * @return mixed
+     */
+    public function getArrivee()
     {
         return $this->arrivee;
     }
 
-    public function setArrivee(string $arrivee): self
+    /**
+     * @param mixed $arrivee
+     * @return TrajetEvent
+     */
+    public function setArrivee($arrivee)
     {
         $this->arrivee = $arrivee;
-
         return $this;
     }
+
+
 
     public function getEvenement(): ?Evenement
     {

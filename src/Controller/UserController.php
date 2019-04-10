@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Destinateur;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Controller\MailController;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -153,10 +155,27 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
-    public function show(User $user): Response
+    public function show(Request $request, User $user): Response
     {
+        $form = $this->createFormBuilder($user)
+            ->add('imageFile', FileType::class, [
+                'label' => "Image",
+                'attr' => [
+                    'class' => 'form-control',
+                    'required' => true
+                ]
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdateAt(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('home');
+        }
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'id' => $user->getId(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -205,7 +224,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setCreatedAt(new \DateTime());
             $user->setUpdateAt(new \DateTime());
             $hash=$encoder->encodePassword($user, $user->getPassword());  
             $user->setPassword($hash);
@@ -221,6 +239,14 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    public function totalBillet2()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->findAll();
+        $nuser=count($user);
+       return $nuser;
+    } 
 
 
     /**

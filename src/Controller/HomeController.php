@@ -3,7 +3,14 @@
 namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Controller\UserController;
 use App\Repository\UserRepository;
+
+use App\Entity\Guichet;
+use App\Form\GuichetType;
+use App\Controller\GuichetController;
+use App\Repository\GuichetRepository;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,10 +21,18 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository,GuichetRepository $guichetRep): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->findAll();
+        $nuser=count($user);
+
+        $entityManagers = $this->getDoctrine()->getManager();
+        $guic = $entityManagers->getRepository(Guichet::class)->findAll();
+        $nguic=count($guic);
+
         return $this->render('home/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $userRepository->findAll(),'nbre'=>$nuser,'guichets' => $guichetRep->findAll(),'nbreguichet'=>$nguic
         ]);
     }
 }

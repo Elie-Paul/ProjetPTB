@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CommandePtb{% endblock %}
+
+{% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Commande PTB</big></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('commande_ptb_lister') }}"><i class="fa fa-list"></i>&nbsp; Liste Commande Ptb</a>
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information de la Commande</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ commande_ptb.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre Billet</th>
+                <td>{{ commande_ptb.nombreBillet }}</td>
+            </tr>
+            <tr>
+                <th>Etat Commande</th>
+                <td>{{ commande_ptb.etatCommande }}</td>
+            </tr>
+            <tr>
+                <th>Date Commande</th>
+                <td>{{ commande_ptb.dateCommande ? commande_ptb.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date Commande Validée</th>
+                <td>{{ commande_ptb.dateCommandeValider ? commande_ptb.dateCommandeValider|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date Commande Realisée</th>
+                <td>{{ commande_ptb.dateCommandeRealiser ? commande_ptb.dateCommandeRealiser|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Mise à jour</th>
+                <td>{{ commande_ptb.updatedAt ? commande_ptb.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de Création</th>
+                <td>{{ commande_ptb.createdAt ? commande_ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nombre Billet Réalisé</th>
+                <td>{{ commande_ptb.nombreBilletRealise }}</td>
+            </tr>
+            <tr>
+                <th>Nombre Billet Vendu</th>
+                <td>{{ commande_ptb.nombreBilletVendu }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-warning" href="{{ path('commande_ptb_voir', {'id': commande_ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a></br>
+    </div>
+</div>
+
+    {{ include('commande_ptb/_delete_form.html.twig') }}
+{% endblock %}
