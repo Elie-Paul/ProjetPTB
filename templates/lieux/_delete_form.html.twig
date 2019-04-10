@@ -2,12 +2,11 @@
 
 
 
-<form method="post" action="{{ path('lieux_delete', {'id': lieux.id}) }}">
+<form method="post" action="{{ path('lieux_delete', {'id': lieux.id}) }}" onsubmit="return confirm('Êtes-vous sûr de bien vouloir supprimer cet élément?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ lieux.id) }}">
-
-    <a onclick="confirmation({{ lieux.id }})" type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> <big>Supprimer</big></a>
-
+    <button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i>&nbsp;Supprimer</button>
+    <!--a onclick="confirmation({{ lieux.id }})" type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> <big>Supprimer</big></a-->
 </form>
 
 

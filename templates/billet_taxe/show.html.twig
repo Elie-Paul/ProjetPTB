@@ -3,16 +3,29 @@
 {% block title %}BilletTaxe{% endblock %}
 
 {% block body %}
-    <h1>BilletTaxe</h1>
-
-    <table class="table">
+    <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><big>Information sur le Taxe</big></h4>
+          </div>
+            <div class="col-md-6 text-right">
+            <a class="btn btn-primary pull-right" href="{{ path('billet_taxe_index2') }}"><i class="fa fa-list"></i>  Liste Taxe</a>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information sur le taxe</h3>
+    </div>
+    <table class="table table-bordered">
         <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ billet_taxe.id }}</td>
             </tr>
             <tr>
-                <th>NumeroDernierBillet</th>
+                <th>Numero Dernier Billet</th>
                 <td>{{ billet_taxe.numeroDernierBillet }}</td>
             </tr>
             <tr>
@@ -20,19 +33,18 @@
                 <td>{{ billet_taxe.prix }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
+                <th>Date de Création</th>
                 <td>{{ billet_taxe.createdAt ? billet_taxe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>UpdatedAt</th>
+                <th>Dernière Modification</th>
                 <td>{{ billet_taxe.updatedAt ? billet_taxe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('billet_taxe_index') }}">back to list</a>
-
-    <a href="{{ path('billet_taxe_edit', {'id': billet_taxe.id}) }}">edit</a>
+    <a class="btn btn-warning" href="{{ path('billet_taxe_edit', {'id': billet_taxe.id}) }}">Modifier</a></br>
+    </div>
+</div
 
     {{ include('billet_taxe/_delete_form.html.twig') }}
 {% endblock %}

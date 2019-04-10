@@ -213,11 +213,7 @@
                 <td >{{billet_ptb.total}}</td>
                 <td>
                 {% if billet_ptb.total == "0" %}
-<<<<<<< HEAD
                     <a class="btn btn-warning" id="myBBtn" href="#" disabled><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
-=======
-                    <a class="btn btn-warning" id="myBBtn" href="#"  disabled><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
->>>>>>> 28f39c158a5361bd4a3396107a306ac544ee978e
                 {% else %}
                     <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_ptb.billet.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
                 {% endif %}

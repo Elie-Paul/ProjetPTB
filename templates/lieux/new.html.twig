@@ -34,5 +34,37 @@
         {% if error is defined %}
             swal("Attention", "Cette gare existe déjà", "warning");
         {% endif %}
+
+
+        function success(){
+            let xhttp=new XMLHttpRequest();
+    
+            xhttp.onreadystatechange = function()
+            {
+                if(this.readyState == 4 && this.status == 200)
+                {
+                let response = JSON.parse(xhttp.responseText);
+                
+                    if(response){
+                        swal({
+                            title: "Succès",
+                            text: "Vous avez ajouté une nouvelle station",
+                            icon: "success",
+                            
+                            })
+                                .then((value) => {                            
+                                    document.location.href="http://localhost:8000/lieux/";
+                                    
+                                });
+                    }
+                }
+                }
+                
+                xhttp.open("GET","/lieux/new",true);
+                xhttp.send();
+    }
+
+        success();
+
     </script>
 {% endblock %}

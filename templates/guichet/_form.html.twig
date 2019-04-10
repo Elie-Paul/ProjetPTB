@@ -7,19 +7,21 @@
   <div class="modal-content">
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
 
-    <div class="modal-body">
-        <form>
-        <div class="form-group">
-            <label for="nomGare"><big>Libelle</big></label>
-            <input type="text"
-              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une gare">
-          </div>
-        </form>
-    </div>
+    <form id="enregistrer">
+        <div class="modal-body">
+            <form>
+            <div class="form-group">
+                <label for="nomGare"><big>Libelle</big></label>
+                <input type="text"
+                class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une station">
+            </div>
+            </form>
+        </div>
 
-    <div class="modal-footer left">
-        <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Ajouter</big></button>
-    </div>
+        <div class="modal-footer left">
+            <button  id="submit" class="btn btn-primary"><big>Ajouter</big></button>
+        </div>
+    </form>
   </div>
   
 
@@ -55,10 +57,6 @@
 </style>
 
 <script>
-    
-
-//import React from 'react';
-//import swal from '@sweetalert/with-react';
 
         var span = document.getElementsByClassName("close")[0];
         var modal = document.getElementById('myModal');
@@ -77,15 +75,7 @@
         function ajouter(){
           var libelle = document.getElementById("libelle").value;
           modal.style.display = "none";
-          document.location.href = `http://localhost:8000/addLieuGuichet/${libelle}`;
-          /*swal({
-                title: "Etes vous sûr ?",
-                text: "Cliquez sur ok pour un réabonnement ou cancel pour annuler!",
-                icon: "warning",
-                buttons: true,
-                // dangerMode: true,
-            })*/
-          
+          document.location.href = `http://localhost:8000/addLieuGuichet/${libelle}`;          
 
         }
         
@@ -97,5 +87,47 @@
           
         }
         
+//-------Traitement du Modal----------------//
+document.getElementById("submit").addEventListener("click", function(e){
+  e.preventDefault();
+
+  var libelle = document.getElementById("libelle").value;
+
+  let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.response);
+      console.log(response);
+      
+      if(response){
+        swal({
+        title: "Succès",
+        text: "Une station a été ajoutée",
+        icon: "success",
+        
+        })
+            .then((value) => {
+              var modal = document.getElementById('myModal');
+              modal.style.display = "none";
+               document.location.href="http://localhost:8000/guichet/new";
+                
+            });
+
+      }
+      
+    }
+  }
+  
+  xhttp.open("POST","/addLieuTrajetNavette",true);
+  xhttp.responseType = "json";
+  let parm = `${libelle}`;
+  xhttp.send(parm);  
+
+  return false;
+
+});
         
     </script>

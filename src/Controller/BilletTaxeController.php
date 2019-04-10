@@ -38,6 +38,19 @@ class BilletTaxeController extends AbstractController
     }
 
     /**
+     * @Route("/index2", name="billet_taxe_index2", methods={"GET"})
+     * @param BilletTaxeRepository $billetTaxeRepository
+     * @return Response
+     */
+    public function index2(BilletTaxeRepository $billetTaxeRepository, Request $request): Response
+    {
+        $billetTaxe = new BilletTaxe();
+        return $this->render('billet_taxe/index2.html.twig', [
+            'billet_taxes' => $billetTaxeRepository->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/new", name="billet_taxe_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response

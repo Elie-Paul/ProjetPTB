@@ -3,11 +3,26 @@
 {% block title %}Edit BilletTaxe{% endblock %}
 
 {% block body %}
-    <h1>Edit BilletTaxe</h1>
+    <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Modification Taxe</big></h4>
+          </div>
+            <div class="col-md-6 text-right">
+            <a class="btn btn-primary pull-right" href="{{ path('billet_taxe_index2') }}"><i class="fa fa-list"></i>  Liste Taxe</a>
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
 
-    {{ include('billet_taxe/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('billet_taxe_index') }}">back to list</a>
+    <div class="box box-solid box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Modifier du taxe</h3>   
+    </div>
+    <div class="box-body">
+    {{ include('billet_taxe/_form.html.twig', {'button_label': 'Modifier'}) }}
+</div>
+</div>
 
     {{ include('billet_taxe/_delete_form.html.twig') }}
 {% endblock %}
