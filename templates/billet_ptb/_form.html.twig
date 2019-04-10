@@ -224,7 +224,8 @@
 
   var code = document.getElementById('code').value;
   var nom = document.getElementById('nom').value;
-  var lieu = document.getElementById('lieu').value;
+  var lieu = document.getElementById('lieu');
+  lieu = lieu.options[lieu.selectedIndex].id;
 
   let xhttp=new XMLHttpRequest();
   

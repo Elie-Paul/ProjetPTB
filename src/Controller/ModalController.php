@@ -166,25 +166,18 @@ class ModalController extends AbstractController
 
         $code = $array[0];
         $nom = $array[1];
-        $lieu1 = $array[2];
-        /*$lieux = $this->getDoctrine()->getRepository(Lieux::class)
-            ->find(intval($array[2]));
-        
+        $lieu1 = intval($array[2]);
         $lieu = $this->getDoctrine()->getRepository(Lieux::class)
-            ->findOneBy([
-                'id' => $lieux,
-            ]);*/
+            ->find($lieu1);
+
         $guichet = new Guichet();
-        $lieux = new Lieux();
 
         $guichet->setCode($code);
         $guichet->setNom($nom);
-        $lieu = $lieux->setLibelle($lieu1);
         $guichet->setLieu($lieu);
         $guichet->setCreatedAt(new \DateTime());
         $guichet->setUpdatedAt(new \DateTime());
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($lieux);
         $entityManager->persist($guichet);
         $entityManager->flush();
 
@@ -289,21 +282,19 @@ class ModalController extends AbstractController
     public function addTrajetNavette(Request $request)
     {   
         $array = explode("+",$request->getContent());
-        $depart1 = $array[0];
-        $arrivee1 = $array[1];
-        $trajet = new Trajet();
-        $lieux = new Lieux();
+        $depart1 = intval($array[0]);
+        $arrivee1 = intval($array[1]);
+        $trajet = new Trajet();        
 
-        $depart = $lieux->setLibelle($depart1);
-        $arrivee = $lieux->setLibelle($arrivee1);
-
+        $depart = $this->getDoctrine()->getRepository(Lieux::class)->find($depart1);
+        $arrivee = $this->getDoctrine()->getRepository(Lieux::class)->find($arrivee1);
 
         $trajet->setDepart($depart);
         $trajet->setArrivee($arrivee);
         $trajet->setCreatedAt(new \DateTime());
         $trajet->setUpdatedAt(new \DateTime());
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($lieux);
+        
         $entityManager->persist($trajet);
         $entityManager->flush();
 
