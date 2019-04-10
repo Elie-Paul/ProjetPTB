@@ -138,57 +138,60 @@ class Controller extends AbstractController
         $data = array();
         foreach ($commandePtbs as $key => $variable) 
         {
-            $myarray = array
-            (
-                'id' => $variable->getId(),
+            if($variable->getBillet()->getEvenement() == null)
+            {
+                $myarray = array
+                (
+                    'id' => $variable->getId(),
 
-                'section' => $variable
-                ->getBillet()
-                ->getPtb()
-                ->getSection(),
+                    'section' => $variable
+                    ->getBillet()
+                    ->getPtb()
+                    ->getSection(),
 
-                'depart' => $variable
-                ->getBillet()
-                ->getPtb()->getTrajet()
-                ->getDepart()
-                ->getLibelle(),
+                    'depart' => $variable
+                    ->getBillet()
+                    ->getPtb()->getTrajet()
+                    ->getDepart()
+                    ->getLibelle(),
 
-                'arrivee' => $variable
-                ->getBillet()
-                ->getPtb()->getTrajet()
-                ->getArrivee()
-                ->getLibelle(),
+                    'arrivee' => $variable
+                    ->getBillet()
+                    ->getPtb()->getTrajet()
+                    ->getArrivee()
+                    ->getLibelle(),
 
-                'guichet' => $variable
-                ->getBillet()
-                ->getGuichet()
-                ->getNom(),
+                    'guichet' => $variable
+                    ->getBillet()
+                    ->getGuichet()
+                    ->getNom(),
 
-                'nombreDeBilletCommander' => $variable
-                ->getNombreBillet(),
-                
-                'nombreBilletRealiser' => $variable
-                ->getNombreBilletRealise(),
+                    'nombreDeBilletCommander' => $variable
+                    ->getNombreBillet(),
+                    
+                    'nombreBilletRealiser' => $variable
+                    ->getNombreBilletRealise(),
 
-                'nombreBilletVendu' => $variable
-                ->getNombreBilletVendu(),
+                    'nombreBilletVendu' => $variable
+                    ->getNombreBilletVendu(),
 
-                'etat' => $variable
-                ->getEtatCommande(),
+                    'etat' => $variable
+                    ->getEtatCommande(),
 
-                'section' => $variable
-                ->getBillet()
-                ->getPtb()
-                ->getSection()
-                ->getLibelle(),
-                'dateCommandeValider' => $variable
-                ->getDateCommandeValider(),
-                'dateCommandeRealiser' => $variable
-                ->getDateCommandeRealiser(),
-                'dateCommande' => $variable
-                ->getDateCommande()
-            );
-            array_push($data,$myarray);
+                    'section' => $variable
+                    ->getBillet()
+                    ->getPtb()
+                    ->getSection()
+                    ->getLibelle(),
+                    'dateCommandeValider' => $variable
+                    ->getDateCommandeValider(),
+                    'dateCommandeRealiser' => $variable
+                    ->getDateCommandeRealiser(),
+                    'dateCommande' => $variable
+                    ->getDateCommande()
+                );
+                array_push($data,$myarray);
+            }
         }
             return new Response(json_encode($data));
             //return new Response('dddd');
@@ -509,39 +512,41 @@ class Controller extends AbstractController
         $data = array();
         foreach ($billets as $key => $billet) 
         {
-            $stock = $this->getDoctrine()
-            ->getRepository(StockPtb::class)->findOneby(
-                [
-                    'billet' =>$billet,
-                ]
-            );
-            $myarray = array
-            (
-                'id' => $billet->getId(),
+            if($billet->getEvenement() == null)
+            {
+                $stock = $this->getDoctrine()
+                ->getRepository(StockPtb::class)->findOneby(
+                    [
+                        'billet' =>$billet,
+                    ]
+                );
+                $myarray = array
+                (
+                    'id' => $billet->getId(),
 
-                'section' => $billet
-                ->getPtb()
-                ->getSection()
-                ->getLibelle(),
+                    'section' => $billet
+                    ->getPtb()
+                    ->getSection()
+                    ->getLibelle(),
+                    'depart' => $billet
+                    ->getPtb()
+                    ->getTrajet()
+                    ->getDepart()
+                    ->getLibelle(),
 
-                'depart' => $billet
-                ->getPtb()
-                ->getTrajet()
-                ->getDepart()
-                ->getLibelle(),
+                    'arrivee' => $billet
+                    ->getPtb()
+                    ->getTrajet()
+                    ->getArrivee()
+                    ->getLibelle(),
 
-                'arrivee' => $billet
-                ->getPtb()
-                ->getTrajet()
-                ->getArrivee()
-                ->getLibelle(),
-
-                'guichet' =>$billet
-                ->getGuichet()
-                ->getNom(),
-                'stock' => $stock->getNbre(),
-            );
-            array_push($data,$myarray);
+                    'guichet' =>$billet
+                    ->getGuichet()
+                    ->getNom(),
+                    'stock' => $stock->getNbre(),
+                );
+                array_push($data,$myarray);
+            }
         }
             return new Response(json_encode($data));
             //return new Response('dddd');

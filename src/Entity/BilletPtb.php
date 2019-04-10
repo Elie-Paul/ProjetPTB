@@ -54,6 +54,11 @@ class BilletPtb
      */
     private $ventePtbs;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="billetPtbs")
+     */
+    private $evenement;
+
     public function __construct()
     {
         $this->commandePtbs = new ArrayCollection();
@@ -188,6 +193,18 @@ class BilletPtb
                 $ventePtb->setBillet(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
 
         return $this;
     }

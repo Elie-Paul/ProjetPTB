@@ -55,9 +55,15 @@ class Evenement
      */
     private $UpdatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\BilletPtb", mappedBy="evenement")
+     */
+    private $billetPtbs;
+
     public function __construct()
     {
         $this->trajet = new ArrayCollection();
+        $this->billetPtbs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,6 +159,37 @@ class Evenement
     public function setUpdatedAt(\DateTimeInterface $UpdatedAt): self
     {
         $this->UpdatedAt = $UpdatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BilletPtb[]
+     */
+    public function getBilletPtbs(): Collection
+    {
+        return $this->billetPtbs;
+    }
+
+    public function addBilletPtb(BilletPtb $billetPtb): self
+    {
+        if (!$this->billetPtbs->contains($billetPtb)) {
+            $this->billetPtbs[] = $billetPtb;
+            $billetPtb->setEvenement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBilletPtb(BilletPtb $billetPtb): self
+    {
+        if ($this->billetPtbs->contains($billetPtb)) {
+            $this->billetPtbs->removeElement($billetPtb);
+            // set the owning side to null (unless already changed)
+            if ($billetPtb->getEvenement() === $this) {
+                $billetPtb->setEvenement(null);
+            }
+        }
 
         return $this;
     }
