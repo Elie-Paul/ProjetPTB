@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+    <!-- CSS IMPRIMER-->
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}CommandeNavette index{% endblock %}
+
+{% block body %}
+     <div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Commandes Navette</big></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('commande_navette_new') }}"><i class="glyphicon glyphicon-plus"></i>&nbsp; Nouvelle Commande Navette</a>
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+    <div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h1 class="box-title">Liste des Commandes Navette</h1>
+            </div>
+            <div class="box-body">
+    <table class="table table-hover table-striped dataTable" id="example1">
+        <thead>
+            <tr>
+                <th>Nombre Billet</th>
+                <th>Etat Commande</th>
+                <th>Date Commande</th>
+                <th>Date Comnande Validée</th>
+                <th>Date Commande Realisée</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande_navette in commande_navettes %}
+            <tr>
+                <td>{{ commande_navette.nombreBillet }}</td>
+                <td>{{ commande_navette.etatCommande }}</td>
+                <td>{{ commande_navette.dateCommande ? commande_navette.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande_navette.dateComnandeValider ? commande_navette.dateComnandeValider|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande_navette.dateCommandeRealiser ? commande_navette.dateCommandeRealiser|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('commande_navette_voir', {'id': commande_navette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
+                    <a class="btn btn-warning" href="{{ path('commande_navette_modifiernonvalider', {'id': commande_navette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- DataTables -->
+    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+                "reponsive": true,
+                "pageLength": 10,
+                "language": {
+                    "decimal": "",
+                    "loadingRecords": "Chargement...",
+                    "processing": "En traitement...",
+                    "lengthMenu": "Afficher _MENU_ entrées",
+                    "zeroRecords": "Aucun enregistrements correspondants trouvés",
+                    "emptyTable": "aucune donnée disponible",
+                    "infoFiltered": "(filtré de _MAX_ entrées totales)",
+                    "infoEmpty": "Affiche 0 à 0 sur 0 entrées",
+                    "info": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
+                    "search": "Rechercher : ",
+                    "paginate": {
+                        "first": "Premier",
+                        "last": "Dernier",
+                        "previous": "Précédent",
+                        "next": "Suivant"
+                    }
+                }
+            })
+        })
+    </script>
+
+    <script type="text/javascript">
+        function imprimer_table(){
+        window.print();
+        }
+    </script>
+{% endblock %}
+
+

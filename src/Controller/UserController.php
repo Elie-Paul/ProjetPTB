@@ -223,7 +223,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setCreatedAt(new \DateTime());
             $user->setUpdateAt(new \DateTime());
             $hash=$encoder->encodePassword($user, $user->getPassword());  
             $user->setPassword($hash);
@@ -239,6 +238,14 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    public function totalBillet2()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->findAll();
+        $nuser=count($user);
+       return $nuser;
+    } 
 
 
     /**

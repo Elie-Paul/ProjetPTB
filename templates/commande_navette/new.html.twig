@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CommandeNavette{% endblock %}
+
+{% block body %}
+    <h1>Create new CommandeNavette</h1>
+
+    {{ include('commande_navette/_form.html.twig') }}
+
+    <a href="{{ path('commande_navette_index') }}">back to list</a>
+{% endblock %}
