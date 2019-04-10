@@ -26,7 +26,7 @@ class StockTaxeController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="stock_taxe_new", methods={"GET","POST"})
+     * @Route("/new", name="stock_taxe_nouveau", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {

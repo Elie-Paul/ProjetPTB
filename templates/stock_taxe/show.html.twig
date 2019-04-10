@@ -3,8 +3,23 @@
 {% block title %}StockTaxe{% endblock %}
 
 {% block body %}
-    <h1>StockTaxe</h1>
-
+<div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Stock Taxe</big></h4>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-info" href="{{ path('stock_taxe_listertaxe') }}"><i class="fa fa-list"></i>&nbsp; Liste Stock Ptb</a>
+          </div>
+          </div>
+          <!-- /.box-body -->
+        </div>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information du Stock</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
     <table class="table">
         <tbody>
             <tr>
@@ -12,23 +27,22 @@
                 <td>{{ stock_taxe.id }}</td>
             </tr>
             <tr>
-                <th>Nbre</th>
+                <th>Nombre</th>
                 <td>{{ stock_taxe.nbre }}</td>
             </tr>
             <tr>
-                <th>CreatedAt</th>
+                <th>Date Création</th>
                 <td>{{ stock_taxe.createdAt ? stock_taxe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>UpdatedAt</th>
+                <th>Mise à jour</th>
                 <td>{{ stock_taxe.updatedAt ? stock_taxe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('stock_taxe_index') }}">back to list</a>
-
-    <a href="{{ path('stock_taxe_edit', {'id': stock_taxe.id}) }}">edit</a>
-
+    <a class="btn btn-warning" href="{{ path('stock_taxe_modifier', {'id': stock_taxe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
+</div>
+</div
     {{ include('stock_taxe/_delete_form.html.twig') }}
 {% endblock %}
