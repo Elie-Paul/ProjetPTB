@@ -187,6 +187,7 @@
                 <th>Prix</th>
                 <th>Guichet</th>
                 <th>Numéro Depart</th>
+                <th>Billets Commandés</th>
                 {% if is_granted('ROLE_BILLETTEUR') %}
                 <th>Action</th>
                 {% endif %}
@@ -195,11 +196,16 @@
         <tbody>
         {% for billet_taxe in billet_taxes %}
             <tr>
-                <td>{{ billet_taxe.prix }}</td>
+                <td>{{ billet_taxe.billet.prix }}</td>
                 <td>Controleur</td>
-                <td id="dpt{{ billet_taxe.id }}">{{billet_taxe.numeroDernierBillet}}</td>
-                <td>                    
-                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_taxe.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                <td id="dpt{{ billet_taxe.billet.id }}">{{billet_taxe.billet.numeroDernierBillet}}</td>
+                <td >{{billet_taxe.total}}</td>
+                <td>  
+                    {% if billet_taxe.total == "0" %}                
+                        <a class="btn btn-warning" id="myBBtn" href="#" disabled><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                    {% else %}
+                        <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_taxe.billet.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

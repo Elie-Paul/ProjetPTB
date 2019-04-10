@@ -212,6 +212,12 @@ function createRowElement(commande)
         button.innerText="traité";
         button.classList.remove('btn-success');
     }
+    else if(commande.etat===4)
+    {
+        button.classList.add('btn-primary');
+        button.innerText="archivé";
+        button.classList.remove('btn-success');
+    }
     buttonTd.appendChild(button);
     modifierTd.appendChild(modifier);
     removeTd.appendChild(remove);

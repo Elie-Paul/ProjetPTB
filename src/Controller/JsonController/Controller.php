@@ -11,6 +11,9 @@ use App\Entity\Classe;
 use App\Entity\Trajet;
 use App\Entity\Section;
 use App\Entity\BilletPtb;
+use App\Entity\User;
+use App\Entity\Audit;
+use App\Entity\TypeAudit;
 use App\Entity\Ptb;
 use App\Entity\CommandePtb;
 use App\Entity\StockPtb;
@@ -48,7 +51,7 @@ class Controller extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesPTB); $i++) 
         { 
-            if($commnadesPTB[$i]->getEtatCommande()>=1 || $commnadesPTB[$i]->getEtatCommande()==2)
+            if($commnadesPTB[$i]->getEtatCommande()>=1 && $commnadesPTB[$i]->getEtatCommande()<=2)
             {
                 $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
@@ -71,7 +74,7 @@ class Controller extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesPTB); $i++) 
         { 
-            if($commnadesPTB[$i]->getEtatCommande()>=1 || $commnadesPTB[$i]->getEtatCommande()==2)
+            if($commnadesPTB[$i]->getEtatCommande()>=1 && $commnadesPTB[$i]->getEtatCommande()<=2)
             {
                 $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
@@ -109,6 +112,13 @@ class Controller extends AbstractController
     public function showCommandePTBVente()
     {
         return $this->render('commandeView/PTB/venteCommandePTB.html.twig');
+    }
+    /**
+     * @Route("/commande/ptb/retour", name="commande_ptb_retour")
+     */
+    public function showCommandePTBRetour()
+    {
+        return $this->render('commandeView/PTB/venteCommandePTB2.html.twig');
     }
 
      /**
@@ -285,6 +295,63 @@ class Controller extends AbstractController
         $stockPtb->setNbre($stockPtb->getNbre()- $vente);
         
         $entityManager->persist($ventePtb);
+        $entityManager->flush();
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
+    }
+    /**
+     * @Route("/returnVentePTB/{id}/{nvente}/{idUser}", name="returnPtb")
+     */
+    public function RetourBillet($id,$nvente,$idUser)
+    {
+        $idBillet = intVal($id);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $vente = intVal($nvente);
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval(1));
+        $billet = $entityManager
+        ->getRepository(BilletPtb::class)
+        ->find($idBillet);
+        
+        $stockPtb=$entityManager->getRepository(StockPtb::class)->findOneBy([
+            'billet' => $billet,
+         ]);
+        
+        if($vente == $stockPtb->getNbre())
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(3));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getPtb()." comme prevus";
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+            $entityManager->persist($audit);
+        }
+        else
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(4));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()."à retourné ".$vente." billet ". $billet->getPtb()." alors qu'il devait retourné".$stockPtb->getNbre();
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+            $entityManager->persist($audit);
+        }
+        
+        
         $entityManager->flush();
         
         return new Response('<h1>'.$billet->getId().'</h1>');

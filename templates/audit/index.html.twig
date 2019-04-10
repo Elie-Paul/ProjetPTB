@@ -60,8 +60,15 @@
                 <td>{{ audit.User.Nom }}</td>
                 {% if audit.type.libelle == "impression" %}
                     <td><button class="btn btn-success" disabled>{{ audit.type.libelle}}</button></td>
-                {% else %}
+                {% endif %}
+                {% if audit.type.libelle == "impression irreguliére" %}
                     <td><button class="btn btn-danger" disabled>{{ audit.type.libelle}}</button></td>
+                {% endif %}
+                {% if audit.type.libelle == "retour billet normale" %}
+                    <td><button class="btn btn-info" disabled>{{ audit.type.libelle}}</button></td>
+                {% endif %}
+                {% if audit.type.libelle == "retour billet irregulier" %}
+                    <td><button class="btn btn-warning" disabled>{{ audit.type.libelle}}</button></td>
                 {% endif %}
                 
                 <td>{{ audit.createdAt ? audit.createdAt|date('d-m-Y H:i:s') : '' }}</td>

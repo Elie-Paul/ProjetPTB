@@ -19,7 +19,7 @@
           <div class="form-group">
             <label for="nomGare"><big>Image</big></label>
             <input type="file"
-              class="form-control" name="" id="img" aria-describedby="helpId" placeholder="Entrer une gare">
+              class="form-control" name="" id="img" name="pic" accept="image/*" aria-describedby="helpId" placeholder="Entrer une gare">
           </div>
         </form>
     </div>
@@ -235,15 +235,14 @@
 
         function ajouter(){
           var modal = document.getElementById('myModal');
-          var libelle = document.getElementById("img").value;
-          var n=libelle.length;
+          var lib = document.getElementById("img").value;
+          var n=lib.length;
+          var libelle =lib.slice(12,n);
           var id = document.getElementById("userid").value;
-
           modal.style.display = "none";
-          console.log(n);
-          //document.location.href = `http://localhost:8000/${id}/ModifierimageUser/${libelle}`;
-          //swal("Modification Réussie!", "Vous avez changé votre photo", "success");
-          
+          console.log(id);
+          document.location.href = `http://localhost:8000/${id}/ModifierimageUser/${libelle}`;
+          swal("Modification Réussie!", "Vous avez changé votre photo", "success");          
 
         }
         
@@ -254,8 +253,7 @@
             modal.style.display = "block";
           
         }
-        
-        
+                
     </script>
 
 

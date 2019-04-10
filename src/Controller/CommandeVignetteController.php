@@ -12,6 +12,9 @@ use App\Entity\Trajet;
 use App\Entity\Section;
 use App\Entity\BilletPtb;
 use App\Entity\Ptb;
+use App\Entity\User;
+use App\Entity\Audit;
+use App\Entity\TypeAudit;
 use App\Entity\Vignette;
 use App\Entity\StockVignette;
 use App\Entity\VenteVignette;
@@ -36,6 +39,32 @@ class CommandeVignetteController extends AbstractController
     {
         return $this->render('commandeView/vignette/validerCommandeVignette.html.twig');
     }
+
+    public function totalBillet2($id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $billet = $entityManager->getRepository(Vignette::class)->find($id);
+        $commandeVignettes = $entityManager->getRepository(CommandeVignette::class)->findBy
+        (
+            [
+                'billet' => $billet,
+            ],
+            ['dateCommande' =>'ASC']
+        );
+        $i=0;
+        $nBillet=0;
+        for ($i=0; $i < count($commandeVignettes); $i++) 
+        { 
+            if($commandeVignettes[$i]->getEtatCommande()>=1 && $commandeVignettes[$i]->getEtatCommande()<=2)
+            {
+                $diff=$commandeVignettes[$i]->getNombreBillet()-$commandeVignettes[$i]->getNombreBilletRealise();
+                $nBillet=$nBillet+$diff;
+            }
+        }
+       return $nBillet;
+    }   
+
+
     /**
      * @Route("/commande/vignette/suivi", name="commande_vignette_suivi")
      */
@@ -56,6 +85,13 @@ class CommandeVignetteController extends AbstractController
     public function showAllCommandeVignette4()
     {
         return $this->render('commandeView/vignette/venteCommandeVignette.html.twig');
+    }
+    /**
+     * @Route("/commande/vignette/retour", name="commande_vignette_return")
+     */
+    public function showAllCommandeVignette5()
+    {
+        return $this->render('commandeView/vignette/venteCommandeVignette2.html.twig');
     }
      /**
      * @Route("/Json/listCommandeVignette", name="getAllCommandeVignette")
@@ -233,7 +269,7 @@ class CommandeVignetteController extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesVignette); $i++) 
         { 
-            if($commnadesVignette[$i]->getEtatCommande()>=1 || $commnadesVignette[$i]->getEtatCommande()==2)
+            if($commnadesVignette[$i]->getEtatCommande()>=1 && $commnadesVignette[$i]->getEtatCommande()<=2)
             {
                 $diff=$commnadesVignette[$i]->getNombreBillet()-$commnadesVignette[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
@@ -318,5 +354,61 @@ class CommandeVignetteController extends AbstractController
         
         return new Response('<h1>ddddd</h1>');
     }
-    
+    /**
+     * @Route("/returnVenteVignette/{id}/{nvente}/{idUser}", name="returnVignette")
+     */
+    public function RetourBillet($id,$nvente,$idUser)
+    {
+        $idBillet = intVal($id);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $vente = intVal($nvente);
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval(1));
+        $billet = $entityManager
+        ->getRepository(Vignette::class)
+        ->find($idBillet);
+        
+        $stockPtb=$entityManager->getRepository(StockVignette::class)->findOneBy([
+            'billet' => $billet,
+         ]);
+        
+        if($vente == $stockPtb->getNbre())
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(3));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." vignette ". $billet->getType()." comme prevus ";
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $entityManager->persist($audit);
+            $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+        }
+        else
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(4));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()."à retourné ".$vente." vignette ". $billet->getType()." alors qu'il devait retourné ".$stockPtb->getNbre();
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $entityManager->persist($audit);
+            $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+        }
+        
+        
+        $entityManager->flush();
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
+    }
 }

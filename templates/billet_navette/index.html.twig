@@ -188,20 +188,26 @@
                 <th>Prix</th>
                 <th>Guichet</th>
                 <th>Numéro Départ</th>
+                <th>Billets Commandés</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
         {% for billet_navette in billet_navettes %}
             <tr> 
-                <td>{{ billet_navette.navette.classe.libelle}}</td>
-                <td>{{ billet_navette.navette.trajet.depart.libelle}}</td>
-                <td>{{ billet_navette.navette.trajet.arrivee.libelle}}</td>
-                <td>{{ billet_navette.navette.prix}}</td>
-                <td>{{ billet_navette.guichet.nom}}</td>
-                <td id="dpt{{ billet_navette.id }}">{{ billet_navette.numeroDernierBillet}}</td>
+                <td>{{ billet_navette.billet.navette.classe.libelle}}</td>
+                <td>{{ billet_navette.billet.navette.trajet.depart.libelle}}</td>
+                <td>{{ billet_navette.billet.navette.trajet.arrivee.libelle}}</td>
+                <td>{{ billet_navette.billet.navette.prix}}</td>
+                <td>{{ billet_navette.billet.guichet.nom}}</td>
+                <td id="dpt{{ billet_navette.billet.id }}">{{ billet_navette.billet.numeroDernierBillet}}</td>
+                <td >{{billet_navette.total}}</td>
                  <td>
-                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_navette.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                 {% if billet_navette.total == "0" %}
+                    <a class="btn btn-warning" id="myBBtn" href="#" disabled><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                {% else %}
+                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_navette.billet.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                {% endif %}
                 </td>
             </tr>
         {% else %}

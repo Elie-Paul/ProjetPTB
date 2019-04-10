@@ -212,7 +212,8 @@ function createRowElement(commande)
     }
     buttonTd.appendChild(button);
     modifierTd.appendChild(modifier);
-    removeTd.appendChild(remove);if(commande.etat===1)
+    removeTd.appendChild(remove);
+    if(commande.etat===1)
     {
         button.classList.add('btn-success');
         button.classList.remove('btn-danger');
@@ -234,6 +235,12 @@ function createRowElement(commande)
     {
         button.classList.add('btn-info');
         button.innerText="traité";
+        button.classList.remove('btn-success');
+    }
+    else if(commande.etat===4)
+    {
+        button.classList.add('btn-primary');
+        button.innerText="archivé";
         button.classList.remove('btn-success');
     }
     buttonTd.appendChild(button);
