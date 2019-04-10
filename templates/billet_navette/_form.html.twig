@@ -24,7 +24,7 @@
         </div>
 
         <div class="modal-footer left">
-            <button  id="submit" onclick="ajouterGuichet()" class="btn btn-primary"><big>Ajouter</big></button>
+            <button  id="submit" class="btn btn-primary"><big>Ajouter</big></button>
         </div>
   </div>
 </div>
@@ -206,5 +206,49 @@
           comboTrajet.appendChild(option);
         }
     }
+
+document.getElementById("submit").addEventListener("click", function(e){
+  e.preventDefault();
+
+  var code = document.getElementById('code').value;
+  var nom = document.getElementById('nom').value;
+  var lieu = document.getElementById('lieu');
+  lieu = lieu.options[lieu.selectedIndex].id;
+
+  let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.response);
+      console.log(response);
+      
+      if(response){
+        swal({
+        title: "Succès",
+        text: "Un guichet a été ajouté",
+        icon: "success",
+        
+        })
+            .then((value) => {
+              var modal = document.getElementsByClassName('modal')[0];
+              modal.style.display = "none";
+               document.location.href="http://localhost:8000/billet/navette/new";
+                
+            });
+
+      }
+      
+    }
+  }
+  
+  xhttp.open("POST","/addGuichetPtb",true);
+  xhttp.responseType = "json";
+  let parm = `${code}+${nom}+${lieu}`;
+  xhttp.send(parm);  
+
+  return false;
+});
 </script>
 

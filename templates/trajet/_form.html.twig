@@ -14,13 +14,13 @@
         <div class="form-group">
             <label for="nomGare"><big>Libelle</big></label>
             <input type="text"
-              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une gare">
+              class="form-control" name="" id="libelle" aria-describedby="helpId" placeholder="Entrer une station">
           </div>
         </form>
     </div>
 
     <div class="modal-footer left">
-        <button  id="submit" onclick="ajouter()" class="btn btn-primary"><big>Ajouter</big></button>
+        <button  id="submit" class="btn btn-primary"><big>Ajouter</big></button>
     </div>
   </div>
   
@@ -87,6 +87,49 @@
             modal.style.display = "block";
           
         }
+
+   //-------Traitement du Modal----------------//
+document.getElementById("submit").addEventListener("click", function(e){
+  e.preventDefault();
+
+  var libelle = document.getElementById("libelle").value;
+
+  let xhttp=new XMLHttpRequest();
+  
+  xhttp.onreadystatechange = function()
+  {
+    if(this.readyState == 4 && this.status == 200)
+    {
+      let response = JSON.parse(xhttp.response);
+      console.log(response);
+      
+      if(response){
+        swal({
+        title: "Succès",
+        text: "Une station a été ajoutée",
+        icon: "success",
+        
+        })
+            .then((value) => {
+              var modal = document.getElementById('myModal');
+              modal.style.display = "none";
+               document.location.href="http://localhost:8000/trajet/new";
+                
+            });
+
+      }
+      
+    }
+  }
+  
+  xhttp.open("POST","/addLieuTrajetNavette",true);
+  xhttp.responseType = "json";
+  let parm = `${libelle}`;
+  xhttp.send(parm);  
+
+  return false;
+
+});     
         
         
     </script>

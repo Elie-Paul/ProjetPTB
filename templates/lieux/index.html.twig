@@ -1,15 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-    <link href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-
     <!-- CSS IMPRIMER-->
-    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block title %}Lieux index{% endblock %}
 {% block body %}
-    <!--h1>Lieux index</h1-->
     <h1>
         <big>
             Gestion des stations/gares
@@ -28,16 +26,8 @@
             <div class="col-md-6 text-right">
                 <a class="btn btn-info" href="{{ path('lieux_new') }}">
                     <i class="fa fa-plus"></i>
-                    <big>Ajouter</big>
+                    <big>Ajouter une station</big>
                 </a>
-                <div class="btn-group margin-bottom-20">
-                    <a class="btn btn-success" class="btn btn-success" href="#" onclick="imprimer_table()">
-                        <big>Exporter en PDF</big>
-                    </a>
-                    <a class="btn btn-success" class="btn btn-success" href="#">
-                        <big>Exporter en CVS</big>
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -50,12 +40,10 @@
                         <big>Liste des stations/gares</big>
                     </h1>                    
                 </div>
-                <!--div class="box-body table-responsive no-padding"-->
                 <div class="box-body">
-                    <table data-order='[[ 1, "desc" ]]' class="table table-hover table-striped dataTable" id="example1" style="width:100%">
+                    <table data-order='[[ 1, "desc" ]]' class="table table-hover table-striped table-bordered" id="example1" style="width:100%">
                         <thead>
                             <tr>
-                                <!--th>Id</th-->
                                 <th aria-controls="example1">Libelle</th>
                                 <th aria-controls="example1">Date de création</th>
                                 <th aria-controls="example1">Date de modification</th>
@@ -65,23 +53,22 @@
                         <tbody>
                             {% for lieux in lieuxes %}
                                 <tr>
-                                    <!--td>{{ lieux.id }}</td-->
                                     <td>
                                         {{ lieux.libelle }}</td>
                                     <td>
-                                        {{ lieux.createdAt ? lieux.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                                        {{ lieux.createdAt ? lieux.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
                                     <td>
-                                        {{ lieux.updatedAt ? lieux.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                                        {{ lieux.updatedAt ? lieux.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
                                     <td>
                                         <a class="btn btn-info" role="button" href="{{ path('lieux_show', {'id': lieux.id}) }}">
                                             <i class="glyphicon glyphicon-eye-open"></i>
                                             <big>
-                                                voir</big>
+                                                Voir</big>
                                         </a>
                                         <a class="btn btn-warning" href="{{ path('lieux_edit', {'id': lieux.id}) }}">
                                             <i class="glyphicon glyphicon-pencil"></i>
                                             <big>
-                                                modifier</big>
+                                                Modifier</big>
                                         </a>
                                     </td>
                                 </tr>
@@ -102,27 +89,31 @@
     <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
+    <!-- Date -->
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/date-de.js" ></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
 
-    <!-- PDF AND CVS>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <!-- PDF AND CVS-->
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script-->
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
 
     <script>
     {% if success is defined %}
-        swal("Bon travail", "Vous aviez ajouté une nouvelle gare", "success");
+        swal("Succès", "Vous avez ajouté une nouvelle station", "success");
     {% endif %}
+
+
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
         $(function () {
-            $('#example1').DataTable({
+            $('#example1').DataTable({                
                 "reponsive": true,
                 "pageLength": 10,
                 "language": {
@@ -142,14 +133,40 @@
                         "previous": "Précédent",
                         "next": "Suivant"
                     }
-                }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: '<i class="fa fa-print"></i> Imprimer',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend:'excel',
+                        text: '<i class="fa fa-file-excel-o"></i> Excel'
+                    },
+                    {
+                        extend:'csv',
+                        text: '<i class="fa fa-file-text-o"></i> CSV'
+                    },
+                    {
+                        extend:'pdf',
+                        text: '<i class="fa fa-file-pdf-o"></i> PDf'
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Colonnes visibles'
+                    }
+                ],
+                columnDefs: [ {
+                   // targets: -1,
+                    visible: false
+                } ]
             })
+            table.buttons().container()
+                .appendTo( '#example1_wrapper .col-sm-6:eq(0)' );
         })
-    </script>
-
-    <script type="text/javascript">
-        function imprimer_table(){
-        window.print();
-        }
     </script>
 {% endblock %}

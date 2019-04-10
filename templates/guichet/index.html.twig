@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- CSS IMPRIMER-->
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block title %}Guichet index{% endblock %}
 {% block body %}
@@ -23,7 +26,6 @@
                     Nouveau Guichet</a>
             </div>
         </div>
-        <!-- /.box-body -->
     </div>
     <div class="row">
         <div class="col-xs-12">
@@ -32,18 +34,12 @@
                     <h1 class="box-title">Liste des guichets</h1>
                     <div class="box-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <!--input class="form-control pull-right" name="table_search" placeholder="Search" type="text">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div-->
                             </div>
                         </div>
                     </div>
 
                     <div class="box-body">
-                        <table data-order='[[ 3, "desc" ]]' class="table table-hover table-striped dataTable" id="example1">
+                        <table data-order='[[ 3, "desc" ]]' class="table table-hover table-striped table-bordered" id="example1" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Emplacement</th>
@@ -64,14 +60,14 @@
                                         <td>
                                             {{ guichet.nom }}</td>
                                         <td>
-                                            {{ guichet.createdAt ? guichet.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                                            {{ guichet.createdAt ? guichet.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
                                         <td>
-                                            {{ guichet.updatedAt ? guichet.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                                            {{ guichet.updatedAt ? guichet.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
                                         <td>
                                             <a class="btn btn-info" role="button" href="{{ path('guichet_show', {'id': guichet.id}) }}">
-                                                <i class="glyphicon glyphicon-eye-open"></i>&nbsp;voir</a>
+                                                <i class="glyphicon glyphicon-eye-open"></i>&nbsp; voir</a>
                                             <a class="btn btn-warning" role="button" href="{{ path('guichet_edit', {'id': guichet.id}) }}">
-                                                <i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+                                                <i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
                                         </td>
                                     </tr>
                                     {% else %}
@@ -91,13 +87,26 @@
     <!-- DataTables -->
     <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <!--script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script-->
+
+    <!-- Date -->
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/date-de.js" ></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
 
+    <!-- PDF AND CVS-->
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
+
     <script>
     {% if success is defined %}
-        swal("Bon travail", "Vous aviez ajouté un nouveau guichet", "success");
+        swal("Succès", "Vous avez ajouté un nouveau guichet", "success");
     {% endif %}
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
         $(function () {
@@ -122,8 +131,40 @@
                         "previous": "Précédent",
                         "next": "Suivant"
                     }
-                }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: '<i class="fa fa-print"></i> Imprimer',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend:'excel',
+                        text: '<i class="fa fa-file-excel-o"></i> Excel'
+                    },
+                    {
+                        extend:'csv',
+                        text: '<i class="fa fa-file-text-o"></i> CSV'
+                    },
+                    {
+                        extend:'pdf',
+                        text: '<i class="fa fa-file-pdf-o"></i> PDf'
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Colonnes visibles'
+                    }
+                ],
+                columnDefs: [ {
+                    visible: false
+                } ]
             })
+            table.buttons().container()
+                .appendTo( '#example1_wrapper .col-sm-6:eq(0)' );
+            
         })
     </script>
 {% endblock %}
