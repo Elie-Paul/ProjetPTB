@@ -444,12 +444,12 @@
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li>
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
             <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
-            <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-plus"></i>Audit</a></li>
+            <li><a href="{{ path('audit_index') }}"><i class="glyphicon glyphicon-plus"></i>Audit</a></li>
           </ul>                
         </li>
         {% endif %}
         {% if is_granted('ROLE_SUPERVISEUR') %}
-          <li><a href="{{ path('tracabilite_index') }}"><i class="glyphicon glyphicon-road"></i><span>&nbsp;Audit</span></a></li>                                       
+          <li><a href="{{ path('audit_index') }}"><i class="glyphicon glyphicon-road"></i><span>&nbsp;Audit</span></a></li>                                       
         {% endif %}
         {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') or is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_SUPERVISEUR') %}
         <li class="treeview">

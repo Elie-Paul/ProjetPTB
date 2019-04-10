@@ -21,7 +21,7 @@ class AuditController extends AbstractController
     public function index(AuditRepository $auditRepository): Response
     {
         return $this->render('audit/index.html.twig', [
-            'audits' => $auditRepository->findAll(),
+            'audits' => $auditRepository->findBy(array(), array('createdAt' => 'DESC')),
         ]);
     }
 

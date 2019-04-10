@@ -54,6 +54,7 @@ class LieuxController extends AbstractController
                     'lieuxes' => $lieuxRepository->findAll(),
                     'success' => 'Lieu '.$lieux->getLibelle().' a été créer',
                 ]);
+                //return new Response("true");
             }else {
                 return $this->render('lieux/new.html.twig', [
                     'lieux' => $lieux,
