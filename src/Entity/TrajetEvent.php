@@ -60,29 +60,43 @@ class TrajetEvent
         return $this->id;
     }
 
-    public function getDepart(): ?string
+    /**
+     * @return mixed
+     */
+    public function getDepart()
     {
         return $this->depart;
     }
 
-    public function setDepart(string $depart): self
+    /**
+     * @param mixed $depart
+     * @return TrajetEvent
+     */
+    public function setDepart($depart)
     {
         $this->depart = $depart;
-
         return $this;
     }
 
-    public function getArrivee(): ?string
+    /**
+     * @return mixed
+     */
+    public function getArrivee()
     {
         return $this->arrivee;
     }
 
-    public function setArrivee(string $arrivee): self
+    /**
+     * @param mixed $arrivee
+     * @return TrajetEvent
+     */
+    public function setArrivee($arrivee)
     {
         $this->arrivee = $arrivee;
-
         return $this;
     }
+
+
 
     public function getEvenement(): ?Evenement
     {
