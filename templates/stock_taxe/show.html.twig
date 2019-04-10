@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StockTaxe{% endblock %}
+
+{% block body %}
+    <h1>StockTaxe</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stock_taxe.id }}</td>
+            </tr>
+            <tr>
+                <th>Nbre</th>
+                <td>{{ stock_taxe.nbre }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ stock_taxe.createdAt ? stock_taxe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ stock_taxe.updatedAt ? stock_taxe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('stock_taxe_index') }}">back to list</a>
+
+    <a href="{{ path('stock_taxe_edit', {'id': stock_taxe.id}) }}">edit</a>
+
+    {{ include('stock_taxe/_delete_form.html.twig') }}
+{% endblock %}

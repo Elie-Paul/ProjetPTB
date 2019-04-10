@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New StockPtb{% endblock %}
+
+{% block body %}
+    <h1>Create new StockPtb</h1>
+
+    {{ include('stock_ptb/_form.html.twig') }}
+
+    <a href="{{ path('stock_ptb_index') }}">back to list</a>
+{% endblock %}

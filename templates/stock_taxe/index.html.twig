@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StockTaxe index{% endblock %}
+
+{% block body %}
+    <h1>StockTaxe index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nbre</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock_taxe in stock_taxes %}
+            <tr>
+                <td>{{ stock_taxe.id }}</td>
+                <td>{{ stock_taxe.nbre }}</td>
+                <td>{{ stock_taxe.createdAt ? stock_taxe.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ stock_taxe.updatedAt ? stock_taxe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('stock_taxe_show', {'id': stock_taxe.id}) }}">show</a>
+                    <a href="{{ path('stock_taxe_edit', {'id': stock_taxe.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('stock_taxe_new') }}">Create new</a>
+{% endblock %}
