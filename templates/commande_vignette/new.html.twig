@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CommandeVignette{% endblock %}
+
+{% block body %}
+    <h1>Create new CommandeVignette</h1>
+
+    {{ include('commande_vignette/_form.html.twig') }}
+
+    <a href="{{ path('commande_vignette_index') }}">back to list</a>
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Destinateur;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Controller\MailController;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;

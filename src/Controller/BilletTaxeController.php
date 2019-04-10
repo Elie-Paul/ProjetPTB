@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BilletTaxe;
 use App\Form\BilletTaxeType;
-use App\Controller\CommandeTaxeController;
+use App\Controller\CommandeTaxeController2;
 use App\Repository\BilletTaxeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ class BilletTaxeController extends AbstractController
     /**
      * @Route("/", name="billet_taxe_index", methods={"GET"})
      */
-    public function index(BilletTaxeRepository $billetTaxeRepository,Request $request,CommandeTaxeController $controller): Response
+    public function index(BilletTaxeRepository $billetTaxeRepository,Request $request,CommandeTaxeController2 $controller): Response
     {
         $array = array();
         foreach ($billetTaxeRepository->findAll() as $key => $value) 

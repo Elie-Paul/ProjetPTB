@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Vignette;
 use App\Form\VignetteType;
 use App\Repository\VignetteRepository;
-use App\Controller\CommandeVignetteController;
+use App\Controller\CommandeVignetteController2;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ class VignetteController extends AbstractController
     /**
      * @Route("/", name="vignette_index", methods={"GET"})
      */
-    public function index(VignetteRepository $vignetteRepository,Request $request,CommandeVignetteController $controller): Response
+    public function index(VignetteRepository $vignetteRepository,Request $request,CommandeVignetteController2 $controller): Response
     {
         $array = array();
         foreach ($vignetteRepository->findAll() as $key => $value) 
