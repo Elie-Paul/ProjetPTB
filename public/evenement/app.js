@@ -102,7 +102,7 @@ $(document).ready(function () {
                 }
             },
             error: function (error) {
-                alert('Erreur '+error);
+                console.log('Erreur '+error);
             }
         });
         return false;

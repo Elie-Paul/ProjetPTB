@@ -31,22 +31,22 @@
     <table class="table table-hover table-striped dataTable" id="example1">
         <thead>
             <tr>
+                <th>Guichet</th>
                 <th>Section</th>
                 <th>Départ</th>
                 <th>Arrivée</th>
-                <th>Prix</th>
-                <th>Guichet</th>
+                <th>Prix</th>                
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for billet_ptb in billet_ptbs %}
             <tr>
+                <td>{{ billet_ptb.guichet.nom }}</td>
                 <td>{{ billet_ptb.ptb.section.libelle }}</td>
                 <td>{{ billet_ptb.ptb.trajet.depart.libelle }}</td>
                 <td>{{ billet_ptb.ptb.trajet.arrivee.libelle }}</td>
-                <td>{{ billet_ptb.ptb.section.prix }}</td>
-                <td>{{ billet_ptb.guichet.nom }}</td>
+                <td>{{ billet_ptb.ptb.section.prix }}</td>                
                 <td>
                     <a class="btn btn-info" role="button" href="{{ path('billet_ptb_show', {'id': billet_ptb.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
                     <a class="btn btn-warning" role="button" href="{{ path('billet_ptb_edit', {'id': billet_ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>

@@ -115,19 +115,33 @@ function getTaxes()
  }
  function validationAction(button)
 {
-    let xhr=new XMLHttpRequest();
-    xhr.onload=function ()
+    swal("Validation Commande:", 
     {
-        if(this.status == 200)
+        title: "Etes vous sûr ?",
+        text: "souhaitez-vous valider cette commande",
+        icon: "warning",
+        buttons: true,
+    })
+    .then((willDelete) => 
+    {
+        if(willDelete)
         {
-            //console.log(JSON.parse(this.responseText));
-            //addRow(JSON.parse(this.responseText));
-           console.log(this.responseText);
-        }
-    }
-    xhr.open("POST","http://localhost:8000/ValidationCommandeTaxe",true);
-    xhr.send(button.id);
-    getTaxes();
+            let xhr=new XMLHttpRequest();
+            xhr.onload=function ()
+            {
+                if(this.status == 200)
+                {
+                    //console.log(JSON.parse(this.responseText));
+                    //addRow(JSON.parse(this.responseText));
+                   console.log(this.responseText);
+                }
+            }
+            xhr.open("POST","http://localhost:8000/ValidationCommandeTaxe",true);
+            xhr.send(button.id);
+            getTaxes();
+            updateTab();
+        }    
+    });
 }
 function DateCompare(date1,date2)
 {

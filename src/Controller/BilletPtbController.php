@@ -57,7 +57,7 @@ class BilletPtbController extends AbstractController
      * @param BilletPtbRepository $billetPtbRepository
      * @return Response
      */
-    public function index2(BilletPtbRepository $billetPtbRepository, \Swift_Mailer $mailer, Request $request): Response
+    public function index2(BilletPtbRepository $billetPtbRepository, Request $request): Response
     {
         $billetPtb = new BilletPtb();
 

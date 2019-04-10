@@ -62,7 +62,7 @@ class MailController extends AbstractController
     {
         $message = (new \Swift_Message('Hello Email'))
         ->setFrom('eliepaulmoubotouto@gmail.com')
-        ->setTo('eliemoubotouto@outlook.fr')
+        ->setTo('theradaouda@yahoo.com')
         ->setBody(
             $this->renderView(
                 // templates/emails/registration.html.twig
@@ -145,7 +145,7 @@ class MailController extends AbstractController
      * @param $arrive
      * @param $vue
      */
-    public function sendMailForPrint($depart, $arrive, $vue)
+    public function sendMailForPrint($depart, $arrive)
     {
         $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
             'processus' => 'impression'
@@ -158,7 +158,7 @@ class MailController extends AbstractController
                     ->setFrom('ddthera@gmail.com')
                     ->setTo($dest->getEmail())
                     ->setBody(
-                        $this->renderView($vue, [
+                        $this->renderView('mail/mailprint.html.twig', [
 //                                'nom' => $nom,
 //                                'prenom' => $prenom,
 //                                'mail' => $mail,
@@ -191,7 +191,8 @@ class MailController extends AbstractController
                     ->setBody(
                         $this->renderView($vue, [
                             'Nom' => $nom,
-                            'Prenom' => $prenom
+                            'Prenom' => $prenom,
+                            'Email' => $email
                         ]),
                         'text/html'
                     );
