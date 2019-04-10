@@ -215,6 +215,12 @@ function createRowElement(commande)
         button.innerText="traité";
         button.classList.remove('btn-success');
     }
+    else if(commande.etat===4)
+    {
+        button.classList.add('btn-primary');
+        button.innerText="archivé";
+        button.classList.remove('btn-success');
+    }
     buttonTd.appendChild(button);
     modifierTd.appendChild(modifier);
     removeTd.appendChild(remove);
@@ -422,3 +428,13 @@ function deleteCommande(element)
 }
 
 getAllCommande();
+/**
+ * DELIMITER $$
+CREATE EVENT reset_usage_count
+ON SCHEDULE EVERY 1 MINUTE
+DO 
+BEGIN
+UPDATE billet_ptb set numero_dernier_billets=0;
+END$$    
+DELIMITER ;
+ */

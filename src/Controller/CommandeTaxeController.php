@@ -7,6 +7,14 @@ use App\Form\CommandeTaxeType;
 use App\Repository\CommandeTaxeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\BilletTaxe;
+use App\Entity\StockTaxe;
+use App\Entity\VenteTaxe;
+use App\Entity\User;
+use App\Entity\Audit;
+use App\Entity\TypeAudit;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -92,5 +100,60 @@ class CommandeTaxeController extends AbstractController
         }
 
         return $this->redirectToRoute('commande_taxe_lister');
+    }
+    /**
+     * @Route("/returnVenteTaxe/{id}/{nvente}/{idUser}", name="returnTaxe")
+     */
+    public function RetourBillet($id,$nvente,$idUser)
+    {
+        $idBillet = intVal($id);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $vente = intVal($nvente);
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval(1));
+        $billet = $entityManager
+        ->getRepository(BilletTaxe::class)
+        ->find($idBillet);
+        
+        $stockPtb=$entityManager->getRepository(StockTaxe::class)->findOneBy([
+            'billet' => $billet,
+         ]);
+        
+        if($vente == $stockPtb->getNbre())
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(3));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getPtb()." comme prevus";
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $entityManager->persist($audit);
+        }
+        else
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(4));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()."à retourné ".$vente." billet ". $billet->getPtb()." alors qu'il devait retourné".$stockPtb->getNbre();
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $entityManager->persist($audit);
+        }
+        
+        
+        $entityManager->flush();
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
     }
 }

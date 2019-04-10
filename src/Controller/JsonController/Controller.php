@@ -11,6 +11,9 @@ use App\Entity\Classe;
 use App\Entity\Trajet;
 use App\Entity\Section;
 use App\Entity\BilletPtb;
+use App\Entity\User;
+use App\Entity\Audit;
+use App\Entity\TypeAudit;
 use App\Entity\Ptb;
 use App\Entity\CommandePtb;
 use App\Entity\StockPtb;
@@ -48,7 +51,7 @@ class Controller extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesPTB); $i++) 
         { 
-            if($commnadesPTB[$i]->getEtatCommande()>=1 || $commnadesPTB[$i]->getEtatCommande()==2)
+            if($commnadesPTB[$i]->getEtatCommande()>=1 && $commnadesPTB[$i]->getEtatCommande()<=2)
             {
                 $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
@@ -71,7 +74,7 @@ class Controller extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesPTB); $i++) 
         { 
-            if($commnadesPTB[$i]->getEtatCommande()>=1 || $commnadesPTB[$i]->getEtatCommande()==2)
+            if($commnadesPTB[$i]->getEtatCommande()>=1 && $commnadesPTB[$i]->getEtatCommande()<=2)
             {
                 $diff=$commnadesPTB[$i]->getNombreBillet()-$commnadesPTB[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
@@ -110,6 +113,13 @@ class Controller extends AbstractController
     {
         return $this->render('commandeView/PTB/venteCommandePTB.html.twig');
     }
+    /**
+     * @Route("/commande/ptb/retour", name="commande_ptb_retour")
+     */
+    public function showCommandePTBRetour()
+    {
+        return $this->render('commandeView/PTB/venteCommandePTB2.html.twig');
+    }
 
      /**
      * @Route("/commande/ptb/imprimer", name="commande_ptb_imprimer")
@@ -128,57 +138,60 @@ class Controller extends AbstractController
         $data = array();
         foreach ($commandePtbs as $key => $variable) 
         {
-            $myarray = array
-            (
-                'id' => $variable->getId(),
+            if($variable->getBillet()->getEvenement() == null)
+            {
+                $myarray = array
+                (
+                    'id' => $variable->getId(),
 
-                'section' => $variable
-                ->getBillet()
-                ->getPtb()
-                ->getSection(),
+                    'section' => $variable
+                    ->getBillet()
+                    ->getPtb()
+                    ->getSection(),
 
-                'depart' => $variable
-                ->getBillet()
-                ->getPtb()->getTrajet()
-                ->getDepart()
-                ->getLibelle(),
+                    'depart' => $variable
+                    ->getBillet()
+                    ->getPtb()->getTrajet()
+                    ->getDepart()
+                    ->getLibelle(),
 
-                'arrivee' => $variable
-                ->getBillet()
-                ->getPtb()->getTrajet()
-                ->getArrivee()
-                ->getLibelle(),
+                    'arrivee' => $variable
+                    ->getBillet()
+                    ->getPtb()->getTrajet()
+                    ->getArrivee()
+                    ->getLibelle(),
 
-                'guichet' => $variable
-                ->getBillet()
-                ->getGuichet()
-                ->getNom(),
+                    'guichet' => $variable
+                    ->getBillet()
+                    ->getGuichet()
+                    ->getNom(),
 
-                'nombreDeBilletCommander' => $variable
-                ->getNombreBillet(),
-                
-                'nombreBilletRealiser' => $variable
-                ->getNombreBilletRealise(),
+                    'nombreDeBilletCommander' => $variable
+                    ->getNombreBillet(),
+                    
+                    'nombreBilletRealiser' => $variable
+                    ->getNombreBilletRealise(),
 
-                'nombreBilletVendu' => $variable
-                ->getNombreBilletVendu(),
+                    'nombreBilletVendu' => $variable
+                    ->getNombreBilletVendu(),
 
-                'etat' => $variable
-                ->getEtatCommande(),
+                    'etat' => $variable
+                    ->getEtatCommande(),
 
-                'section' => $variable
-                ->getBillet()
-                ->getPtb()
-                ->getSection()
-                ->getLibelle(),
-                'dateCommandeValider' => $variable
-                ->getDateCommandeValider(),
-                'dateCommandeRealiser' => $variable
-                ->getDateCommandeRealiser(),
-                'dateCommande' => $variable
-                ->getDateCommande()
-            );
-            array_push($data,$myarray);
+                    'section' => $variable
+                    ->getBillet()
+                    ->getPtb()
+                    ->getSection()
+                    ->getLibelle(),
+                    'dateCommandeValider' => $variable
+                    ->getDateCommandeValider(),
+                    'dateCommandeRealiser' => $variable
+                    ->getDateCommandeRealiser(),
+                    'dateCommande' => $variable
+                    ->getDateCommande()
+                );
+                array_push($data,$myarray);
+            }
         }
             return new Response(json_encode($data));
             //return new Response('dddd');
@@ -285,6 +298,63 @@ class Controller extends AbstractController
         $stockPtb->setNbre($stockPtb->getNbre()- $vente);
         
         $entityManager->persist($ventePtb);
+        $entityManager->flush();
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
+    }
+    /**
+     * @Route("/returnVentePTB/{id}/{nvente}/{idUser}", name="returnPtb")
+     */
+    public function RetourBillet($id,$nvente,$idUser)
+    {
+        $idBillet = intVal($id);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $vente = intVal($nvente);
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval(1));
+        $billet = $entityManager
+        ->getRepository(BilletPtb::class)
+        ->find($idBillet);
+        
+        $stockPtb=$entityManager->getRepository(StockPtb::class)->findOneBy([
+            'billet' => $billet,
+         ]);
+        
+        if($vente == $stockPtb->getNbre())
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(3));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getPtb()." comme prevus";
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+            $entityManager->persist($audit);
+        }
+        else
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(4));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()."à retourné ".$vente." billet ". $billet->getPtb()." alors qu'il devait retourné".$stockPtb->getNbre();
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+            $entityManager->persist($audit);
+        }
+        
+        
         $entityManager->flush();
         
         return new Response('<h1>'.$billet->getId().'</h1>');
@@ -442,39 +512,41 @@ class Controller extends AbstractController
         $data = array();
         foreach ($billets as $key => $billet) 
         {
-            $stock = $this->getDoctrine()
-            ->getRepository(StockPtb::class)->findOneby(
-                [
-                    'billet' =>$billet,
-                ]
-            );
-            $myarray = array
-            (
-                'id' => $billet->getId(),
+            if($billet->getEvenement() == null)
+            {
+                $stock = $this->getDoctrine()
+                ->getRepository(StockPtb::class)->findOneby(
+                    [
+                        'billet' =>$billet,
+                    ]
+                );
+                $myarray = array
+                (
+                    'id' => $billet->getId(),
 
-                'section' => $billet
-                ->getPtb()
-                ->getSection()
-                ->getLibelle(),
+                    'section' => $billet
+                    ->getPtb()
+                    ->getSection()
+                    ->getLibelle(),
+                    'depart' => $billet
+                    ->getPtb()
+                    ->getTrajet()
+                    ->getDepart()
+                    ->getLibelle(),
 
-                'depart' => $billet
-                ->getPtb()
-                ->getTrajet()
-                ->getDepart()
-                ->getLibelle(),
+                    'arrivee' => $billet
+                    ->getPtb()
+                    ->getTrajet()
+                    ->getArrivee()
+                    ->getLibelle(),
 
-                'arrivee' => $billet
-                ->getPtb()
-                ->getTrajet()
-                ->getArrivee()
-                ->getLibelle(),
-
-                'guichet' =>$billet
-                ->getGuichet()
-                ->getNom(),
-                'stock' => $stock->getNbre(),
-            );
-            array_push($data,$myarray);
+                    'guichet' =>$billet
+                    ->getGuichet()
+                    ->getNom(),
+                    'stock' => $stock->getNbre(),
+                );
+                array_push($data,$myarray);
+            }
         }
             return new Response(json_encode($data));
             //return new Response('dddd');

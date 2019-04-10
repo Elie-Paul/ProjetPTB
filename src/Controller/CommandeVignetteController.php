@@ -7,6 +7,22 @@ use App\Form\CommandeVignetteType;
 use App\Repository\CommandeVignetteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Guichet;
+use App\Entity\Type;
+use App\Entity\Trajet;
+use App\Entity\Section;
+use App\Entity\BilletPtb;
+use App\Entity\Ptb;
+use App\Entity\User;
+use App\Entity\Audit;
+use App\Entity\TypeAudit;
+use App\Entity\Vignette;
+use App\Entity\StockVignette;
+use App\Entity\VenteVignette;
+use App\Entity\CommandePtb;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Lieux;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

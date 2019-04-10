@@ -24,18 +24,7 @@ class BilletPtbController extends AbstractController
      */
     public function index(BilletPtbRepository $billetPtbRepository, \Swift_Mailer $mailer, Request $request,Controller $controller): Response
     {
-           /* $message = (new \Swift_Message('Hello Email'))
-                ->setFrom('send@example.com')
-                ->setTo('recipient@example.com')
-                ->setReplyTo('napalousmanadda@gmail.com')
-                ->setBody($this->renderView(
-                    // templates/emails/registration.html.twig
-                    'emails/test.html.twig'
-                ),
-                'text/html');
-        
-            $mailer->send($message);*/
-            
+         
             $array = array();
             foreach ($billetPtbRepository->findAll() as $key => $value) 
             {
@@ -86,6 +75,7 @@ class BilletPtbController extends AbstractController
             $billetPtb1 = $billetPtbRepository->findOneBy([
                 'guichet' => $billetPtb->getGuichet(),
                 'ptb' => $billetPtb->getPtb()
+                
             ]);
 
             if (!$billetPtb1) {

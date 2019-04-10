@@ -11,6 +11,9 @@ use App\Entity\Trajet;
 use App\Entity\Classe;
 use App\Entity\BilletNavette;
 use App\Entity\Navette;
+use App\Entity\User;
+use App\Entity\Audit;
+use App\Entity\TypeAudit;
 use App\Entity\StockNavette;
 use App\Entity\VenteNavette;
 use App\Entity\CommandeNavette;
@@ -38,6 +41,13 @@ class ControllerCommandeNavetteController extends AbstractController
     public function showCommandePTBVente()
     {
         return $this->render('commandeView/navette/venteCommandeNavette.html.twig');
+    }
+    /**
+     * @Route("/commande/navette/retour", name="commande_navette_return")
+     */
+    public function showCommandePTBRetour()
+    {
+        return $this->render('commandeView/navette/venteCommandeNavette2.html.twig');
     }
     /**
      * @Route("/commande/navette/valider", name="commande_navette_valider")
@@ -72,7 +82,7 @@ class ControllerCommandeNavetteController extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesNavette); $i++) 
         { 
-            if($commnadesNavette[$i]->getEtatCommande()>=1)
+            if($commnadesNavette[$i]->getEtatCommande()>=1 && $commnadesNavette[$i]->getEtatCommande()<=2)
             {
                 $diff=$commnadesNavette[$i]->getNombreBillet()-$commnadesNavette[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
@@ -96,7 +106,7 @@ class ControllerCommandeNavetteController extends AbstractController
         $nBillet=0;
         for ($i=0; $i < count($commnadesNavette); $i++) 
         { 
-            if($commnadesNavette[$i]->getEtatCommande()>=1 || $commnadesNavette[$i]->getEtatCommande()==2)
+            if($commnadesNavette[$i]->getEtatCommande()>=1 && $commnadesNavette[$i]->getEtatCommande()<=2)
             {
                 $diff=$commnadesNavette[$i]->getNombreBillet()-$commnadesNavette[$i]->getNombreBilletRealise();
                 $nBillet=$nBillet+$diff;
@@ -413,6 +423,63 @@ class ControllerCommandeNavetteController extends AbstractController
         $entityManager->flush();
         
         return new Response('<h1>ddddd</h1>');
+    }
+    /**
+     * @Route("/returnVenteNavette/{id}/{nvente}/{idUser}", name="returnNavette")
+     */
+    public function RetourBillet($id,$nvente,$idUser)
+    {
+        $idBillet = intVal($id);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+        $vente = intVal($nvente);
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval(1));
+        $billet = $entityManager
+        ->getRepository(BilletNavette::class)
+        ->find($idBillet);
+        
+        $stockPtb=$entityManager->getRepository(StockNavette::class)->findOneBy([
+            'billet' => $billet,
+         ]);
+        
+        if($vente == $stockPtb->getNbre())
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(3));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getNavette()." comme prevus ";
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+            $entityManager->persist($audit);
+        }
+        else
+        {
+            $type = $this->getDoctrine()
+            ->getRepository(TypeAudit::class)
+            ->find(intval(4));
+            $audit = new Audit();
+            $audit->setUser($user);
+            $audit->setType($type);
+            $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getNavette()." alors qu'il devait retourné ".$stockPtb->getNbre();
+            $audit->setDescription($text);
+            $audit->setCreatedAt(new \DateTime());
+            $audit->setUpdatedAt(new \DateTime());
+            $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+            $entityManager->persist($audit);
+        }
+        
+        
+        $entityManager->flush();
+        
+        return new Response('<h1>'.$billet->getId().'</h1>');
     }
 
 }

@@ -60,13 +60,13 @@ class ImpressionController extends AbstractController
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
-         $depart = intval($arr[2])+1;
+         $depart = intval($arr[2]);
          $userid = intval($arr[3]);
          $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletPtb::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
-         if($depart ==$billet->getNumeroDernierBillets()+1)
+         if($depart ==$billet->getNumeroDernierBillets())
          {
             $testMotif="true";
          }
@@ -115,16 +115,27 @@ class ImpressionController extends AbstractController
              if( $j == $num)
                 break;
          }
-        $billet->setNumeroDernierBillets(end($array));
+         if($testMotif == "true")
+        {
+            $stockPtb->setNbre( $stockPtb->getNbre() + $num );
+        }
+        else
+        {
+            $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
+            $stockPtb->setNbre( $stockPtb->getNbre() + $bb) ;
+            $num=$bb;
+        }
+        $billet->setNumeroDernierBillets(end($array)+1);
         $a=0;
         $d=0;
         $test=array();
-        $stockPtb->setNbre( $stockPtb->getNbre() + $num );
+        
+        
         while ($a<count($commnadesPTB)) 
         {
             for ($d;$d<$num;$d++) 
             {
-                if($commnadesPTB[$a]->getEtatCommande() == 0 )
+                if($commnadesPTB[$a]->getEtatCommande() == 0 || $commnadesPTB[$a]->getEtatCommande() >= 3 )
                 {
                     array_push($test, $commnadesPTB[$a]->getId());
                     break;
@@ -176,13 +187,13 @@ class ImpressionController extends AbstractController
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
-         $depart = intval($arr[2])+1;
+         $depart = intval($arr[2]);
          $userid = intval($arr[3]);
          $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
-         if($depart ==$billet->getNumeroDernierBillet()+1)
+         if($depart ==$billet->getNumeroDernierBillet())
          {
             $testMotif="true";
          }
@@ -231,8 +242,17 @@ class ImpressionController extends AbstractController
              if( $j == $num)
                 break;
          }
-        $billet->setNumeroDernierBillet(end($array));
-        $stockNavette->setNbre( $stockNavette->getNbre() + $num );
+         if($testMotif == "true")
+         {
+            $stockNavette->setNbre( $stockNavette->getNbre() + $num );
+         }
+         else
+         {
+             $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
+             $stockNavette->setNbre( $stockNavette->getNbre() + $bb) ;
+             $num=$bb;
+         }
+        $billet->setNumeroDernierBillet(end($array)+1);
         $a=0;
         $d=0;
         $test=array();
@@ -240,7 +260,7 @@ class ImpressionController extends AbstractController
         {
             for ($d;$d<$num;$d++) 
             {
-                if($commnadesNavettes[$a]->getEtatCommande() == 0 )
+                if($commnadesNavettes[$a]->getEtatCommande() == 0 || $commnadesNavettes[$a]->getEtatCommande() >= 3)
                 {
                     array_push($test, $commnadesNavettes[$a]->getId());
                     break;
@@ -288,7 +308,7 @@ class ImpressionController extends AbstractController
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
-         $depart = intval($arr[2])+1;
+         $depart = intval($arr[2]);
          $userid = intval($arr[3]);
          $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
@@ -298,7 +318,7 @@ class ImpressionController extends AbstractController
             'billet' => $billet,
          ],);
          $user = $entityManager->getRepository(User::class)->find($userid);
-         if($depart ==$billet->getNumeroDernierBillet()+1)
+         if($depart ==$billet->getNumeroDernierBillet())
          {
             $testMotif="true";
          }
@@ -345,7 +365,17 @@ class ImpressionController extends AbstractController
              if( $j == $num)
                 break;
          }
-         $stockTaxe->setNbre( $stockTaxe->getNbre() + $num );
+         
+         if($testMotif == "true")
+         {
+            $stockTaxe->setNbre( $stockTaxe->getNbre() + $num );
+         }
+         else
+         {
+             $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
+             $stockTaxe->setNbre( $stockTaxe->getNbre() + $bb) ;
+             $num=$bb;
+         }
         $billet->setNumeroDernierBillet(end($array));
         $a=0;
         $d=0;
@@ -354,7 +384,7 @@ class ImpressionController extends AbstractController
         {
             for ($d;$d<$num;$d++) 
             {
-                if($commnadesTaxes[$a]->getEtatCommande() == 0 )
+                if($commnadesTaxes[$a]->getEtatCommande() == 0 || $commnadesTaxes[$a]->getEtatCommande() >= 3)
                 {
                     array_push($test, $commnadesTaxes[$a]->getId());
                     break;
@@ -410,7 +440,7 @@ class ImpressionController extends AbstractController
             'billet' => $billet,
          ],);
          $user = $entityManager->getRepository(User::class)->find($userid);
-         if($depart ==$billet->getNumeroDernierBillet()+1)
+         if($depart ==$billet->getNumeroDernierBillet())
          {
             $testMotif="true";
          }
@@ -456,16 +486,26 @@ class ImpressionController extends AbstractController
              if( $j == $num)
                 break;
          }
-        $billet->setNumeroDernierBillet(end($array));
+         if($testMotif == "true")
+         {
+            $stockVignette->setNbre( $stockVignette->getNbre() + $num );
+         }
+         else
+         {
+             $bb=$num - $billet->getNumeroDernierBillets() - $depart;
+             $stockVignette->setNbre( $stockVignette->getNbre() + $bb) ;
+             $num=$bb;
+         }
+        $billet->setNumeroDernierBillet(end($array)+1);
         $a=0;
         $d=0;
         $test=array();
-        $stockVignette->setNbre( $stockVignette->getNbre() + $num );
+        
         while ($a<count($commnadesVignettes)) 
         {
             for ($d;$d<$num;$d++) 
             {
-                if($commnadesVignettes[$a]->getEtatCommande() == 0 )
+                if($commnadesVignettes[$a]->getEtatCommande() == 0 || $commnadesVignettes[$a]->getEtatCommande() >= 3)
                 {
                     array_push($test, $commnadesVignettes[$a]->getId());
                     break;

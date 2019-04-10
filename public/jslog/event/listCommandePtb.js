@@ -31,7 +31,6 @@ function addRow(array)
     if(!a)
         addGuichet();
     a=true;
-    
     $("table").tableExport().remove();
           
     $("table").tableExport({
@@ -47,6 +46,7 @@ function addRow(array)
         emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
         trimWhitespace: false              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
     });
+     
     
 }
 
@@ -54,20 +54,26 @@ function createRowElement(commande)
 {
     let array=[];
     
-    let type = document.createElement('td');
-    let typeContent = document.createTextNode(commande.type);
-    type.appendChild(typeContent);
-    array.push(type);
-
     let section = document.createElement('td');
     let sectionContent = document.createTextNode(commande.section);
     section.appendChild(sectionContent);
     array.push(section);
-    
+
+    let trajet = document.createElement('td');
+    let trajetContent = document.createTextNode(`${commande.depart}-${commande.arrivee}`);
+    trajet.style.width="150px";
+    trajet.appendChild(trajetContent);
+    array.push(trajet);
+
     let guichet = document.createElement('td');
     let guichetContent = document.createTextNode(commande.guichet);
     guichet.appendChild(guichetContent);
     array.push(guichet);
+
+    let event = document.createElement('td');
+    let eventContent = document.createTextNode(commande.event);
+    event.appendChild(eventContent);
+    array.push(event);
 
     let NbreCom = document.createElement('td');
     NbreCom.style.width="140px";
@@ -97,7 +103,7 @@ function createRowElement(commande)
     realisation.appendChild(pdiv);
     array.push(realisation);
     
-
+    
     
     let DateCommande = document.createElement('td');
     DateCommande.style.width="180px";
@@ -107,16 +113,20 @@ function createRowElement(commande)
     let DateCommandeContent = document.createTextNode(`${d.toLocaleDateString('fr-FR', options)}`);
     DateCommande.appendChild(DateCommandeContent);
     array.push(DateCommande);
+
     
     let buttonTd = document.createElement('td');
     buttonTd.style.width="20px";
     let button = document.createElement('button');
     let buttonContent = document.createTextNode('Valider');
     button.appendChild(buttonContent);
-    
+    button.id = "";
     button.type = "button";
     button.disabled = false;
     button.classList.add('btn');
+    /**
+     * <i class="fa fa-circle-o"></i>
+     */
     let modifierTd = document.createElement('td');
     let modifier = document.createElement('i');
     modifier.classList.add('glyphicon');
@@ -156,8 +166,8 @@ function createRowElement(commande)
     remove.classList.add('glyphicon');
     remove.classList.add('glyphicon-remove');
     remove.classList.add('popup');
-    remove.style.fontSize = "25px";
     remove.id = "r" +commande.id;
+    remove.style.fontSize = "25px";
     remove.style.color = '#d9534f';
     let popspan2 = document.createElement('span');
     popspan2.classList.add('popuptext');
@@ -210,33 +220,6 @@ function createRowElement(commande)
         button.innerText="traité";
         button.classList.remove('btn-success');
     }
-    buttonTd.appendChild(button);
-    modifierTd.appendChild(modifier);
-    removeTd.appendChild(remove);
-    if(commande.etat===1)
-    {
-        button.classList.add('btn-success');
-        button.classList.remove('btn-danger');
-        button.innerText="validé";
-    }
-    else if(commande.etat===0)
-    {
-        button.classList.add('btn-danger');
-        button.innerText="Non Validé";
-        button.classList.remove('btn-success');
-    }
-    else if(commande.etat===2)
-    {
-        button.classList.add('btn-warning');
-        button.innerText="en cours traitement";
-        button.classList.remove('btn-success');
-    }
-    else if(commande.etat===3)
-    {
-        button.classList.add('btn-info');
-        button.innerText="traité";
-        button.classList.remove('btn-success');
-    }
     else if(commande.etat===4)
     {
         button.classList.add('btn-primary');
@@ -249,7 +232,6 @@ function createRowElement(commande)
     array.push(buttonTd);
     array.push(modifierTd);
     array.push(removeTd);
-
     return array;
 }
 function DateCompare(date1,date2)
@@ -279,9 +261,10 @@ function getAllCommande()
             console.log(JSON.parse(this.responseText));
             addRow(JSON.parse(this.responseText));
             tab = JSON.parse(this.responseText); 
+            
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommandeVignette",true);
+    xhr.open("GET","http://localhost:8000/Json/listCommande/event",false);
     xhr.send();
 
 }
@@ -388,7 +371,6 @@ function updateTab()
   addRow(tab1);
 
 }
-
 function modifierCommande(element)
 {
     let id = element.id;
@@ -408,12 +390,13 @@ function modifierCommande(element)
                   });
             }
         }
-        xhr.open("GET",`http://localhost:8000/commande/vignette/modifier/${id}/${value}`,true);
+        xhr.open("GET",`http://localhost:8000/commande/ptb/modifier/${id}/${value}`,true);
         xhr.send();
         getAllCommande();
         updateTab();
     });
 }
+
 function deleteCommande(element)
 {
     let id = element.id;
@@ -441,11 +424,22 @@ function deleteCommande(element)
                     });
                 }
             }
-            xhr.open("GET",`http://localhost:8000/commande/vignette/delete/${id}`,true);
+            xhr.open("GET",`http://localhost:8000/commande/ptb/delete/${id}`,true);
             xhr.send();
             getAllCommande();
             updateTab();
         }    
     });
 }
+
 getAllCommande();
+/**
+ * DELIMITER $$
+CREATE EVENT reset_usage_count
+ON SCHEDULE EVERY 1 MINUTE
+DO 
+BEGIN
+UPDATE billet_ptb set numero_dernier_billets=0;
+END$$    
+DELIMITER ;
+ */

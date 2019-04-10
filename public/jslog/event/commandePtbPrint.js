@@ -22,11 +22,15 @@ function addRow(array)
 
     for (let index = 0; index < array.length; index++) 
     {
-        let tr = document.createElement('tr');
-        tr.id=array[index].id;
-        let arr=createRowElement(array[index]);
-        arr.forEach((value) => tr.appendChild(value));
-        tbody.appendChild(tr);
+        if(array[index].etat >=1)
+        {
+            let tr = document.createElement('tr');
+            tr.id=array[index].id;
+            let arr=createRowElement(array[index]);
+            arr.forEach((value) => tr.appendChild(value));
+            tbody.appendChild(tr);
+        }
+        
     }
     if(!a)
         addGuichet();
@@ -47,27 +51,32 @@ function addRow(array)
         emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
         trimWhitespace: false              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
     });
-    
 }
 
 function createRowElement(commande)
 {
     let array=[];
     
-    let type = document.createElement('td');
-    let typeContent = document.createTextNode(commande.type);
-    type.appendChild(typeContent);
-    array.push(type);
-
     let section = document.createElement('td');
     let sectionContent = document.createTextNode(commande.section);
     section.appendChild(sectionContent);
     array.push(section);
-    
+
+    let trajet = document.createElement('td');
+    let trajetContent = document.createTextNode(`${commande.depart}-${commande.arrivee}`);
+    trajet.style.width="150px";
+    trajet.appendChild(trajetContent);
+    array.push(trajet);
+
     let guichet = document.createElement('td');
     let guichetContent = document.createTextNode(commande.guichet);
     guichet.appendChild(guichetContent);
     array.push(guichet);
+
+    let event = document.createElement('td');
+    let eventContent = document.createTextNode(commande.event);
+    event.appendChild(eventContent);
+    array.push(event);
 
     let NbreCom = document.createElement('td');
     NbreCom.style.width="140px";
@@ -97,8 +106,6 @@ function createRowElement(commande)
     realisation.appendChild(pdiv);
     array.push(realisation);
     
-
-    
     let DateCommande = document.createElement('td');
     DateCommande.style.width="180px";
     var d = new Date(commande.dateCommande.date);
@@ -107,148 +114,44 @@ function createRowElement(commande)
     let DateCommandeContent = document.createTextNode(`${d.toLocaleDateString('fr-FR', options)}`);
     DateCommande.appendChild(DateCommandeContent);
     array.push(DateCommande);
+
     
-    let buttonTd = document.createElement('td');
-    buttonTd.style.width="20px";
+
     let button = document.createElement('button');
     let buttonContent = document.createTextNode('Valider');
     button.appendChild(buttonContent);
-    
+    button.id = ""+commande.id;
     button.type = "button";
     button.disabled = false;
     button.classList.add('btn');
-    let modifierTd = document.createElement('td');
-    let modifier = document.createElement('i');
-    modifier.classList.add('glyphicon');
-    modifier.classList.add('glyphicon-edit');
-    modifier.classList.add('popup');
-    modifier.id = commande.id;
-    modifierTd.style.width="10px"
-    modifier.style.fontSize = "25px";
-    modifier.style.color = '#5cb85c';
-    let popspan = document.createElement('span');
-    popspan.classList.add('popuptext');
-    popspan.appendChild(document.createTextNode('modifier'));
-    modifier.appendChild(popspan);
-    if(commande.etat ===0)
+    if(commande.etat===1)
     {
-        modifier.addEventListener('mouseover',(e)=> 
-        {
-            e.target.style.transform ='scale(1.5, 1.5)';
-            e.target.firstChild.classList.toggle("show");
-            e.target.firstChild.style.fontSize="10px";
-        }
-        
-        );
-        modifier.addEventListener('mouseout',(e)=> 
-        {
-            e.target.style.transform ='scale(1, 1)';
-            e.target.firstChild.classList.toggle("show");
-            
-        }
-        
-        );
-        modifier.addEventListener('click',(e)=> modifierCommande(e.target));
-    }    
-    let removeTd = document.createElement('td');
-    ;
-    let remove = document.createElement('i');
-    remove.classList.add('glyphicon');
-    remove.classList.add('glyphicon-remove');
-    remove.classList.add('popup');
-    remove.style.fontSize = "25px";
-    remove.id = "r" +commande.id;
-    remove.style.color = '#d9534f';
-    let popspan2 = document.createElement('span');
-    popspan2.classList.add('popuptext');
-    popspan2.appendChild(document.createTextNode('annuler'));
-    remove.appendChild(popspan2);
-    if(commande.etat === 0)
+        button.classList.add('btn-success');
+        button.classList.remove('btn-danger');
+        button.innerText="validé";
+    }
+    else if(commande.etat===0)
     {
+        button.classList.add('btn-danger');
+        button.innerText="Non Validé";
+        button.classList.remove('btn-success');
+    }
+    else if(commande.etat===2)
+    {
+        button.classList.add('btn-warning');
+        button.innerText="en cours traitement";
+        button.classList.remove('btn-success');
+    }
+    else if(commande.etat===3)
+    {
+        button.classList.add('btn-info');
+        button.innerText="traité";
+        button.classList.remove('btn-success');
+    }
+    array.push(button);
+
 
     
-        remove.addEventListener('mouseover',(e)=> 
-        {
-            e.target.style.transform ='scale(1.5, 1.5)';
-            e.target.firstChild.classList.toggle("show");
-            e.target.firstChild.style.fontSize="10px";
-        }
-        
-        );
-        remove.addEventListener('mouseout',(e)=> 
-        {
-            e.target.style.transform ='scale(1, 1)';
-            e.target.firstChild.classList.toggle("show");
-            
-        }
-        
-        );
-        remove.addEventListener('click',(e)=> deleteCommande(e.target));
-    }
-    if(commande.etat===1)
-    {
-        button.classList.add('btn-success');
-        button.classList.remove('btn-danger');
-        button.innerText="validé";
-
-    }
-    else if(commande.etat===0)
-    {
-        button.classList.add('btn-danger');
-        button.innerText="Non Validé";
-        button.classList.remove('btn-success');
-    }
-    else if(commande.etat===2)
-    {
-        button.classList.add('btn-warning');
-        button.innerText="en cours traitement";
-        button.classList.remove('btn-success');
-    }
-    else if(commande.etat===3)
-    {
-        button.classList.add('btn-info');
-        button.innerText="traité";
-        button.classList.remove('btn-success');
-    }
-    buttonTd.appendChild(button);
-    modifierTd.appendChild(modifier);
-    removeTd.appendChild(remove);
-    if(commande.etat===1)
-    {
-        button.classList.add('btn-success');
-        button.classList.remove('btn-danger');
-        button.innerText="validé";
-    }
-    else if(commande.etat===0)
-    {
-        button.classList.add('btn-danger');
-        button.innerText="Non Validé";
-        button.classList.remove('btn-success');
-    }
-    else if(commande.etat===2)
-    {
-        button.classList.add('btn-warning');
-        button.innerText="en cours traitement";
-        button.classList.remove('btn-success');
-    }
-    else if(commande.etat===3)
-    {
-        button.classList.add('btn-info');
-        button.innerText="traité";
-        button.classList.remove('btn-success');
-    }
-    else if(commande.etat===4)
-    {
-        button.classList.add('btn-primary');
-        button.innerText="archivé";
-        button.classList.remove('btn-success');
-    }
-    buttonTd.appendChild(button);
-    modifierTd.appendChild(modifier);
-    removeTd.appendChild(remove);
-    array.push(buttonTd);
-    array.push(modifierTd);
-    array.push(removeTd);
 
     return array;
 }
@@ -279,9 +182,10 @@ function getAllCommande()
             console.log(JSON.parse(this.responseText));
             addRow(JSON.parse(this.responseText));
             tab = JSON.parse(this.responseText); 
+            
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommandeVignette",true);
+    xhr.open("GET","http://localhost:8000/Json/listCommande/event",false);
     xhr.send();
 
 }
@@ -315,10 +219,9 @@ function addGuichet()
 
 function updateTab()
 {
-    //let idGuichet = cmbGuichets[selectedrow].options[cmbGuichets[selectedrow].selectedIndex].id;
-    //alert(cmbGuichet.options[cmbGuichet.selectedIndex].value);
+    
   let guichetSelected = cmbGuichet.selectedIndex;
-  /*let dateSelected = cmbDate.selectedIndex;*/
+  
   let etatSelected = cmbEtat.selectedIndex;
   let tab1 = tab;
   if(guichetSelected ==0 && start.value == '' && end.value == '' && etatSelected ==0)
@@ -389,63 +292,4 @@ function updateTab()
 
 }
 
-function modifierCommande(element)
-{
-    let id = element.id;
-    swal("Nombre de billet a commander:", 
-    {
-        content: "input",
-    })
-    .then((value) => 
-    {
-        let xhr = new XMLHttpRequest();
-        xhr.onload = function()
-        {
-            if(this.status == 200)
-            {
-                swal({
-                    icon: "success",
-                  });
-            }
-        }
-        xhr.open("GET",`http://localhost:8000/commande/vignette/modifier/${id}/${value}`,true);
-        xhr.send();
-        getAllCommande();
-        updateTab();
-    });
-}
-function deleteCommande(element)
-{
-    let id = element.id;
-    id = id.substr(1);
-    swal("Nombre de billet a commander:", 
-    {
-        title: "Etes vous sûr ?",
-        text: "souhaitez-vous supprimer ces commandes",
-        icon: "warning",
-        buttons: true,
-    })
-    .then((willDelete) => 
-    {
-        if(willDelete)
-        {
-
-        
-            let xhr = new XMLHttpRequest();
-            xhr.onload = function()
-            {
-                if(this.status == 200)
-                {
-                    swal({
-                        icon: "success",
-                    });
-                }
-            }
-            xhr.open("GET",`http://localhost:8000/commande/vignette/delete/${id}`,true);
-            xhr.send();
-            getAllCommande();
-            updateTab();
-        }    
-    });
-}
 getAllCommande();
