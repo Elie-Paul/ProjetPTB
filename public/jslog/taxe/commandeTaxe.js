@@ -76,7 +76,7 @@ function controlPasserCommande()
  {
     swal({
         title: "commande envoyé",
-        text: "Toute vos commande on été envoyé",
+        text: "verifier si tous vos commande ont bien été envoyé",
         icon: "success",
         
     })
@@ -103,6 +103,13 @@ function controlPasserCommande()
                 button.innerText="validé";
                 button.style.display='block';
             }
+            else
+            {
+                button.classList.add('btn-danger');
+                button.classList.remove('btn-success');
+                button.innerText="echec";
+                button.style.display='block';
+            }
         }
         let link ="http://localhost:8000/newCommandeTaxe/";
         let params =`${inputs[i].value}`;
@@ -116,17 +123,11 @@ function controlPasserCommande()
         {
             alert ('error');
         }
-        afterCommande();    
-        
-        
-       /* if(i==inputs.length)
-        {
-            setTimeout(function(){ document.location.href = "http://localhost:8000/commande/taxe/";}
-            , index*600); 
-        }*/
+            
+
     } 
     
-     
+        afterCommande();
  }
  function getTaxes() 
  {

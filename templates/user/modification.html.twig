@@ -17,12 +17,27 @@
           <!-- /.box-body -->
         </div>
 
- <div class="box box-solid box-primary">
+<div class="box box-solid box-primary">
     <div class="box-header">
-    <h3 class="box-title">Ajouter un Nouveau utilisateur</h3>   
+        <h3 class="box-title">Modification de l'utilisateur {{user.username|capitalize}}</h3>   
     </div>
-    <div class="box-body"> 
-    {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
- </div>
+    <div class="box-body">
+    {{ form_start(form) }}    
+    <div class="row">
+        <div class="col-xs-12">{{ form_row(form.nom) }}</div>        
+    </div>
+<div class="row">
+    <div class="col-xs-12">{{ form_row(form.prenom) }}</div>    
+</div>
+<div class="row">
+    <div class="col-xs-12">{{ form_row(form.email) }}</div>    
+</div>
+<div class="row">
+    <div class="col-xs-12">{{ form_row(form.password) }}</div>    
+</div>
+    <button class="btn btn-info">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+    
+</div>
 </div>
 {% endblock %}

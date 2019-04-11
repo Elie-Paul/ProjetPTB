@@ -188,14 +188,7 @@ class UserController extends AbstractController
      */
     public function edit(Request $request, User $user,UserPasswordEncoderInterface $encoder): Response
     {
-        $form = $this->createFormBuilder($user)
-        ->add('imageFile', FileType::class, [                
-            'label' => "Image",
-            'attr' => [                    
-                'class' => 'form-control',
-                'required' => true                  
-                ]             
-        ])
+        $form = $this->createFormBuilder($user)    
         ->add('nom')            
         ->add('prenom')
         ->add('email')
