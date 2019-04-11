@@ -51,7 +51,7 @@
                 <td>{{ commande_vignette.nombreBilletRealise }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('commande_vignette_voir', {'id': commande_vignette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
-                    <a class="btn btn-warning" href="{{ path('commande_vignette_modifier', {'id': commande_vignette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
+                    <a class="btn btn-warning" href="{{ path('commande_vignette_modifiernonval', {'id': commande_vignette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
                 </td>
             </tr>
         {% else %}
