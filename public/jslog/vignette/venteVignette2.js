@@ -101,7 +101,7 @@ function ajoutVente(element)
                     getAllCommande()
                }
             }
-            let link =`http://localhost:8000/addVenteVignette/${idb}/${vente}`;
+            let link =`http://serveurptb:8000/addVenteVignette/${idb}/${vente}`;
             xhttp.open("GET",link,true);
             xhttp.send();
                 
@@ -125,7 +125,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/vignette/billet",true);
+    xhr.open("GET","http://serveurptb:8000/Json/vignette/billet",true);
     xhr.send();
 
 }

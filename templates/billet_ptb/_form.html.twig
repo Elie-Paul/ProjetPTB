@@ -100,7 +100,7 @@
     function addGuichet()
     {
         modal.style.display = "block";
-        getJson('http://localhost:8000/json/lieu/depart',1);
+        getJson('http://serveurptb:8000/json/lieu/depart',1);
     }
 
     function ajouterGuichet()
@@ -109,7 +109,7 @@
         var nom = document.getElementById('nom').value;
         var lieu = document.getElementById('lieu').value;
 
-        document.location.href = `http://localhost:8000/addGuichetPtb/${code}/${nom}/${lieu}`;
+        document.location.href = `http://serveurptb:8000/addGuichetPtb/${code}/${nom}/${lieu}`;
     }
    /*function addGuichet(){
        swal("Write something here:", {
@@ -131,8 +131,8 @@
     function addPtb()
     {
         modal1.style.display = "block";
-        getJson("http://localhost:8000/json/section/",2);
-        getJson("http://localhost:8000/json/TrajetBillet/",3);
+        getJson("http://serveurptb:8000/json/section/",2);
+        getJson("http://serveurptb:8000/json/TrajetBillet/",3);
     }
 
     function ajouterPtb()
@@ -142,7 +142,7 @@
 
         modal1.style.display = "none";
 
-        document.location.href = `http://localhost:8000/addPtbBillet/${trajet}/${section}`;
+        document.location.href = `http://serveurptb:8000/addPtbBillet/${trajet}/${section}`;
     }
 
 
@@ -246,7 +246,7 @@
             .then((value) => {
               var modal = document.getElementsByClassName('modal')[0];
               modal.style.display = "none";
-               document.location.href="http://localhost:8000/billet/ptb/new";
+               document.location.href="http://serveurptb:8000/billet/ptb/new";
                 
             });
 
