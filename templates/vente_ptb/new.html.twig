@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New VentePtb{% endblock %}
+
+{% block body %}
+    <h1>Create new VentePtb</h1>
+
+    {{ include('vente_ptb/_form.html.twig') }}
+
+    <a href="{{ path('vente_ptb_index') }}">back to list</a>
+{% endblock %}

@@ -481,6 +481,36 @@
             <li><a href="{{ path('user_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li> 
           </ul>
           </li>
+             <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-certificate"></i>
+                <span>Billet</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                  <li><a href="{{ path('billet_navette_index2') }}"><i class="fa fa-circle-o"></i>Autorail</a></li>
+                  <li><a href="{{ path('billet_ptb_index2') }}"><i class="fa fa-circle-o"></i>Ptb</a></li>            
+                <li><a href="{{ path('billet_taxe_index2') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
+                <li><a href="{{ path('vignette_index') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>
+              </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-certificate"></i>
+                <span>Commande</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                  <li><a href="{{ path('commande_navette_lister') }}"><i class="fa fa-circle-o"></i>Billet Autorail</a></li>
+                  <li><a href="{{ path('commande_ptb_lister') }}"><i class="fa fa-circle-o"></i>Billet Ptb</a></li>            
+                <li><a href="{{ path('commande_taxe_lister') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
+                <li><a href="{{ path('commande_vignette_lister') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>
+              </ul>
+        </li>
             <li class="treeview">
         <a href="#">
         <i class="glyphicon glyphicon-certificate"></i>
@@ -496,7 +526,23 @@
         </li>                            
             <li><a href="{{ path('navette_index') }}"><i class="fa fa-circle-o"></i>Navette</a></li>
             <li><a href="{{ path('ptb_index') }}"><i class="fa  fa-train"></i>PTB</a></li>
-            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-plus"></i>Section</a></li>
+            <li><a href="{{ path('section_index') }}"><i class="glyphicon glyphicon-certificate"></i>Section</a></li>
+            
+        <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-certificate"></i>
+                <span>Stock</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                  <li><a href="{{ path('stock_navette_lister') }}"><i class="fa fa-circle-o"></i>Billet Autorail</a></li>
+                  <li><a href="{{ path('stock_ptb_lister') }}"><i class="fa fa-circle-o"></i>Billet Ptb</a></li>            
+                <li><a href="{{ path('stock_taxe_listertaxe') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
+                <li><a href="{{ path('stock_vignette_lister') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>
+              </ul>
+        </li>
             <li><a href="{{ path('audit_index') }}"><i class="glyphicon glyphicon-plus"></i>Audit</a></li>
           </ul>                
         </li>
@@ -516,8 +562,12 @@
           <ul class="treeview-menu">
             <li><a href="{{ path('statistique_venteptb_guichet') }}"><i class="fa fa-circle-o"></i>Vente Billet Ptb par Guichet</a></li>
             <li><a href="{{ path('statistique_ventecommandeptb_guichet') }}"><i class="fa fa-circle-o"></i>Vente et Commande Ptb</a></li>
-            <li><a href="{{ path('statistique_commandeptb_guichet') }}"><i class="fa fa-circle-o"></i>Commande Ptb par Guichet</a></li>
-            <li><a href="{{ path('statistique_ventecommandeptb_billet') }}"><i class="fa fa-circle-o"></i>Vente de Commande par Billet</a></li>
+            <li><a href="{{ path('statistique_commandeptb_guichet') }}"><i class="fa fa-circle-o"></i>Commande Ptb/Guichet</a></li>
+            <li><a href="{{ path('statistique_ventecommandeptb_billet') }}"><i class="fa fa-circle-o"></i>Vente de Commande/Billet</a></li>
+            <li><a href="{{ path('vente_ptb_index') }}"><i class="fa fa-circle-o"></i>Liste vente Billet Ptb</a></li>
+            <li><a href="{{ path('vente_navette_index') }}"><i class="fa fa-circle-o"></i>Liste vente Billet Autorail</a></li>
+            <li><a href="{{ path('vente_taxe_index') }}"><i class="fa fa-circle-o"></i>Liste vente Taxe</a></li>
+            <li><a href="{{ path('vente_taxe_index') }}"><i class="fa fa-circle-o"></i>Liste vente vignette</a></li>
           </ul>
         </li>
         {% endif %}

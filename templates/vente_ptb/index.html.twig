@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheets %}
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- CSS IMPRIMER-->
@@ -8,65 +7,51 @@
     <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
-{% block title %}User index{% endblock %}
+{% block title %}VentePtb index{% endblock %}
 
 {% block body %}
-<h1>
-    <big>
-        Gestion des Utilisateurs
-    </big>
-</h1>
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
-            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Utilisateurs</big></h4>
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Ventes de Billet PTB</big></h4>
           </div>
-            <div class="col-md-6 text-right">
-                <a class="btn btn-info" href="{{ path('user_new') }}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nouveau Utilisateur</a>
-            </div>
           </div>
         </div>
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h1 class="box-title">Liste des utilisateurs</h1>
+                <h1 class="box-title">Liste des ventes</h1>
             </div>
             <div class="box-body">
-
     <table class="table table-hover table-striped table-bordered" id="example1">
         <thead>
             <tr>
-                <th>Utilisateurs</th>                
-                <th>Rôles</th>
-                <th>Noms</th>   
-                <th>Prenoms</th>   
-                <th>Email</th>           
+                <th>Id</th>
+                <th>Nombre De Billet Vendu</th>
+                <th>Date de création</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for user in users %}
+        {% for vente_ptb in vente_ptbs %}
             <tr>
-                <td>{{ user.username }}</td>
-                <td>{{ user.roles ? user.roles[0]|slice(5)}}</td>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>{{ user.email }}</td>
+                <td>{{ vente_ptb.id }}</td>
+                <td>{{ vente_ptb.nbreDeBillet }}</td>
+                <td>{{ vente_ptb.createAt ? vente_ptb.createAt|date('Y-m-d à H:i:s') : '' }}</td>
                 <td>
-                    <a class="btn btn-info" role="button" href="{{ path('user_show', {'id': user.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
-                    <a class="btn btn-warning" role="button" href="{{ path('user_edit', {'id': user.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
-                    
+                    <a class="btn btn-info" href="{{ path('vente_ptb_show', {'id': vente_ptb.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
+                    <a class="btn btn-warning" href="{{ path('vente_ptb_edit', {'id': vente_ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">Aucun enregistrement trouvé</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-            </div>
+    </div>
         </div>
     </div>
 </div>
