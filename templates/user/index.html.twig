@@ -56,7 +56,15 @@
                 <td>
                     <a class="btn btn-warning" role="button" href="{{ path('user_show', {'id': user.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
                     <a class="btn btn-info" role="button" href="{{ path('user_edit', {'id': user.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
-                    
+
+                    {% if user.active %}
+                        <a class="btn btn-danger bloquer_user" role="button" onclick="bloquer({{ user.id }})"><i
+                                    class="glyphicon glyphicon-exclamation-sign"></i>bloquer</a>
+                    {% else %}
+                        <a class="btn btn-success bloquer_user" role="button" onclick="bloquer({{ user.id }})"><i
+                                    class="glyphicon glyphicon-ok"></i>activer</a>
+                    {% endif %}
+
                 </td>
             </tr>
         {% else %}
@@ -156,5 +164,34 @@
             table.buttons().container()
                 .appendTo( '#example1_wrapper .col-sm-6:eq(0)' );
         })
+    </script>
+
+    <script>
+        function bloquer(id) {
+            $.ajax({
+                url: '/user/bloquer',
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (data) {
+                    switch(data.status) {
+                        case 'error':
+                            swal("Erreur", data.message, "error");
+                            break;
+                        case 'success':
+                            // swal("SUCCES", data.message, "success");
+                            location.reload(true);
+                            // $('.content').load('http://localhost:8000/user/ .content');
+                            break;
+                        default:
+                            swal("Erreur", data.message, "error");
+                    }
+                },
+                error: function (error) {
+                    swal("Erreur", "Une erreur est survenue", "error");
+                }
+            });
+            return false;
+        }
     </script>
 {% endblock %}

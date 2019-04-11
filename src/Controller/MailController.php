@@ -141,9 +141,45 @@ class MailController extends AbstractController
     }
 
     /**
+     * @param $nom
+     * @param $prenom
+     * @param $email
+     * @param $role
+     */
+    public function sendMailUserInfo($nom,$prenom, $email, $role)
+    {
+        $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
+            'processus' => 'utilisateur'
+        ]);
+        if ($destinateur)
+        {
+            foreach ($destinateur as $dest)
+            {
+                if($dest->getActive())
+                {
+                    $message = (new \Swift_Message("Création d'un nouvelle utilisateur"))
+                        ->setFrom('ptbsaptb@gmail.com')
+                        ->setTo($dest->getEmail())
+                        ->setBody(
+                            $this->renderView('mail/dafmail.html.twig', [
+                                    'nom' => $nom,
+                                    'prenom' => $prenom,
+                                    'role' => $role,
+                                    'mail' => $email
+                                ]
+                            ),
+                            'text/html'
+                        );
+
+                    $this->mailer->send($message);
+                }
+            }
+        }
+    }
+
+    /**
      * @param $depart
      * @param $arrive
-     * @param $vue
      */
     public function sendMailForPrint($depart, $arrive)
     {
@@ -154,23 +190,22 @@ class MailController extends AbstractController
         {
             foreach ($destinateur as $dest)
             {
-                $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
-                    ->setFrom('ddthera@gmail.com')
-                    ->setTo($dest->getEmail())
-                    ->setBody(
-                        $this->renderView('mail/mailprint.html.twig', [
-//                                'nom' => $nom,
-//                                'prenom' => $prenom,
-//                                'mail' => $mail,
-//                                'role' => $role,
-                                'depart' => $depart,
-                                'arrivee' => $arrive,
-                            ]
-                        ),
-                        'text/html'
-                    );
+                if($dest->getActive())
+                {
+                    $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
+                        ->setFrom('ptbsaptb@gmail.com')
+                        ->setTo($dest->getEmail())
+                        ->setBody(
+                            $this->renderView('mail/mailprint.html.twig', [
+                                    'depart' => $depart,
+                                    'arrivee' => $arrive,
+                                ]
+                            ),
+                            'text/html'
+                        );
 
-                $this->mailer->send($message);
+                    $this->mailer->send($message);
+                }
             }
         }
 
@@ -185,19 +220,22 @@ class MailController extends AbstractController
         {
             foreach ($destinateur as $dest)
             {
-                $message = (new \Swift_Message('Test mail par THERA pour Mr Ly'))
-                    ->setFrom('ddthera@gmail.com')
-                    ->setTo($dest->getEmail())
-                    ->setBody(
-                        $this->renderView($vue, [
-                            'Nom' => $nom,
-                            'Prenom' => $prenom,
-                            'Email' => $email
-                        ]),
-                        'text/html'
-                    );
+                if($dest->getActive())
+                {
+                    $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
+                        ->setFrom('ptbsaptb@gmail.com')
+                        ->setTo($dest->getEmail())
+                        ->setBody(
+                            $this->renderView($vue, [
+                                'Nom' => $nom,
+                                'Prenom' => $prenom,
+                                'Email' => $email
+                            ]),
+                            'text/html'
+                        );
 
-                $this->mailer->send($message);
+                    $this->mailer->send($message);
+                }
             }
         }
     }
