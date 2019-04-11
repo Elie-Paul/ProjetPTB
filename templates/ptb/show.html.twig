@@ -35,11 +35,11 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{{ ptb.createdAt ? ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ ptb.createdAt ? ptb.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{{ ptb.updatedAt ? ptb.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ ptb.updatedAt ? ptb.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
             </tbody>
         </table>

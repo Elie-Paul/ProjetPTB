@@ -15,8 +15,8 @@
                 </h4>
             </div>
             <div class="col-md-6 text-right">
-                <a class="btn btn-primary pull-right" href="{{ path('evenement_index') }}">
-                    <i class="fa fa-list"></i>&nbsp;Lister les Evenements</a>
+                <a class="btn btn-info pull-right" href="{{ path('evenement_index') }}">
+                    <i class="fa fa-list"></i>&nbsp; <big>Lister les Evenements</big></a>
             </div>
         </div>
         <!-- /.box-body -->
@@ -29,7 +29,7 @@
     {% endif %}
     <div class="box box-solid box-primary">
         <div class="box-header">
-            <h3 class="box-title">Ajouter un nouveau Evenement</h3>   
+            <h3 class="box-title">Ajouter un nouvel Evenement</h3>   
         </div>
         <div class="box-body">            
                 {{ include('evenement/_form.html.twig') }}            

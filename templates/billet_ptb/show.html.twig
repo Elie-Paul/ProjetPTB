@@ -25,8 +25,8 @@
         <table class="table table-bordered">
             <tbody>
                 <tr>
-                    <th>#</th>
-                    <td>{{ billet_ptb.id }}</td>
+                    <th>Billet PTB</th>
+                    <td>{{ billet_ptb.ptb }}</td>
                 </tr>
                 <tr>
                     <th>Numero du Dernier Billet imprimer</th>
@@ -34,11 +34,11 @@
                 </tr>
                 <tr>
                     <th>Date de creation</th>
-                    <td>{{ billet_ptb.createdAt ? billet_ptb.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ billet_ptb.createdAt ? billet_ptb.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{{ billet_ptb.updateAt ? billet_ptb.updateAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ billet_ptb.updateAt ? billet_ptb.updateAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
             </tbody>
         </table>
