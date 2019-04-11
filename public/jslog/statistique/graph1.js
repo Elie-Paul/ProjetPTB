@@ -20,7 +20,7 @@ window.onload = function ()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichet2vente/",true);
+    xhr.open("GET","http://serveurptb:8000/json/guichet2vente/",true);
     xhr.send();
     
 

@@ -75,7 +75,7 @@
         function ajouter(){
           var libelle = document.getElementById("libelle").value;
           modal.style.display = "none";
-          document.location.href = `http://localhost:8000/addLieuGuichet/${libelle}`;          
+          document.location.href = `http://serveurptb:8000/addLieuGuichet/${libelle}`;          
 
         }
         
@@ -112,7 +112,7 @@ document.getElementById("submit").addEventListener("click", function(e){
             .then((value) => {
               var modal = document.getElementById('myModal');
               modal.style.display = "none";
-               document.location.href="http://localhost:8000/guichet/new";
+               document.location.href="http://serveurptb:8000/guichet/new";
                 
             });
 
