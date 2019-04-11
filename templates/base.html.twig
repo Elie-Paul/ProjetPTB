@@ -268,9 +268,18 @@
             </li>
             <li><a href="{{ path('billet_taxe_index') }}"><i class="fa fa-credit-card"></i><span>Taxe</span></a></li>            
             {% endif %}
-            <li>
-              <a href="{{ path('vignette_index') }}"><i class="fa fa-cc-mastercard"></i><span>&nbsp;Billet Vignette</span></a>
-            </li>
+
+              <li class="treeview">
+              <a href="#"><i class="fa fa-subway"></i><span>Billet Vignette</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="{{ path('vignette_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+                  <li><a href="{{ path('vignette_index') }}"><i class="fa fa-circle-o"></i>Imprimer</a></li>
+              </ul>
+        </li>
             <li>            
               <a href="{{ path('billet_event_index') }}"><i class="fa fa-folder"></i><span>Billet Evenement</span></a>
             </li>
