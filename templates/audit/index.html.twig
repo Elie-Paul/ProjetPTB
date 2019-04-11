@@ -67,8 +67,8 @@
                     <td><button class="btn btn-warning" disabled>{{ audit.type.libelle}}</button></td>
                 {% endif %}
                 
-                <td>{{ audit.createdAt ? audit.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
-                <td>{{ audit.updatedAt ? audit.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
+                <td>{{ audit.createdAt ? audit.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
+                <td>{{ audit.updatedAt ? audit.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
                 <td>{{ audit.description }}</td>
             </tr>
         {% else %}
@@ -103,9 +103,6 @@
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
 
     <script>
-    {% if success is defined %}
-        swal("Bon travail", "Vous aviez ajouté un nouveau guichet", "success");
-    {% endif %}
 
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
 

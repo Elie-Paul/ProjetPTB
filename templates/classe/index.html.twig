@@ -47,8 +47,8 @@
                     {% for classe in classes %}
                         <tr>
                             <td>{{ classe.libelle }}</td>
-                            <td>{{ classe.createdAt ? classe.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
-                            <td>{{ classe.updatedAt ? classe.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ classe.createdAt ? classe.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ classe.updatedAt ? classe.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('classe_show', {'id': classe.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('classe_edit', {'id': classe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
@@ -88,7 +88,15 @@
 
     <script>
     {% if success is defined %}
-        swal("Succès", "Vous avez ajouté une nouvelle classe", "success");
+        swal({
+        title: "Succès",
+        text: "Vous avez ajouté une nouvelle classe",
+        icon: "success",
+        
+        })
+        .then((value) => {
+            document.location.href="/classe";
+        });
     {% endif %}
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
         $(function () {

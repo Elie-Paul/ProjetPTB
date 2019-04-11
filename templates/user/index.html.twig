@@ -90,7 +90,15 @@
 
     <script>
     {% if success is defined %}
-        swal("Succès", "Vous avez ajouté un utilisateur", "success");
+        swal({
+        title: "Succès",
+        text: "Vous avez ajouté un utilisateur",
+        icon: "success",
+        
+        })
+        .then((value) => {
+            document.location.href="/user";
+        });
     {% endif %}
         $(function () {
             $('#example1').DataTable({

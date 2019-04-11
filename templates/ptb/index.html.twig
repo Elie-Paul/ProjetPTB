@@ -48,8 +48,8 @@
                         <tr>
                             <td>{{ ptb.trajet.depart.libelle }}-{{ ptb.trajet.arrivee.libelle }}</td>
                             <td>{{ ptb.section.libelle }}</td>
-                            <td>{{ ptb.createdAt ? ptb.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS')}}</td>
-                            <td>{{ ptb.updatedAt ? ptb.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ ptb.createdAt ? ptb.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS')}}</td>
+                            <td>{{ ptb.updatedAt ? ptb.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('ptb_show', {'id': ptb.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('ptb_edit', {'id': ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
@@ -87,7 +87,15 @@
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
     <script>
     {% if success is defined %}
-        swal("Succès", "Vous avez ajouté un nouveau train PTB", "success");
+        swal({
+        title: "Succès",
+        text: "Vous avez ajouté un nouveau train PTB",
+        icon: "success",
+        
+        })
+        .then((value) => {
+            document.location.href="/ptb";
+        });
     {% endif %}
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
     

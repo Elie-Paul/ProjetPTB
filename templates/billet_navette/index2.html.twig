@@ -92,7 +92,15 @@
 
     <script>
     {% if success is defined %}
-        swal("Succès", "Vous avez ajouté un nouveau billet pour le train Autorail", "success");
+        swal({
+        title: "Succès",
+        text: "Vous avez ajouté un nouveau billet pour le train Autorail",
+        icon: "success",
+        
+        })
+        .then((value) => {
+            document.location.href="/billet/navette/index2";
+        });
     {% endif %}
         $(function () {
             $('#example1').DataTable({

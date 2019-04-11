@@ -43,8 +43,8 @@
                             <td>{{ navette.trajet.depart.libelle }}-{{ navette.trajet.arrivee.libelle }}</td>
                             <td>{{ navette.classe.libelle }}</td>
                             <td>{{ navette.prix }}</td>
-                            <td>{{ navette.createdAt ? navette.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS')}}</td>
-                            <td>{{ navette.updatedAt ? navette.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ navette.createdAt ? navette.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS')}}</td>
+                            <td>{{ navette.updatedAt ? navette.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('navette_show', {'id': navette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
@@ -83,7 +83,15 @@
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
     <script>
     {% if success is defined %}
-        swal("Succès", "Vous avez ajouté un nouveau train Autorail", "success");
+        swal({
+        title: "Succès",
+        text: "Vous avez ajouté un nouveau train Autorail",
+        icon: "success",
+        
+        })
+        .then((value) => {
+            document.location.href="/navette";
+        });
     {% endif %}
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
         $(function () {
