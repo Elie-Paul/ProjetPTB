@@ -238,12 +238,12 @@ function getJson3()
  {
     swal({
         title: "commande envoyé",
-        text: "Toute vos commande on été envoyé",
+        text: "verifier si tous vos commande ont bien été envoyé",
         icon: "success",
         
     })
         .then((value) => {
-            document.location.href="http://localhost:8000/commande/ptb";
+            document.location.href="http://localhost:8000/commande/event";
             
         });
  } 
@@ -277,8 +277,13 @@ function getJson3()
             //alert(xhttp.responseText);
             ///a++;
             spansSuccess[i].style.display = "block";
+            spansDanger[i].style.display = "none";
             
-            
+        }
+        else
+        {
+            spansDanger[i].style.display = "block";
+            spansSuccess[i].style.display = "none";
         }
      }
      let link ="http://localhost:8000/newCommande/Event";
@@ -290,12 +295,10 @@ function getJson3()
         xhttp.send(params);  
      }
      
-     if(i==index)
-     {
-        
-        afterCommande();
-        
-     }
+        if(i==index)
+        {
+            afterCommande();
+        }
     } 
     
      

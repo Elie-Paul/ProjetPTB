@@ -171,7 +171,7 @@ function checkforEmpty()
  {
     swal({
         title: "commande envoyé",
-        text: "Toute vos commande on été envoyé",
+        text: "verifier si tous vos commande ont bien été envoyé",
         icon: "success",
         
     })
@@ -186,37 +186,44 @@ function checkforEmpty()
     buttonCommande.style.display="none";
     for (let i = 0; i <= index; i++) 
     {
-        let idGuichet = cmbGuichets[i].options[cmbGuichets[i].selectedIndex].id;
-        let idSection = cmbSections[i].options[cmbSections[i].selectedIndex].id;
+            let idGuichet = cmbGuichets[i].options[cmbGuichets[i].selectedIndex].id;
+            let idSection = cmbSections[i].options[cmbSections[i].selectedIndex].id;
+                
+            let xhttp=new XMLHttpRequest();
+        let a= true;
+        xhttp.onload = function ()
+        {
+            if (this.status == 200)
+            {
+
+                spansSuccess[i].style.display = "block";
+                spansDanger[i].style.display = "none";
+                a=true;
+            }
+            else
+            {
+                a=false;
+                spansDanger[i].style.display = "block";
+                spansSuccess[i].style.display = "none";
+                
+            }
+        }
+        let link ="http://localhost:8000/newCommandeVignette/";
+        let params =`${idGuichet}+${idSection}+${Nbres[i].value}`;
+        console.log(params);
+        if(Nbres[i].value !="" && idGuichet!='0' && idSection!='0')
+        {
+            xhttp.open("POST",link,false);
+            xhttp.send(params); 
             
-        let xhttp=new XMLHttpRequest();
-     let a= true;
-     xhttp.onload = function ()
-     {
-        if (this.status == 200)
-        {
-            //let response = JSON.parse();
-            //alert(xhttp.responseText);
-            ///a++;
-            spansSuccess[i].style.display = "block";
-            a=true;
         }
-        else
+            
+        if(i==index)
         {
-            a=false;
-            spansDanger[i].style.display = "block";
+            
+            afterCommande();
+            
         }
-     }
-     let link ="http://localhost:8000/newCommandeVignette/";
-     let params =`${idGuichet}+${idSection}+${Nbres[i].value}`;
-     console.log(params);
-     if(Nbres[i].value !="" && idGuichet!='0' && idSection!='0')
-     {
-        xhttp.open("POST",link,false);
-        xhttp.send(params);  
-     }
-        
-        afterCommande();
          
      
     } 

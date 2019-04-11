@@ -122,7 +122,11 @@ class ImpressionController extends AbstractController
         else
         {
             $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
-            $stockPtb->setNbre( $stockPtb->getNbre() + $bb) ;
+            if($bb > 0)
+            {
+                $stockPtb->setNbre( $stockPtb->getNbre() + $bb) ;
+            }
+            
             $num=$bb;
         }
         $billet->setNumeroDernierBillets(end($array)+1);
@@ -248,8 +252,12 @@ class ImpressionController extends AbstractController
          }
          else
          {
-             $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
-             $stockNavette->setNbre( $stockNavette->getNbre() + $bb) ;
+             
+            $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
+            if($bb > 0)
+            {
+                $stockNavette->setNbre( $stockNavette->getNbre() + $bb) ;
+            }    
              $num=$bb;
          }
         $billet->setNumeroDernierBillet(end($array)+1);
@@ -372,9 +380,12 @@ class ImpressionController extends AbstractController
          }
          else
          {
-             $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
-             $stockTaxe->setNbre( $stockTaxe->getNbre() + $bb) ;
-             $num=$bb;
+            $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
+            if($bb > 0)
+            {
+                $stockTaxe->setNbre( $stockTaxe->getNbre() + $bb) ;
+            }
+            $num=$bb;
          }
         $billet->setNumeroDernierBillet(end($array));
         $a=0;
@@ -492,8 +503,11 @@ class ImpressionController extends AbstractController
          }
          else
          {
-             $bb=$num - $billet->getNumeroDernierBillets() - $depart;
-             $stockVignette->setNbre( $stockVignette->getNbre() + $bb) ;
+             $bb=$num - $billet->getNumeroDernierBillet() - $depart;
+             if($bb > 0)
+             {
+                $stockVignette->setNbre( $stockVignette->getNbre() + $bb) ;
+             }
              $num=$bb;
          }
         $billet->setNumeroDernierBillet(end($array)+1);

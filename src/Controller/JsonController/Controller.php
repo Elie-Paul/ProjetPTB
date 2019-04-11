@@ -198,7 +198,7 @@ class Controller extends AbstractController
     }
     
      /**
-     * @Route("/newCommande/", name="newCommande")
+     * @Route("/newCommande/", name="newCommande2")
      */
     public function newCommande(Request $request)//Request $request
     {
@@ -436,7 +436,7 @@ class Controller extends AbstractController
     }
 
     /**
-     * @Route("/json/trajet/{id}", name="json_controller_Trajet")
+     * @Route("/json/trajet/{id}", name="json_controller_Trajet2")
      */
     public function getTrajet($id)
     {

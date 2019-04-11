@@ -222,7 +222,7 @@ function getJson3()
  {
     swal({
         title: "commande envoyé",
-        text: "Toute vos commande on été envoyé",
+        text: "verifier si tous vos commande ont bien été envoyé",
         icon: "success",
         
     })
@@ -246,12 +246,13 @@ function getJson3()
         {
             if ( this.status == 200)
             {
-                //let response = JSON.parse();
-                //alert(xhttp.responseText);
-                ///a++;
-                spansSuccess[i].style.display = "block";
-                
-                
+               spansSuccess[i].style.display = "block";
+               spansDanger[i].style.display = "none";
+            }
+            else
+            {
+                spansDanger[i].style.display = "block";
+                spansSuccess[i].style.display = "none";
             }
         }
         let link ="http://localhost:8000/newCommandeNavette/";
@@ -259,14 +260,13 @@ function getJson3()
         console.log(params);
         if(Nbres[i].value !="" && idGuichet!='0' && idClasse!='0'&& idTrajet!='0')
         {
-            xhttp.open("POST",link,true);
+            xhttp.open("POST",link,false);
             xhttp.send(params);  
         }
         
         if(i==index)
         {
-            setTimeout(function(){ afterCommande();}
-            , index*600); 
+            afterCommande(); 
         }
     } 
     
