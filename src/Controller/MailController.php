@@ -141,9 +141,42 @@ class MailController extends AbstractController
     }
 
     /**
+     * @param $nom
+     * @param $prenom
+     * @param $email
+     * @param $role
+     */
+    public function sendMailUserInfo($nom,$prenom, $email, $role)
+    {
+        $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
+            'processus' => 'utilisateur'
+        ]);
+        if ($destinateur)
+        {
+            foreach ($destinateur as $dest)
+            {
+                $message = (new \Swift_Message("Création d'un nouvelle utilisateur"))
+                    ->setFrom('ptbsaptb@gmail.com')
+                    ->setTo($dest->getEmail())
+                    ->setBody(
+                        $this->renderView('mail/dafmail.html.twig', [
+                                'nom' => $nom,
+                                'prenom' => $prenom,
+                                'role' => $role,
+                                'mail' => $email
+                            ]
+                        ),
+                        'text/html'
+                    );
+
+                $this->mailer->send($message);
+            }
+        }
+    }
+
+    /**
      * @param $depart
      * @param $arrive
-     * @param $vue
      */
     public function sendMailForPrint($depart, $arrive)
     {
@@ -159,10 +192,6 @@ class MailController extends AbstractController
                     ->setTo($dest->getEmail())
                     ->setBody(
                         $this->renderView('mail/mailprint.html.twig', [
-//                                'nom' => $nom,
-//                                'prenom' => $prenom,
-//                                'mail' => $mail,
-//                                'role' => $role,
                                 'depart' => $depart,
                                 'arrivee' => $arrive,
                             ]

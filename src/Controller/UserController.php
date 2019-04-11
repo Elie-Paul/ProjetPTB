@@ -40,10 +40,9 @@ class UserController extends AbstractController
     /**
      * @Route("/bloquer", name="user_bloquer", methods={"GET","POST"})
      * @param Request $request
-     * @param UserRepository $userRepository
      * @return Response
      */
-    public function bloquer(Request $request, UserRepository $userRepository): Response
+    public function bloquer(Request $request): Response
     {
         if($request->isXmlHttpRequest())
         {
@@ -119,7 +118,7 @@ class UserController extends AbstractController
             ]);
             if (!$user1)
             {
-                $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/dafmail.html.twig');
+                $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $user->getRoles());
                 $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/index.html.twig');
                 $user->setCreatedAt(new \DateTime());
                 $user->setUpdateAt(new \DateTime());
