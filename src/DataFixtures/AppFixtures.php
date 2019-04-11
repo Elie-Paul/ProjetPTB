@@ -24,6 +24,7 @@ class AppFixtures extends Fixture
         $user=new User();
         $user->setUsername("thera");
         $user->setNom("THERA");
+        $user->setActive(true);
         $user->setPrenom("THERA");
         $user->setEmail("taalr@taalr.com");
         $user->setFilename("taalr");

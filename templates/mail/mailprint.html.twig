@@ -237,12 +237,9 @@
 																				<td align="center" class="textContent">																																										
 																					<div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
 																						<p>Bonjour, nous vous informons que l'utilisateur :</p>
-																						<p>{{app.user.nom|capitalize}} {{app.user.prenom|capitalize}} pour fonction {{app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}, <a>{{app.user.email}}</a> vient</br>
+																						<p>{{app.user.nom|capitalize}} {{app.user.prenom|capitalize}} pour fonction {{app.user.roles ? app.user.roles[0]|slice(5)|capitalize|replace({"_": ' '}) }}, et adresse email {{app.user.email}} vient</br>
                                                                                          d'imprimer un billet commançant :</br>
-                                                                                         <p>de <p>
-                                                                                         <p>{{ depart }}</p>
-                                                                                         <p>à</p>
-                                                                                         {{ arrivee }}
+                                                                                         <p>de {{ depart }} à {{ arrivee }}<p>
                                                                                         </p>
 																					</div>																																																																																				
 																					</br></br>
