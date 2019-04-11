@@ -29,7 +29,7 @@ class Guichet
      *      minMessage = "Votre code doit avoir au minimum {{ limit }} charactère de longueur"
      * )
      * @Assert\Type("string")
-     * @Assert\Regex(pattern="/^[a-zA-Z0-9 ]+$/", match=true, message="Les caractères spéciaux sont interdits dans le titre")
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9]+$/i", match=true, message="Les caractères spéciaux et les espaces sont interdits")
      */
     private $code;
 
@@ -41,7 +41,7 @@ class Guichet
      *      minMessage = "Votre nom doit avoir au minimum 2 charactère de longueur"
      * )
      * @Assert\Type("string")
-     * @Assert\Regex(pattern="/^[a-zA-Z0-9]+$/", match=true, message="Les caractères spéciaux sont interdits dans le titre")
+     * @Assert\Regex(pattern="/^[a-zA-Z ]+$/i", match=true, message="Les caractères spéciaux sont interdits")
      */
     private $nom;
 

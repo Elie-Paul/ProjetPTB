@@ -198,7 +198,7 @@ class Controller extends AbstractController
     }
     
      /**
-     * @Route("/newCommande/", name="newCommande")
+     * @Route("/newCommande/", name="newCommande2")
      */
     public function newCommande(Request $request)//Request $request
     {

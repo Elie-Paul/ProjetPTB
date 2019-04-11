@@ -13,8 +13,6 @@ class VignetteType extends AbstractType
     {
         $builder
             ->add('numeroDernierBillet')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('guichet')
             ->add('type')
         ;

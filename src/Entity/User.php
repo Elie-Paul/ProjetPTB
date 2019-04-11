@@ -29,6 +29,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25)
+     * @Assert\Regex(pattern="/^[a-zA-Z ]+$/i", match=true, message="Les caractères spéciaux ou les chiffres sont interdits")
      */
     private $nom;
 
@@ -39,6 +40,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25)
+     * @Assert\Regex(pattern="/^[a-zA-Z ]+$/i", match=true, message="Les caractères spéciaux ou les chiffres sont interdits")
      */
     private $prenom;
 
@@ -49,6 +51,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Regex(pattern="/^[a-zA-Z ]+$/i", match=true, message="Les caractères spéciaux ou les chiffres sont interdits")
      */
     private $username;
 
