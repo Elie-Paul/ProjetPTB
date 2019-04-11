@@ -87,7 +87,15 @@
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
     <script>
     {% if success is defined %}
-        swal("Succès", "Vous avez ajouté un nouveau billet pour le train PTB", "success");
+        swal({
+        title: "Succès",
+        text: "Vous avez ajouté un nouveau billet pour le train PTB",
+        icon: "success",
+        
+        })
+        .then((value) => {
+            document.location.href="/billet/ptb/index2";
+        });
     {% endif %}
         $(function () {
             $('#example1').DataTable({

@@ -60,9 +60,9 @@
                                         <td>
                                             {{ guichet.nom }}</td>
                                         <td>
-                                            {{ guichet.createdAt ? guichet.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
+                                            {{ guichet.createdAt ? guichet.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
                                         <td>
-                                            {{ guichet.updatedAt ? guichet.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
+                                            {{ guichet.updatedAt ? guichet.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
                                         <td>
                                             <a class="btn btn-info" role="button" href="{{ path('guichet_show', {'id': guichet.id}) }}">
                                                 <i class="glyphicon glyphicon-eye-open"></i>&nbsp; voir</a>
@@ -106,7 +106,15 @@
 
     <script>
     {% if success is defined %}
-        swal("Succès", "Vous avez ajouté un nouveau guichet", "success");
+        swal({
+        title: "Succès",
+        text: "Vous avez ajouté un nouveau guichet",
+        icon: "success",
+        
+        })
+        .then((value) => {
+            document.location.href="/guichet";
+        });
     {% endif %}
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
         $(function () {

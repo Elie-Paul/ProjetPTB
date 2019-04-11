@@ -10,7 +10,7 @@
 {% block body %}
     <h1>
         <big>
-            Gestion des stations/gares
+            Gestion des Stations/Gares
         </big>
     </h1>
     <div class="box">
@@ -19,14 +19,14 @@
                 <h4>
                     <i class="fa fa-list"></i>
                     &nbsp;<big>
-                        Liste des stations/gares
+                        Liste des Stations/Gares
                     </big>
                 </h4>
             </div>
             <div class="col-md-6 text-right">
                 <a class="btn btn-info" href="{{ path('lieux_new') }}">
                     <i class="fa fa-plus"></i>
-                    <big>Ajouter une station</big>
+                    <big>Ajouter une Station/Gare</big>
                 </a>
             </div>
         </div>
@@ -56,9 +56,9 @@
                                     <td>
                                         {{ lieux.libelle }}</td>
                                     <td>
-                                        {{ lieux.createdAt ? lieux.createdAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
+                                        {{ lieux.createdAt ? lieux.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
                                     <td>
-                                        {{ lieux.updatedAt ? lieux.updatedAt|localizeddate('none', 'none', null, null, 'EE MMMM Y à HH:mm:SS') }}</td>
+                                        {{ lieux.updatedAt ? lieux.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
                                     <td>
                                         <a class="btn btn-info" role="button" href="{{ path('lieux_show', {'id': lieux.id}) }}">
                                             <i class="glyphicon glyphicon-eye-open"></i>
@@ -107,7 +107,15 @@
 
     <script>
     {% if success is defined %}
-        swal("Succès", "Vous avez ajouté une nouvelle station", "success");
+        swal({
+        title: "Succès",
+        text: "Vous avez ajouté une nouvelle station",
+        icon: "success",
+        
+        })
+        .then((value) => {
+            document.location.href="/lieux";
+        });
     {% endif %}
 
 

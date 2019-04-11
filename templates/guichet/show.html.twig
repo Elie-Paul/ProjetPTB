@@ -38,11 +38,11 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{{ guichet.createdAt ? guichet.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ guichet.createdAt ? guichet.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
                 <tr>
                     <th>Date de modifiaction</th>
-                    <td>{{ guichet.updatedAt ? guichet.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ guichet.updatedAt ? guichet.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
             </tbody>
         </table>

@@ -37,11 +37,11 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{{ navette.createdAt ? navette.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ navette.createdAt ? navette.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{{ navette.updatedAt ? navette.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ navette.updatedAt ? navette.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS')}}</td>
                 </tr>
             </tbody>
         </table>
