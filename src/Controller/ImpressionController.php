@@ -54,7 +54,7 @@ class ImpressionController extends AbstractController
    /**
     * @Route("/impression/{id}/{numDepartMotif}",name="impression_process")
     */
-    public function show2($id,$numDepartMotif)
+    public function show2($id,$numDepartMotif, MailController $mail)
     {
         
          $arr=explode("+",$numDepartMotif);
@@ -171,6 +171,7 @@ class ImpressionController extends AbstractController
         
         $entityManager->flush();
         $date=new \DateTime();
+        $mail->sendMailForPrint($depart, end($array));
        // $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' => $date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif,
@@ -181,7 +182,7 @@ class ImpressionController extends AbstractController
     /**
     * @Route("/impressionAutorail/{id}/{numDepartMotif}",name="impressionAutorail_process")
     */
-    public function show3($id,$numDepartMotif)
+    public function show3($id,$numDepartMotif, MailController $mail)
     {
         
          $arr=explode("+",$numDepartMotif);
@@ -295,6 +296,7 @@ class ImpressionController extends AbstractController
    
         $entityManager->flush();
         $date=new \DateTime();
+        $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index2.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif,
          ]);
@@ -302,7 +304,7 @@ class ImpressionController extends AbstractController
     /**
     * @Route("/impressiontaxes/{id}/{numDepartMotif}",name="impressiontaxes_process")
     */
-    public function show4($id,$numDepartMotif)
+    public function show4($id,$numDepartMotif, MailController $mail)
     {
         
          $arr=explode("+",$numDepartMotif);
@@ -418,6 +420,7 @@ class ImpressionController extends AbstractController
         }
         $entityManager->flush();
         $date=new \DateTime();
+        $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index3taxes.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif
          ]);
@@ -425,7 +428,7 @@ class ImpressionController extends AbstractController
     /**
     * @Route("/impressionvignette/{id}/{numDepartMotif}",name="impressionVignette_process")
     */
-    public function show5($id,$numDepartMotif)
+    public function show5($id,$numDepartMotif, MailController $mail)
     {
         
          $arr=explode("+",$numDepartMotif);
@@ -492,7 +495,7 @@ class ImpressionController extends AbstractController
          }
          else
          {
-             $bb=$num - $billet->getNumeroDernierBillets() - $depart;
+             $bb=$num - $billet->getNumeroDernierBillet() - $depart;
              $stockVignette->setNbre( $stockVignette->getNbre() + $bb) ;
              $num=$bb;
          }
@@ -539,6 +542,7 @@ class ImpressionController extends AbstractController
         }
         $entityManager->flush();
         $date=new \DateTime();
+        $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/indexvignette.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date ,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif
          ]);

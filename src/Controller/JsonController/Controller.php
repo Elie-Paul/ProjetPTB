@@ -436,7 +436,7 @@ class Controller extends AbstractController
     }
 
     /**
-     * @Route("/json/trajet/{id}", name="json_controller_Trajet")
+     * @Route("/json/trajet/{id}", name="json_controller_Trajet2")
      */
     public function getTrajet($id)
     {
