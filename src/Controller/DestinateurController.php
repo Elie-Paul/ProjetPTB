@@ -38,9 +38,11 @@ class DestinateurController extends AbstractController
         if($request->isXmlHttpRequest())
         {
             $email = $_POST['email'];
+            $processus = $_POST['processus'];
             $etat = null;
             $dest = $this->getDoctrine()->getRepository(Destinateur::class)->findOneBy([
-                'email' => $email
+                'email' => $email,
+                'processus' => $processus
             ]);
             if($dest)
             {

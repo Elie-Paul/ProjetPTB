@@ -35,11 +35,11 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{{ section.createdAt ? section.createdAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ section.createdAt ? section.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{{ section.updatedAt ? section.updatedAt|date('d-m-Y H:i:s') : '' }}</td>
+                    <td>{{ section.updatedAt ? section.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
                 </tr>
             </tbody>
         </table>

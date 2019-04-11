@@ -47,6 +47,8 @@ class VignetteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $vignette->setCreatedAt(new \DateTime());
+            $vignette->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($vignette);
             $entityManager->flush();
