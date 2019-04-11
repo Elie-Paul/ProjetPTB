@@ -254,7 +254,6 @@ class UserController extends AbstractController
         $form = $this->createFormBuilder($user)
         ->add('nom')            
         ->add('prenom')
-        ->add('email')
         ->add('password',PasswordType::class,[
             'label'=> "Mot de Passe",
             
