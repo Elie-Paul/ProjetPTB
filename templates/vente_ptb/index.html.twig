@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- CSS IMPRIMER-->
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}VentePtb index{% endblock %}
+
+{% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Ventes de Billet PTB</big></h4>
+          </div>
+          </div>
+        </div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h1 class="box-title">Liste des ventes</h1>
+            </div>
+            <div class="box-body">
+    <table class="table table-hover table-striped table-bordered" id="example1">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre De Billet Vendu</th>
+                <th>Date de création</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vente_ptb in vente_ptbs %}
+            <tr>
+                <td>{{ vente_ptb.id }}</td>
+                <td>{{ vente_ptb.nbreDeBillet }}</td>
+                <td>{{ vente_ptb.createAt ? vente_ptb.createAt|date('Y-m-d à H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('vente_ptb_show', {'id': vente_ptb.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
+                    <a class="btn btn-warning" href="{{ path('vente_ptb_edit', {'id': vente_ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <!-- DataTables -->
+    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    <!-- PDF AND CVS-->
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
+
+    <script>
+    {% if success is defined %}
+        swal("Succès", "Vous avez ajouté un utilisateur", "success");
+    {% endif %}
+        $(function () {
+            $('#example1').DataTable({
+                "reponsive": true,
+                "pageLength": 10,
+                "language": {
+                    "decimal": "",
+                    "loadingRecords": "Chargement...",
+                    "processing": "En traitement...",
+                    "lengthMenu": "Afficher _MENU_ entrées",
+                    "zeroRecords": "Aucun enregistrements correspondants trouvés",
+                    "emptyTable": "aucune donnée disponible",
+                    "infoFiltered": "(filtré de _MAX_ entrées totales)",
+                    "infoEmpty": "Affiche 0 à 0 sur 0 entrées",
+                    "info": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
+                    "search": "Rechercher : ",
+                    "paginate": {
+                        "first": "Premier",
+                        "last": "Dernier",
+                        "previous": "Précédent",
+                        "next": "Suivant"
+                    }
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'print',
+                        text: '<i class="fa fa-print"></i> Imprimer',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend:'excel',
+                        text: '<i class="fa fa-file-excel-o"></i> Excel'
+                    },
+                    {
+                        extend:'csv',
+                        text: '<i class="fa fa-file-text-o"></i> CSV'
+                    },
+                    {
+                        extend:'pdf',
+                        text: '<i class="fa fa-file-pdf-o"></i> PDf'
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Colonnes visibles'
+                    }
+                ],
+                columnDefs: [ {
+                   // targets: -1,
+                    visible: false
+                } ]
+            })
+            table.buttons().container()
+                .appendTo( '#example1_wrapper .col-sm-6:eq(0)' );
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}VenteNavette{% endblock %}
+
+{% block body %}
+<div class="box box-default">
+          <div class="box-header with-border">
+          <div class="col-md-6">
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Information sur la vente</big></h4>
+          </div>
+            <div class="col-md-6 text-right">
+                <a class="btn btn-info" href="{{ path('vente_navette_index') }}"><i class="fa fa-list"></i>&nbsp; Liste Vente</a>
+            </div>
+          </div>
+</div>
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Information de la vente</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vente_navette.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre De Billet vendu</th>
+                <td>{{ vente_navette.nbreDeBillet }}</td>
+            </tr>
+            <tr>
+                <th>Date de création</th>
+                <td>{{ vente_navette.createAt ? vente_navette.createAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Dernière mise à jour</th>
+                <td>{{ vente_navette.updatedAt ? vente_navette.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-warning" href="{{ path('vente_navette_edit', {'id': vente_navette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
+ </div>
+</div> 
+    {{ include('vente_navette/_delete_form.html.twig') }}
+{% endblock %}

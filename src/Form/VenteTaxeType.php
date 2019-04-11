@@ -2,26 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Vignette;
+use App\Entity\VenteTaxe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VignetteType extends AbstractType
+class VenteTaxeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numeroDernierBillet')
-            ->add('guichet')
-            ->add('type')
+            ->add('nbreDeBillet')
+            ->add('createAt')
+            ->add('updatedAt')
+            ->add('billet')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Vignette::class,
+            'data_class' => VenteTaxe::class,
         ]);
     }
 }
