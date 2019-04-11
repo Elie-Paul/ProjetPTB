@@ -8,12 +8,12 @@
 {% endblock %}
 {% block javascripts %}
     <script>
-        function bloquer(email) {
+        function bloquer(email, processus) {
             console.log(email);
             $.ajax({
                 url: '/destinateur/bloquer',
                 type: 'post',
-                data: {email: email},
+                data: {email: email, processus: processus},
                 dataType: 'json',
                 success: function (data) {
                     switch (data.status) {
@@ -147,9 +147,9 @@
                     <td>{{ destinateur.email }}</td>
                     <td>{{ destinateur.processus }}</td>
                     {% if destinateur.active %}
-                        <td><a onclick="bloquer('{{ destinateur.email }}');" class="btn btn-warning" href="#">Bloquer</a></td>
+                        <td><a onclick="bloquer('{{ destinateur.email }}', '{{ destinateur.processus }}');" class="btn btn-warning" href="#">Bloquer</a></td>
                     {% else %}
-                        <td><a onclick="bloquer('{{ destinateur.email }}');" class="btn btn-primary" href="#">Activer</a></td>
+                        <td><a onclick="bloquer('{{ destinateur.email }}', '{{ destinateur.processus }}');" class="btn btn-primary" href="#">Activer</a></td>
                     {% endif %}
                     <td><a onclick="supprimer('{{ destinateur.email }}')" class="btn btn-danger" href="#">Supprimer</a></td>
                 </tr>
