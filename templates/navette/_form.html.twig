@@ -278,42 +278,48 @@ document.getElementById("submit1").addEventListener("click", function(e){
   e.preventDefault();
 
   var lib = document.getElementById("libLieux").value;
+  var regex = /^[a-zA-Z ]+$/;
 
-  let xhttp=new XMLHttpRequest();
-  
-  xhttp.onreadystatechange = function()
-  {
-    if(this.readyState == 4 && this.status == 200)
-    {
-      let response = JSON.parse(xhttp.response);
-      console.log(response);
-      
-      if(response){
-        swal({
-        title: "Succès",
-        text: "Une station a été ajoutée",
-        icon: "success",
-        
-        })
-            .then((value) => {
-              var modal1 = document.getElementsByClassName('modal')[1];
-              modal1.style.display = "block";
-               // document.location.href="http://serveurptb:8000/ptb/new";
-              getJson('http://serveurptb:8000/json/lieu/depart',1);
-              getJson('http://serveurptb:8000/json/lieu/arrivee',2);
-              document.getElementById("libLieux").innerHTML = " ";
-                
-            });
-
-      }
-      
-    }
+if (lib === "" || !regex.test(lib)) {
+    alert("Le champ ne doit pas être vide et ne doit pas contenir des caractères spéciaux !!");
   }
-  
-  xhttp.open("POST","/addLieuTrajetNavette",true);
-  xhttp.responseType = "json";
-  let parm = `${lib}`;
-  xhttp.send(parm);  
+  else{
+    let xhttp=new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function()
+    {
+      if(this.readyState == 4 && this.status == 200)
+      {
+        let response = JSON.parse(xhttp.response);
+        console.log(response);
+        
+        if(response){
+          swal({
+          title: "Succès",
+          text: "Une station a été ajoutée",
+          icon: "success",
+          
+          })
+              .then((value) => {
+                var modal1 = document.getElementsByClassName('modal')[1];
+                modal1.style.display = "block";
+                // document.location.href="http://serveurptb:8000/ptb/new";
+                getJson('http://serveurptb:8000/json/lieu/depart',1);
+                getJson('http://serveurptb:8000/json/lieu/arrivee',2);
+                document.getElementById("libLieux").innerHTML = " ";
+                  
+              });
+
+        }
+        
+      }
+    }
+    
+    xhttp.open("POST","/addLieuTrajetNavette",true);
+    xhttp.responseType = "json";
+    let parm = `${lib}`;
+    xhttp.send(parm);  
+  }
 
   return false;
 
@@ -323,40 +329,44 @@ document.getElementById("submit1").addEventListener("click", function(e){
 document.getElementById("enClasse").addEventListener("submit", function(e){
   e.preventDefault();
   var libelle = document.getElementById("libelle").value;
-
-alert(libelle);
-let xhttp=new XMLHttpRequest();
-  
-  xhttp.onreadystatechange = function()
-  {
-    if(this.readyState == 4 && this.status == 200)
-    {
-      let response = JSON.parse(xhttp.response);
-      console.log(response);
-      
-      if(response){
-        swal({
-        title: "Succès",
-        text: "Une Classe a été ajoutée",
-        icon: "success",
-        
-        })
-            .then((value) => {
-              var modal = document.getElementsByClassName('modal')[0];
-              modal.style.display = "none";
-                document.location.href="http://serveurptb:8000/navette/new";
-                
-            });
-
-      }
-      
-    }
+var regex = /^[a-zA-Z ]+$/;
+if (libelle === "" || !regex.test(libelle)) {
+    alert("Le champ ne doit pas être vide et ne doit pas contenir des caractères spéciaux !!");
   }
-  
-  xhttp.open("POST","/addClasse",true);
-  xhttp.responseType = "json";
-  let parm = `${libelle}`;
-  xhttp.send(parm)
+  else{
+  let xhttp=new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function()
+    {
+      if(this.readyState == 4 && this.status == 200)
+      {
+        let response = JSON.parse(xhttp.response);
+        console.log(response);
+        
+        if(response){
+          swal({
+          title: "Succès",
+          text: "Une Classe a été ajoutée",
+          icon: "success",
+          
+          })
+              .then((value) => {
+                var modal = document.getElementsByClassName('modal')[0];
+                modal.style.display = "none";
+                  document.location.href="http://serveurptb:8000/navette/new";
+                  
+              });
+
+        }
+        
+      }
+    }
+    
+    xhttp.open("POST","/addClasse",true);
+    xhttp.responseType = "json";
+    let parm = `${libelle}`;
+    xhttp.send(parm)
+  }
   return false;
 });
 </script>

@@ -179,6 +179,6 @@ class Navette
 
     public function __toString()
     {
-        return (string)$this->trajet->getDepart()->getLibelle().'-'.$this->trajet->getArrivee()->getLibelle().''.$this->classe->getLibelle();
+        return (string)$this->trajet->getDepart()->getLibelle().'-'.$this->trajet->getArrivee()->getLibelle().', '.$this->classe->getLibelle();
     }
 }
