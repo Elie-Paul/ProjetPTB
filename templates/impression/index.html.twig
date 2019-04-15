@@ -114,12 +114,12 @@
         }
     if(f)
     {
-        xhr.open("POST","http://localhost:8000/audit/impression",false);
+        xhr.open("POST","http://serveurptb:8000/audit/impression",false);
         xhr.send(param);
     }
     else
     {
-        xhr.open("POST","http://localhost:8000/audit/reimpression",false);
+        xhr.open("POST","http://serveurptb:8000/audit/reimpression",false);
         param=param +"pour motif:{{motif}}";
         xhr.send(param);
     }
@@ -128,7 +128,7 @@
     function(event) 
     { 
        
-        document.location.href = "http://localhost:8000/billet/ptb/";
+        document.location.href = "http://serveurptb:8000/billet/ptb/";
 
     };
 </script>
