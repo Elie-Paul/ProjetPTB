@@ -24,7 +24,7 @@ class Section
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\Type("string")
-     * @Assert\Regex(pattern="/^[a-zA-Z0-9 ]+$/", match=true, message="Les caractères spéciaux sont interdits dans le titre")
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9 ]+$/i", match=true, message="Les caractères spéciaux sont interdits")
      */
     private $libelle;
 

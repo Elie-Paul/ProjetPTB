@@ -48,7 +48,7 @@
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
+                        window.location.href = "http://serveurptb:8000/abonnement/retablir/" + id;
                         // swal("Poof! Your imaginary file has been deleted!", {
                         //     icon: "success",
                         // });
@@ -63,7 +63,7 @@
         function printContent(id, nom, prenom, type, section, filename, expiration) {
             // alert(expiration.toString());
             //LA PARTIE AFFICHAGE DES INFORMATIONS DE L'ABONNE SUR LA CARTE
-            window.location.href = "http://localhost:8000/abonnement/valider/" + id;
+            window.location.href = "http://serveurptb:8000/abonnement/valider/" + id;
             let image = document.getElementById('photop');
             let idp = id;
             let nomp = nom;

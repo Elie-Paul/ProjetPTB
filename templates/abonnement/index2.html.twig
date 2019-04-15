@@ -31,6 +31,7 @@
     <script type="text/javascript">
         function survol(filename, expiration) {
             // alert(expiration)
+            console.log('survol');
             let file = filename;
             let image = document.getElementById('photop');
             image.src = ("{{ asset('clients/images/') }}" + file);
@@ -54,7 +55,7 @@
                             swal("ERREUR", "Désolé, Vous n'êtes pas connecté à l'internet", "error");
                             return false;
                         }
-                        window.location.href = "http://localhost:8000/abonnement/retablir/" + id;
+                        window.location.href = "http://serveurptb:8000/abonnement/retablir/" + id;
                     }
                 });
 
@@ -66,7 +67,7 @@
                 swal("ERREUR", "Désolé, Vous n'êtes pas connecté à l'internet", "error");
                 return false;
             }
-            window.location.href = "http://localhost:8000/abonnement/valider/" + id;
+            window.location.href = "http://serveurptb:8000/abonnement/valider/" + id;
             let image = document.getElementById('photop');
             let idp = id;
             let nomp = nom;
@@ -204,85 +205,6 @@
                 </div>
             </div>
         </div>
-        {#<div class="premiere-page">#}
-            {#<div class="cote-top">#}
-                {#<div class="col-sm-3 logo">#}
-                    {#<img class="logo" src="{{ asset('logo.png') }}" alt="logo">#}
-                {#</div>#}
-                {#<div class="col-md-8 titre-principal">#}
-                    {#<p><span class="petit-train">PETIT TRAIN DE BANLIEUE</span></p>#}
-                    {#<p><span class="gras">CARTE D'ABONNEMENT</span></p>#}
-                {#</div>#}
-            {#</div>#}
-            {#<div class="numero col-xs-12">#}
-                {#<p><span class="numero-content">Numero: <span id="numerop">00000</span></span></p>#}
-            {#</div>#}
-            {#<div class="col-sm-12 milieu">#}
-                {#<div class="col-sm-4 cote-gauche">#}
-                    {#<div class="premier-ligne ligne">#}
-                        {#<span>01</span> <span>02</span> <span>03</span>#}
-                    {#</div>#}
-                    {#<div class="premier-ligne ligne">#}
-                        {#<span>04</span> <span>05</span> <span>06</span>#}
-                    {#</div>#}
-                    {#<div class="premier-ligne ligne">#}
-                        {#<span>07</span> <span>08</span> <span>09</span>#}
-                    {#</div>#}
-                    {#<div class=" premier-ligne ligne">#}
-                        {#<span>10</span> <span>11</span> <span>12</span>#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="col-sm-6 cote-milieu">#}
-                    {#<p>Nom: <span id="nomp" class="valeur">THERA</span>#}
-                    {#</p>#}
-                    {#<p>Prenom: <span id="prenomp" class="valeur">Daouda S.</span>#}
-                    {#</p>#}
-                    {#<p>Type d'abonnement: <span id="typep" class="valeur">Etudiant</span>#}
-                    {#</p>#}
-                    {#<p>Section: <span id="sectionp" class="valeur"></span>#}
-                    {#</p>#}
-                    {#<p>Date d'expiration: <span id="datep" class="valeur"></span>#}
-                    {#</p>#}
-                {#</div>#}
-                {#<div class="col-sm-3 cote-droit">#}
-                    {#<div class="photo">#}
-                        {#<img id="photop" src="{{ asset('clients/images/student carte.jpeg') }}" class="picture"#}
-                             {#alt="photo">#}
-                    {#</div>#}
-                    {#<div class="le-cacher">#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-            {#<div class="col-sm-12 footer">#}
-                {#<p class="noter-bien"><span class="nb">NB: </span>Cette Carte est strictement personnelle.</p>#}
-                {#<p class="footer-haut"><span class="adresse">Adresse :</span> Immeuble Bâtiment, Av Malick SY 3ème étage#}
-                    {#| BP : 265 Dakar - Sénégal |#}
-                    {#<a href="#">www.ptb.sn</a></p>#}
-                {#<p class="footer-bas"><span class="tel">Téléphone :</span> 33 889 19 00 / 77 862 54 71 / 76 021 85 00 /#}
-                    {#70 345 00 05 [ Fax : 33#}
-                    {#842 62 60</p>#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="seconde-page">#}
-            {#<div class="titre-content">#}
-                {#<p class="titre-recommandation">#}
-                    {#<strong>#}
-                        {#RECOMMANDATION#}
-                    {#</strong>#}
-                {#</p>#}
-            {#</div>#}
-            {#<div class="principal-content">#}
-                {#<p class="paragraphe">1. Cette carte doit être présentée en bon état, sans rature ni surcharge, à toute#}
-                    {#demande des agents chargés du controle.</p>#}
-                {#<p class="paragraphe">2. Chaque mois, le client est tenu d'acheter une vignette pour la validité de sa#}
-                    {#carte#}
-                    {#d'abonnement.</p>#}
-                {#<p class="paragraphe">3. La carte est nominative. Toute utilisation frauduleuse, en plus du retrait#}
-                    {#immediat#}
-                    {#de la carte, exposerait le contrevenant à des poursuites.</p>#}
-                {#<p class="paragraphe">4. Cette carte est valable jusqu'au DD/MM/YYYY.</p>#}
-            {#</div>#}
-        {#</div>#}
 
     </div>
 

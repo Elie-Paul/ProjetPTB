@@ -35,8 +35,8 @@ function addRow()
        // Nbres[index].addEventListener("focus",removeRow);
         trows[index].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
        // cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));    
-       getJson("http://localhost:8000/json/guichet/",1);
-       getJson("http://localhost:8000/json/type/",2);
+       getJson("http://serveurptb:8000/json/guichet/",1);
+       getJson("http://serveurptb:8000/json/type/",2);
        
        Nbres[index].addEventListener("change",setTotal);
        
@@ -101,7 +101,7 @@ function checkforEmpty()
  function setGuichet(array)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson("http://serveurptb:8000/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -118,7 +118,7 @@ function checkforEmpty()
  function setSection(array)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson("http://serveurptb:8000/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -146,8 +146,8 @@ function checkforEmpty()
     checkforEmpty() 
     total.innerText=""+tot;
  } 
- getJson("http://localhost:8000/json/guichet/",1);
- getJson("http://localhost:8000/json/type/",2);
+ getJson("http://serveurptb:8000/json/guichet/",1);
+ getJson("http://serveurptb:8000/json/type/",2);
  //cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));
  Nbres[index].addEventListener("click",addRow);
  Nbres[index].addEventListener("keyup",checkforEmpty);
@@ -176,7 +176,7 @@ function checkforEmpty()
         
     })
         .then((value) => {
-            document.location.href="http://localhost:8000/commande/vignette";
+            document.location.href="http://serveurptb:8000/commande/vignette";
             
         });
  } 
@@ -208,7 +208,7 @@ function checkforEmpty()
                 
             }
         }
-        let link ="http://localhost:8000/newCommandeVignette/";
+        let link ="http://serveurptb:8000/newCommandeVignette/";
         let params =`${idGuichet}+${idSection}+${Nbres[i].value}`;
         console.log(params);
         if(Nbres[i].value !="" && idGuichet!='0' && idSection!='0')

@@ -580,6 +580,22 @@
           </ul>
         </li>
         {% endif %}
+        {% if is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_ADMINISTRATEUR') %}
+        <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-certificate"></i>
+                <span>Invendus</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                  <li><a href="{{ path('commande_navette_return') }}"><i class="fa fa-circle-o"></i>Billet Autorail</a></li>
+                  <li><a href="{{ path('commande_ptb_retour') }}"><i class="fa fa-circle-o"></i>Billet Ptb</a></li>                            
+                  <li><a href="{{ path('commande_event_retour') }}"><i class="fa fa-circle-o"></i>Evenement</a></li>
+              </ul>
+        </li>
+        {% endif %}
       </ul>
     </section>
     <!-- /.sidebar -->
