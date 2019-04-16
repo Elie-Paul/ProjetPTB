@@ -205,4 +205,11 @@ class BilletTaxe
 
         return $this;
     }
+    public function __toString()
+    {
+        
+        return 'Taxe:'.$this->getPrix();
+        
+        
+    }
 }

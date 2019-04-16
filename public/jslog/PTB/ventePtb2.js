@@ -65,7 +65,7 @@ function createRowElement(billet)
     input.type = 'number';
     input.classList.add('form-control');
     input.id ="i"+billet.id;
-    input.placeholder = 'nombre de Vente';
+    input.placeholder = 'Nombre Billets Retournés';
     //input.style.width='20px';
     div.appendChild(input);
     nombreVente.appendChild(div);
