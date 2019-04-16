@@ -19,11 +19,7 @@ window.onload = function ()
             
         }
     }
-<<<<<<< HEAD
-    xhr.open("GET","http://localhost:8000/json/statBillets/Vente/",true);
-=======
-    xhr.open("GET","http://serveurptb:8000/json/billet/ptb/Vente/",true);
->>>>>>> c51fe43a6ea0a17877d9c5dc56c3d81866415bcd
+    xhr.open("GET",superLink+"/json/statBillets/Vente/",true);
     xhr.send();
     
 

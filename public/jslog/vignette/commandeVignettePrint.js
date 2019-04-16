@@ -178,7 +178,7 @@ function getAllCommande()
             tab = JSON.parse(this.responseText); 
         }
     }
-    xhr.open("GET","http://serveurptb:8000/Json/listCommandeVignette",true);
+    xhr.open("GET",superLink+"/Json/listCommandeVignette",true);
     xhr.send();
 
 }
@@ -205,7 +205,7 @@ function addGuichet()
             
         }
     }
-    xhr.open("GET","http://serveurptb:8000/json/guichet/",true);
+    xhr.open("GET",superLink+"/json/guichet/",true);
     xhr.send();
     
 }

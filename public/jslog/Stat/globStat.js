@@ -43,7 +43,7 @@ function getAllCommande()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/statBillets/Vente/",false);
+    xhr.open("GET",superLink+"/json/statBillets/Vente/",false);
     xhr.send();
 
 }

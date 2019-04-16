@@ -94,7 +94,7 @@ function ajoutVente(element)
                     getAllCommande()
                }
             }
-            let link =`http://serveurptb:8000/addVentePTB/${idb}/${vente}`;
+            let link =`${superLink}/addVentePTB/${idb}/${vente}`;
             xhttp.open("GET",link,true);
             xhttp.send();
                 
@@ -117,7 +117,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://serveurptb:8000/Json/ptb/billet",true);
+    xhr.open("GET",superLink+"/Json/ptb/billet",true);
     xhr.send();
 
 }
@@ -174,7 +174,7 @@ function vente()
                         span.appendChild(text);
                     }
                 }
-                let link =`http://serveurptb:8000/addVentePTB/${idc}/${vente}`;
+                let link =`${superLink}/addVentePTB/${idc}/${vente}`;
                 xhttp.open("GET",link,false);
                 xhttp.send();
             }

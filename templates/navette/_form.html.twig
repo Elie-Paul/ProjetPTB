@@ -116,7 +116,7 @@
         {
           var libelle = document.getElementById("libelle").value;
           modal.style.display = "none";
-          document.location.href = `http://serveurptb:8000/addClasse/${libelle}`;
+          document.location.href = `${superLink}/addClasse/${libelle}`;
           //swal("Good job!", "Vous avez ajouté une section", "success");  
           alert("Classe ajouter");
         }*/
@@ -142,7 +142,7 @@
           var depart = document.getElementById("sel1").value;
           var arrivee = document.getElementById("sel2").value;
           modal1.style.display = "none";
-          document.location.href = `http://serveurptb:8000/addTrajetNavette/${depart}/${arrivee}`;
+          document.location.href = `${superLink}/addTrajetNavette/${depart}/${arrivee}`;
           swal("Good job!", "Vous avez ajouté une gare", "success"); 
           
         }
@@ -150,17 +150,17 @@
         function mode2()
         {
           modal1.style.display = "block"; 
-          getJson('http://serveurptb:8000/json/lieu/depart',1);
-          getJson('http://serveurptb:8000/json/lieu/arrivee',2);         
+          getJson(superLink+'/json/lieu/depart',1);
+          getJson(superLink+'/json/lieu/arrivee',2);         
         }
 
        /* function ajoutLieu()
         {
           var lib = document.getElementById("libLieux").value;
           modal1.style.display = "none";
-          document.location.href = `http://serveurptb:8000/addLieuTrajetNavette/${lib}`;
-          getJson('http://serveurptb:8000/json/lieu/depart',1);
-          getJson('http://serveurptb:8000/json/lieu/arrivee',2);
+          document.location.href = `${superLink}/addLieuTrajetNavette/${lib}`;
+          getJson(superLink+'/json/lieu/depart',1);
+          getJson(superLink+'/json/lieu/arrivee',2);
         }*/
 
         /* window.onclick = function(event) 
@@ -255,7 +255,7 @@ let xhttp=new XMLHttpRequest();
             .then((value) => {
               var modal1 = document.getElementsByClassName('modal')[1];
               modal1.style.display = "none";
-                document.location.href="http://serveurptb:8000/navette/new";
+                document.location.href=superLink+"/navette/new";
                 
             });
 
@@ -303,9 +303,9 @@ if (lib === "" || !regex.test(lib)) {
               .then((value) => {
                 var modal1 = document.getElementsByClassName('modal')[1];
                 modal1.style.display = "block";
-                // document.location.href="http://serveurptb:8000/ptb/new";
-                getJson('http://serveurptb:8000/json/lieu/depart',1);
-                getJson('http://serveurptb:8000/json/lieu/arrivee',2);
+                // document.location.href=superLink+"/ptb/new";
+                getJson(superLink+'/json/lieu/depart',1);
+                getJson(superLink+'/json/lieu/arrivee',2);
                 document.getElementById("libLieux").innerHTML = " ";
                   
               });
@@ -353,7 +353,7 @@ if (libelle === "" || !regex.test(libelle)) {
               .then((value) => {
                 var modal = document.getElementsByClassName('modal')[0];
                 modal.style.display = "none";
-                  document.location.href="http://serveurptb:8000/navette/new";
+                  document.location.href=superLink+"/navette/new";
                   
               });
 

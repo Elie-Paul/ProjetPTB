@@ -99,7 +99,7 @@ function ajoutVente(element)
                     getAllCommande()
                }
             }
-            let link =`http://localhost:8000/addVentePTB/${idb}/${vente}`;
+            let link =`${superLink}/addVentePTB/${idb}/${vente}`;
             xhttp.open("GET",link,true);
             xhttp.send();
                 
@@ -122,7 +122,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/event/billet",true);
+    xhr.open("GET",superLink+"/Json/event/billet",true);
     xhr.send();
 
 }
@@ -179,7 +179,7 @@ function vente()
                         span.appendChild(text);
                     }
                 }
-                let link =`http://localhost:8000/addVentePTB/${idc}/${vente}`;
+                let link =`${superLink}/addVentePTB/${idc}/${vente}`;
                 xhttp.open("GET",link,false);
                 xhttp.send();
             }
