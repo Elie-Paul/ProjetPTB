@@ -93,39 +93,46 @@ document.getElementById("submit").addEventListener("click", function(e){
   e.preventDefault();
 
   var libelle = document.getElementById("libelle").value;
+  var regex = /^[a-zA-Z ]+$/;
 
-  let xhttp=new XMLHttpRequest();
-  
-  xhttp.onreadystatechange = function()
-  {
-    if(this.readyState == 4 && this.status == 200)
-    {
-      let response = JSON.parse(xhttp.response);
-      console.log(response);
-      
-      if(response){
-        swal({
-        title: "Succès",
-        text: "Une station a été ajoutée",
-        icon: "success",
-        
-        })
-            .then((value) => {
-              var modal = document.getElementById('myModal');
-              modal.style.display = "none";
-               document.location.href="http://serveurptb:8000/trajet/new";
-                
-            });
-
-      }
-      
-    }
+  if (libelle === "" || !regex.test(libelle)) {
+    alert("Le champ ne doit pas être vide et ne doit pas contenir des caractères spéciaux !!");
   }
-  
-  xhttp.open("POST","/addLieuTrajetNavette",true);
-  xhttp.responseType = "json";
-  let parm = `${libelle}`;
-  xhttp.send(parm);  
+  else{
+
+    let xhttp=new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function()
+    {
+      if(this.readyState == 4 && this.status == 200)
+      {
+        let response = JSON.parse(xhttp.response);
+        console.log(response);
+        
+        if(response){
+          swal({
+          title: "Succès",
+          text: "Une station a été ajoutée",
+          icon: "success",
+          
+          })
+              .then((value) => {
+                var modal = document.getElementById('myModal');
+                modal.style.display = "none";
+                document.location.href="http://serveurptb:8000/trajet/new";
+                  
+              });
+
+        }
+        
+      }
+    }
+    
+    xhttp.open("POST","/addLieuTrajetNavette",true);
+    xhttp.responseType = "json";
+    let parm = `${libelle}`;
+    xhttp.send(parm); 
+  } 
 
   return false;
 
