@@ -127,7 +127,7 @@ function validationAction(button)
                     console.log(this.responseText);
                 }
             }
-            xhr.open("POST","http://localhost:8000/ValidationCommande",true);
+            xhr.open("POST",superLink+"/ValidationCommande",true);
             xhr.send(button.id);
             getAllCommande();
             updateTab();
@@ -147,7 +147,7 @@ function getAllCommande()
             tab = JSON.parse(this.responseText); 
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommande/event",true);
+    xhr.open("GET",superLink+"/Json/listCommande/event",true);
     xhr.send();
 
 }
@@ -191,7 +191,7 @@ function addGuichet()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichet/",true);
+    xhr.open("GET",superLink+"/json/guichet/",true);
     xhr.send();
     
 }

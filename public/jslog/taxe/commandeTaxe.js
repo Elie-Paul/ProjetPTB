@@ -81,7 +81,7 @@ function controlPasserCommande()
         
     })
         .then((value) => {
-            document.location.href="http://serveurptb:8000/commande/taxe";
+            document.location.href=superLink+"/commande/taxe";
             
         });
  }
@@ -111,7 +111,7 @@ function controlPasserCommande()
                 button.style.display='block';
             }
         }
-        let link ="http://serveurptb:8000/newCommandeTaxe/";
+        let link =superLink+"/newCommandeTaxe/";
         let params =`${inputs[i].value}`;
 
         if (parseInt(params,10)>0 ) 
@@ -137,7 +137,7 @@ function controlPasserCommande()
             addRow(JSON.parse(this.responseText));
             console.log(JSON.parse(this.responseText))
         }
-        let link ="http://serveurptb:8000/json/BilletsTaxe/";
+        let link =superLink+"/json/BilletsTaxe/";
         
         
         xhttp.open("GET",link,true);

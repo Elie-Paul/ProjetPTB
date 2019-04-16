@@ -98,7 +98,7 @@ function ajoutVente(element)
                     getAllCommande()
                }
             }
-            let link =`http://localhost:8000/addVenteNavette/${idb}/${vente}`;
+            let link =`${superLink}/addVenteNavette/${idb}/${vente}`;
             xhttp.open("GET",link,true);
             xhttp.send();
                 
@@ -121,7 +121,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/navette/billet",true);
+    xhr.open("GET",superLink+"/Json/navette/billet",true);
     xhr.send();
 
 }
@@ -178,7 +178,7 @@ function vente()
                         span.appendChild(text);
                     }
                 }
-                let link =`http://localhost:8000/addVenteNavette/${idc}/${vente}`;
+                let link =`${superLink}/addVenteNavette/${idc}/${vente}`;
                 xhttp.open("GET",link,true);
                 xhttp.send();
             }

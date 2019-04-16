@@ -65,7 +65,7 @@ function createRowElement(billet)
     input.type = 'number';
     input.classList.add('form-control');
     input.id ="i"+billet.id;
-    input.placeholder = 'nombre de Vente';
+    input.placeholder = 'Nombre Billets Retournés';
     //input.style.width='20px';
     div.appendChild(input);
     nombreVente.appendChild(div);
@@ -94,7 +94,7 @@ function ajoutVente(element)
                     getAllCommande()
                }
             }
-            let link =`http://serveurptb:8000/addVentePTB/${idb}/${vente}`;
+            let link =`${superLink}/addVentePTB/${idb}/${vente}`;
             xhttp.open("GET",link,true);
             xhttp.send();
                 
@@ -117,7 +117,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://serveurptb:8000/Json/ptb/billet",true);
+    xhr.open("GET",superLink+"/Json/ptb/billet",true);
     xhr.send();
 
 }

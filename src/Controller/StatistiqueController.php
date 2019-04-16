@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Guichet;
-use App\Entity\Trajet;
-use App\Entity\Section;
-use App\Entity\BilletPtb;
 use App\Entity\Ptb;
-use App\Entity\CommandePtb;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\Lieux;
+use App\Entity\Trajet;
+use App\Entity\Guichet;
+use App\Entity\Section;
+use App\Entity\Vignette;
+use App\Entity\BilletPtb;
+use App\Entity\BilletTaxe;
+use App\Entity\CommandePtb;
+use App\Entity\BilletNavette;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class StatistiqueController extends AbstractController
@@ -23,7 +26,7 @@ class StatistiqueController extends AbstractController
      */
     public function index()
     {
-        return $this->render('statistique/index.html.twig', [
+        return $this->render('statistique/globalStat.html.twig', [
             'controller_name' => 'StatistiqueController',
         ]);
     }
@@ -172,7 +175,13 @@ class StatistiqueController extends AbstractController
     public function getbilletVente2()
     {
         $repository = $this->getDoctrine()->getRepository(BilletPtb::class);
+        $repository1 = $this->getDoctrine()->getRepository(BilletNavette::class);
+        $repository2 = $this->getDoctrine()->getRepository(Vignette::class);
+        $repository3 = $this->getDoctrine()->getRepository(BilletTaxe::class);
         $billetPtbs = $repository->findAll();
+        $billetNavetttes = $repository1->findAll();
+        $Vignette = $repository2->findAll();
+        $billetTaxes = $repository3->findAll();
         $note = array();
         
             foreach($billetPtbs as $key => $billetP) 
@@ -208,6 +217,186 @@ class StatistiqueController extends AbstractController
                 $myarray = array(
                     'id' => $billetP->getId(),
                     'ptb' => $billetP->getPtb()->__toString(),
+                    'commandes' => $commandes,
+                    'guichet' => $billetP->getGuichet()->getCode(),
+                    'ventes' => $ventes,
+                );
+                array_push($note,$myarray);
+                
+            }
+            return new Response(json_encode($note));
+    }
+     /**
+     * @Route("/json/statBillets/Vente/", name="json/statBillets/Vente")
+     */
+    public function getbilletVente3()
+    {
+        $repository = $this->getDoctrine()->getRepository(BilletPtb::class);
+        $repository1 = $this->getDoctrine()->getRepository(BilletNavette::class);
+        $repository2 = $this->getDoctrine()->getRepository(Vignette::class);
+        $repository3 = $this->getDoctrine()->getRepository(BilletTaxe::class);
+        $billetPtbs = $repository->findAll();
+        $billetNavettes = $repository1->findAll();
+        $Vignettes = $repository2->findAll();
+        $billetTaxes = $repository3->findAll();
+        $note = array();
+        foreach($billetPtbs as $key => $billetP) 
+        {
+            $commandes=array();
+            $ventes=array();
+            foreach($billetP->getCommandePtbs() as $key => $variable) 
+            {
+                    $myarray = array
+                    (
+                        'nombreDeBilletCommander' => $variable->getNombreBillet(),
+                        
+                        'nombreBilletRealiser' => $variable->getNombreBilletRealise(),
+        
+                        'nombreBilletVendu' => $variable->getNombreBilletVendu(),
+        
+                        'etat' => $variable->getEtatCommande(),
+                        'dateCommandeValider' => $variable->getDateCommandeValider(),
+                        'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
+                        'date' => $variable->getDateCommande()
+                    );
+                    array_push($commandes,$myarray);
+            }
+            foreach($billetP->getVentePtbs() as $key => $variable) 
+            {
+                    $myarray = array
+                    (
+                        'nbre' => $variable->getNbreDeBillet(),
+                        'date' => $variable->getCreateAt(),
+                    );
+                    array_push($ventes,$myarray);
+            }
+                $myarray = array(
+                    'id' => $billetP->getId(),
+                    'type' => "PTB",
+                    'billet' => $billetP->getPtb()->__toString(),
+                    'commandes' => $commandes,
+                    'guichet' => $billetP->getGuichet()->getCode(),
+                    'ventes' => $ventes,
+                );
+                array_push($note,$myarray);
+                
+        }
+            foreach($billetNavettes as $key => $billetNavette) 
+            {
+                $commandes=array();
+                $ventes=array();
+                foreach($billetNavette->getCommandeNavettes() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nombreDeBilletCommander' => $variable->getNombreBillet(),
+                        
+                        'nombreBilletRealiser' => $variable->getNombreBilletRealise(),
+        
+                        'nombreBilletVendu' => $variable->getNombreBilletVendu(),
+        
+                        'etat' => $variable->getEtatCommande(),
+                        'dateCommandeValider' => $variable->getDateCommandeValider(),
+                        'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
+                        'date' => $variable->getDateCommande()
+                    );
+                    array_push($commandes,$myarray);
+                }
+                foreach($billetNavette->getVenteNavettes() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nbre' => $variable->getNbreDeBillet(),
+                        'date' => $variable->getCreateAt(),
+                    );
+                    array_push($ventes,$myarray);
+                }
+                $myarray = array(
+                    'id' => $billetNavette->getId(),
+                    'type' =>'Autorail',
+                    'billet' => $billetNavette->getNavette()->__toString(),
+                    'commandes' => $commandes,
+                    'guichet' => $billetNavette->getGuichet()->getCode(),
+                    'ventes' => $ventes,
+                );
+                array_push($note,$myarray);
+                
+            }
+            foreach($billetTaxes as $key => $billetTaxe) 
+            {
+                $commandes=array();
+                $ventes=array();
+                foreach($billetTaxe->getCommandeTaxes() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nombreDeBilletCommander' => $variable->getNombreBillet(),
+                        
+                        'nombreBilletRealiser' => $variable->getNombreBilletRealise(),
+        
+                        'nombreBilletVendu' => $variable->getNombreBilletVendu(),
+        
+                        'etat' => $variable->getEtatCommande(),
+                        'dateCommandeValider' => $variable->getDateCommandeValider(),
+                        'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
+                        'date' => $variable->getDateCommande()
+                    );
+                    array_push($commandes,$myarray);
+                }
+                foreach($billetTaxe->getVenteTaxes() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nbre' => $variable->getNbreDeBillet(),
+                        'date' => $variable->getCreateAt(),
+                    );
+                    array_push($ventes,$myarray);
+                }
+                $myarray = array(
+                    'id' => $billetTaxe->getId(),
+                    'type' => 'Taxe',
+                    'billet' => $billetTaxe->__toString(),
+                    'commandes' => $commandes,
+                    'guichet' =>'CTRL',
+                    'ventes' => $ventes,
+                );
+                array_push($note,$myarray);
+                
+            }
+            foreach($Vignettes as $key => $vignette) 
+            {
+                $commandes=array();
+                $ventes=array();
+                foreach($vignette->getCommandeVignettes() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nombreDeBilletCommander' => $variable->getNombreBillet(),
+                        
+                        'nombreBilletRealiser' => $variable->getNombreBilletRealise(),
+        
+                        'nombreBilletVendu' => $variable->getNombreBilletVendu(),
+        
+                        'etat' => $variable->getEtatCommande(),
+                        'dateCommandeValider' => $variable->getDateCommandeValider(),
+                        'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
+                        'date' => $variable->getDateCommande()
+                    );
+                    array_push($commandes,$myarray);
+                }
+                foreach($vignette->getVenteVignettes() as $key => $variable) 
+                {
+                    $myarray = array
+                    (
+                        'nbre' => $variable->getNbreDeBillet(),
+                        'date' => $variable->getCreateAt(),
+                    );
+                    array_push($ventes,$myarray);
+                }
+                $myarray = array(
+                    'id' => $vignette->getId(),
+                    'type'=>'Vignette',
+                    'billet' => $vignette->__toString(),
                     'commandes' => $commandes,
                     'guichet' => $billetP->getGuichet()->getCode(),
                     'ventes' => $ventes,

@@ -74,7 +74,7 @@
         function ajouter(){
           var libelle = document.getElementById("libelle").value;
           modal.style.display = "none";
-          document.location.href = `http://serveurptb:8000/addLieuTrajet/${libelle}`;
+          document.location.href = `${superLink}+/addLieuTrajet/${libelle}`;
           swal("Good job!", "Vous avez ajouté une gare", "success");
           
 
@@ -119,7 +119,7 @@ document.getElementById("submit").addEventListener("click", function(e){
               .then((value) => {
                 var modal = document.getElementById('myModal');
                 modal.style.display = "none";
-                document.location.href="http://serveurptb:8000/trajet/new";
+                document.location.href=superLink+"/trajet/new";
                   
               });
 

@@ -264,7 +264,7 @@ function getAllCommande()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommande/event",false);
+    xhr.open("GET",superLink+"/Json/listCommande/event",false);
     xhr.send();
 
 }
@@ -291,7 +291,7 @@ function addGuichet()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichet/",true);
+    xhr.open("GET",superLink+"/json/guichet/",true);
     xhr.send();
     
 }
@@ -390,7 +390,7 @@ function modifierCommande(element)
                   });
             }
         }
-        xhr.open("GET",`http://localhost:8000/commande/ptb/modifier/${id}/${value}`,true);
+        xhr.open("GET",`${superLink}/commande/ptb/modifier/${id}/${value}`,true);
         xhr.send();
         getAllCommande();
         updateTab();
@@ -424,7 +424,7 @@ function deleteCommande(element)
                     });
                 }
             }
-            xhr.open("GET",`http://localhost:8000/commande/ptb/delete/${id}`,true);
+            xhr.open("GET",`${superLink}/commande/ptb/delete/${id}`,true);
             xhr.send();
             getAllCommande();
             updateTab();

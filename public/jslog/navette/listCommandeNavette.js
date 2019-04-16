@@ -268,7 +268,7 @@ function addGuichet()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichet/",true);
+    xhr.open("GET",superLink+"/json/guichet/",true);
     xhr.send();
     
 }
@@ -284,7 +284,7 @@ function getAllCommande()
             tab = JSON.parse(this.responseText); 
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommandeNavette",true);
+    xhr.open("GET",superLink+"/Json/listCommandeNavette",true);
     xhr.send();
 
 }

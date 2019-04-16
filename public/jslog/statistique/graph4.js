@@ -19,7 +19,7 @@ window.onload = function ()
             
         }
     }
-    xhr.open("GET","http://serveurptb:8000/json/billet/ptb/Vente/",true);
+    xhr.open("GET",superLink+"/json/statBillets/Vente/",true);
     xhr.send();
     
 
