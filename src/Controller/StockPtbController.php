@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\StockPtb;
 use App\Form\StockPtbType;
+use App\Entity\Guichet;
+use App\Entity\BilletPtb;
 use App\Repository\StockPtbRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

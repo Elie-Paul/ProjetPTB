@@ -30,6 +30,7 @@
     <table class="table table-hover table-striped dataTable" id="example1">
         <thead>
             <tr>
+                <th>Guichet</th>
                 <th>Nombre Billet</th>
                 <th>Etat Commande</th>
                 <th>Date Commande</th>
@@ -41,6 +42,7 @@
         <tbody>
         {% for commande_ptb in commande_ptbs %}
             <tr>
+                <td>{{ commande_ptb.billet.guichet.nom }}</td>
                 <td>{{ commande_ptb.nombreBillet }}</td>
                 <td>{{ commande_ptb.etatCommande }}</td>
                 <td>{{ commande_ptb.dateCommande ? commande_ptb.dateCommande|date('Y-m-d à H:i:s') : '' }}</td>
