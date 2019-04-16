@@ -29,6 +29,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nombre De Billet Vendu</th>
+                <th>billet</th>
                 <th>Date de création</th>
                 <th>Actions</th>
             </tr>
@@ -38,6 +39,7 @@
             <tr>
                 <td>{{ vente_ptb.id }}</td>
                 <td>{{ vente_ptb.nbreDeBillet }}</td>
+                <td>{{ vente_ptb.billet.ptb }}</td>
                 <td>{{ vente_ptb.createAt ? vente_ptb.createAt|date('Y-m-d à H:i:s') : '' }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('vente_ptb_show', {'id': vente_ptb.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>

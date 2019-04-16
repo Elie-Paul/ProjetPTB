@@ -16,7 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @Vich\Uploadable()
  * @UniqueEntity(
  *     fields={"telephone"},
- *     message="Ce numero de telephone existe dejà"
+ *     message="Ce numéro de téléphone existe dejà"
  * )
  */
 class Abonnement
@@ -59,7 +59,8 @@ class Abonnement
     private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=12)
+     * @ORM\Column(type="string", length=9)
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="Le numero de téléphone n'est pas correct")
      */
     private $telephone;
 

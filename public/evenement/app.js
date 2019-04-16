@@ -28,31 +28,31 @@ $(document).ready(function () {
     });
 
     //CREATION DE L'ABONNEE
-    $('.foAbonne').on('submit', function (e) {
-        e.preventDefault();
-        $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
-            data: $(this).serialize(),
-            dataType: 'json',
-            success: function (data) {
-                switch(data.status) {
-                    case 'error':
-                        swal("Erreur", data.message, "error");
-                        break;
-                    case 'success':
-                        swal("SUCCES", data.message, "success");
-                        break;
-                    default:
-                        swal("Erreur", data.message, "error");
-                }
-            },
-            error: function (error) {
-                swal("SUCCES", "Il existe déjà un abonné pour ce numéro", "error");
-            }
-        });
-        return false;
-    });
+    // $('.foAbonne').on('submit', function (e) {
+    //     e.preventDefault();
+    //     $.ajax({
+    //         url: $(this).attr('action'),
+    //         type: $(this).attr('method'),
+    //         data: $(this).serialize(),
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             switch(data.status) {
+    //                 case 'error':
+    //                     swal("Erreur", data.message, "error");
+    //                     break;
+    //                 case 'success':
+    //                     swal("SUCCES", data.message, "success");
+    //                     break;
+    //                 default:
+    //                     swal("Erreur", data.message, "error");
+    //             }
+    //         },
+    //         error: function (error) {
+    //             swal("SUCCES", "Il existe déjà un abonné pour ce numéro", "error");
+    //         }
+    //     });
+    //     return false;
+    // });
 
     $('.form_new_event').on('submit', function (e) {
         e.preventDefault();
