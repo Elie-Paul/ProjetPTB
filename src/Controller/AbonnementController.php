@@ -62,48 +62,49 @@ class AbonnementController extends AbstractController
 //        $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
 
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            if($request->isXmlHttpRequest())
-            {
-                if(strcmp($abonnement->getExpiration()->format('Y/m/d'), $toDay->format('Y/m/d')) <= 0)
-                {
-                    return new JsonResponse([
-                        'status' => 'error',
-                        'message' => "La date d'expiration n'est pas valide"
-                    ]);
-                }
-                $abonne = $this->getDoctrine()->getRepository(Abonnement::class)->findOneBy([
-                    'telephone' => $abonnement->getTelephone()
+        if ($form->isSubmitted() && $form->isValid()) {
+//            if($request->isXmlHttpRequest())
+//            {
+            if (strcmp($abonnement->getExpiration()->format('Y/m/d'), $toDay->format('Y/m/d')) <= 0) {
+                return $this->render('abonnement/new.html.twig', [
+                    'abonnement' => $abonnement,
+                    'form' => $form->createView(),
+                    'expiration' => "La date d'expiration n'est pas valide",
+                    'expiration' => $abonnement->getExpiration()
                 ]);
-                if($abonne)
-                {
-                    return new JsonResponse([
-                        'status' => 'error',
-                        'message' => "Il existe déjà un abonné avec ce numéro",
-                        'tel' => $abonnement->getTelephone()
-                    ]);
-                }
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($abonnement);
-                $entityManager->flush();
-                return new JsonResponse([
-                    'status' => 'success',
-                    'message' => "L'abonné est ajouté avec succès",
-                    'tel' => $abonnement->getTelephone()
+            }
+            $abonne = $this->getDoctrine()->getRepository(Abonnement::class)->findOneBy([
+                'telephone' => $abonnement->getTelephone()
+            ]);
+            if ($abonne) {
+                return $this->render('abonnement/new.html.twig', [
+                    'abonnement' => $abonnement,
+                    'form' => $form->createView(),
+                    'tel' => "Il existe déjà un abonné avec ce numéro",
+                    'expiration' => $abonnement->getExpiration()
                 ]);
             }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($abonnement);
             $entityManager->flush();
-
-            return $this->redirectToRoute('abonnement_index');
+            return $this->render('abonnement/new.html.twig', [
+                'abonnement' => $abonnement,
+                'form' => $form->createView(),
+                'success' => "L'abonné est ajouté avec success",
+                'expiration' => $abonnement->getExpiration()
+            ]);
+//            }
+//            $entityManager = $this->getDoctrine()->getManager();
+//            $entityManager->persist($abonnement);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('abonnement_index');
         }
 
         return $this->render('abonnement/new.html.twig', [
             'abonnement' => $abonnement,
             'form' => $form->createView(),
-            'expiration' => $abonnement->getExpiration()
+//            'expiration' => $abonnement->getExpiration()
         ]);
     }
 

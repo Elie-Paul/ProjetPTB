@@ -29,8 +29,7 @@
 {% block javascripts %}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
-        function survol(filename, expiration) {
-            // alert(expiration)
+        function survol(filename) {
             console.log('survol');
             let file = filename;
             let image = document.getElementById('photop');
@@ -216,7 +215,7 @@
             <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Abonnés</big></h4>
           </div>
             <div class="col-md-6 text-right">
-            <a class="btn btn-primary pull-right" href="{{ path('abonnement_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau Abonné</a>
+            <a class="btn btn-primary pull-right" href="{{ path('abonnement_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouvel Abonné</a>
             </div>
           </div>
           <!-- /.box-body -->

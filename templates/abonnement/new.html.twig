@@ -6,6 +6,30 @@
 {% endblock %}
 {% block javascripts %}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        {% if success is defined %}
+        swal({
+            title: "Succès",
+            text: "L'abonné est ajouté avec succès",
+            icon: "success",
+
+        });
+        {% elseif expiration is defined %}
+        swal({
+            title: "Erreur",
+            text: "La date d'expiration n'est pas valide",
+            icon: "error",
+
+        });
+        {% elseif tel is defined %}
+        swal({
+            title: "Erreur",
+            text: "Il existe déjà un abonné avec ce numéro",
+            icon: "error",
+
+        });
+        {% endif %}
+    </script>
     <script src="{{ asset('evenement/app.js') }}"></script>
 {% endblock %}
 {% block body %}
@@ -23,7 +47,7 @@
 
 <div class="box box-solid box-primary">
     <div class="box-header">
-    <h3 class="box-title">Ajouter un Nouveau Abonné</h3>   
+    <h3 class="box-title">Ajouter un Nouvel Abonné</h3>
     </div>
     <div class="box-body">
     {{ include('abonnement/_form.html.twig') }}
