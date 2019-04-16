@@ -65,6 +65,26 @@ class AbonnementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 //            if($request->isXmlHttpRequest())
 //            {
+            $thera = $abonnement->getTelephone();
+            if($thera[0] != '7')
+            {
+                return $this->render('abonnement/new.html.twig', [
+                    'abonnement' => $abonnement,
+                    'form' => $form->createView(),
+                    'incorrect' => "Le numéro de téléphone n'est pas valide",
+                    'expiration' => $abonnement->getExpiration()
+                ]);
+            }
+            $taalr = $abonnement->getTelephone();
+            if(strlen($taalr) != 9)
+            {
+                return $this->render('abonnement/new.html.twig', [
+                    'abonnement' => $abonnement,
+                    'form' => $form->createView(),
+                    'incorrect' => "Le numéro de téléphone n'est pas valide",
+                    'expiration' => $abonnement->getExpiration()
+                ]);
+            }
             if (strcmp($abonnement->getExpiration()->format('Y/m/d'), $toDay->format('Y/m/d')) <= 0) {
                 return $this->render('abonnement/new.html.twig', [
                     'abonnement' => $abonnement,
@@ -76,6 +96,8 @@ class AbonnementController extends AbstractController
             $abonne = $this->getDoctrine()->getRepository(Abonnement::class)->findOneBy([
                 'telephone' => $abonnement->getTelephone()
             ]);
+//            dump($abonne);
+//            die();
             if ($abonne) {
                 return $this->render('abonnement/new.html.twig', [
                     'abonnement' => $abonnement,

@@ -14,6 +14,13 @@
             icon: "success",
 
         });
+        {% elseif incorrect is defined %}
+        swal({
+            title: "Erreur",
+            text: "Le numéro de téléphone n'est pas valide",
+            icon: "error",
+
+        });
         {% elseif expiration is defined %}
         swal({
             title: "Erreur",
