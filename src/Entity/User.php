@@ -46,6 +46,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/i", match=true, message="Votre adresse mail n'est pas conforme !!")
      */
     private $email;
 

@@ -245,7 +245,7 @@ if (libelle === "" || !regex.test(libelle) || isNaN(prix1)) {
     alert("Les champs ne doivent pas être vide et ne doivent pas contenir des caractères spéciaux !!");
   }
   else if (prix1 < 1 || prix1 > 5000) {
-    alert("Le prix ne peut pas être négative !!!");
+    alert("Le prix ne peut pas être négatif ou nul !!!");
   }
   else{
     let xhttp=new XMLHttpRequest();

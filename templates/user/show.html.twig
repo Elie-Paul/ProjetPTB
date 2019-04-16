@@ -183,7 +183,6 @@
       </div>
       <!-- /.row -->
       {% if is_granted('ROLE_ADMINISTRATEUR') %}
-    {{ include('user/_delete_form.html.twig') }}
     {% endif %}
     <div id="userid" style="display:none;">
         {{ user.id }}
