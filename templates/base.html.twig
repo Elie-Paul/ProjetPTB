@@ -6,7 +6,7 @@
   <title>PTB</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="icon" type="image/png" href="{{ asset('img/favicon.ico') }}"/>
+  <link rel="icon" type="image/png" href="{{ asset('img/train1.png') }}"/>
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="{{ asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
@@ -137,7 +137,7 @@
     <a href="{{ path('home') }}" class="logo">
     <span class="logo-mini"><b>P</b>TB</span>
       <!-- logo for regular state and mobile devices -->
-     <span class="logo-lg">Billetterie <b>PTB</b></span>
+     <span class="logo-lg">i<b>B</b>illet</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -578,6 +578,22 @@
             <li><a href="{{ path('vente_taxe_index') }}"><i class="fa fa-circle-o"></i>Liste vente Taxe</a></li>
             <li><a href="{{ path('vente_taxe_index') }}"><i class="fa fa-circle-o"></i>Liste vente vignette</a></li>
           </ul>
+        </li>
+        {% endif %}
+        {% if is_granted('ROLE_VALIDATEUR') or is_granted('ROLE_ADMINISTRATEUR') %}
+        <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-certificate"></i>
+                <span>Invendus</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                  <li><a href="{{ path('commande_navette_return') }}"><i class="fa fa-circle-o"></i>Billet Autorail</a></li>
+                  <li><a href="{{ path('commande_ptb_retour') }}"><i class="fa fa-circle-o"></i>Billet Ptb</a></li>                            
+                  <li><a href="{{ path('commande_event_retour') }}"><i class="fa fa-circle-o"></i>Evenement</a></li>
+              </ul>
         </li>
         {% endif %}
       </ul>

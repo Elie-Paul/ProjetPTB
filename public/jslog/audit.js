@@ -179,7 +179,7 @@ function getAllCommande()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommande",false);
+    xhr.open("GET","http://serveurptb:8000/Json/listCommande",false);
     xhr.send();
 
 }
@@ -206,7 +206,7 @@ function addGuichet()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichet/",true);
+    xhr.open("GET","http://serveurptb:8000/json/guichet/",true);
     xhr.send();
     
 }

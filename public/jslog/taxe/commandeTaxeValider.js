@@ -103,7 +103,7 @@ function getTaxes()
             console.log(JSON.parse(this.responseText))
             tab = JSON.parse(this.responseText);
         }
-        let link ="http://localhost:8000/Json/listCommandeTaxe";
+        let link ="http://serveurptb:8000/Json/listCommandeTaxe";
         
         
         xhttp.open("GET",link,true);
@@ -136,7 +136,7 @@ function getTaxes()
                    console.log(this.responseText);
                 }
             }
-            xhr.open("POST","http://localhost:8000/ValidationCommandeTaxe",true);
+            xhr.open("POST","http://serveurptb:8000/ValidationCommandeTaxe",true);
             xhr.send(button.id);
             getTaxes();
             updateTab();
@@ -183,7 +183,7 @@ function addGuichet()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichet/",true);
+    xhr.open("GET","http://serveurptb:8000/json/guichet/",true);
     xhr.send();
     
 }

@@ -5,11 +5,15 @@
 {% block title %}New User{% endblock %}
 
 {% block body %}
-
+<h1>
+    <big>
+        Gestion des Utilisateurs
+    </big>
+</h1>
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
-            <h4><i class="fa fa-plus"></i>&nbsp;<big>Ajouter utilisateur</big></h4>
+            <h4><i class="fa fa-plus"></i>&nbsp;<big>Ajouter un utilisateur</big></h4>
           </div>
           <div class="col-md-6 text-right">
             <a class="btn btn-info" href="{{ path('user_index') }}"><i class="fa fa-list"></i>&nbsp;<big>Liste des Utilisateurs</big></a>
@@ -20,7 +24,7 @@
   
   <div class="box box-solid box-primary">
     <div class="box-header">
-    <h3 class="box-title">Ajouter un Nouveau utilisateur</h3>   
+    <h3 class="box-title">Ajouter un Nouvel utilisateur</h3>   
     </div>
     <div class="box-body">    
     {{ include('user/_form.html.twig') }}

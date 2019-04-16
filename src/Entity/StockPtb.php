@@ -89,4 +89,9 @@ class StockPtb
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return (string)$this->billet->getBillet();
+    }
 }

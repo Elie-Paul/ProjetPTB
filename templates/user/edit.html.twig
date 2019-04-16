@@ -8,11 +8,11 @@
 <div class="box box-default">
       <div class="box-header with-border">
           <div class="col-md-6">
-            <h4><i class="fa fa-list"></i>&nbsp;<big>Information sur Mon Profil</big></h4>
+            <h4></h4>
           </div>
           <div class="col-md-6 text-right">
             {% if is_granted('ROLE_ADMINISTRATEUR') %}
-              <a class="btn btn-info" href="{{ path('user_index') }}"><i class="fa fa-list"></i>&nbsp;Liste Utilisateur</a>
+              <a class="btn btn-info" href="{{ path('user_index') }}"><i class="fa fa-list"></i>&nbsp; <big>Liste des Utilisateurs</big></a>
             {% endif %}
           </div>
           </div>
@@ -25,7 +25,7 @@
     <div class="box-body">
     {{ form_start(form) }}    
     <div class="row">
-        <div class="col-xs-12">{{ form_row(form.username) }}</div>        
+        <div class="col-xs-12">{{ form_row(form.username) }}</div>
     </div>
     <div class="row">
         <div class="col-xs-12">{{ form_row(form.nom) }}</div>        
@@ -49,5 +49,4 @@
     
 </div>
 </div>
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

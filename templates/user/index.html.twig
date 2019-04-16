@@ -22,7 +22,7 @@
             <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Utilisateurs</big></h4>
           </div>
             <div class="col-md-6 text-right">
-                <a class="btn btn-info" href="{{ path('user_new') }}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nouveau Utilisateur</a>
+                <a class="btn btn-info" href="{{ path('user_new') }}"><i class="glyphicon glyphicon-plus"></i>&nbsp; <big>Nouvel Utilisateur</big></a>
             </div>
           </div>
         </div>
@@ -181,7 +181,7 @@
                         case 'success':
                             // swal("SUCCES", data.message, "success");
                             location.reload(true);
-                            // $('.content').load('http://localhost:8000/user/ .content');
+                            // $('.content').load('http://serveurptb:8000/user/ .content');
                             break;
                         default:
                             swal("Erreur", data.message, "error");

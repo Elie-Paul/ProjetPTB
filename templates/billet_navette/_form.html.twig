@@ -100,7 +100,7 @@
     function addGuichet()
     {
         modal.style.display = "block";
-        getJson('http://localhost:8000/json/lieu/depart',1);
+        getJson('http://serveurptb:8000/json/lieu/depart',1);
     }
 
     function ajouterGuichet()
@@ -109,7 +109,7 @@
         var nom = document.getElementById('nom').value;
         var lieu = document.getElementById('lieu').value;
 
-        document.location.href = `http://localhost:8000/addGuichetNavette/${code}/${nom}/${lieu}`;
+        document.location.href = `http://serveurptb:8000/addGuichetNavette/${code}/${nom}/${lieu}`;
     }
 
     var span1 = document.getElementsByClassName("close")[1];
@@ -123,8 +123,8 @@
     function addNavette()
     {
         modal1.style.display = "block";
-        getJson("http://localhost:8000/json/classe/",2);
-        getJson("http://localhost:8000/json/TrajetBillet/",3);
+        getJson("http://serveurptb:8000/json/classe/",2);
+        getJson("http://serveurptb:8000/json/TrajetBillet/",3);
     }
 
     function ajouterNavette()
@@ -214,39 +214,45 @@ document.getElementById("submit").addEventListener("click", function(e){
   var nom = document.getElementById('nom').value;
   var lieu = document.getElementById('lieu');
   lieu = lieu.options[lieu.selectedIndex].id;
+  var regexCode = /^[a-zA-Z0-9]+$/;
+  var regexNom = /^[a-zA-Z ]+$/;
+  if (code === "" || nom === "" || !regexCode.test(code) || !regexNom.test(nom)) {
+    alert("Les champs ne doivent pas être vide et ne doivent pas contenir des caractères spéciaux !!");
+  } else {
 
-  let xhttp=new XMLHttpRequest();
-  
-  xhttp.onreadystatechange = function()
-  {
-    if(this.readyState == 4 && this.status == 200)
+    let xhttp=new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function()
     {
-      let response = JSON.parse(xhttp.response);
-      console.log(response);
-      
-      if(response){
-        swal({
-        title: "Succès",
-        text: "Un guichet a été ajouté",
-        icon: "success",
+      if(this.readyState == 4 && this.status == 200)
+      {
+        let response = JSON.parse(xhttp.response);
+        console.log(response);
         
-        })
-            .then((value) => {
-              var modal = document.getElementsByClassName('modal')[0];
-              modal.style.display = "none";
-               document.location.href="http://localhost:8000/billet/navette/new";
-                
-            });
+        if(response){
+          swal({
+          title: "Succès",
+          text: "Un guichet a été ajouté",
+          icon: "success",
+          
+          })
+              .then((value) => {
+                var modal = document.getElementsByClassName('modal')[0];
+                modal.style.display = "none";
+                document.location.href="http://serveurptb:8000/billet/navette/new";
+                  
+              });
 
+        }
+        
       }
-      
     }
-  }
-  
-  xhttp.open("POST","/addGuichetPtb",true);
-  xhttp.responseType = "json";
-  let parm = `${code}+${nom}+${lieu}`;
-  xhttp.send(parm);  
+    
+    xhttp.open("POST","/addGuichetPtb",true);
+    xhttp.responseType = "json";
+    let parm = `${code}+${nom}+${lieu}`;
+    xhttp.send(parm); 
+  } 
 
   return false;
 });

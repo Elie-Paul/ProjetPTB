@@ -29,7 +29,7 @@
     <table class="table table-hover table-striped dataTable" id="example1">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Guichet</th>
                 <th>Nombre Billet</th>
                 <th>Etat Commande</th>
                 <th>Date Commande</th>
@@ -43,6 +43,7 @@
         <tbody>
         {% for commande_taxe in commande_taxes %}
             <tr>
+                <td>Contrôleur</td>
                 <td>{{ commande_taxe.id }}</td>
                 <td>{{ commande_taxe.nombreBillet }}</td>
                 <td>{{ commande_taxe.etatCommande }}</td>

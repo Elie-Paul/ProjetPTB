@@ -122,7 +122,7 @@ function validationAction(button)
                     console.log(this.responseText);
                 }
             }
-            xhr.open("POST","http://localhost:8000/ValidationCommande",true);
+            xhr.open("POST","http://serveurptb:8000/ValidationCommande",true);
             xhr.send(button.id);
             getAllCommande();
             updateTab();
@@ -142,7 +142,7 @@ function getAllCommande()
             tab = JSON.parse(this.responseText); 
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommande",true);
+    xhr.open("GET","http://serveurptb:8000/Json/listCommande",true);
     xhr.send();
 
 }
@@ -186,7 +186,7 @@ function addGuichet()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichet/",true);
+    xhr.open("GET","http://serveurptb:8000/json/guichet/",true);
     xhr.send();
     
 }

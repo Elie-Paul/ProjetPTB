@@ -56,7 +56,7 @@ class CommandeVignetteController extends AbstractController
             $entityManager->persist($commandeVignette);
             $entityManager->flush();
 
-            return $this->redirectToRoute('commande_vignette_index');
+            return $this->redirectToRoute('commande_vignette_lister');
         }
 
         return $this->render('commande_vignette/new.html.twig', [
@@ -76,7 +76,7 @@ class CommandeVignetteController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="commande_vignette_modifier", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="commande_vignette_modifiernonval", methods={"GET","POST"})
      */
     public function edit(Request $request, CommandeVignette $commandeVignette): Response
     {
@@ -86,7 +86,7 @@ class CommandeVignetteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('commande_vignette_index', [
+            return $this->redirectToRoute('commande_vignette_lister', [
                 'id' => $commandeVignette->getId(),
             ]);
         }
@@ -108,6 +108,6 @@ class CommandeVignetteController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('commande_vignette_index');
+        return $this->redirectToRoute('commande_vignette_lister');
     }
 }
