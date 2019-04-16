@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +22,7 @@ class AbonnementType extends AbstractType
             ->add('imageFile', FileType::class, [
                 'required' => false,
                 'label' => "Image",
-                'attr' => [                    
+                'attr' => [
                     'class' => 'form-control',
                     'required' => false
                     ] 
@@ -29,7 +30,7 @@ class AbonnementType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('adresse')
-            ->add('telephone', TextType::class, [
+            ->add('telephone', TelType::class, [
                 'attr' => [
                     'placeholder' => "+221"
                 ]
