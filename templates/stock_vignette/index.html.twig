@@ -28,7 +28,7 @@
     <table class="table table-hover table-striped dataTable" id="example1">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Guichet</th>
                 <th>Nombre</th>
                 <th>Actions</th>
             </tr>
@@ -36,7 +36,7 @@
         <tbody>
         {% for stock_vignette in stock_vignettes %}
             <tr>
-                <td>{{ stock_vignette.id }}</td>
+                <td>Contrôleur</td>
                 <td>{{ stock_vignette.nbre }}</td>
                 <td>
                     <a class="btn btn-ifno" href="{{ path('stock_vignette_voir', {'id': stock_vignette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
