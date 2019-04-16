@@ -3,7 +3,11 @@
 {% block title %}Ptb{% endblock %}
 
 {% block body %}
-
+<h1>
+    <big>
+        Gestion des trains PTB
+    </big>
+</h1>
 
 <div class="box box-default">
           <div class="box-header with-border">
@@ -11,15 +15,15 @@
             <h4></h4>
           </div>
           <div class="col-md-6 text-right">
-            <a class="btn btn-info" href="{{ path('ptb_index') }}"><i class="fa fa-list"></i>&nbsp;Liste PTB</a>&nbsp;
-            <a class="btn btn-warning" role="button" href="{{ path('ptb_edit', {'id': ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;modifier</a>
+            <a class="btn btn-info" href="{{ path('ptb_index') }}"><i class="fa fa-list"></i>&nbsp; <big>Liste des trains PTB</big></a>&nbsp;
+            <a class="btn btn-warning" role="button" href="{{ path('ptb_edit', {'id': ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; <big>Modifier</big></a>
           </div>
           </div>    
           <!-- /.box-body -->
         </div>
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Information du train PTB</h3>
+        <h3 class="box-title">Information du train PTB {{ ptb.trajet }}, {{ ptb.section.libelle }}</h3>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
@@ -27,7 +31,7 @@
             <tbody>                
                 <tr>
                     <th>Trajet</th>
-                    <td>{{ ptb.trajet.depart.libelle }}-{{ ptb.trajet.arrivee.libelle }}</td>
+                    <td>{{ ptb.trajet }}</td>
                 </tr>
                 <tr>
                     <th>Section</th>
