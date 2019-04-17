@@ -293,7 +293,7 @@ class Controller extends AbstractController
         $ventePtb->setNbreDeBillet($vente);
         $stockPtb=$entityManager->getRepository(StockPtb::class)->findOneBy([
             'billet' => $billet,
-         ],);
+         ]);
         
         $stockPtb->setNbre($stockPtb->getNbre()- $vente);
         

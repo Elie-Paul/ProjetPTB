@@ -153,7 +153,7 @@ class CommandeVignetteController2 extends AbstractController
         $venteVignette->setNbreDeBillet($vente);
         $stockVignette=$entityManager->getRepository(StockVignette::class)->findOneBy([
             'billet' => $billet,
-         ],);
+         ]);
         
         $stockVignette->setNbre($stockVignette->getNbre()- $vente);
         
