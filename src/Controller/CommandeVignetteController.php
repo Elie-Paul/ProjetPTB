@@ -47,6 +47,7 @@ class CommandeVignetteController extends AbstractController
     public function new(Request $request): Response
     {
         $commandeVignette = new CommandeVignette();
+        
         $form = $this->createForm(CommandeVignetteType::class, $commandeVignette);
         $form->handleRequest($request);
 

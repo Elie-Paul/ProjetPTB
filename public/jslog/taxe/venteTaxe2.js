@@ -93,7 +93,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://serveurptb:8000/Json/taxe/billet",true);
+    xhr.open("GET",superLink+"/Json/taxe/billet",true);
     xhr.send();
 
 }
@@ -149,7 +149,7 @@ function vente()
                         span.appendChild(text);
                     }
                 }
-                let link =`http://serveurptb:8000/addVenteTaxe/${idc}/${vente}`;
+                let link =`${superLink}/addVenteTaxe/${idc}/${vente}`;
                 xhttp.open("GET",link,true);
                 xhttp.send();
             }

@@ -112,7 +112,7 @@ function validationAction(button)
            console.log(this.responseText);
         }
     }
-    xhr.open("POST","http://localhost:8000/ValidationCommandeNavette",true);
+    xhr.open("POST",superLink+"/ValidationCommandeNavette",true);
     xhr.send(button.id);
     getAllCommande();
 }
@@ -127,7 +127,7 @@ function getAllCommande()
             addRow(JSON.parse(this.responseText));
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommandeNavette",true);
+    xhr.open("GET",superLink+"/Json/listCommandeNavette",true);
     xhr.send();
 
 }

@@ -37,8 +37,8 @@ function addRow()
        // Nbres[index].addEventListener("focus",removeRow);
         trows[index].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
        // cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));    
-       getJson("http://localhost:8000/json/guichet/",1);
-       getJson("http://localhost:8000/json/section/",2);
+       getJson(superLink+"/json/guichet/",1);
+       getJson(superLink+"/json/section/",2);
        cmbGuichets[index].addEventListener("change",getJson3);
        cmbSections[index].addEventListener("change",getJson3);
        cmbEvents[index].addEventListener("change",getJson3);
@@ -121,7 +121,7 @@ function getJson3()
             cmbTrajets[selectedrow].removeChild(cmbTrajets[selectedrow].children[i]);
         }
    }
-    let link =`http://localhost:8000/json/trajetEvent/${idGuichet}+${idSection}+${idEvent}`;
+    let link =`${superLink}/json/trajetEvent/${idGuichet}+${idSection}+${idEvent}`;
     console.log(link);
     if (idGuichet!='0' && idSection!='0' && idEvent!='0')
     {
@@ -131,7 +131,7 @@ function getJson3()
  function setGuichet(array)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -148,7 +148,7 @@ function getJson3()
  function setSection(array)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -165,7 +165,7 @@ function getJson3()
  function setEvent(array)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -182,7 +182,7 @@ function getJson3()
  function setTrajet(array,trajetid)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -209,9 +209,9 @@ function getJson3()
     checkforEmpty() 
     total.innerText=""+tot;
  } 
- getJson("http://localhost:8000/json/guichet/",1);
- getJson("http://localhost:8000/json/section/",2);
- getJson("http://localhost:8000/json/event/",4);
+ getJson(superLink+"/json/guichet/",1);
+ getJson(superLink+"/json/section/",2);
+ getJson(superLink+"/json/event/",4);
  cmbGuichets[index].addEventListener("change",getJson3);
  cmbSections[index].addEventListener("change",getJson3);
  cmbEvents[index].addEventListener("change",getJson3);
@@ -243,7 +243,7 @@ function getJson3()
         
     })
         .then((value) => {
-            document.location.href="http://localhost:8000/commande/event";
+            document.location.href=superLink+"/commande/event";
             
         });
  } 
@@ -286,7 +286,7 @@ function getJson3()
             spansSuccess[i].style.display = "none";
         }
      }
-     let link ="http://localhost:8000/newCommande/Event";
+     let link =superLink+"/newCommande/Event";
      let params =`${idGuichet}+${idSection}+${idTrajet}+${idEvent}+${Nbres[i].value}`;
      console.log(params);
      if(Nbres[i].value !="" && idGuichet!='0' && idSection!='0'&& idTrajet!='0')

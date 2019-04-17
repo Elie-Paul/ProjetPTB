@@ -168,7 +168,7 @@ function getAllCommande()
             tab = JSON.parse(this.responseText); 
         }
     }
-    xhr.open("GET","http://serveurptb:8000/Json/listCommandeTaxe",true);
+    xhr.open("GET",superLink+"/Json/listCommandeTaxe",true);
     xhr.send();
 
 }

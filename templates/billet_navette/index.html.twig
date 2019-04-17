@@ -41,7 +41,7 @@
         </div>
         
     </form>
-    <button  id="submit" onclick="print2()" class="btn btn-primary">Submit</button>
+    <button  id="submit" onclick="print2()" class="btn btn-primary">Imprimer</button>
   </div>
 
 </div>
@@ -105,7 +105,7 @@
                     total= parseInt(this.responseText);
                 }
             }
-            xhr.open("GET","http://serveurptb:8000/totalbilletNavette/"+idb,true);
+            xhr.open("GET",superLink+"0/totalbilletNavette/"+idb,true);
             xhr.send();
             var modal = document.getElementById('myModal');
             var td = document.getElementById('dpt'+idb);
@@ -144,7 +144,7 @@
                 {
                     var modal = document.getElementById('myModal');
                     modal.style.display = "none";
-                    document.location.href = `http://serveurptb:8000/impressionAutorail/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
+                    document.location.href = `${superLink}/impressionAutorail/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
                 }
                 
             }

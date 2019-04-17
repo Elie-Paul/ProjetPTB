@@ -185,7 +185,7 @@ function getAllCommande()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/Json/listCommande/event",false);
+    xhr.open("GET",superLink+"/Json/listCommande/event",false);
     xhr.send();
 
 }
@@ -212,7 +212,7 @@ function addGuichet()
             
         }
     }
-    xhr.open("GET","http://localhost:8000/json/guichet/",true);
+    xhr.open("GET",superLink+"/json/guichet/",true);
     xhr.send();
     
 }

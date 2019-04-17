@@ -36,8 +36,8 @@ function addRow()
        // Nbres[index].addEventListener("focus",removeRow);
         trows[index].addEventListener('mouseenter',(e) => {selectedrow = parseInt(e.target.id);console.log(selectedrow);});
        // cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));    
-       getJson("http://localhost:8000/json/guichet/",1);
-       getJson("http://localhost:8000/json/classe/",2);
+       getJson(superLink+"/json/guichet/",1);
+       getJson(superLink+"/json/classe/",2);
        cmbGuichets[index].addEventListener("change",getJson3);
        cmbClasses[index].addEventListener("change",getJson3);
        Nbres[index].addEventListener("change",setTotal);
@@ -123,7 +123,7 @@ function getJson3()
             cmbTrajets[selectedrow].removeChild(cmbTrajets[selectedrow].children[i]);
         }
    }
-    let link =`http://localhost:8000/json/trajetNavette/${idGuichet}+${idClasse}`;
+    let link =`${superLink}/json/trajetNavette/${idGuichet}+${idClasse}`;
     console.log(link);
     if (idGuichet!='0' && idClasse!='0')
     {
@@ -133,7 +133,7 @@ function getJson3()
  function setGuichet(array)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -150,7 +150,7 @@ function getJson3()
  function setClasse(array)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -167,7 +167,7 @@ function getJson3()
  function setTrajet(array,trajetid)
  {
      
-     //var array=getJson("http://localhost:8000/json/guichet/");
+     //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
          
@@ -194,8 +194,8 @@ function getJson3()
     checkforEmpty() 
     total.innerText=""+tot;
  } 
- getJson("http://localhost:8000/json/guichet/",1);
- getJson("http://localhost:8000/json/classe/",2);
+ getJson(superLink+"/json/guichet/",1);
+ getJson(superLink+"/json/classe/",2);
  cmbGuichets[index].addEventListener("change",getJson3);
  cmbClasses[index].addEventListener("change",getJson3);
  //cmbGuichets[index].addEventListener("click",(e) =>getElementId(e.target));
@@ -227,7 +227,7 @@ function getJson3()
         
     })
         .then((value) => {
-            document.location.href="http://localhost:8000/commande/navette";
+            document.location.href=superLink+"/commande/navette";
             
         });
  } 
@@ -255,7 +255,7 @@ function getJson3()
                 spansSuccess[i].style.display = "none";
             }
         }
-        let link ="http://localhost:8000/newCommandeNavette/";
+        let link =superLink+"/newCommandeNavette/";
         let params =`${idGuichet}+${idClasse}+${idTrajet}+${Nbres[i].value}`;
         console.log(params);
         if(Nbres[i].value !="" && idGuichet!='0' && idClasse!='0'&& idTrajet!='0')

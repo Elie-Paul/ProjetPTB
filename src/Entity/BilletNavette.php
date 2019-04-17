@@ -187,4 +187,11 @@ class BilletNavette
 
         return $this;
     }
+    public function __toString()
+    {
+        
+        return $this->getGuichet()+' '+$this->getNavette()->getTrajet();
+        
+        
+    }
 }

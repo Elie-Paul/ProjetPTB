@@ -132,7 +132,15 @@ class BilletPtb
 
     public function __toString()
     {
-        return $this->getGuichet()+' '+$this->getPtb()->getTrajet()->getDepart();
+        if ($this->evenement != null) 
+        {
+            return $this->evenement+': '+$this->getGuichet()+' '+$this->getPtb()->getTrajet();
+        }
+        else
+        {
+            return $this->getGuichet()+' '+$this->getPtb()->getTrajet();
+        }
+        
     }
 
     /**

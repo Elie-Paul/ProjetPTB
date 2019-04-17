@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 </head>
+<script>
+  var superLink="http://localhost:8000";
+</script>
 <Style>
     .page
     {
@@ -114,12 +117,12 @@
         }
     if(f)
     {
-        xhr.open("POST","http://serveurptb:8000/audit/impression",false);
+        xhr.open("POST",superLink+"/audit/impression",false);
         xhr.send(param);
     }
     else
     {
-        xhr.open("POST","http://serveurptb:8000/audit/reimpression",false);
+        xhr.open("POST",superLink+"/audit/reimpression",false);
         param=param +"pour motif:{{motif}}";
         xhr.send(param);
     }
@@ -128,7 +131,7 @@
     function(event) 
     { 
        
-        document.location.href = "http://serveurptb:8000/billet/ptb/";
+        document.location.href = superLink+"/billet/ptb/";
 
     };
 </script>

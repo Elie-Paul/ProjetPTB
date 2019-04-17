@@ -76,7 +76,7 @@ class ImpressionController extends AbstractController
          }
          $stockPtb=$entityManager->getRepository(StockPtb::class)->findOneBy([
             'billet' => $billet,
-         ],);
+         ]);
          $commnadesPTB = $entityManager->getRepository(CommandePtb::class)->findBy
          (
              [
@@ -208,7 +208,7 @@ class ImpressionController extends AbstractController
          }
          $stockNavette=$entityManager->getRepository(StockNavette::class)->findOneBy([
             'billet' => $billet,
-         ],);
+         ]);
          $commnadesNavettes = $entityManager->getRepository(CommandeNavette::class)->findBy
          (
              [
@@ -326,7 +326,7 @@ class ImpressionController extends AbstractController
          $user = $entityManager->getRepository(User::class)->find($userid);
          $stockTaxe=$entityManager->getRepository(StockTaxe::class)->findOneBy([
             'billet' => $billet,
-         ],);
+         ]);
          $user = $entityManager->getRepository(User::class)->find($userid);
          if($depart ==$billet->getNumeroDernierBillet())
          {
@@ -452,7 +452,7 @@ class ImpressionController extends AbstractController
          $billet = $entityManager->getRepository(Vignette::class)->find($id);
          $stockVignette=$entityManager->getRepository(StockVignette::class)->findOneBy([
             'billet' => $billet,
-         ],);
+         ]);
          $user = $entityManager->getRepository(User::class)->find($userid);
          if($depart ==$billet->getNumeroDernierBillet())
          {

@@ -201,7 +201,7 @@ class CommandeTaxeController2 extends AbstractController
         $venteTaxe->setNbreDeBillet($vente);
         $stockTaxe=$entityManager->getRepository(StockTaxe::class)->findOneBy([
             'billet' => $billet,
-         ],);
+         ]);
         
         $stockTaxe->setNbre($stockTaxe->getNbre()- $vente);
         

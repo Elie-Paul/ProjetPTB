@@ -138,7 +138,7 @@ class ControllerCommandeNavetteController extends AbstractController
         $venteNavette->setNbreDeBillet($vente);
         $stockNavette=$entityManager->getRepository(StockNavette::class)->findOneBy([
             'billet' => $billet,
-         ],);
+         ]);
         
         $stockNavette->setNbre($stockNavette->getNbre()- $vente);
         
