@@ -236,11 +236,14 @@
 																			<tr>
 																				<td align="center" class="textContent">																																										
 																					<div style="text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;">
-																						<p>Bonjour, un Compte Billetterie PTB a été crée pour l'utilisateur :</p>
+																						<p>Bienvenue Sur i-Billet, l'application de gestion de la Billetterie.</p>
+																						<p>Un compte vient d'être crée pour :</p>
 																						<p>Nom : {{nom|capitalize}}</p>
 																						<p>Prenom : {{prenom|capitalize}}</p>
-																						<p>Fonction : {{role ? role[0]|slice(5)|capitalize|replace({"_": ' '}) }}</p>
-																						<p>E-mail : {{mail}}</p>
+																						<p>Email : {{mail}}</p>
+																						<p>Si vous souhaitez vous connecter,
+																							<a href="{{ path('app_login') }}">Cliquez ici</a>
+																						</p>
 																					</div>																																																																																				
 																					</br></br>
 																					</br></br>
