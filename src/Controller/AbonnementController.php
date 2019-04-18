@@ -55,12 +55,9 @@ class AbonnementController extends AbstractController
         $form->handleRequest($request);
         $date = new \DateTime();
         $date->setTimezone(new \DateTimeZone('GMT'));
-        $abonnement->setCreatedAt($date);
         $abonnement->setUpdateAt($date);
+        $abonnement->setCreatedAt($date);
         $toDay = new \DateTime();
-//        $expiration = new \DateTime();
-//        $expiration->setTimezone(new \DateTimeZone('GMT'));
-//        $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -148,6 +145,7 @@ class AbonnementController extends AbstractController
      * @param Request $request
      * @param Abonnement $abonnement
      * @return Response
+     * @throws \Exception
      */
     public function edit(Request $request, Abonnement $abonnement): Response
     {
@@ -155,6 +153,9 @@ class AbonnementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $date = new \DateTime();
+            $date->setTimezone(new \DateTimeZone('GMT'));
+            $abonnement->setUpdateAt($date);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('abonnement_index', [
@@ -178,7 +179,9 @@ class AbonnementController extends AbstractController
     public function validerCarte(Request $request, Abonnement $abonnement): Response
     {
         $abonnement->setNombreCarte(1);
-        $abonnement->setUpdateAt(new \DateTime());
+        $date = new \DateTime();
+        $date->setTimezone(new \DateTimeZone('GMT'));
+        $abonnement->setUpdateAt($date);
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('abonnement_index');
@@ -193,8 +196,9 @@ class AbonnementController extends AbstractController
     public function retablirCarte(Abonnement $abonnement): Response
     {
         $abonnement->setNombreCarte(0);
-        $abonnement->setCreatedAt(new \DateTime());
-        $abonnement->setUpdateAt(new \DateTime());
+        $date = new \DateTime();
+        $date->setTimezone(new \DateTimeZone('GMT'));
+        $abonnement->setUpdateAt($date);
         $expiration = new \DateTime();
         $abonnement->setExpiration($expiration->add(new \DateInterval('P12M')));
         $this->getDoctrine()->getManager()->flush();
