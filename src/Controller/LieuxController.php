@@ -16,9 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LieuxController extends AbstractController
 {
+    
     /**
      * @Route("/", name="lieux_index", methods={"GET"})
      */
+    
     public function index(LieuxRepository $lieuxRepository): Response
     {
         return $this->render('lieux/index.html.twig', [
@@ -42,8 +44,8 @@ class LieuxController extends AbstractController
             ]);
 
             if (!$lieux1) {
-                $lieux->setCreatedAt(new \DateTime());
-                $lieux->setUpdatedAt(new \DateTime());
+                $lieux->setCreatedAt($this->test35());
+                $lieux->setUpdatedAt($this->test35());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($lieux);
                 $entityManager->flush();
@@ -90,7 +92,7 @@ class LieuxController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $lieux->setUpdatedAt(new \DateTime());
+            $lieux->setUpdatedAt($this->test35());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('lieux_index', [

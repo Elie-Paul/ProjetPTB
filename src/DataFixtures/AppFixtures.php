@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 use App\Entity\User;
 use App\Entity\Trajet;
+use App\Entity\TypeAudit;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -22,10 +23,10 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
         $user=new User();
-        $user->setUsername("thera");
-        $user->setNom("THERA");
+        $user->setUsername("Admin");
+        $user->setNom("Admin");
         $user->setActive(true);
-        $user->setPrenom("THERA");
+        $user->setPrenom("Admin");
         $user->setEmail("taalr@taalr.com");
         $user->setFilename("taalr");
         $user->setCreatedAt(new \DateTime());
@@ -35,8 +36,20 @@ class AppFixtures extends Fixture
         //$user->setRoles($roles[0]);
         $user->setPassword($this->passwordEncoder->encodePassword(
                          $user,
-                         'passer'
+                         'admin'
                     ));
+
+        $typeAudit1=new TypeAudit();
+        $typeAudit1->setLibelle("impression");                    
+
+        $typeAudit2=new TypeAudit();                    
+        $typeAudit2->setLibelle("impression irreguliére");
+
+        $typeAudit3=new TypeAudit();                    
+        $typeAudit3->setLibelle("retour billet normale");
+
+        $typeAudit4=new TypeAudit();
+        $typeAudit4->setLibelle("retour billet irregulier");                      
         $manager->persist($user);
         $manager->flush();
     }

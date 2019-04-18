@@ -162,7 +162,12 @@ class Evenement
 
         return $this;
     }
-
+    public function __toString()
+    {
+        
+            return $this->getLibelle();
+        
+    }
     /**
      * @return Collection|BilletPtb[]
      */

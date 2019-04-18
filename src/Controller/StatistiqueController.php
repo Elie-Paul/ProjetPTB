@@ -273,7 +273,7 @@ class StatistiqueController extends AbstractController
                 $myarray = array(
                     'id' => $billetP->getId(),
                     'type' => "PTB",
-                    'billet' => $billetP->getPtb()->__toString(),
+                    'billet' => $billetP->__toString(),
                     'commandes' => $commandes,
                     'guichet' => $billetP->getGuichet()->getCode(),
                     'ventes' => $ventes,
