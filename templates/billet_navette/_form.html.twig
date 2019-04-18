@@ -214,8 +214,8 @@ document.getElementById("submit").addEventListener("click", function(e){
   var nom = document.getElementById('nom').value;
   var lieu = document.getElementById('lieu');
   lieu = lieu.options[lieu.selectedIndex].id;
-  var regexCode = /^[a-zA-Z0-9]+$/;
-  var regexNom = /^[a-zA-Z ]+$/;
+  var regexCode = /^[a-zA-Z0-9_-]+$/;
+  var regexNom = /^[a-zA-Z0-9éèïî ]+$/;
   if (code === "" || nom === "" || !regexCode.test(code) || !regexNom.test(nom)) {
     alert("Les champs ne doivent pas être vide et ne doivent pas contenir des caractères spéciaux !!");
   } else {

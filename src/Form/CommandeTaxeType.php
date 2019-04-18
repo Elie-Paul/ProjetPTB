@@ -13,15 +13,6 @@ class CommandeTaxeType extends AbstractType
     {
         $builder
             ->add('nombreBillet')
-            ->add('etatCommande')
-            ->add('dateCommande')
-            ->add('dateComnandeValider')
-            ->add('dateCommandeRealiser')
-            ->add('nombreBilletVendu')
-            ->add('nombreBilletRealise')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('billet')
         ;
     }
 
