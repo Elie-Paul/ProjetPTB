@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BilletTaxe;
 use App\Form\BilletTaxeType;
+use App\Entity\StockTaxe;
 use App\Controller\CommandeTaxeController2;
 use App\Repository\BilletTaxeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,6 +57,7 @@ class BilletTaxeController extends AbstractController
     public function new(Request $request): Response
     {
         $billetTaxe = new BilletTaxe();
+        $stockPtb = new StockTaxe();
         $form = $this->createForm(BilletTaxeType::class, $billetTaxe);
         $form->handleRequest($request);
 
@@ -64,6 +66,11 @@ class BilletTaxeController extends AbstractController
             $billetTaxe->setUpdatedAt($this->test35());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($billetTaxe);
+            $stockPtb->setBillet($billetTaxe);
+                $stockPtb->setNbre(0);
+                $stockPtb->setCreatedAt($this->test35());
+                $stockPtb->setUpdatedAt($this->test35());
+                $entityManager->persist($stockPtb);
             $entityManager->flush();
 
             return $this->redirectToRoute('billet_taxe_index');

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Vignette;
 use App\Form\VignetteType;
+use App\Entity\StockVignette;
 use App\Repository\VignetteRepository;
 use App\Controller\CommandeVignetteController2;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,6 +44,7 @@ class VignetteController extends AbstractController
     public function new(Request $request): Response
     {
         $vignette = new Vignette();
+        $stockPtb = new StockVignette();
         $form = $this->createForm(VignetteType::class, $vignette);
         $form->handleRequest($request);
 
@@ -51,6 +53,11 @@ class VignetteController extends AbstractController
             $vignette->setUpdatedAt(new \DateTime());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($vignette);
+            $stockPtb->setBillet($vignette);
+                $stockPtb->setNbre(0);
+                $stockPtb->setCreatedAt($this->test35());
+                $stockPtb->setUpdatedAt($this->test35());
+                $entityManager->persist($stockPtb);
             $entityManager->flush();
 
             return $this->redirectToRoute('vignette_index');
