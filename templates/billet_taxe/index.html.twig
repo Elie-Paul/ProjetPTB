@@ -1,8 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    <link href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" rel="stylesheet" type="text/css"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- CSS IMPRIMER-->
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block title %}BilletPtb{% endblock %}
@@ -44,7 +47,7 @@
   </div>
 
 </div>
-    <h1>Génération de Taxes PTB</h1>
+    <h1>Génération de Billets Taxe</h1>
     <script>
          idb=0;
          dpt=0;
@@ -95,7 +98,7 @@
         function print(id)
         {
             idb=id;
-             let xhr=new XMLHttpRequest();
+            let xhr=new XMLHttpRequest();
             xhr.onload=function ()
             {
                 if(this.status == 200)
@@ -104,7 +107,7 @@
                     total= parseInt(this.responseText);
                 }
             }
-            xhr.open("GET",${superLink}+"/totalbilletTaxe/"+idb,true);
+            xhr.open("GET","/totalbilletTaxe/"+idb,true);
             xhr.send();
             var modal = document.getElementById('myModal');
             var td = document.getElementById('dpt'+idb);
@@ -115,11 +118,12 @@
         }
         function print2()
         {
+            
             var nbreprint = document.getElementById("nbreprint").value;
             var color = document.getElementById("color").value;
             var checkbox = document.getElementById("modifierdpt");
             var userid = parseInt(document.getElementById("userid").innerHTML, 10);
-            var motif = "";
+            var motif = ""; 
             if(parseInt(nbreprint)>total)
             {
                 alert("Vous essayez d'imprimer un nombre de billet superieur au nombre commandé")
@@ -137,15 +141,21 @@
                 }
                 if(checkbox.checked && motif==='')
                 {
-                        alert("veuillez indiquez le motif ")
+                    alert("veuillez indiquez le motif ")
                 }
                 else
                 {
                     var modal = document.getElementById('myModal');
                     modal.style.display = "none";
-                    document.location.href = `${superLink}/impressiontaxes/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
+                    document.location.href = `/impressiontaxes/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
                 }
-            }  
+                
+            } 
+            
+            
+                
+                
+            //document.location.href = `http://serveurptb:8000/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;
             
 
         }
@@ -154,11 +164,11 @@
     <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
-            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Taxes PTB</big></h4>
+            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Billets Taxe</big></h4>
           </div>
             <div class="col-md-6 text-right">
             {% if is_granted('ROLE_ADMINISTRATEUR') %}
-            <a class="btn btn-info pull-right" href="{{ path('billet_taxe_new') }}"><i class="glyphicon glyphicon-plus"></i> <big> Nouvelle taxe</big></a>
+            <!--a class="btn btn-primary pull-right" href="{{ path('billet_ptb_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouveau PTB</a-->
             {% endif %}
             </div>
           </div>
@@ -168,7 +178,7 @@
     <div class="col-xs-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h1 class="box-title">Liste des Taxes PTB</h1>
+                <h1 class="box-title">Liste des billets Taxe</h1>
 
                 <!--div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
