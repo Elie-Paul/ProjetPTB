@@ -82,7 +82,7 @@
             <div class="billet">
                 <h3>N : {{i}}</h3>
                 <h3>PTB{{ date ? date|date('m/Y ') : '' }}</h3>
-                <h3>{{billet.guichet.nom }}</h3>
+                <h3>{{billet.guichet.nom }}  {{billet.evenement}}</h3>
                 <h5>Aller simple</h5>
                 <h5>Départ:{{billet.ptb.trajet.depart.libelle}}</h5>
                 <h5>Arrivée:{{billet.ptb.trajet.arrivee.libelle}}</h5>
@@ -97,7 +97,7 @@
             {% endif %}
         {% endfor %}
     </div>
-    
+    <p id="fuck" style="display:none;">{{billet.evenement}}</p>
 </body>
 </html>
 <script>
@@ -130,8 +130,12 @@
     window.onafterprint = 
     function(event) 
     { 
-       
-        document.location.href = superLink+"/billet/ptb/";
+        
+            
+        if(document.getElementById('fuck').innerText=='')
+            document.location.href = superLink+"/billet/ptb/";
+        else 
+            document.location.href = superLink+"/billet/event/";
 
     };
 </script>

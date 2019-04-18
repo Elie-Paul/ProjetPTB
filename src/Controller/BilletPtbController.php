@@ -28,11 +28,14 @@ class BilletPtbController extends AbstractController
             $array = array();
             foreach ($billetPtbRepository->findAll() as $key => $value) 
             {
-                $arr = array();
-                $id = $value->getId();
-                $total = intVal($controller->totalBillet2($id));
-                $arr = ['billet' => $value,'total' => $total];
-                array_push($array,$arr);
+                if($value->getEvenement() ==null)
+                {    
+                    $arr = array();
+                    $id = $value->getId();
+                    $total = intVal($controller->totalBillet2($id));
+                    $arr = ['billet' => $value,'total' => $total];
+                    array_push($array,$arr);
+                }
             }
         
 
