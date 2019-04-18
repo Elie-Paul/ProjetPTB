@@ -296,7 +296,7 @@ class StatistiqueController extends AbstractController
                         'nombreBilletVendu' => $variable->getNombreBilletVendu(),
         
                         'etat' => $variable->getEtatCommande(),
-                        'dateCommandeValider' => $variable->getDateCommandeValider(),
+                        'dateCommandeValider' => $variable->getDateComnandeValider(),
                         'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
                         'date' => $variable->getDateCommande()
                     );
@@ -337,7 +337,7 @@ class StatistiqueController extends AbstractController
                         'nombreBilletVendu' => $variable->getNombreBilletVendu(),
         
                         'etat' => $variable->getEtatCommande(),
-                        'dateCommandeValider' => $variable->getDateCommandeValider(),
+                        'dateCommandeValider' => $variable->getDateComnandeValider(),
                         'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
                         'date' => $variable->getDateCommande()
                     );
@@ -378,7 +378,7 @@ class StatistiqueController extends AbstractController
                         'nombreBilletVendu' => $variable->getNombreBilletVendu(),
         
                         'etat' => $variable->getEtatCommande(),
-                        'dateCommandeValider' => $variable->getDateCommandeValider(),
+                        'dateCommandeValider' => $variable->getDateComnandeValider(),
                         'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
                         'date' => $variable->getDateCommande()
                     );

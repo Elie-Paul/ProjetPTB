@@ -254,7 +254,7 @@ class ImpressionController extends AbstractController
          else
          {
              
-            $bb=$num - ($billet->getNumeroDernierBillets() - $depart);
+            $bb=$num - ($billet->getNumeroDernierBillet() - $depart);
             if($bb > 0)
             {
                 $stockNavette->setNbre( $stockNavette->getNbre() + $bb) ;

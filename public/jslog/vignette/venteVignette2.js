@@ -155,7 +155,7 @@ function vente()
         let span = document.getElementById("s"+idc);
         if(element.value != "" && !element.disabled) 
         {
-            if (vente<=stock) 
+            if (vente<=stock && vente>=1) 
             {
                
                 let xhttp=new XMLHttpRequest();

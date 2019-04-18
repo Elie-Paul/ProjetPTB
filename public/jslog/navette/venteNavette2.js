@@ -69,6 +69,7 @@ function createRowElement(billet)
     input.type = 'number';
     input.classList.add('form-control');
     input.id ="i"+billet.id;
+    input.setAttribute("min",1);
     input.placeholder = 'Nombre Billets Retournés';
     //input.style.width='20px';
     div.appendChild(input);
@@ -152,7 +153,7 @@ function vente()
         let span = document.getElementById("s"+idc);
         if(element.value != "" && !element.disabled) 
         {
-            if (vente<=stock) 
+            if (vente<=stock && vente>=1) 
             {
                 
                 let xhttp=new XMLHttpRequest();

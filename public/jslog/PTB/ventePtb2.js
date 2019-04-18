@@ -68,6 +68,7 @@ function createRowElement(billet)
     input.placeholder = 'Nombre Billets Retournés';
     //input.style.width='20px';
     div.appendChild(input);
+    input.setAttribute("min",1);
     nombreVente.appendChild(div);
     array.push(nombreVente);
 
@@ -147,7 +148,7 @@ function vente()
         let span = document.getElementById("s"+idc);
         if(element.value != "" && !element.disabled) 
         {
-            if (vente<=stock) 
+            if (vente<=stock && vente>=1) 
             {
                 
                 let xhttp=new XMLHttpRequest();

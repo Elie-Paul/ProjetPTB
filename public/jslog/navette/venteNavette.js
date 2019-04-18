@@ -68,6 +68,7 @@ function createRowElement(billet)
     let input= document.createElement('input');
     input.type = 'number';
     input.classList.add('form-control');
+    input.setAttribute("min",1);
     input.id ="i"+billet.id;
     input.placeholder = 'nombre de Vente';
     //input.style.width='20px';
@@ -152,7 +153,7 @@ function vente()
         let span = document.getElementById("s"+idc);
         if(element.value != "" && !element.disabled) 
         {
-            if (vente<=stock) 
+            if (vente<=stock && vente>=1) 
             {
                 
                 let xhttp=new XMLHttpRequest();
