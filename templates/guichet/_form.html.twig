@@ -92,7 +92,7 @@ document.getElementById("submit").addEventListener("click", function(e){
   e.preventDefault();
 
   var libelle = document.getElementById("libelle").value;
-  var regex = /^[a-zA-Z ]+$/;
+  var regex = /^[a-zA-Z0-9éèïî ]+$/;
 
   if (libelle === "" || !regex.test(libelle)) {
     alert("Le champ ne doit pas être vide et ne doit pas contenir des caractères spéciaux !!");

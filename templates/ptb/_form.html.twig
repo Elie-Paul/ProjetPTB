@@ -208,6 +208,10 @@ function getJson(link,id)
 
 function setLieuxDepart(array)
 {
+  while (combLieuxDepart.firstChild) 
+  {
+      combLieuxDepart.removeChild(combLieuxDepart.firstChild);
+  }
   for(let i=0; i<array.length; i++){
     let option=document.createElement('option');
     option.id = `${array[i].id}`;
@@ -219,6 +223,10 @@ function setLieuxDepart(array)
 
 function setLieuxArrivee(array)
 {
+  while (combLieuxArrivee.firstChild) 
+  {
+      combLieuxArrivee.removeChild(combLieuxArrivee.firstChild);
+  }
   for(let i=0; i<array.length; i++){
     let option=document.createElement('option');
     option.id = `${array[i].id}`;
@@ -239,7 +247,7 @@ document.getElementById("enregistrer").addEventListener("submit", function(e){
   var prix = document.getElementById("prix").value;
 
   var prix1 = parseInt(prix);
-  var regex = /^[a-zA-Z ]+$/;
+  var regex = /^[a-zA-Z0-9éèï ]+$/;
 
 if (libelle === "" || !regex.test(libelle) || isNaN(prix1)) {
     alert("Les champs ne doivent pas être vide et ne doivent pas contenir des caractères spéciaux !!");
@@ -340,7 +348,7 @@ document.getElementById("submit1").addEventListener("click", function(e){
 
   var lib = document.getElementById("libLieux").value;
 
-  var regex = /^[a-zA-Z ]+$/;
+  var regex = /^[a-zA-Z0-9éèïî ]+$/;
 
 if (lib === "" || !regex.test(lib)) {
     alert("Le champ ne doit pas être vide et ne doit pas contenir des caractères spéciaux !!");

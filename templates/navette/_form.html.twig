@@ -205,6 +205,10 @@ function getJson(link,id)
 
 function setLieuxDepart(array)
 {
+  while (combLieuxDepart.firstChild) 
+  {
+      combLieuxDepart.removeChild(combLieuxDepart.firstChild);
+  }
   for(let i=0; i<array.length; i++){
     let option=document.createElement('option');
     option.id = `${array[i].id}`;
@@ -216,6 +220,10 @@ function setLieuxDepart(array)
 
 function setLieuxArrivee(array)
 {
+  while (combLieuxArrivee.firstChild) 
+  {
+      combLieuxArrivee.removeChild(combLieuxArrivee.firstChild);
+  }
   for(let i=0; i<array.length; i++){
     let option=document.createElement('option');
     option.id = `${array[i].id}`;
@@ -278,7 +286,7 @@ document.getElementById("submit1").addEventListener("click", function(e){
   e.preventDefault();
 
   var lib = document.getElementById("libLieux").value;
-  var regex = /^[a-zA-Z ]+$/;
+  var regex = /^[a-zA-Z0-90-9éèïî ]+$/;
 
 if (lib === "" || !regex.test(lib)) {
     alert("Le champ ne doit pas être vide et ne doit pas contenir des caractères spéciaux !!");
@@ -329,7 +337,7 @@ if (lib === "" || !regex.test(lib)) {
 document.getElementById("enClasse").addEventListener("submit", function(e){
   e.preventDefault();
   var libelle = document.getElementById("libelle").value;
-var regex = /^[a-zA-Z ]+$/;
+var regex = /^[a-zA-Z0-9éèïî ]+$/;
 if (libelle === "" || !regex.test(libelle)) {
     alert("Le champ ne doit pas être vide et ne doit pas contenir des caractères spéciaux !!");
   }

@@ -23,7 +23,7 @@ class Lieux
 
     /**
      * @ORM\Column(type="string", length=35)
-     * @Assert\Regex(pattern="/^[a-zA-Z ]+$/i", match=true, message="Les caractères spéciaux ou les chiffres sont interdits")
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9éèïî ]+$/i", match=true, message="Les caractères spéciaux sont interdits")
      */
     private $libelle;
 

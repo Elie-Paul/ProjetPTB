@@ -3,13 +3,14 @@
 {% block title %}CommandePtb{% endblock %}
 
 {% block body %}
+<h1><big> Gestion des commande PTB </big></h1>
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
-            <h4><i class="fa fa-list"></i>&nbsp;<big>Commande PTB</big></h4>
+            <h4><i class="fa fa-list"></i>&nbsp; <big>Commande PTB</big></h4>
           </div>
           <div class="col-md-6 text-right">
-            <a class="btn btn-info" href="{{ path('commande_ptb_lister') }}"><i class="fa fa-list"></i>&nbsp; Liste Commande Ptb</a>
+            <a class="btn btn-info" href="{{ path('commande_ptb_lister') }}"><i class="fa fa-list"></i>&nbsp; <big>Liste des Commandes PTB</big></a>
           </div>
           </div>
           <!-- /.box-body -->
@@ -23,10 +24,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ commande_ptb.id }}</td>
-            </tr>
-            <tr>
                 <th>Nombre Billet</th>
                 <td>{{ commande_ptb.nombreBillet }}</td>
             </tr>
@@ -36,23 +33,15 @@
             </tr>
             <tr>
                 <th>Date Commande</th>
-                <td>{{ commande_ptb.dateCommande ? commande_ptb.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date Commande Validée</th>
-                <td>{{ commande_ptb.dateCommandeValider ? commande_ptb.dateCommandeValider|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date Commande Realisée</th>
-                <td>{{ commande_ptb.dateCommandeRealiser ? commande_ptb.dateCommandeRealiser|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande_ptb.dateCommande ? commande_ptb.dateCommande|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
             </tr>
             <tr>
                 <th>Mise à jour</th>
-                <td>{{ commande_ptb.updatedAt ? commande_ptb.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande_ptb.updatedAt ? commande_ptb.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
             </tr>
             <tr>
                 <th>Date de Création</th>
-                <td>{{ commande_ptb.createdAt ? commande_ptb.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande_ptb.createdAt ? commande_ptb.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
             </tr>
             <tr>
                 <th>Nombre Billet Réalisé</th>
@@ -65,7 +54,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-warning" href="{{ path('commande_ptb_voir', {'id': commande_ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a></br>
+    <a class="btn btn-warning" href="{{ path('commande_ptb_modifiernonvalider', {'id': commande_ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; <big>Modifier</big></a></br>
     </div>
 </div>
 

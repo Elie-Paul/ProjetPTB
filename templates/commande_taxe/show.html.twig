@@ -3,13 +3,14 @@
 {% block title %}CommandeTaxe{% endblock %}
 
 {% block body %}
+<h1><big> Gestion des commandes taxes </big></h1>
 <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
-            <h4><i class="fa fa-list"></i>&nbsp;<big>Commande PTB</big></h4>
+            <h4><i class="fa fa-list"></i>&nbsp; <big>Commande PTB</big></h4>
           </div>
           <div class="col-md-6 text-right">
-            <a class="btn btn-info" href="{{ path('commande_taxe_lister') }}"><i class="fa fa-list"></i>&nbsp; Liste Commande Taxe</a>
+            <a class="btn btn-info" href="{{ path('commande_taxe_lister') }}"><i class="fa fa-list"></i>&nbsp; <big>Liste des Commandes Taxe</big></a>
           </div>
           </div>
           <!-- /.box-body -->
@@ -23,10 +24,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ commande_taxe.id }}</td>
-            </tr>
-            <tr>
                 <th>Nombre Billet</th>
                 <td>{{ commande_taxe.nombreBillet }}</td>
             </tr>
@@ -36,15 +33,7 @@
             </tr>
             <tr>
                 <th>Date Commande</th>
-                <td>{{ commande_taxe.dateCommande ? commande_taxe.dateCommande|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date Comnande Validée</th>
-                <td>{{ commande_taxe.dateComnandeValider ? commande_taxe.dateComnandeValider|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Date Commande Realisée</th>
-                <td>{{ commande_taxe.dateCommandeRealiser ? commande_taxe.dateCommandeRealiser|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande_taxe.dateCommande ? commande_taxe.dateCommande|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
             </tr>
             <tr>
                 <th>Nombre Billet Vendu</th>
@@ -56,12 +45,12 @@
             </tr>
             <tr>
                 <th>Dernière mise à jour </th>
-                <td>{{ commande_taxe.updatedAt ? commande_taxe.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ commande_taxe.updatedAt ? commande_taxe.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a class="btn btn-warning" href="{{ path('commande_taxe_modifier', {'id': commande_taxe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
+    <a class="btn btn-warning" href="{{ path('commande_taxe_modifier1', {'id': commande_taxe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; <big>Modifier</big></a>
 </div>
 </div>
     {{ include('commande_taxe/_delete_form.html.twig') }}

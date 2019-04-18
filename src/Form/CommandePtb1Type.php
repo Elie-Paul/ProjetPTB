@@ -13,15 +13,6 @@ class CommandePtb1Type extends AbstractType
     {
         $builder
             ->add('nombreBillet')
-            ->add('etatCommande')
-            ->add('dateCommande')
-            ->add('dateCommandeValider')
-            ->add('dateCommandeRealiser')
-            ->add('updatedAt')
-            ->add('createdAt')
-            ->add('nombreBilletRealise')
-            ->add('nombreBilletVendu')
-            ->add('billet')
         ;
     }
 
