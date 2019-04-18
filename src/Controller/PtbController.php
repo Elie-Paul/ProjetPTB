@@ -45,8 +45,8 @@ class PtbController extends AbstractController
 
             if(!$ptb1)
             {
-                $ptb->setCreatedAt(new \DateTime());
-                $ptb->setUpdatedAt(new \DateTime());
+                $ptb->setCreatedAt($this->test35());
+                $ptb->setUpdatedAt($this->test35());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($ptb);
                 $entityManager->flush();
@@ -92,7 +92,7 @@ class PtbController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $ptb->setUpdatedAt(new \DateTime());
+            $ptb->setUpdatedAt($this->test35());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('ptb_index', [

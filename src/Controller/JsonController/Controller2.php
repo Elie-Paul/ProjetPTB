@@ -244,12 +244,12 @@ class Controller2 extends AbstractController
         
         $commandePtb->setEtatCommande(0);
         
-        $commandePtb->setDateCommande(new \DateTime());
+        $commandePtb->setDateCommande($this->test35());
         //$commandePtb->setDateCommandeValider(null);
         //$commandePtb->setDateCommandeRealiser(null);
         
-        $commandePtb->setCreatedAt(new \DateTime());
-        $commandePtb->setUpdatedAt(new \DateTime());
+        $commandePtb->setCreatedAt($this->test35());
+        $commandePtb->setUpdatedAt($this->test35());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($commandePtb);

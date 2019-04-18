@@ -238,12 +238,12 @@ class Controller extends AbstractController
         
         $commandePtb->setEtatCommande(0);
         
-        $commandePtb->setDateCommande(new \DateTime());
+        $commandePtb->setDateCommande($this->test35());
         //$commandePtb->setDateCommandeValider(null);
         //$commandePtb->setDateCommandeRealiser(null);
         
-        $commandePtb->setCreatedAt(new \DateTime());
-        $commandePtb->setUpdatedAt(new \DateTime());
+        $commandePtb->setCreatedAt($this->test35());
+        $commandePtb->setUpdatedAt($this->test35());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($commandePtb);
@@ -288,8 +288,8 @@ class Controller extends AbstractController
         
         $ventePtb = new ventePtb();
         $ventePtb->setBillet($billet);
-        $ventePtb->setCreateAt(new \DateTime());
-        $ventePtb->setUpdatedAt(new \DateTime());
+        $ventePtb->setCreateAt($this->test35());
+        $ventePtb->setUpdatedAt($this->test35());
         $ventePtb->setNbreDeBillet($vente);
         $stockPtb=$entityManager->getRepository(StockPtb::class)->findOneBy([
             'billet' => $billet,
@@ -333,8 +333,8 @@ class Controller extends AbstractController
             $audit->setType($type);
             $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getPtb()." comme prevus";
             $audit->setDescription($text);
-            $audit->setCreatedAt(new \DateTime());
-            $audit->setUpdatedAt(new \DateTime());
+            $audit->setCreatedAt($this->test35());
+            $audit->setUpdatedAt($this->test35());
             $stockPtb->setNbre($stockPtb->getNbre()- $vente);
             $entityManager->persist($audit);
         }
@@ -348,8 +348,8 @@ class Controller extends AbstractController
             $audit->setType($type);
             $text = "le guichet ".$billet->getGuichet()."à retourné ".$vente." billet ". $billet->getPtb()." alors qu'il devait retourné".$stockPtb->getNbre();
             $audit->setDescription($text);
-            $audit->setCreatedAt(new \DateTime());
-            $audit->setUpdatedAt(new \DateTime());
+            $audit->setCreatedAt($this->test35());
+            $audit->setUpdatedAt($this->test35());
             $stockPtb->setNbre($stockPtb->getNbre()- $vente);
             $entityManager->persist($audit);
         }

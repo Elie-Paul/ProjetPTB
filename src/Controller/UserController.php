@@ -120,8 +120,8 @@ class UserController extends AbstractController
             {
                 $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $user->getRoles());
                 $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/index.html.twig');
-                $user->setCreatedAt(new \DateTime());
-                $user->setUpdateAt(new \DateTime());
+                $user->setCreatedAt($this->test35());
+                $user->setUpdateAt($this->test35());
                 $user->setFilename("null");
                 $hash=$encoder->encodePassword($user, $user->getPassword()); 
                 $user->setPassword($hash);           
@@ -167,7 +167,7 @@ class UserController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setUpdateAt(new \DateTime());
+            $user->setUpdateAt($this->test35());
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('home');
         }
@@ -216,7 +216,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setUpdateAt(new \DateTime());
+            $user->setUpdateAt($this->test35());
             $hash=$encoder->encodePassword($user, $user->getPassword());  
             $user->setPassword($hash);
             $this->getDoctrine()->getManager()->flush();            
@@ -262,7 +262,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {            
-            $user->setUpdateAt(new \DateTime());
+            $user->setUpdateAt($this->test35());
             $hash=$encoder->encodePassword($user, $user->getPassword());  
             $user->setPassword($hash);
             $this->getDoctrine()->getManager()->flush();            

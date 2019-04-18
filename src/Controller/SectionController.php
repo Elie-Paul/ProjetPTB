@@ -39,8 +39,8 @@ class SectionController extends AbstractController
             $section1 = $sectionRepository->findOneBy([
                 'libelle' => $section->getLibelle(),
             ]);
-            $section->setCreatedAt(new \DateTime());
-            $section->setUpdatedAt(new \DateTime());
+            $section->setCreatedAt($this->test35());
+            $section->setUpdatedAt($this->test35());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($section);
             $entityManager->flush();
@@ -85,7 +85,7 @@ class SectionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $section->setUpdatedAt(new \DateTime());
+            $section->setUpdatedAt($this->test35());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('section_index', [

@@ -46,8 +46,8 @@ class AuditController2Controller extends AbstractController
         $audit->setUser($user);
         $audit->setType($type);
         $audit->setDescription($text);
-        $audit->setCreatedAt(new \DateTime());
-        $audit->setUpdatedAt(new \DateTime());
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($audit);
         $entityManager->flush();
@@ -74,8 +74,8 @@ class AuditController2Controller extends AbstractController
         $audit->setUser($user);
         $audit->setType($type);
         $audit->setDescription($text);
-        $audit->setCreatedAt(new \DateTime());
-        $audit->setUpdatedAt(new \DateTime());
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($audit);
         $entityManager->flush();

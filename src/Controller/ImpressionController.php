@@ -174,7 +174,7 @@ class ImpressionController extends AbstractController
         }
         
         $entityManager->flush();
-        $date=new \DateTime();
+        $date=$this->test35();
         $mail->sendMailForPrint($depart, end($array));
        // $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index.html.twig', [
@@ -303,7 +303,7 @@ class ImpressionController extends AbstractController
         }
    
         $entityManager->flush();
-        $date=new \DateTime();
+        $date=$this->test35();
         $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index2.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif,
@@ -430,7 +430,7 @@ class ImpressionController extends AbstractController
             $a++;
         }
         $entityManager->flush();
-        $date=new \DateTime();
+        $date=$this->test35();
         $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index3taxes.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif
@@ -555,7 +555,7 @@ class ImpressionController extends AbstractController
             $a++;
         }
         $entityManager->flush();
-        $date=new \DateTime();
+        $date=$this->test35();
         $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/indexvignette.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date ,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif

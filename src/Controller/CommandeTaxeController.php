@@ -132,8 +132,8 @@ class CommandeTaxeController extends AbstractController
             $audit->setType($type);
             $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getPtb()." comme prevus";
             $audit->setDescription($text);
-            $audit->setCreatedAt(new \DateTime());
-            $audit->setUpdatedAt(new \DateTime());
+            $audit->setCreatedAt($this->test35());
+            $audit->setUpdatedAt($this->test35());
             $entityManager->persist($audit);
         }
         else
@@ -146,8 +146,8 @@ class CommandeTaxeController extends AbstractController
             $audit->setType($type);
             $text = "le guichet ".$billet->getGuichet()."à retourné ".$vente." billet ". $billet->getPtb()." alors qu'il devait retourné".$stockPtb->getNbre();
             $audit->setDescription($text);
-            $audit->setCreatedAt(new \DateTime());
-            $audit->setUpdatedAt(new \DateTime());
+            $audit->setCreatedAt($this->test35());
+            $audit->setUpdatedAt($this->test35());
             $entityManager->persist($audit);
         }
         

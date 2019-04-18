@@ -43,8 +43,8 @@ class GuichetController extends AbstractController
             ]);
 
             if (!$guichet1) {
-                $guichet->setCreatedAt(new \DateTime());
-                $guichet->setUpdatedAt(new \DateTime());
+                $guichet->setCreatedAt($this->test35());
+                $guichet->setUpdatedAt($this->test35());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($guichet);
                 $entityManager->flush();
@@ -99,7 +99,7 @@ class GuichetController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $guichet->setUpdatedAt(new \DateTime());
+            $guichet->setUpdatedAt($this->test35());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('guichet_index', [

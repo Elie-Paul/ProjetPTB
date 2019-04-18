@@ -64,10 +64,10 @@ class CommandeTaxeController2 extends AbstractController
         
         $commandeTaxe->setEtatCommande(0);
         
-        $commandeTaxe->setDateCommande(new \DateTime());
+        $commandeTaxe->setDateCommande($this->test35());
         
-        $commandeTaxe->setCreatedAt(new \DateTime());
-        $commandeTaxe->setUpdatedAt(new \DateTime());
+        $commandeTaxe->setCreatedAt($this->test35());
+        $commandeTaxe->setUpdatedAt($this->test35());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($commandeTaxe);
@@ -196,8 +196,8 @@ class CommandeTaxeController2 extends AbstractController
         
         $venteTaxe = new venteTaxe();
         $venteTaxe->setBillet($billet);
-        $venteTaxe->setCreateAt(new \DateTime());
-        $venteTaxe->setUpdatedAt(new \DateTime());
+        $venteTaxe->setCreateAt($this->test35());
+        $venteTaxe->setUpdatedAt($this->test35());
         $venteTaxe->setNbreDeBillet($vente);
         $stockTaxe=$entityManager->getRepository(StockTaxe::class)->findOneBy([
             'billet' => $billet,

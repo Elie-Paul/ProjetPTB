@@ -133,8 +133,8 @@ class ControllerCommandeNavetteController extends AbstractController
         
         $venteNavette = new venteNavette();
         $venteNavette->setBillet($billet);
-        $venteNavette->setCreateAt(new \DateTime());
-        $venteNavette->setUpdatedAt(new \DateTime());
+        $venteNavette->setCreateAt($this->test35());
+        $venteNavette->setUpdatedAt($this->test35());
         $venteNavette->setNbreDeBillet($vente);
         $stockNavette=$entityManager->getRepository(StockNavette::class)->findOneBy([
             'billet' => $billet,
@@ -253,10 +253,10 @@ class ControllerCommandeNavetteController extends AbstractController
         
         $commandeNavette->setEtatCommande(0);
         
-        $commandeNavette->setDateCommande(new \DateTime());
+        $commandeNavette->setDateCommande($this->test35());
         
-        $commandeNavette->setCreatedAt(new \DateTime());
-        $commandeNavette->setUpdatedAt(new \DateTime());
+        $commandeNavette->setCreatedAt($this->test35());
+        $commandeNavette->setUpdatedAt($this->test35());
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($commandeNavette);
@@ -455,8 +455,8 @@ class ControllerCommandeNavetteController extends AbstractController
             $audit->setType($type);
             $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getNavette()." comme prevus ";
             $audit->setDescription($text);
-            $audit->setCreatedAt(new \DateTime());
-            $audit->setUpdatedAt(new \DateTime());
+            $audit->setCreatedAt($this->test35());
+            $audit->setUpdatedAt($this->test35());
             $stockPtb->setNbre($stockPtb->getNbre()- $vente);
             $entityManager->persist($audit);
         }
@@ -470,8 +470,8 @@ class ControllerCommandeNavetteController extends AbstractController
             $audit->setType($type);
             $text = "le guichet ".$billet->getGuichet()." à retourné ".$vente." billet ". $billet->getNavette()." alors qu'il devait retourné ".$stockPtb->getNbre();
             $audit->setDescription($text);
-            $audit->setCreatedAt(new \DateTime());
-            $audit->setUpdatedAt(new \DateTime());
+            $audit->setCreatedAt($this->test35());
+            $audit->setUpdatedAt($this->test35());
             $stockPtb->setNbre($stockPtb->getNbre()- $vente);
             $entityManager->persist($audit);
         }

@@ -44,8 +44,8 @@ class NavetteController extends AbstractController
             ]);
 
             if (!$navette1) {
-                $navette->setCreatedAt(new \DateTime());
-                $navette->setUpdatedAt(new \DateTime());
+                $navette->setCreatedAt($this->test35());
+                $navette->setUpdatedAt($this->test35());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($navette);            
                 $entityManager->flush();
@@ -91,7 +91,7 @@ class NavetteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $navette->setUpdatedAt(new \DateTime());
+            $navette->setUpdatedAt($this->test35());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('navette_index', [

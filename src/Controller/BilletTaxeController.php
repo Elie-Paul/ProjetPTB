@@ -60,8 +60,8 @@ class BilletTaxeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $billetTaxe->setCreatedAt(new \DateTime());
-            $billetTaxe->setUpdatedAt(new \DateTime());
+            $billetTaxe->setCreatedAt($this->test35());
+            $billetTaxe->setUpdatedAt($this->test35());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($billetTaxe);
             $entityManager->flush();

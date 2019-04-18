@@ -80,14 +80,14 @@ class BilletPtbController extends AbstractController
 
             if (!$billetPtb1) {
                 $billetPtb->setNumeroDernierBillets(0);
-                $billetPtb->setCreatedAt(new \DateTime());
-                $billetPtb->setUpdateAt(new \DateTime());
+                $billetPtb->setCreatedAt($this->test35());
+                $billetPtb->setUpdateAt($this->test35());
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($billetPtb);
                 $stockPtb->setBillet($billetPtb);
                 $stockPtb->setNbre(0);
-                $stockPtb->setCreatedAt(new \DateTime());
-                $stockPtb->setUpdatedAt(new \DateTime());
+                $stockPtb->setCreatedAt($this->test35());
+                $stockPtb->setUpdatedAt($this->test35());
                 $entityManager->persist($stockPtb);
                 $entityManager->flush();
 
@@ -137,7 +137,7 @@ class BilletPtbController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $billetPtb->setUpdateAt(new \DateTime());
+            $billetPtb->setUpdateAt($this->test35());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('billet_ptb_index', [

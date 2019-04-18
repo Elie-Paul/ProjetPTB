@@ -54,8 +54,8 @@ class ModalController extends AbstractController
         $classe = new Classe();
 
         $classe->setLibelle($libelle);
-        $classe->setCreatedAt(new \DateTime());
-        $classe->setUpdatedAt(new \DateTime());
+        $classe->setCreatedAt($this->test35());
+        $classe->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($classe);
         $entityManager->flush();
@@ -72,8 +72,8 @@ class ModalController extends AbstractController
         $lieux = new Lieux();
 
         $lieux->setLibelle($libelle);
-        $lieux->setCreatedAt(new \DateTime());
-        $lieux->setUpdatedAt(new \DateTime());
+        $lieux->setCreatedAt($this->test35());
+        $lieux->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($lieux);
         $entityManager->flush();
@@ -89,8 +89,8 @@ class ModalController extends AbstractController
         $lieux = new Lieux();
 
         $lieux->setLibelle($libelle);
-        $lieux->setCreatedAt(new \DateTime());
-        $lieux->setUpdatedAt(new \DateTime());
+        $lieux->setCreatedAt($this->test35());
+        $lieux->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($lieux);
         $entityManager->flush();
@@ -107,8 +107,8 @@ class ModalController extends AbstractController
         $lieux = new Lieux();
 
         $lieux->setLibelle($libelle);
-        $lieux->setCreatedAt(new \DateTime());
-        $lieux->setUpdatedAt(new \DateTime());
+        $lieux->setCreatedAt($this->test35());
+        $lieux->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($lieux);
         $entityManager->flush();
@@ -126,8 +126,8 @@ class ModalController extends AbstractController
         $guichet = new Guichet();
 
         $lieux->setLibelle($libelle);
-        $lieux->setCreatedAt(new \DateTime());
-        $lieux->setUpdatedAt(new \DateTime());
+        $lieux->setCreatedAt($this->test35());
+        $lieux->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($lieux);
         $entityManager->flush();
@@ -147,8 +147,8 @@ class ModalController extends AbstractController
 
         $section->setLibelle($libelle);
         $section->setPrix($prix);
-        $section->setCreatedAt(new \DateTime());
-        $section->setUpdatedAt(new \DateTime());
+        $section->setCreatedAt($this->test35());
+        $section->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($section);
         $entityManager->flush();
@@ -175,8 +175,8 @@ class ModalController extends AbstractController
         $guichet->setCode($code);
         $guichet->setNom($nom);
         $guichet->setLieu($lieu);
-        $guichet->setCreatedAt(new \DateTime());
-        $guichet->setUpdatedAt(new \DateTime());
+        $guichet->setCreatedAt($this->test35());
+        $guichet->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($guichet);
         $entityManager->flush();
@@ -197,8 +197,8 @@ class ModalController extends AbstractController
         $guichet->setNom($nom);
         $lieu = $lieux->setLibelle($lieu);
         $guichet->setLieu($lieu);
-        $guichet->setCreatedAt(new \DateTime());
-        $guichet->setUpdatedAt(new \DateTime());
+        $guichet->setCreatedAt($this->test35());
+        $guichet->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($lieux);
         $entityManager->persist($guichet);
@@ -218,8 +218,8 @@ class ModalController extends AbstractController
         $navette->setTrajet($trajet);
         $navette->setClasse($classe);
         $navette->setPrix($prix);
-        $navette->setCreatedAt(new \DateTime());
-        $navette->setUpdatedAt(new \DateTime());
+        $navette->setCreatedAt($this->test35());
+        $navette->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($navette);
         $entityManager->flush();
@@ -243,8 +243,8 @@ class ModalController extends AbstractController
 
         $ptb->setTrajet($trajet);
         $ptb->setSection($section);
-        $ptb->setCreatedAt(new \DateTime());
-        $ptb->setUpdatedAt(new \DateTime());
+        $ptb->setCreatedAt($this->test35());
+        $ptb->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($ptb);
         $entityManager->flush();
@@ -266,8 +266,8 @@ class ModalController extends AbstractController
 
         $trajet->setDepart($depart);
         $trajet->setArrivee($arrivee);
-        $trajet->setCreatedAt(new \DateTime());
-        $trajet->setUpdatedAt(new \DateTime());
+        $trajet->setCreatedAt($this->test35());
+        $trajet->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($lieux);
         $entityManager->persist($trajet);
@@ -291,8 +291,8 @@ class ModalController extends AbstractController
 
         $trajet->setDepart($depart);
         $trajet->setArrivee($arrivee);
-        $trajet->setCreatedAt(new \DateTime());
-        $trajet->setUpdatedAt(new \DateTime());
+        $trajet->setCreatedAt($this->test35());
+        $trajet->setUpdatedAt($this->test35());
         $entityManager = $this->getDoctrine()->getManager();
         
         $entityManager->persist($trajet);
@@ -344,7 +344,7 @@ class ModalController extends AbstractController
         ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setUpdateAt(new \DateTime());           
+            $user->setUpdateAt($this->test35());           
             $this->getDoctrine()->getManager()->flush();
             return $this->render('user/show.html.twig', [
                 'user' => $user,

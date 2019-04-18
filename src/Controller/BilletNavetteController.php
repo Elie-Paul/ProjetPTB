@@ -71,15 +71,15 @@ class BilletNavetteController extends AbstractController
             ]);
 
             if(!$billetNavette1 && !$billetNavette2){
-                $billetNavette->setCreatedAt(new \DateTime());
-                $billetNavette->setUpdatedAt(new \Datetime());
+                $billetNavette->setCreatedAt($this->test35());
+                $billetNavette->setUpdatedAt($this->test35());
                 $billetNavette->setNumeroDernierBillet(0);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($billetNavette);
                 $stockNavette->setBillet($billetNavette);
                 $stockNavette->setNbre(0);
-                $stockNavette->setCreatedAt(new \DateTime());
-                $stockNavette->setUpdatedAt(new \DateTime());
+                $stockNavette->setCreatedAt($this->test35());
+                $stockNavette->setUpdatedAt($this->test35());
                 $entityManager->persist($stockNavette);
                 $entityManager->flush();
 
