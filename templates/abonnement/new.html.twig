@@ -9,11 +9,24 @@
     <script>
         {% if success is defined %}
         swal({
-            title: "Succès",
+            title: "SUCCES",
             text: "L'abonné est ajouté avec succès",
             icon: "success",
-
-        });
+            // buttons: true,
+            // dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                        window.location.href = superLink+"/abonnement/";
+                        return false;
+                }
+            });
+        // swal({
+        //     title: "Succès",
+        //     text: "L'abonné est ajouté avec succès",
+        //     icon: "success",
+        //
+        // });
         {% elseif incorrect is defined %}
         swal({
             title: "Erreur",
