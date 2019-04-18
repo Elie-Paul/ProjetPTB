@@ -67,7 +67,7 @@ class CommandeTaxeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="commande_taxe_modifier", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="commande_taxe_modifier1", methods={"GET","POST"})
      */
     public function edit(Request $request, CommandeTaxe $commandeTaxe): Response
     {
