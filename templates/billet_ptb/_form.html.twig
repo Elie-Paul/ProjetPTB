@@ -1,7 +1,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
 <div id="myModal" class="modal" role="dialog">
-
+<div class="modal-dialog modal-sm-20 ">
   <!-- Modal content -->
   <div class="modal-content">
         <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
@@ -27,6 +27,8 @@
             <button  id="submit" class="btn btn-primary"><big>Ajouter</big></button>
         </div>
   </div>
+  </div>
+  
 </div>
 
 <!-- The Modal -->
@@ -100,7 +102,7 @@
     function addGuichet()
     {
         modal.style.display = "block";
-        getJson('http://serveurptb:8000/json/lieu/depart',1);
+        getJson('http://serveurptb:81/iBillet/public/json/lieu/depart',1);
     }
 
     function ajouterGuichet()
@@ -131,8 +133,8 @@
     function addPtb()
     {
         modal1.style.display = "block";
-        getJson("http://serveurptb:8000/json/section/",2);
-        getJson("http://serveurptb:8000/json/TrajetBillet/",3);
+        getJson("http://serveurptb:81/iBillet/public/json/section/",2);
+        getJson("http://serveurptb:81/iBillet/public/json/TrajetBillet/",3);
     }
 
     function ajouterPtb()
@@ -251,16 +253,29 @@
               .then((value) => {
                 var modal = document.getElementsByClassName('modal')[0];
                 modal.style.display = "none";
-                document.location.href="http://serveurptb:8000/billet/ptb/new";
+                document.location.href="http://serveurptb:81/iBillet/public/billet/ptb/new";
                   
               });
 
+        }else
+        {
+          swal({
+          title: "Erreur",
+          text: "Ce guichet existe déjà ",
+          icon: "error",
+          
+          })
+              .then((value) => {
+                var modal = document.getElementsByClassName('modal')[0];
+                modal.style.display = "block";
+                  
+              });
         }
         
       }
     }
     
-    xhttp.open("POST","/addGuichetPtb",true);
+    xhttp.open("POST","http://serveurptb:81/iBillet/public/addGuichetPtb",true);
     xhttp.responseType = "json";
     let parm = `${code}+${nom}+${lieu}`;
     xhttp.send(parm);  

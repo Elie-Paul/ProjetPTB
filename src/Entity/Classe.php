@@ -23,7 +23,6 @@ class Classe
 
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\Regex(pattern="/^[a-zA-Z0-9éèïî ]+$/i", match=true, message="Les caractères spéciaux sont interdits !!")
      */
     private $libelle;
 

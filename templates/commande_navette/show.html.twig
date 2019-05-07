@@ -37,7 +37,7 @@
             </tr>
             <tr>
                 <th>Date Commande</th>
-                <td>{{ commande_navette.dateCommande ? commande_navette.dateCommande|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
+                <td>{{ commande_navette.dateCommande ? commande_navette.dateCommande|localizeddate('none', 'none', null, null, 'EEEE d MMMM y à HH:mm:ss') }}</td>
             </tr>
             <tr>
                 <th>Nombre Billet Vendu</th>
@@ -49,11 +49,11 @@
             </tr>
             <tr>
                 <th>Date de Création</th>
-                <td>{{ commande_navette.createdAt ? commande_navette.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
+                <td>{{ commande_navette.createdAt ? commande_navette.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM y à HH:mm:ss') }}</td>
             </tr>
             <tr>
                 <th>Mise à jour</th>
-                <td>{{ commande_navette.updatedAt ? commande_navette.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
+                <td>{{ commande_navette.updatedAt ? commande_navette.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM y à HH:mm:ss') }}</td>
             </tr>
         </tbody>
     </table>

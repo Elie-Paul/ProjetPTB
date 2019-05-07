@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 </head>
 <script>
-  var superLink="http://serveurptb:8000";
+  var superLink="http://serveurptb:81/iBillet/public";
 </script>
 <Style>
     .page
@@ -16,45 +16,51 @@
         display: grid;
         grid-template-columns: repeat(4, 190px);
         grid-template-rows: repeat(5, 200px);
+        position:relative;
+        top :20px;
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
-        position:relative;
-        top :45px;
-        width: 100%;
-        grid-row-gap:20px;
-        /*overflow: auto;*/
-        /*page-break-after: always;*/
-        
+        width: 100%;  
+        grid-row-gap:30px;
+            
     }
 
-    @page 
-    {
-        size: auto;   /* auto is the initial value */
-        margin: 0px;  /* this affects the margin in the printer settings */
-        margin-bottom:20px;
+    @page {
+    size: auto;   /* auto is the initial value */
+    margin: 0px;  /* this affects the margin in the printer settings */
+    margin-bottom:0px;
     }
     .billet
     {
         -webkit-print-color-adjust: exact;
         color-adjust: exact;
         background-image: url('{{ asset('img/backbillet3.png') }}');
-        line-height:0.5px; 
+        line-height:8px; 
         opacity: 0.85;
         
         
     }
+    .main2
+    {
+         display: block;
+       -webkit-print-color-adjust: exact;
+        position: absolute;
+        top:0;
+        left: 0px;
+        width :40px;
+    }
     
    .main
     {
-        display: block;
-        -webkit-print-color-adjust: exact;
-       position: absolute;
-        
-        left: 40px;
+       display: block;
+       -webkit-print-color-adjust: exact;
+        position: absolute;
+        top:0;
+        left: 50px;
         right: 20px;
         width :100%;
     }
-     @media print 
+  @media print 
   {
       .page
       {
@@ -66,21 +72,21 @@
    
 </style>
 <body style="width: 100%;">
-    
+    <div class="main2" style="background-color:#{{color}};"></div>
     <div class="main" style="background-color:#{{color}};">
         {% set myVal = 0 %}
         {% for i in nbrebillet %}
             {% if myVal == 0 %}
             <div class="page">
             {% endif %}
-            <div class="billet">
+           <div class="billet">
                 <h3>N : {{i}}</h3>
-                <h3>PTB{{ date ? date|date('m/Y ') : '' }}</h3>
+                <h3>Taxe{{ date ? date|date('m/Y ') : '' }}</h3>
                 <h3>guichet:controlleur</h3>
-                <h3>Taxe</h3>
                 <h3>Taxe Controlleur</h3>
-                <h5>Tarif: {{billet.prix}}Fcfa</h5>
-                <h3>***Senegal***</h3>
+                <h3>Tarif: {{billet.prix}}Fcfa</h3>
+                <h2>***Senegal***</h2>
+                
             </div>
             {% set myVal = myVal + 1 %}
             {% if myVal == 20 %}

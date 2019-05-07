@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Section;
+use App\Entity\Ptb;
 use App\Form\SectionType;
 use App\Repository\SectionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -104,6 +105,16 @@ class SectionController extends AbstractController
      */
     public function delete(Request $request, Section $section): Response
     {
+        $ptb = $this->getDoctrine()->getRepository(Ptb::class)->findOneBy([
+            'section' => $section
+        ]);
+        if($ptb)
+        {
+            return $this->render('section/show.html.twig', [
+            'section' => $section,
+            'error' => "Il y'a une contrainte d'integrité entre 'Section' et 'PTB'"
+        ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$section->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($section);

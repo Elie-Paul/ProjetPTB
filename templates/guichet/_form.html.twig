@@ -1,8 +1,8 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
 <!-- The Modal -->
-<div id="myModal" class="modal">
-
+<div id="myModal" class="modal" style="display: none;">
+<div class="modal-dialog modal-sm-20 ">
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
@@ -23,7 +23,7 @@
         </div>
     </form>
   </div>
-  
+  </div>
 
 </div>
 
@@ -54,6 +54,28 @@
        top: 1.55em;
        left: 1.7em; 
     }
+    .modal {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: @qquad;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: @zindex-modal;
+
+    &__content {
+        width: 900px;
+        margin: auto;
+        max-width: 90%;
+        padding: @quad;
+        background: white;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
+    }
+}
 </style>
 
 <script>
@@ -117,16 +139,29 @@ document.getElementById("submit").addEventListener("click", function(e){
               .then((value) => {
                 var modal = document.getElementById('myModal');
                 modal.style.display = "none";
-                document.location.href="http://serveurptb:8000/guichet/new";
+                document.location.href="http://serveurptb:81/iBillet/public/guichet/new";
                   
               });
 
+        }else
+        {
+          swal({
+          title: "Erreur",
+          text: "Cette station existe déjà ",
+          icon: "error",
+          
+          })
+              .then((value) => {
+                var modal = document.getElementsByClassName('modal')[0];
+                modal.style.display = "block";
+                  
+              });
         }
         
       }
     }
     
-    xhttp.open("POST","/addLieuTrajetNavette",true);
+    xhttp.open("POST","http://serveurptb:81/iBillet/public/addLieuTrajetNavette",true);
     xhttp.responseType = "json";
     let parm = `${libelle}`;
     xhttp.send(parm);  

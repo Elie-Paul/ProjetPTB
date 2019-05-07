@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Lieux;
+use App\Repository\LieuxRepository;
+use App\Repository\SectionRepository;
 use App\Entity\Trajet;
+use App\Repository\ClasseRepository;
+use App\Repository\GuichetRepository;
 use App\Entity\Type;
 use App\Form\TypeType;
 use App\Entity\User;
@@ -48,11 +52,16 @@ class ModalController extends AbstractController
     /**
      * @Route("/addClasse", name="lieux_addClasse")
      */
-    public function addClasse(Request $request)
+    public function addClasse(Request $request,ClasseRepository $classeRepository)
     {    
         $libelle = $request->getContent();
         $classe = new Classe();
 
+        $classe1 = $classeRepository->findOneBy([
+                'libelle' => $libelle,
+            ]);
+
+        if (!$classe1) {
         $classe->setLibelle($libelle);
         $classe->setCreatedAt($this->test35());
         $classe->setUpdatedAt($this->test35());
@@ -61,7 +70,10 @@ class ModalController extends AbstractController
         $entityManager->flush();
 
         return new Response("true");
+    }else{
         //return $this->redirectToRoute('navette_new');
+        return new Response("false");
+    }
     }
 
     /**
@@ -101,19 +113,28 @@ class ModalController extends AbstractController
     /**
      * @Route("/addLieuTrajetNavette", name="lieux_addLieuTrajetNavette")
      */
-    public function addLieuTrajetNavette(Request $request)
+    public function addLieuTrajetNavette(Request $request, LieuxRepository $lieuxRepository)
     {   
         $libelle = $request->getContent();
         $lieux = new Lieux();
 
-        $lieux->setLibelle($libelle);
-        $lieux->setCreatedAt($this->test35());
-        $lieux->setUpdatedAt($this->test35());
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($lieux);
-        $entityManager->flush();
+        $lieux1 = $this->getDoctrine()->getRepository(Lieux::class)->findOneBy([
+            'libelle' => $libelle
+        ]);
+        
+        if(!$lieux1){
+            $lieux->setLibelle($libelle);
+            $lieux->setCreatedAt($this->test35());
+            $lieux->setUpdatedAt($this->test35());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($lieux);
+            $entityManager->flush();
 
-        return new Response("true");
+            return new Response("true");
+        }else{
+            return new Response("false");
+        }
+        
         //return $this->redirectToRoute('navette_new');
     }
 
@@ -138,29 +159,39 @@ class ModalController extends AbstractController
     /**
      * @Route("/addSection", name="lieux_addSection")
      */
-    public function addSection(Request $request)
+    public function addSection(Request $request, SectionRepository $sectionRepository)
     {   
         $array = explode("+",$request->getContent());
         $libelle = $array[0];
         $section = new Section();
         $prix = intval($array[1]);
 
-        $section->setLibelle($libelle);
-        $section->setPrix($prix);
-        $section->setCreatedAt($this->test35());
-        $section->setUpdatedAt($this->test35());
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($section);
-        $entityManager->flush();
+        $section1 = $sectionRepository->findOneBy([
+                'libelle' => $libelle,
+            ]);
 
-        return new Response("true");
+        if (!$section1) {
+            $section->setLibelle($libelle);
+            $section->setPrix($prix);
+            $section->setCreatedAt($this->test35());
+            $section->setUpdatedAt($this->test35());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($section);
+            $entityManager->flush();
+
+            return new Response("true");
+        }else{
+            return new Response("false");
+        }
+
+        
         //return $this->redirectToRoute('ptb_new');
     }
 
     /**
      * @Route("/addGuichetPtb", name="lieux_addGuichetPtb")
      */
-    public function addGuichetPtb(Request $request)
+    public function addGuichetPtb(Request $request, GuichetRepository $guichetRepository)
     {        
         $array = explode("+",$request->getContent());
 
@@ -172,16 +203,25 @@ class ModalController extends AbstractController
 
         $guichet = new Guichet();
 
-        $guichet->setCode($code);
-        $guichet->setNom($nom);
-        $guichet->setLieu($lieu);
-        $guichet->setCreatedAt($this->test35());
-        $guichet->setUpdatedAt($this->test35());
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($guichet);
-        $entityManager->flush();
+        $guichet1 = $guichetRepository->findOneBy([
+                'nom' => $nom,
+            ]);
 
-        return new Response("true");
+            if (!$guichet1) {
+
+                $guichet->setCode($code);
+                $guichet->setNom($nom);
+                $guichet->setLieu($lieu);
+                $guichet->setCreatedAt($this->test35());
+                $guichet->setUpdatedAt($this->test35());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($guichet);
+                $entityManager->flush();
+
+                return new Response("true");
+            }else{
+                return new Response("false");
+            }
         //return $this->redirectToRoute('billet_ptb_new');
     }
 
@@ -279,7 +319,7 @@ class ModalController extends AbstractController
     /**
      * @Route("/addTrajetNavette", name="lieux_addTrajetNavette")
      */
-    public function addTrajetNavette(Request $request)
+    public function addTrajetNavette(Request $request, TrajetRepository $trajetRepo)
     {   
         $array = explode("+",$request->getContent());
         $depart1 = intval($array[0]);
@@ -289,16 +329,26 @@ class ModalController extends AbstractController
         $depart = $this->getDoctrine()->getRepository(Lieux::class)->find($depart1);
         $arrivee = $this->getDoctrine()->getRepository(Lieux::class)->find($arrivee1);
 
-        $trajet->setDepart($depart);
-        $trajet->setArrivee($arrivee);
-        $trajet->setCreatedAt($this->test35());
-        $trajet->setUpdatedAt($this->test35());
-        $entityManager = $this->getDoctrine()->getManager();
-        
-        $entityManager->persist($trajet);
-        $entityManager->flush();
+        $trajet1 = $trajetRepo->findOneBy([
+            'depart' => $depart,
+            'arrivee' => $arrivee
+        ]);
 
-        return new Response("true");
+        if(!$trajet1){
+            $trajet->setDepart($depart);
+            $trajet->setArrivee($arrivee);
+            $trajet->setCreatedAt($this->test35());
+            $trajet->setUpdatedAt($this->test35());
+            $entityManager = $this->getDoctrine()->getManager();
+            
+            $entityManager->persist($trajet);
+            $entityManager->flush();
+
+            return new Response("true");
+        }else{
+            return new Response("false");
+        }
+        
        // return $this->redirectToRoute('navette_new');
     }
 

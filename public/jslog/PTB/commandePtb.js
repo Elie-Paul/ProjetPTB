@@ -83,7 +83,6 @@ function checkforEmpty()
          if (this.readyState == 4 && this.status == 200)
          {
              let response = JSON.parse(xhttp.responseText);
-             //console.log(response);
              switch (id) 
              {
                 case 1:
@@ -94,7 +93,6 @@ function checkforEmpty()
                     break;                    
                 case 3:
                     setTrajet(response,trajetid);
-                    console.log(link+"ss");
                     break;
              }
              
@@ -159,6 +157,10 @@ function getJson3()
  {
      
      //var array=getJson(superLink+"/json/guichet/");
+    while (cmbTrajets[trajetid].firstChild) 
+    {
+        cmbTrajets[trajetid].removeChild(cmbTrajets[trajetid].firstChild);
+    }
      for(let i= 0 ; i<array.length ; i++)
      {
          

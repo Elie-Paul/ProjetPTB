@@ -183,6 +183,10 @@ function getJson3()
  {
      
      //var array=getJson(superLink+"/json/guichet/");
+     while (cmbTrajets[trajetid].firstChild) 
+    {
+        cmbTrajets[trajetid].removeChild(cmbTrajets[trajetid].firstChild);
+    }
      for(let i= 0 ; i<array.length ; i++)
      {
          

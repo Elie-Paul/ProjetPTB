@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <th>Date Commande</th>
-                <td>{{ commande_taxe.dateCommande ? commande_taxe.dateCommande|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
+                <td>{{ commande_taxe.dateCommande ? commande_taxe.dateCommande|localizeddate('none', 'none', null, null, 'EEEE d MMMM y à HH:mm:ss') }}</td>
             </tr>
             <tr>
                 <th>Nombre Billet Vendu</th>
@@ -45,7 +45,7 @@
             </tr>
             <tr>
                 <th>Dernière mise à jour </th>
-                <td>{{ commande_taxe.updatedAt ? commande_taxe.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
+                <td>{{ commande_taxe.updatedAt ? commande_taxe.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM y à HH:mm:ss') }}</td>
             </tr>
         </tbody>
     </table>

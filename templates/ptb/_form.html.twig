@@ -1,8 +1,8 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
 <!-- The Modal -->
-<div id="myModal" class="modal">
-
+<div id="myModal" class="modal" style="display: none;">
+<div class="modal-dialog modal-sm-20 ">
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
@@ -35,13 +35,13 @@
       <button type="button" id="submit2" class="btn btn-primary">Ajouter</button>
     </div>
   </div>
-  
+  </div>
 
 </div>
 
 <!-- The Modal -->
 <div id="myModal1" class="modal" style="display: none; padding-right: 5px; border-radius: 10px">
-
+<div class="modal-dialog modal-sm-20 ">
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
@@ -64,7 +64,7 @@
       </div>
     </form>
   </div>
-  
+  </div>
 
 </div>
 
@@ -279,12 +279,25 @@ if (libelle === "" || !regex.test(libelle) || isNaN(prix1)) {
                   
               });
 
+        }else{
+          swal({
+          title: "Erreur",
+          text: "Cette section existe déjà ",
+          icon: "error",
+          
+          })
+              .then((value) => {
+                var modal1 = document.getElementsByClassName('modal')[1];
+                modal1.style.display = "block";
+                  
+              });
+
         }
         
       }
     }
     
-    xhttp.open("POST","/addSection",true);
+    xhttp.open("POST","http://serveurptb:81/iBillet/public/addSection",true);
     xhttp.responseType = "json";
     let parm = `${libelle}+${prix}`;
     xhttp.send(parm); 
@@ -304,6 +317,21 @@ depart = depart.options[depart.selectedIndex].id;
 
 var arrivee = document.getElementById("sel2");
  arrivee = arrivee.options[arrivee.selectedIndex].id;
+
+ if (depart === arrivee) {
+   swal({
+        title: "Attention",
+        text: "Le lieu de départ doit être différent du lieu d'arrivé ",
+        icon: "warning",
+        
+        })
+            .then((value) => {
+              var modal1 = document.getElementsByClassName('modal')[1];
+              modal1.style.display = "block";
+                
+            });
+
+ }else{
 
 let xhttp=new XMLHttpRequest();
   
@@ -329,15 +357,28 @@ let xhttp=new XMLHttpRequest();
             });
 
       }
+      else {
+      swal({
+        title: "Erreur",
+        text: "Ce trajet existe déjà",
+        icon: "error",
+        
+        })
+            .then((value) => {
+              var modal1 = document.getElementsByClassName('modal')[1];
+              modal1.style.display = "block";
+                
+            });
+      }
       
     }
   }
   
-  xhttp.open("POST","/addTrajetNavette",true);
+  xhttp.open("POST","http://serveurptb:81/iBillet/public/addTrajetNavette",true);
   xhttp.responseType = "json";
   let parm = `${depart}+${arrivee}`;
   xhttp.send(parm);  
-
+}
   return false;
 
 });
@@ -382,11 +423,26 @@ if (lib === "" || !regex.test(lib)) {
               });
 
         }
+        else
+        {
+          swal({
+          title: "Erreur",
+          text: "Cette station existe déjà ",
+          icon: "error",
+          
+          })
+              .then((value) => {
+                var modal = document.getElementsByClassName('modal')[0];
+                modal.style.display = "block";
+                document.getElementById("libLieux").innerHTML = " ";
+                  
+              });
+        }
         
       }
     }
     
-    xhttp.open("POST","/addLieuTrajetNavette",true);
+    xhttp.open("POST","http://serveurptb:81/iBillet/public/addLieuTrajetNavette",true);
     xhttp.responseType = "json";
     let parm = `${lib}`;
     xhttp.send(parm);  

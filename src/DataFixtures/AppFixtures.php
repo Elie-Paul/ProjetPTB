@@ -51,6 +51,10 @@ class AppFixtures extends Fixture
         $typeAudit4=new TypeAudit();
         $typeAudit4->setLibelle("retour billet irregulier");                      
         $manager->persist($user);
+        $manager->persist( $typeAudit4);
+        $manager->persist( $typeAudit3);
+        $manager->persist( $typeAudit2);
+        $manager->persist( $typeAudit1);
         $manager->flush();
     }
 }

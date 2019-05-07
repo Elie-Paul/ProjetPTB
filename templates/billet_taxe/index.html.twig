@@ -107,7 +107,7 @@
                     total= parseInt(this.responseText);
                 }
             }
-            xhr.open("GET","/totalbilletTaxe/"+idb,true);
+            xhr.open("GET","http://serveurptb:81/iBillet/public/totalbilletTaxe/"+idb,true);
             xhr.send();
             var modal = document.getElementById('myModal');
             var td = document.getElementById('dpt'+idb);
@@ -128,6 +128,10 @@
             {
                 alert("Vous essayez d'imprimer un nombre de billet superieur au nombre commandé")
             }
+            else if(nbreprint === "")
+            {
+                alert("Veuillez renseigner le nombre de billet à imprimer");
+            }
             else
             {
                 if(checkbox.checked)
@@ -147,7 +151,7 @@
                 {
                     var modal = document.getElementById('myModal');
                     modal.style.display = "none";
-                    document.location.href = `/impressiontaxes/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
+                    document.location.href = `http://serveurptb:81/iBillet/public/impressiontaxes/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
                 }
                 
             } 

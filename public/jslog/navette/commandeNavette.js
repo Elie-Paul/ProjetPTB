@@ -150,6 +150,7 @@ function getJson3()
  function setClasse(array)
  {
      
+     
      //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {
@@ -167,6 +168,10 @@ function getJson3()
  function setTrajet(array,trajetid)
  {
      
+     while (cmbTrajets[trajetid].firstChild) 
+    {
+        cmbTrajets[trajetid].removeChild(cmbTrajets[trajetid].firstChild);
+    }
      //var array=getJson(superLink+"/json/guichet/");
      for(let i= 0 ; i<array.length ; i++)
      {

@@ -1,8 +1,8 @@
 <!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <!-- The Modal -->
-<div id="myModal" class="modal" role="dialog">
-
+<div id="myModal" class="modal" role="dialog" style="display: none;">
+<div class="modal-dialog modal-sm-20 ">
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
@@ -22,11 +22,12 @@
       </div>
     </form>
   </div>
+  </div>
 </div>
 
 <!-- The Modal -->
-<div id="myModal" class="modal">
-
+<div id="myModal" class="modal" style="display: none;">
+<div class="modal-dialog modal-sm-20 ">
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
@@ -42,6 +43,7 @@
             <button type="button" id="submit1" class="btn btn-primary">Ajouter</button>
         </div>
         </form>
+      
       </div>
       <hr>
   <form id="enTrajet">
@@ -66,7 +68,7 @@
   </form>
     </div>
   
-
+</div>  
 </div>
 
 {{ form_start(form) }}
@@ -95,6 +97,27 @@
        position: relative;
        top: 1.55em;
        left: 2em; 
+    }
+    .modal {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: @qquad;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: @zindex-modal;
+
+    &__content {
+        width: 900px;
+        margin: auto;
+        max-width: 90%;
+        padding: @quad;
+        background: white;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.75);
     }
 </style>
 
@@ -244,6 +267,21 @@ depart = depart.options[depart.selectedIndex].id;
 var arrivee = document.getElementById("sel2");
  arrivee = arrivee.options[arrivee.selectedIndex].id;
 
+ if (depart === arrivee) {
+   swal({
+        title: "Attention",
+        text: "Le lieu de départ doit être différent du lieu d'arrivé ",
+        icon: "warning",
+        
+        })
+            .then((value) => {
+              var modal1 = document.getElementsByClassName('modal')[1];
+              modal1.style.display = "block";
+                
+            });
+
+ }else{
+
 let xhttp=new XMLHttpRequest();
   
   xhttp.onreadystatechange = function()
@@ -268,15 +306,29 @@ let xhttp=new XMLHttpRequest();
             });
 
       }
+      else {
+      swal({
+        title: "Erreur",
+        text: "Ce trajet existe déjà",
+        icon: "error",
+        
+        })
+            .then((value) => {
+              var modal1 = document.getElementsByClassName('modal')[1];
+              modal1.style.display = "block";
+                
+            });
+      }
       
     }
   }
   
-  xhttp.open("POST","/addTrajetNavette",true);
+  xhttp.open("POST","http://serveurptb:81/iBillet/public/addTrajetNavette",true);
   xhttp.responseType = "json";
   let parm = `${depart}+${arrivee}`;
   xhttp.send(parm);  
 
+}
   return false;
 
 });
@@ -318,12 +370,26 @@ if (lib === "" || !regex.test(lib)) {
                   
               });
 
+        }else
+        {
+          swal({
+          title: "Erreur",
+          text: "Cette station existe déjà ",
+          icon: "error",
+          
+          })
+              .then((value) => {
+                 var modal1 = document.getElementsByClassName('modal')[1];
+                modal1.style.display = "block";
+                document.getElementById("libLieux").innerHTML = " ";
+                  
+              });
         }
         
       }
     }
     
-    xhttp.open("POST","/addLieuTrajetNavette",true);
+    xhttp.open("POST",superLink+"/addLieuTrajetNavette",true);
     xhttp.responseType = "json";
     let parm = `${lib}`;
     xhttp.send(parm);  
@@ -337,8 +403,7 @@ if (lib === "" || !regex.test(lib)) {
 document.getElementById("enClasse").addEventListener("submit", function(e){
   e.preventDefault();
   var libelle = document.getElementById("libelle").value;
-var regex = /^[a-zA-Z0-9éèïî ]+$/;
-if (libelle === "" || !regex.test(libelle)) {
+if (libelle === "") {
     alert("Le champ ne doit pas être vide et ne doit pas contenir des caractères spéciaux !!");
   }
   else{
@@ -365,12 +430,25 @@ if (libelle === "" || !regex.test(libelle)) {
                   
               });
 
+        }else{
+          swal({
+          title: "Erreur",
+          text: "Cette classe existe déjà ",
+          icon: "error",
+          
+          })
+              .then((value) => {
+                var modal = document.getElementsByClassName('modal')[0];
+                modal.style.display = "block";
+                  
+              });
+
         }
         
       }
     }
     
-    xhttp.open("POST","/addClasse",true);
+    xhttp.open("POST","http://serveurptb:81/iBillet/public/addClasse",true);
     xhttp.responseType = "json";
     let parm = `${libelle}`;
     xhttp.send(parm)

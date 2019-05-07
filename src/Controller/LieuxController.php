@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Lieux;
+use App\Entity\Guichet;
+use App\Entity\Trajet;
 use App\Form\LieuxType;
 use App\Repository\LieuxRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -111,6 +113,31 @@ class LieuxController extends AbstractController
      */
     public function delete(Request $request, Lieux $lieux): Response
     {
+        $gareA = $this->getDoctrine()->getRepository(Trajet::class)->findOneBy([
+            'arrivee' => $lieux
+        ]);
+        $gareD = $this->getDoctrine()->getRepository(Trajet::class)->findOneBy([
+            'depart' => $lieux
+        ]);
+        $gareG = $this->getDoctrine()->getRepository(Guichet::class)->findOneBy([
+            'lieu' => $lieux
+        ]);
+        if($gareA || $gareD)
+        {
+            return $this->render('lieux/show.html.twig', [
+            'lieux' => $lieux,
+            'error' => "Il y'a une contrainte d'integrité entre 'Gare' et 'Trajet'"
+        ]);
+        }
+
+
+        if($gareG)
+        {
+            return $this->render('lieux/show.html.twig', [
+            'lieux' => $lieux,
+            'erreur' => "Il y'a une contrainte d'integrité entre 'Gare' et 'Guichet'"
+        ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$lieux->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($lieux);

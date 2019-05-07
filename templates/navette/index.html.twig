@@ -48,8 +48,8 @@
                             <td>{{ navette.trajet.depart.libelle }}-{{ navette.trajet.arrivee.libelle }}</td>
                             <td>{{ navette.classe.libelle }}</td>
                             <td>{{ navette.prix }}</td>
-                            <td>{{ navette.createdAt ? navette.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS')}}</td>
-                            <td>{{ navette.updatedAt ? navette.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ navette.createdAt ? navette.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss')}}</td>
+                            <td>{{ navette.updatedAt ? navette.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss') }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('navette_show', {'id': navette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('navette_edit', {'id': navette.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
@@ -95,7 +95,7 @@
         
         })
         .then((value) => {
-            document.location.href="/navette";
+            document.location.href="http://serveurptb:81/iBillet/public/navette";
         });
     {% endif %}
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );

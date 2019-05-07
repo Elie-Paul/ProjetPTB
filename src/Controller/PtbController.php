@@ -111,6 +111,17 @@ class PtbController extends AbstractController
      */
     public function delete(Request $request, Ptb $ptb): Response
     {
+        $check = $this->getDoctrine()->getRepository(BilletPtb::class)->findOneBy([
+            'ptb' => $ptb
+        ]);
+
+        if($check)
+        {
+            return $this->render('ptb/show.html.twig', [
+            'ptb' => $ptb,
+            'error' => "Il y'a une contrainte d'integrité entre 'PTB' et 'Billet PTB'"
+        ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$ptb->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($ptb);

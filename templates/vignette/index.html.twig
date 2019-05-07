@@ -107,7 +107,7 @@
                     total= parseInt(this.responseText);
                 }
             }
-            xhr.open("GET","http://localhost:8000/totalbilletVignette/"+idb,true);
+            xhr.open("GET","http://serveurptb:81/iBillet/public/totalbilletVignette/"+idb,true);
             xhr.send();
             var modal = document.getElementById('myModal');
             var td = document.getElementById('dpt'+idb);
@@ -132,6 +132,10 @@
                 motif = document.getElementById("form7").value;  
                 dpt = parseInt(document.getElementById('nbredepart').value, 10);
             }
+            else if(nbreprint === "")
+            {
+                alert("Veuillez renseigner le nombre de billet à imprimer");
+            }
             else
             {
                 if(checkbox.checked)
@@ -151,7 +155,7 @@
                 {
                     var modal = document.getElementById('myModal');
                     modal.style.display = "none";
-                    document.location.href = `http://localhost:8000/impressionvignette/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
+                    document.location.href = `http://serveurptb:81/iBillet/public/impressionvignette/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
                 }
                 
             }

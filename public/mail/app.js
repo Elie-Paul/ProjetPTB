@@ -17,7 +17,7 @@ $(document).ready(function () {
         if(user || commande || impression) {
             //AJAX
             $.ajax({
-                url: '/destinateur/add/mail',
+                url: 'http://serveurptb:81/iBillet/public/destinateur/add/mail',
                 type: 'post',
                 data: {user: user, commande: commande, impression: impression},
                 dataType: 'json',
@@ -29,7 +29,7 @@ $(document).ready(function () {
                         case 'success':
                             console.log(data.message);
                             swal("SUCCES", data.message, "success");
-                            $('.table').load('http://localhost:8000/destinateur .table');
+                            $('.table').load('http://serveurptb:81/iBillet/public/destinateur .table');
                             break;
                         default:
                             swal("Erreur", data.message, "error");
@@ -61,7 +61,7 @@ $(document).ready(function () {
         if(mails && objet && message) {
             //AJAX
             $.ajax({
-                url: '/mail/presonnel',
+                url: 'http://serveurptb:81/iBillet/public/mail/presonnel',
                 type: 'post',
                 data: {mails: mails, objet: objet, message: message, emetteur: emetteur},
                 dataType: 'json',

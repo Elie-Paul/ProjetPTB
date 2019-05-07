@@ -107,7 +107,7 @@
                     total= parseInt(this.responseText);
                 }
             }
-            xhr.open("GET","/totalbillet/"+idb,true);
+            xhr.open("GET","http://serveurptb:81/iBillet/public/totalbillet/"+idb,true);
             xhr.send();
             var modal = document.getElementById('myModal');
             var td = document.getElementById('dpt'+idb);
@@ -147,7 +147,7 @@
                 {
                     var modal = document.getElementById('myModal');
                     modal.style.display = "none";
-                    document.location.href = `/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
+                    document.location.href = `http://serveurptb:81/iBillet/public/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}+${color}`;
                 }
                 
             } 
@@ -155,7 +155,7 @@
             
                 
                 
-            //document.location.href = `http://serveurptb:8000/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;
+            //document.location.href = `http://serveurptb:81/iBillet/public/impression/${idb}/${nbreprint}+${motif}+${dpt}+${userid}`;
             
 
         }

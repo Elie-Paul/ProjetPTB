@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Guichet;
+use App\Entity\BilletPtb;
+use App\Entity\BilletNavette;
 use App\Form\GuichetType;
 use App\Entity\Lieux;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -118,6 +120,28 @@ class GuichetController extends AbstractController
      */
     public function delete(Request $request, Guichet $guichet): Response
     {
+        $ptb = $this->getDoctrine()->getRepository(BilletPtb::class)->findOneBy([
+            'guichet' => $guichet
+        ]);
+        $navette = $this->getDoctrine()->getRepository(BilletNavette::class)->findOneBy([
+            'guichet' => $guichet
+        ]);
+        if($ptb)
+        {
+            return $this->render('guichet/show.html.twig', [
+            'guichet' => $guichet,
+            'error' => "Il y'a une contrainte d'integrité entre 'Guichet' et 'Billet PTB'"
+        ]);
+        }
+
+
+        if($navette)
+        {
+            return $this->render('guichet/show.html.twig', [
+            'guichet' => $guichet,
+            'erreur' => "Il y'a une contrainte d'integrité entre 'Guichet' et 'Billet Navette'"
+        ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$guichet->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($guichet);

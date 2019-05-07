@@ -110,6 +110,17 @@ class NavetteController extends AbstractController
      */
     public function delete(Request $request, Navette $navette): Response
     {
+        $check = $this->getDoctrine()->getRepository(BilletNavette::class)->findOneBy([
+            'navette' => $navette
+        ]);
+
+        if($check)
+        {
+            return $this->render('navette/show.html.twig', [
+            'navette' => $navette,
+            'error' => "Il y'a une contrainte d'integrité entre 'Navette' et 'Billet navette'"
+        ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$navette->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($navette);

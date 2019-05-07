@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\BilletPtb;
+use App\Entity\VentePtb;
+use App\Entity\Guichet;
+use App\Entity\CommandePtb;
+use App\Entity\Ptb;
 use App\Form\BilletPtbType;
 use App\Entity\StockPtb;
 use App\Controller\JsonController\Controller;
@@ -162,6 +166,38 @@ class BilletPtbController extends AbstractController
      */
     public function delete(Request $request, BilletPtb $billetPtb): Response
     {
+        $ptb = $this->getDoctrine()->getRepository(Ptb::class)->findOneBy([
+            'billetPtb' => $billetPtb
+        ]);
+        $commande = $this->getDoctrine()->getRepository(CommandePtb::class)->findOneBy([
+            'billet' => $billetPtb
+        ]);
+        $vente = $this->getDoctrine()->getRepository(VentePtb::class)->findOneBy([
+            'billet' => $billetPtb
+        ]);
+        if($ptb)
+        {
+            return $this->render('billet_ptb/show.html.twig', [
+            'billet_ptb' => $billetPtb,
+            'error' => "Il y'a une contrainte d'integrité entre 'PTB' et 'Billet PTB'"
+        ]);
+        }
+
+        if($vente)
+        {
+            return $this->render('billet_ptb/show.html.twig', [
+            'billet_ptb' => $billetPtb,
+            'erreur' => "Il y'a une contrainte d'integrité entre 'Vente PTB' et 'Billet PTB'"
+        ]);
+        }
+
+        if($commande)
+        {
+            return $this->render('billet_ptb/show.html.twig', [
+            'billet_ptb' => $billetPtb,
+            'errors' => "Il y'a une contrainte d'integrité entre 'Commande PTB' et 'Billet PTB'"
+        ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$billetPtb->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($billetPtb);

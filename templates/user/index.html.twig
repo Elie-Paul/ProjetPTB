@@ -81,8 +81,10 @@
 {% endblock %}
 {% block javascripts %}
     <!-- DataTables -->
-    <script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+      
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap.min.js"></script>
 
     <!-- PDF AND CVS-->
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
@@ -105,7 +107,7 @@
         
         })
         .then((value) => {
-            document.location.href="/user";
+            document.location.href="http://serveurptb:81/iBillet/public/user";
         });
     {% endif %}
         $(function () {

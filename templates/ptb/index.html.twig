@@ -48,8 +48,8 @@
                         <tr>
                             <td>{{ ptb.trajet.depart.libelle }}-{{ ptb.trajet.arrivee.libelle }}</td>
                             <td>{{ ptb.section.libelle }}</td>
-                            <td>{{ ptb.createdAt ? ptb.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS')}}</td>
-                            <td>{{ ptb.updatedAt ? ptb.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ ptb.createdAt ? ptb.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss')}}</td>
+                            <td>{{ ptb.updatedAt ? ptb.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss') }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('ptb_show', {'id': ptb.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('ptb_edit', {'id': ptb.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
@@ -94,7 +94,7 @@
         
         })
         .then((value) => {
-            document.location.href="/ptb";
+            document.location.href="http://serveurptb:81/iBillet/public/ptb";
         });
     {% endif %}
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );

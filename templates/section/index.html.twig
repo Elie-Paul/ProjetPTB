@@ -48,8 +48,8 @@
                         <tr>
                             <td>{{ section.libelle }}</td>
                             <td>{{ section.prix }}</td>
-                            <td>{{ section.createdAt ? section.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS')}}</td>
-                            <td>{{ section.updatedAt ? section.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ section.createdAt ? section.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss')}}</td>
+                            <td>{{ section.updatedAt ? section.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss') }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('section_show', {'id': section.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('section_edit', {'id': section.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp; Modifier</a>
@@ -95,7 +95,7 @@
         
         })
         .then((value) => {
-            document.location.href="/section";
+            document.location.href="http://serveurptb:81/iBillet/public/section";
         });
     {% endif %}
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );

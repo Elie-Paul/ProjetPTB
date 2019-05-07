@@ -4,7 +4,7 @@
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
-
+<div class="modal-dialog modal-sm-20 ">
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header"><span class="close" style="color: red;">&times;</span></div>
@@ -23,7 +23,7 @@
         <button  id="submit" class="btn btn-primary"><big>Ajouter</big></button>
     </div>
   </div>
-  
+</div>  
 
 </div>
 
@@ -123,12 +123,25 @@ document.getElementById("submit").addEventListener("click", function(e){
                   
               });
 
+        }else
+        {
+          swal({
+          title: "Erreur",
+          text: "Cette station existe déjà ",
+          icon: "error",
+          
+          })
+              .then((value) => {
+                var modal = document.getElementsByClassName('modal')[0];
+                modal.style.display = "block";
+                  
+              });
         }
         
       }
     }
     
-    xhttp.open("POST","/addLieuTrajetNavette",true);
+    xhttp.open("POST","http://serveurptb:81/iBillet/public/addLieuTrajetNavette",true);
     xhttp.responseType = "json";
     let parm = `${libelle}`;
     xhttp.send(parm); 

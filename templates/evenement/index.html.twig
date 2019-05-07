@@ -75,9 +75,9 @@
                     {% for evenement in evenements %}
                         <tr>
                             <td>{{ evenement.libelle }}</td>
-                            <td>{{ evenement.dateEvent ? evenement.dateEvent|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS')}}</td>
-                            <td>{{ evenement.finEvent ? evenement.finEvent|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS')}}</td>
-                            <td>{{ evenement.UpdatedAt ? evenement.UpdatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ evenement.dateEvent ? evenement.dateEvent|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss')}}</td>
+                            <td>{{ evenement.finEvent ? evenement.finEvent|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss')}}</td>
+                            <td>{{ evenement.UpdatedAt ? evenement.UpdatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss') }}</td>
                             <td>
                                 <a class="btn btn-info" role="button" href="{{ path('evenement_show', {'id': evenement.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
                                 <a class="btn btn-warning" role="button" href="{{ path('evenement_edit', {'id': evenement.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
@@ -129,7 +129,7 @@
         
         })
         .then((value) => {
-            document.location.href="/evenement";
+            document.location.href="http://serveurptb:81/iBillet/public/evenement/";
         });
     {% endif %}
 

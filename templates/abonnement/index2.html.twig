@@ -113,7 +113,7 @@
     {#---------------------------------------------To PRINT------------------------------------------#}
 
     <div class="toPrint">
-        <div class="col-xs-12 inset">
+        <div class="col-xs-10 inset">
             <div class="row">
                 <div class="col-xs-3 logo">
                     <img class="logo" src="{{ asset('logo.png') }}" alt="logo">
@@ -124,27 +124,27 @@
                 </div>
             </div>
             <div class="row">
-                <div class="numero col-xs-12">
+                <div class="numero col-xs-10">
                 <p><span class="numero-content">Numero: <span id="numerop">00000</span></span></p>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12 milieu">
+                <div class="col-xs-12 milieu">
                     <div class="col-sm-4 cote-gauche">
                         <div class="premier-ligne ligne">
-                            <span>01</span> <span>02</span> <span>03</span>
+                            <span>01</span> <span class="marge">02</span> <span class="marge">03</span>
                         </div>
                         <div class="premier-ligne ligne">
-                            <span>04</span> <span>05</span> <span>06</span>
+                            <span>04</span> <span class="marge">05</span> <span class="marge">06</span>
                         </div>
                         <div class="premier-ligne ligne">
-                            <span>07</span> <span>08</span> <span>09</span>
+                            <span>07</span> <span class="marge">08</span> <span class="marge">09</span>
                         </div>
                         <div class=" premier-ligne ligne">
-                            <span>10</span> <span>11</span> <span>12</span>
+                            <span>10</span> <span class="marge">11</span> <span class="marge">12</span>
                         </div>
                     </div>
-                    <div class="col-sm-6 cote-milieu">
+                    <div class="col-sm-5 cote-milieu">
                         <p>Nom: <span id="nomp" class="valeur">THERA</span>
                         </p>
                         <p>Prenom: <span id="prenomp" class="valeur">Daouda S.</span>
@@ -156,12 +156,10 @@
                         <p>Date d'expiration: <span id="datep" class="valeur"></span>
                         </p>
                     </div>
-                    <div class="col-sm-2 cote-droit">
+                    <div class="col-sm-3 cote-droit">
                         <div class="photo">
                             <img id="photop" src="{{ asset('clients/images/student carte.jpeg') }}" class="picture"
                             alt="photo">
-                        </div>
-                        <div class="le-cacher">
                         </div>
                     </div>
                 </div>
@@ -179,7 +177,7 @@
             </div>
         </div>
         <div class="seconde-page">
-            <div class="col-xs-12 inset2">
+            <div class="col-xs-10 inset2">
                 <div class="row">
                     <div class="titre-content">
                         <p class="titre-recommandation">
@@ -212,7 +210,7 @@
         <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">
-            <h4><i class="fa fa-list"></i>&nbsp;<big>Liste des Abonnés</big></h4>
+            <h4><i class="fa fa-list"></i> <big>Liste des Abonnés</big></h4>
           </div>
             <div class="col-md-6 text-right">
             <a class="btn btn-primary pull-right" href="{{ path('abonnement_new') }}"><i class="glyphicon glyphicon-plus"></i>  Nouvel Abonné</a>
@@ -252,8 +250,8 @@
                     <td>{{ abonnement.type.prix }}</td>
                     <td>{{ abonnement.expiration | date('d-m-Y') }}</td>
                     <td>
-                        <a class="btn btn-info" role="button" href="{{ path('abonnement_show', {'id': abonnement.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;<big>Voir</big></a>
-                        <a class="btn btn-warning" role="button" href="{{ path('abonnement_edit', {'id': abonnement.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;<big>Modifier</big></a>
+                        <a class="btn btn-info" role="button" href="{{ path('abonnement_show', {'id': abonnement.id}) }}"><i class="glyphicon glyphicon-eye-open"></i> <big>Voir</big></a>
+                        <a class="btn btn-warning" role="button" href="{{ path('abonnement_edit', {'id': abonnement.id}) }}"><i class="glyphicon glyphicon-pencil"></i> <big>Modifier</big></a>
                         {% if abonnement.nombreCarte is not defined or abonnement.nombreCarte != 1 %}
                             <a class="btn btn-success" role="button" onmouseover="survol('{{ abonnement.filename }}', '{{ abonnement.expiration | date('d-m-Y') }}' )"
                                onclick="printContent({{ abonnement.id }}, '{{ abonnement.nom }}', '{{ abonnement.prenom }}'

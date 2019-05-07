@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Classe;
+use App\Entity\Navette;
 use App\Form\ClasseType;
 use App\Repository\ClasseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -107,6 +108,16 @@ class ClasseController extends AbstractController
      */
     public function delete(Request $request, Classe $classe): Response
     {
+        $navette = $this->getDoctrine()->getRepository(navette::class)->findOneBy([
+            'classe' => $classe
+        ]);
+        if($navette)
+        {
+            return $this->render('classe/show.html.twig', [
+            'classe' => $classe,
+            'error' => "Il y'a une contrainte d'integrité entre 'Classe' et 'Navette'"
+        ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$classe->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($classe);

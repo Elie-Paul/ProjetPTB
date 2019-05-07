@@ -50,8 +50,8 @@
                         <tr>                            
                             <td>{{ trajet.depart.libelle }}</td>
                             <td>{{ trajet.arrivee.libelle }}</td>
-                            <td>{{ trajet.createdAt ? trajet.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS')}}</td>
-                            <td>{{ trajet.updatedAt ? trajet.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM Y à HH:mm:SS') }}</td>
+                            <td>{{ trajet.createdAt ? trajet.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss')}}</td>
+                            <td>{{ trajet.updatedAt ? trajet.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss') }}</td>
                             <td>
 
                                 <a class="btn btn-info" role="button" href="{{ path('trajet_show', {'id': trajet.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; Voir</a>
@@ -101,7 +101,7 @@
         
         })
         .then((value) => {
-            document.location.href="http://localhost:8000/trajet";
+            document.location.href="http://serveurptb:81/iBillet/public/trajet";
         });
   {% endif %}
 

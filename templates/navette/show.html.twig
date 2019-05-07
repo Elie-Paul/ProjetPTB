@@ -42,11 +42,11 @@
                 </tr>
                 <tr>
                     <th>Date de création</th>
-                    <td>{{ navette.createdAt ? navette.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS') }}</td>
+                    <td>{{ navette.createdAt ? navette.createdAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM y à HH:mm:ss') }}</td>
                 </tr>
                 <tr>
                     <th>Date de modification</th>
-                    <td>{{ navette.updatedAt ? navette.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM Y à HH:mm:SS')}}</td>
+                    <td>{{ navette.updatedAt ? navette.updatedAt|localizeddate('none', 'none', null, null, 'EEEE d MMMM y à HH:mm:ss')}}</td>
                 </tr>
             </tbody>
         </table>
@@ -54,4 +54,11 @@
 </div>    
 
     {{ include('navette/_delete_form.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+<script>
+  {% if error is defined %}
+    swal("ERREUR", "Il y'a une contrainte d'integrité entre 'Navette' et 'Billet navette'", "error");
+  {% endif %}
+</script>
 {% endblock %}

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Trajet;
 use App\Form\TrajetType;
+use App\Entity\Navette;
+use App\Entity\Ptb;
 use App\Entity\Lieux;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Repository\TrajetRepository;
@@ -125,6 +127,28 @@ class TrajetController extends AbstractController
      */
     public function delete(Request $request, Trajet $trajet): Response
     {
+        $ptb = $this->getDoctrine()->getRepository(Ptb::class)->findOneBy([
+            'trajet' => $trajet
+        ]);
+        $navette = $this->getDoctrine()->getRepository(Navette::class)->findOneBy([
+            'trajet' => $trajet
+        ]);
+        if($ptb)
+        {
+            return $this->render('trajet/show.html.twig', [
+            'trajet' => $trajet,
+            'error' => "Il y'a une contrainte d'integrité entre 'Trajet' et 'PTB'"
+        ]);
+        }
+
+
+        if($navette)
+        {
+            return $this->render('trajet/show.html.twig', [
+            'trajet' => $trajet,
+            'erreur' => "Il y'a une contrainte d'integrité entre 'Trajet' et 'Navette'"
+        ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$trajet->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($trajet);
