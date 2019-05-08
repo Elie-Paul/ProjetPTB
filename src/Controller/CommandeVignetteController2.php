@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Controller\MailController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -134,7 +135,7 @@ class CommandeVignetteController2 extends AbstractController
     /**
      * @Route("/addVenteVignette/{id}/{nvente}", name="VenteVignette")
      */
-    public function VenteCommande($id,$nvente)
+    public function VenteCommande($id,$nvente,MailController $mail)
     {
         $idBillet = intVal($id);
         $vente = intVal($nvente);
@@ -156,6 +157,13 @@ class CommandeVignetteController2 extends AbstractController
          ]);
         
         $stockVignette->setNbre($stockVignette->getNbre()- $vente);
+
+        
+        
+        if($stockVignette->getNbre() <=200)
+        {
+            $mail->sendMailForStock($billet->__toString());
+        }
         
         $entityManager->persist($venteVignette);
         $entityManager->flush();

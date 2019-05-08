@@ -98,7 +98,7 @@ function updateTab()
   let etatSelected = cmbEtat.selectedIndex;
   let tab1 = tab;
 
-  if(start.value == '' && end.value == '' && etatSelected ==0)
+  if(start.value == '' && end.value == '' && etatSelected ===0)
   {
     getAllCommande();
   }
@@ -133,54 +133,35 @@ function updateTab()
       {
           
         let a=false;  
-        billet.ventes.filter((value) =>
+        billet.ventes.filter((value,index) =>
         {
             a=true;
             let date = new Date(value.date.date);
               if(DateCompare(date,dstart))
               {
-                return true;
+                a= true;
+                
+                
               }
               else if(DateCompare(date,dend))
               {
-                return true;
+                a=true;
+                
               }
               else if(date > dstart && date < dend)
               {
+                  a=true;
                   
-                return true;
+                
               }
               else
               {
                 a=false;
-                return false;
+                value.nbre=0;
+                
               } 
            });
-            billet.commandes.filter((value) =>
-          {
-            a=true;  
-            let date = new Date(value.date.date);
-              if(DateCompare(date,dstart))
-              {
-                return true;
-              }
-              else if(DateCompare(date,dend))
-              {
-                return true;
-              }
-              else if(date > dstart && date < dend)
-              {
-                  
-                return true;
-              }
-              else
-              {
-                a=false;
-                return false;
-              } 
-           });
-          //let venteGuichet={y:total,label:""+value1.guichet};
-          //graphData.push(venteGuichet);  
+            
           if(a)
            return a;
           else
@@ -190,13 +171,21 @@ function updateTab()
       //makeGuichetVente(graphData);
       //addRow(tabData);
       
-      
+      if(start.value == '' && end.value == '' && etatSelected ===0)
+  {
+    getAllCommande();
+  }
       
   }
   //$("#example1").DataTable().clear().draw();
 
   console.log(tab1);
   setTotal(tab1);
+  if(start.value == '' && end.value == '' && etatSelected ===0)
+  {
+    getAllCommande();
+  }
+
 
 }
 

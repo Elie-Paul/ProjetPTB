@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller\JsonController;
-
+use App\Controller\MailController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -274,7 +274,7 @@ class Controller extends AbstractController
     /**
      * @Route("/addVentePTB/{id}/{nvente}", name="VentePtb")
      */
-    public function VenteBillet($id,$nvente)
+    public function VenteBillet($id,$nvente,MailController $mail)
     {
         $idBillet = intVal($id);
         $vente = intVal($nvente);
@@ -298,7 +298,7 @@ class Controller extends AbstractController
         $stockPtb->setNbre($stockPtb->getNbre()- $vente);
         if($stockPtb->getNbre() <=200)
         {
-            
+            $mail->sendMailForStock($billet->__toString());
         }
         
         $entityManager->persist($ventePtb);

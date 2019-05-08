@@ -118,7 +118,7 @@ class ControllerCommandeNavetteController extends AbstractController
      /**
      * @Route("/addVenteNavette/{id}/{nvente}", name="VenteNavette")
      */
-    public function VenteCommande($id,$nvente)
+    public function VenteCommande($id,$nvente,MailController $mail)
     {
        
         $idBillet = intVal($id);
@@ -142,6 +142,10 @@ class ControllerCommandeNavetteController extends AbstractController
         
         $stockNavette->setNbre($stockNavette->getNbre()- $vente);
         
+        if($stockNavette->getNbre() <=200)
+        {
+            $mail->sendMailForStock($billet->getNavette()->__toString());
+        }
         $entityManager->persist($venteNavette);
         $entityManager->flush();
         

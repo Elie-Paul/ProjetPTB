@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CommandeTaxe;
+use App\Controller\MailController;
 use App\Form\CommandeTaxeType;
 use App\Repository\CommandeTaxeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

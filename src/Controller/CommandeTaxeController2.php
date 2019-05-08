@@ -181,7 +181,7 @@ class CommandeTaxeController2 extends AbstractController
      /**
      * @Route("/addVenteTaxe/{id}/{nvente}", name="VenteTaxe")
      */
-    public function VenteCommande($id,$nvente)
+    public function VenteCommande($id,$nvente,MailController $mail)
     {
         
         $idBillet = intVal($id);
@@ -204,6 +204,13 @@ class CommandeTaxeController2 extends AbstractController
          ]);
         
         $stockTaxe->setNbre($stockTaxe->getNbre()- $vente);
+
+        
+        
+        if($stockTaxe->getNbre() <=200)
+        {
+            $mail->sendMailForStock($billet->__toString());
+        }
         
         $entityManager->persist($venteTaxe);
         $entityManager->flush();

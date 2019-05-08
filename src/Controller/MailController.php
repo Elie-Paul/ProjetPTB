@@ -210,6 +210,37 @@ class MailController extends AbstractController
         }
 
     }
+    /**
+     * @param $text
+     */
+    public function sendMailForStock($text)
+    {
+        $destinateur = $this->getDoctrine()->getRepository(Destinateur::class)->findBy([
+            'processus' => 'impression'
+        ]);
+        if($destinateur)
+        {
+            foreach ($destinateur as $dest)
+            {
+                if($dest->getActive())
+                {
+                    $message = (new \Swift_Message('Bonjour, PTB vous souhaite une bonne journée'))
+                        ->setFrom('ptbsaptb@gmail.com')
+                        ->setTo($dest->getEmail())
+                        ->setBody(
+                            $this->renderView('mail/mailprint2.html.twig', [
+                                    'text' => $text,
+                                ]
+                            ),
+                            'text/html'
+                        );
+
+                    $this->mailer->send($message);
+                }
+            }
+        }
+
+    }
 
     public function sendMailForCommande($nom, $prenom, $email, $vue)
     {
