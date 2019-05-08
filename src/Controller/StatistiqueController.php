@@ -267,6 +267,8 @@ class StatistiqueController extends AbstractController
                     (
                         'nbre' => $variable->getNbreDeBillet(),
                         'date' => $variable->getCreateAt(),
+                        'prix' => $billetP->getPtb()->getSection()->getPrix() * $variable->getNbreDeBillet(),
+                        'voyageurs' =>$variable->getNbreDeBillet(),
                     );
                     array_push($ventes,$myarray);
             }
@@ -274,6 +276,7 @@ class StatistiqueController extends AbstractController
                     'id' => $billetP->getId(),
                     'type' => "PTB",
                     'billet' => $billetP->__toString(),
+                    
                     'commandes' => $commandes,
                     'guichet' => $billetP->getGuichet()->getCode(),
                     'ventes' => $ventes,
@@ -308,6 +311,8 @@ class StatistiqueController extends AbstractController
                     (
                         'nbre' => $variable->getNbreDeBillet(),
                         'date' => $variable->getCreateAt(),
+                        'prix' => $billetNavette->getNavette()->getPrix()*$variable->getNbreDeBillet(),
+                        'voyageurs' =>$variable->getNbreDeBillet(),
                     );
                     array_push($ventes,$myarray);
                 }
@@ -315,6 +320,7 @@ class StatistiqueController extends AbstractController
                     'id' => $billetNavette->getId(),
                     'type' =>'Autorail',
                     'billet' => $billetNavette->getNavette()->__toString(),
+                    
                     'commandes' => $commandes,
                     'guichet' => $billetNavette->getGuichet()->getCode(),
                     'ventes' => $ventes,
@@ -335,7 +341,7 @@ class StatistiqueController extends AbstractController
                         'nombreBilletRealiser' => $variable->getNombreBilletRealise(),
         
                         'nombreBilletVendu' => $variable->getNombreBilletVendu(),
-        
+                        
                         'etat' => $variable->getEtatCommande(),
                         'dateCommandeValider' => $variable->getDateComnandeValider(),
                         'dateCommandeRealiser' => $variable->getDateCommandeRealiser(),
@@ -349,6 +355,8 @@ class StatistiqueController extends AbstractController
                     (
                         'nbre' => $variable->getNbreDeBillet(),
                         'date' => $variable->getCreateAt(),
+                        'prix'=>$billetTaxe->getPrix()*$variable->getNbreDeBillet(),
+                        'voyageurs' =>$variable->getNbreDeBillet(),
                     );
                     array_push($ventes,$myarray);
                 }
@@ -356,6 +364,7 @@ class StatistiqueController extends AbstractController
                     'id' => $billetTaxe->getId(),
                     'type' => 'Taxe',
                     'billet' => $billetTaxe->__toString(),
+                    
                     'commandes' => $commandes,
                     'guichet' =>'CTRL',
                     'ventes' => $ventes,
@@ -390,6 +399,8 @@ class StatistiqueController extends AbstractController
                     (
                         'nbre' => $variable->getNbreDeBillet(),
                         'date' => $variable->getCreateAt(),
+                        'prix' => $vignette->getType()->getPrix(),
+                        'voyageurs' =>$variable->getNbreDeBillet()*2,
                     );
                     array_push($ventes,$myarray);
                 }
@@ -398,7 +409,7 @@ class StatistiqueController extends AbstractController
                     'type'=>'Vignette',
                     'billet' => $vignette->__toString(),
                     'commandes' => $commandes,
-                    'guichet' => $billetP->getGuichet()->getCode(),
+                    'guichet' => $vignette->getGuichet()->getCode(),
                     'ventes' => $ventes,
                 );
                 array_push($note,$myarray);

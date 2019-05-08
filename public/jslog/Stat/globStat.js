@@ -56,6 +56,8 @@ function setTotal(array)
             let totalCommandeReal=0;
             let totalCommande=0;
             let totalVente=0;
+            let ca=0;
+            let voyageur=0;
             billet.commandes.forEach(
                 (commande) =>
                 {
@@ -68,13 +70,18 @@ function setTotal(array)
               (vente) =>
               {
                 totalVente += vente.nbre;
+                ca +=vente.prix;
+                voyageur +=vente.voyageurs;
               }  
             )
             billet.totalVente = totalVente;
             billet.totalCmd = totalCommande;
             billet.totalReal = totalCommandeReal;
+            billet.ca= ca;
+            billet.voyageur = voyageur;
+            billet.prime = (ca*5)/1000
             let arr = [billet.billet,billet.guichet,billet.type,
-            billet.totalCmd,billet.totalReal,billet.totalVente,billet.totalReal - billet.totalVente];
+            billet.totalCmd,billet.totalReal,billet.totalVente,billet.ca,billet.voyageur,billet.totalReal - billet.totalVente,billet.prime];
             tab2.push(arr);
         }
            
@@ -203,6 +210,7 @@ function setDataTable(dataSet)
    
      
     //$("#example1").dataTable().fnDestroy();
+    console.log(dataSet);
     
     $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm:SS' );
     $(function () {
@@ -217,7 +225,10 @@ function setDataTable(dataSet)
                     { title: "Nombre Commandé" },
                     { title: "Nombre Realisé" },
                     { title: "Nombre Vendu" },
-                    { title: "Invendu" }
+                    { title: "CA(FCFA)" },
+                    { title: "Voyageur" },
+                    { title: "Invendu" },
+                    { title: "prime(5/1000)" }
                 ],
                 "destroy":true,
                 "language": 
@@ -242,18 +253,18 @@ function setDataTable(dataSet)
                 dom: 'Bfrtip',
                 buttons: [
                     {
-                        extend: 'print',
+                        extend: 'print', footer: true,
                         text: '<i class="fa fa-print"></i> Imprimer',
                         exportOptions: {
                             columns: ':visible'
                         }
                     },
                     {
-                        extend:'excel',
+                        extend:'excel', footer: true,
                         text: '<i class="fa fa-file-excel-o"></i> Excel'
                     },
                     {
-                        extend:'csv',
+                        extend:'csv', footer: true,
                         text: '<i class="fa fa-file-text-o"></i> CSV'
                     },
                     {
@@ -262,15 +273,156 @@ function setDataTable(dataSet)
                     },
                     {
                         extend: 'colvis',
-                        text: 'Colonnes visibles'
+                        text: 'Colonnes visibles', footer: true
                     }
                 ],
                 columnDefs: [ {
                     visible: false
-                } ]
+                } ],
+              "footerCallback": function ( row, data, start, end, display ) {
+            
+              var api = this.api(), data;
+   
+              // Remove the formatting to get integer data for summation
+              var intVal = function ( i ) {
+                  return typeof i === 'string' ?
+                      i.replace(/[\$,]/g, '')*1 :
+                      typeof i === 'number' ?
+                          i : 0;
+              };
+   
+              // Total over all pages
+              total = api
+                  .column( 5 )
+                  .data()
+                  .reduce( function (a, b) {
+                      return intVal(a) + intVal(b);
+                  }, 0 );
+                  
+              // Total over this page
+              pageTotal = api
+                  .column( 5, { page: 'current'} )
+                  .data()
+                  .reduce( function (a, b) {
+                      return intVal(a) + intVal(b);
+                  }, 0 );
+   
+              // Update footer
+              $( api.column( 5 ).footer() ).html(
+                  'billets vendu:'+pageTotal 
+              );
+              total = api
+              .column( 6 )
+              .data()
+              .reduce( function (a, b) {
+                  return intVal(a) + intVal(b);
+              }, 0 );
+
+          // Total over this page
+          pageTotal = api
+              .column( 6, { page: 'current'} )
+              .data()
+              .reduce( function (a, b) {
+                  return intVal(a) + intVal(b);
+              }, 0 );
+
+          // Update footer
+          $( api.column( 6 ).footer() ).html(
+              'CA:'+pageTotal+'FCFA' 
+          );
+          total = api
+          .column( 7 )
+          .data()
+          .reduce( function (a, b) {
+              return intVal(a) + intVal(b);
+          }, 0 );
+
+      // Total over this page
+      pageTotal = api
+          .column( 7, { page: 'current'} )
+          .data()
+          .reduce( function (a, b) {
+              return intVal(a) + intVal(b);
+          }, 0 );
+
+      // Update footer
+      $( api.column( 7 ).footer() ).html(
+          'Voyageurs:'+pageTotal 
+      );
+      total = api
+      .column( 8 )
+      .data()
+      .reduce( function (a, b) {
+          return intVal(a) + intVal(b);
+      }, 0 );
+
+  // Total over this page
+  pageTotal = api
+      .column( 8, { page: 'current'} )
+      .data()
+      .reduce( function (a, b) {
+          return intVal(a) + intVal(b);
+      }, 0 );
+
+  // Update footer
+  $( api.column( 8 ).footer() ).html(
+      'deficit:'+pageTotal 
+  );
+  total = api
+      .column(4)
+      .data()
+      .reduce( function (a, b) {
+          return intVal(a) + intVal(b);
+      }, 0 );
+
+  // Total over this page
+  pageTotal = api
+      .column( 4, { page: 'current'} )
+      .data()
+      .reduce( function (a, b) {
+          return intVal(a) + intVal(b);
+      }, 0 );
+
+  // Update footer
+  $( api.column( 4 ).footer() ).html(
+      'dotation:'+pageTotal 
+  );
+
+  // Total over this page
+  pageTotal = api
+      .column( 9, { page: 'current'} )
+      .data()
+      .reduce( function (a, b) {
+          return intVal(a) + intVal(b);
+      }, 0 );
+      let test75 = (pageTotal*5)/1000
+      pageTotal2=0;
+                if(test75<5000)
+      {
+        pageTotal2=5000;
+      }
+      else
+      {
+        pageTotal2 = Math.round(test75);
+      }
+
+  // Update footer
+  $( api.column( 9 ).footer() ).html(
+      'Prime:'+pageTotal2 
+  );
+      
+          }
+          
             })
+            
             table.buttons().container()
                 .appendTo( '#example1_wrapper .col-sm-6:eq(0)' );
+
+                
             
-        })
+        }
+        )
+    
+        
+        
 }

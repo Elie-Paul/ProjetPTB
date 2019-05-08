@@ -296,6 +296,10 @@ class Controller extends AbstractController
          ]);
         
         $stockPtb->setNbre($stockPtb->getNbre()- $vente);
+        if($stockPtb->getNbre() <=200)
+        {
+            
+        }
         
         $entityManager->persist($ventePtb);
         $entityManager->flush();

@@ -163,6 +163,5 @@ class Trajet
 
         return $this;
     }
-
-    
+   
 }

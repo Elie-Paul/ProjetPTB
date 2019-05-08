@@ -139,7 +139,7 @@ document.getElementById("submit").addEventListener("click", function(e){
               .then((value) => {
                 var modal = document.getElementById('myModal');
                 modal.style.display = "none";
-                document.location.href="http://serveurptb:81/iBillet/public/guichet/new";
+                document.location.href=superLink+"/guichet/new";
                   
               });
 
@@ -161,7 +161,7 @@ document.getElementById("submit").addEventListener("click", function(e){
       }
     }
     
-    xhttp.open("POST","http://serveurptb:81/iBillet/public/addLieuTrajetNavette",true);
+    xhttp.open("POST",superLink+"/addLieuTrajetNavette",true);
     xhttp.responseType = "json";
     let parm = `${libelle}`;
     xhttp.send(parm);  

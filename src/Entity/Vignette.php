@@ -203,6 +203,6 @@ class Vignette
     public function __toString()
     {
     
-        return $this->getGuichet().":".$this->getType();
+        return "Abonnement:".$this->getType();
     }
 }

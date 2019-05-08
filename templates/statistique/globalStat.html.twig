@@ -42,12 +42,31 @@
                 <th>Nombre Commandé</th>
                 <th>Nombre Realisé</th>
                 <th>Nombre Vendu</th>
+                <th>CA</th>
+                <th>Voyageurs</th>
                 <th>Invendu</th>
+                <th>Prime</th>
+                
             </tr>
         </thead>
         <tbody id='tbody'>
 
         </tbody>
+           <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                
+            </tr>
+        </tfoot>
         
             <select class="form-control" id="etat" style='width : 200px; display:inline;'>
                 <option selected>Type Billet</option>
@@ -62,6 +81,7 @@
             
         
     </table>
+
               
             </div>
         </div>
@@ -89,6 +109,7 @@
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>   
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>   
     <script src="{{ asset('jslog/Stat/globStat.js') }}"></script>
  
 
