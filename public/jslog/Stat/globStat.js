@@ -408,7 +408,7 @@ function setDataTable(dataSet)
 
   // Update footer
   $( api.column( 9 ).footer() ).html(
-      'Prime:'+pageTotal2 
+      'Prime:'+pageTotal2+'FCFA'
   );
       
           }
