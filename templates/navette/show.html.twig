@@ -60,5 +60,13 @@
   {% if error is defined %}
     swal("ERREUR", "Il y'a une contrainte d'integrité entre 'Navette' et 'Billet navette'", "error");
   {% endif %}
+
+  {% if erreur is defined %}
+    swal("ERREUR", "Il y'a une contrainte d'integrité entre 'Navette' et 'Trajet'", "error");
+  {% endif %}
+
+  {% if errors is defined %}
+    swal("ERREUR", "Il y'a une contrainte d'integrité entre 'Navette' et 'Classe'", "error");
+  {% endif %}
 </script>
 {% endblock %}

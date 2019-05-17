@@ -37,8 +37,8 @@
                 <td>{{ stock_taxe.billet }}</td>
                 <td>{{ stock_taxe.nbre }}</td>
                 <td>
-                    <a class="btn btn-ifno" href="{{ path('stock_taxe_voir', {'id': stock_taxe.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
-                    <a class="btn btn-warning" href="{{ path('stock_taxe_edit', {'id': stock_taxe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
+                    <a class="btn btn-info" href="{{ path('stock_taxe_voir', {'id': stock_taxe.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
+                    <a class="btn btn-warning" href="{{ path('stock_taxe_modifier', {'id': stock_taxe.id}) }}"><i class="glyphicon glyphicon-pencil"></i>&nbsp;Modifier</a>
                 </td>
             </tr>
         {% else %}

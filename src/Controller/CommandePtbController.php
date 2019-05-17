@@ -81,7 +81,7 @@ class CommandePtbController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="commande_ptb_delete", methods={"DELETE"})
+     * @Route("/{id}", name="commande_ptb_deletecrud", methods={"DELETE"})
      */
     public function delete(Request $request, CommandePtb $commandePtb): Response
     {

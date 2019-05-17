@@ -161,6 +161,7 @@ function updateTab()
                 
               } 
            });
+        
             
           if(a)
            return a;
@@ -243,6 +244,24 @@ function setDataTable(dataSet)
                 buttons: [
                     {
                         extend: 'print', footer: true,
+                        messageTop: `<div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <h4>Réplublique du Sénégal</h4>
+                                                <h5>Un peuple- Un but- Une foi</h5></br>
+                                                <h4>Ministère des Infrastructures,</br>Des Transports Terrestres</br>Et du Désenclavement</h4></br>
+                                                <h4>Le Petit Train de Banlieue-s.a. /DAF / Sub Centralisation</h4>
+                                            </div>
+                                            <div class="row" style="text-align: center; font-weight: bold">
+                                                <div class="col-xs-10">
+                                                    <h4>Vente et commandes ${start.value}-${end.value}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`,
+                        title: function(){
+                            return ""
+                        },
                         text: '<i class="fa fa-print"></i> Imprimer',
                         exportOptions: {
                             columns: ':visible'
@@ -404,8 +423,7 @@ function setDataTable(dataSet)
           
             })
             
-            table.buttons().container()
-                .appendTo( '#example1_wrapper .col-sm-6:eq(0)' );
+            
 
                 
             

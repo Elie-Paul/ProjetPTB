@@ -39,7 +39,7 @@
         <tbody>
         {% for stock_navette in stock_navettes %}
             <tr>
-                <td>{{ stock_navette.billet }}</td>
+                <td>{{ stock_navette.billet.guichet }}</td>
                 <td>{{ stock_navette.nbre }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('stock_navette_voir', {'id': stock_navette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>

@@ -592,7 +592,6 @@ class Controller extends AbstractController
         $commandePtb = $entityManager
         ->getRepository(CommandePtb::class)
         ->find($id);
-        
         $entityManager->remove($commandePtb);
         $entityManager->flush();
         

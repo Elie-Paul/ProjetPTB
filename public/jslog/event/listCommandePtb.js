@@ -36,7 +36,7 @@ function addRow(array)
     $("table").tableExport({
         headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
         footers: true,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
-        formats: ["xls", "csv", "txt"],    // (String[]), filetypes for the export
+        formats: ["xls"],    // (String[]), filetypes for the export
         fileName: "idghg",                    // (id, String), filename for the downloaded file
         bootstrap: true,                   // (Boolean), style buttons using bootstrap
         position: "top",               // (top, bottom), position of the caption element relative to table

@@ -90,7 +90,7 @@ class CommandeTaxeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="commande_taxe_delete", methods={"DELETE"})
+     * @Route("/{id}", name="commande_taxe_delete2", methods={"DELETE"})
      */
     public function delete(Request $request, CommandeTaxe $commandeTaxe): Response
     {

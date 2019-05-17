@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Type;
+use App\Entity\Abonnement;
 use App\Form\TypeType;
 use App\Repository\TypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -99,6 +100,16 @@ class TypeController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$type->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            $abonne = $this->getDoctrine()->getRepository(Abonnement::class)->findOneBy([
+            'type' => $type
+            ]);
+            if($abonne)
+            {
+                return $this->render('type/index.html.twig', [
+            'types' => $this->getDoctrine()->getRepository(Type::class)->findAll(),
+            'erreur' => "Il y'a une contrainte d'integrité entre 'Type' et 'Abonnement.'"
+            ]);
+            }
             $entityManager->remove($type);
             $entityManager->flush();
         }

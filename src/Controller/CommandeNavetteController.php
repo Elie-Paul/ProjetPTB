@@ -81,7 +81,7 @@ class CommandeNavetteController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="commande_navette_delete", methods={"DELETE"})
+     * @Route("/{id}", name="commande_navette_delete2", methods={"DELETE"})
      */
     public function delete(Request $request, CommandeNavette $commandeNavette): Response
     {

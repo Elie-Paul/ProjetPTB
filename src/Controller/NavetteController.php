@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Navette;
 use App\Entity\BilletNavette;
+use App\Entity\Trajet;
+use App\Entity\Classe;
 use App\Entity\Guichet;
 use App\Form\NavetteType;
 use App\Repository\NavetteRepository;
@@ -114,6 +116,18 @@ class NavetteController extends AbstractController
             'navette' => $navette
         ]);
 
+        /*$trajet = $this->getDoctrine()->getRepository(Trajet::class)->findOneBy([
+            'navette' => $navette
+        ]);*/
+
+
+        /*$classe = $this->getDoctrine()->getRepository(Classe::class)->findOneBy([
+            'navettes' => $navette
+        ]);*/
+
+        /*dump($navette);
+        die();*/
+
         if($check)
         {
             return $this->render('navette/show.html.twig', [
@@ -121,6 +135,28 @@ class NavetteController extends AbstractController
             'error' => "Il y'a une contrainte d'integrité entre 'Navette' et 'Billet navette'"
         ]);
         }
+        /*else
+        {
+            $abonne = $this->getDoctrine()->getRepository(Abonnement::class)->findOneBy([
+                'telephone' => $abonnement->getTelephone()
+            ]);
+        }*/
+
+        /*if($trajet)
+        {
+            return $this->render('navette/show.html.twig', [
+            'navette' => $navette,
+            'erreur' => "Il y'a une contrainte d'integrité entre 'Navette' et 'Billet navette'"
+        ]);
+        }*/
+
+        /**if($classe)
+        {
+            return $this->render('navette/show.html.twig', [
+            'navette' => $navette,
+            'errors' => "Il y'a une contrainte d'integrité entre 'Navette' et 'Billet navette'"
+        ]);
+        }*/
         if ($this->isCsrfTokenValid('delete'.$navette->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($navette);

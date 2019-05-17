@@ -47,3 +47,11 @@
 
     {{ include('type/_delete_form.html.twig') }}
 {% endblock %}
+{% block javascripts %}
+<script>
+  {% if erreur is defined %}
+    swal("ERREUR", "Il y'a une contrainte d'integrité entre 'Type' et 'Abonnement.'", "error");
+    
+  {% endif %}
+</script>
+{% endblock %}
