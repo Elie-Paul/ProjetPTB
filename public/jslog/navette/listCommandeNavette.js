@@ -367,7 +367,7 @@ function modifierCommande(element)
                   });
             }
         }
-        xhr.open("GET",`http://localhost:8000/commande/navette/modifier/${id}/${value}`,true);
+        xhr.open("GET",`http://serveurptb:81/iBillet/public/commande/navette/modifier/${id}/${value}`,true);
         xhr.send();
         getAllCommande();
         updateTab();
@@ -401,7 +401,7 @@ function deleteCommande(element)
                     });
                 }
             }
-            xhr.open("GET",`http://localhost:8000/commande/navette/delete/${id}`,true);
+            xhr.open("GET",`http://serveurptb:81/iBillet/public/commande/navette/delete/${id}`,true);
             xhr.send();
             getAllCommande();
             updateTab();
