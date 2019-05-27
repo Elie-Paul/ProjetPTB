@@ -48,3 +48,11 @@
 
     {{ include('billet_taxe/_delete_form.html.twig') }}
 {% endblock %}
+{% block javascripts %}
+<script>
+  {% if error is defined %}
+    swal("ERREUR", "Il y'a une contrainte d'integrité entre 'Commande taxe' et 'Billet Taxe'", "error");
+    
+  {% endif %}
+</script>
+{% endblock %}

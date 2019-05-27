@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\BilletTaxe;
 use App\Form\BilletTaxeType;
 use App\Entity\StockTaxe;
+use App\Entity\CommandeTaxe;
 use App\Controller\CommandeTaxeController2;
 use App\Repository\BilletTaxeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -119,6 +120,16 @@ class BilletTaxeController extends AbstractController
      */
     public function delete(Request $request, BilletTaxe $billetTaxe): Response
     {
+        $commande = $this->getDoctrine()->getRepository(CommandeTaxe::class)->findOneBy([
+            'billet' => $billetTaxe
+        ]);
+        if($commande)
+        {
+            return $this->render('billet_taxe/show.html.twig', [
+                'billet_taxe' => $billetTaxe,
+                'error' => "Il y'a une contrainte d'integrité entre 'Commande PTB' et 'Billet PTB'"
+            ]);
+        }
         if ($this->isCsrfTokenValid('delete'.$billetTaxe->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($billetTaxe);

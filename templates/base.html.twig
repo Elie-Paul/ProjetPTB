@@ -418,7 +418,24 @@
                 </ul>
          </li>
           {% endif %}
-        {% endif %}                            
+        {% endif %} 
+              {% if is_granted('ROLE_RESPONSABLE_DE_VENTE') %}
+        <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-certificate"></i>
+                <span>Stock</span>
+                  <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                  <li><a href="{{ path('stock_navette_lister') }}"><i class="fa fa-circle-o"></i>Billet Autorail</a></li>
+                  <li><a href="{{ path('stock_ptb_lister') }}"><i class="fa fa-circle-o"></i>Billet Ptb</a></li>            
+                <li><a href="{{ path('stock_taxe_listertaxe') }}"><i class="fa fa-circle-o"></i>Taxe</a></li>
+                <li><a href="{{ path('stock_vignette_lister') }}"><i class="fa fa-circle-o"></i>Vignette</a></li>
+              </ul>
+        </li>
+        {% endif %}                     
         {% if is_granted('ROLE_ADMINISTRATEUR') %}        
         <li class="treeview">
               <a href="{{ path('billet_navette_new') }}"><i class="fa fa-credit-card"></i><span>Taxe</span>
@@ -451,6 +468,20 @@
         <ul class="treeview-menu">
             <li><a href="{{ path('lieux_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
             <li><a href="{{ path('lieux_index') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
+        </ul>
+        </li>
+
+        <li class="treeview">
+        <a href="#">
+        <i class="glyphicon glyphicon-map-marker"></i>
+        <span>Taxes</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ path('billet_taxe_new') }}"><i class="fa fa-circle-o"></i>Nouveau</a></li>
+            <li><a href="{{ path('billet_taxe_index2') }}"><i class="fa fa-circle-o"></i>Lister</a></li>
         </ul>
         </li>
 
