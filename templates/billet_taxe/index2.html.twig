@@ -30,7 +30,8 @@
     <table class="table table-hover table-striped table-bordered" id="example1">
         <thead>
             <tr>        
-                <th>Guichet</th>           
+                <th>Guichet</th> 
+                <th>Type</th>          
                 <th>Numéro Dernier Billet</th> 
                 <th>Prix</th>            
                 <th>Actions</th>
@@ -40,6 +41,7 @@
         {% for billet_taxe in billet_taxes %}
             <tr>
                 <td>Contrôleur</td>
+                <td>{{ billet_taxe.type }}</td>
                 <td>{{ billet_taxe.numeroDernierBillet }}</td>
                 <td>{{ billet_taxe.prix }}</td>                
                 <td>

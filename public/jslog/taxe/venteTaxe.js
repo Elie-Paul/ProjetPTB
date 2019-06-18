@@ -111,6 +111,20 @@ function validerVente()
             }
         });
 }
+function validerVenteInvendu()
+{
+    swal({
+        title: "Validez",
+        text: "souhaitez valider les valeur saisi",
+        icon: "info",
+        buttons: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                venteInvendu();
+            }
+        });
+}
 function vente()
 {
     for(let i=0 ;i<inputs.length ;i++)
@@ -177,6 +191,73 @@ function vente()
         });
 
    
+}
+function venteInvendu()
+{
+    for(let i=0 ;i<inputs.length ;i++)
+    {
+        let element=inputs[i];
+        let idc=element.id.substr(1);
+        let stock = document.getElementById("n"+idc).innerText;
+        stock = parseInt(stock,10);
+        let vente = parseInt(element.value,10);
+        let span = document.getElementById("s"+idc);
+        if(element.value != "" && !element.disabled)
+        {
+            if (vente<=stock && vente>=1)
+            {
+
+                let xhttp=new XMLHttpRequest();
+                xhttp.onload = function ()
+                {
+                    if(this.status==200)
+                    {
+                        console.log(this.responseText);
+                        span.classList.remove('label-danger');
+                        span.innerText="";
+                        span.classList.add('label-success');
+                        let text1 = document.createTextNode("saisi reussi");
+                        span.appendChild(text1);
+                        element.disabled = true;
+                    }
+                    else
+                    {
+                        console.log(this.responseText);
+                        span.classList.remove('label-success');
+                        span.innerText="";
+                        span.classList.add('label-danger')
+                        let text = document.createTextNode("echec")
+                        span.appendChild(text);
+                    }
+                }
+                let link =`${superLink}/addTaxeInvendu/${idc}/${vente}`;
+                xhttp.open("GET",link,true);
+                xhttp.send();
+            }
+            else
+            {
+                        console.log(this.responseText);
+                        span.classList.add('label-danger');
+                        let text = document.createTextNode("echec");
+                        span.appendChild(text);
+            }
+        }
+
+
+    };
+    swal({
+        title: "Vente renseigné",
+        text: "cliquez sur annuler pour corriger les potentiels erreurs",
+        icon: "info",
+        buttons: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                getAllCommande();
+            }
+        });
+
+
 }
 getAllCommande();
 

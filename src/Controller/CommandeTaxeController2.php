@@ -87,7 +87,8 @@ class CommandeTaxeController2 extends AbstractController
             $myarray = array
             (
                 'id'=>$variable->getId(),
-                'Prix'=>$variable->getPrix()
+                'Prix'=>$variable->getPrix(),
+                'type' => $variable->getType()
             );
             array_push($data,$myarray);
         }
@@ -215,6 +216,39 @@ class CommandeTaxeController2 extends AbstractController
         $entityManager->persist($venteTaxe);
         $entityManager->flush();
         
+        return new Response('<h1>'.$billet->getId().'</h1>');
+    }
+    /**
+     * @Route("/addTaxeInvendu/{id}/{nvente}", name="VenteTaxeinvendu")
+     */
+    public function VenteCommandeInvendu($id,$nvente,MailController $mail)
+    {
+
+        $idBillet = intVal($id);
+        $vente = intVal($nvente);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+
+        $billet = $entityManager
+        ->getRepository(BilletTaxe::class)
+        ->find($idBillet);
+
+//        $venteTaxe = new venteTaxe();
+//        $venteTaxe->setBillet($billet);
+//        $venteTaxe->setCreateAt($this->test35());
+//        $venteTaxe->setUpdatedAt($this->test35());
+//        $venteTaxe->setNbreDeBillet($vente);
+        $stockTaxe=$entityManager->getRepository(StockTaxe::class)->findOneBy([
+            'billet' => $billet,
+         ]);
+
+        $stockTaxe->setNbre($stockTaxe->getNbre()- $vente);
+
+
+//        $entityManager->persist($venteTaxe);
+        $entityManager->flush();
+
         return new Response('<h1>'.$billet->getId().'</h1>');
     }
     /**

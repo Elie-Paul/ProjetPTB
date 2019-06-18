@@ -84,6 +84,13 @@ class CommandeVignetteController2 extends AbstractController
     {
         return $this->render('commandeView/vignette/venteCommandeVignette.html.twig');
     }
+    /**
+     * @Route("/commande/vignette/invendu", name="commande_vignette_invendu")
+     */
+    public function showAllCommandeVignetteInvendu()
+    {
+        return $this->render('commandeView/vignette/Vignetteinvendu.html.twig');
+    }
      /**
      * @Route("/Json/listCommandeVignette", name="getAllCommandeVignette")
      */
@@ -168,6 +175,38 @@ class CommandeVignetteController2 extends AbstractController
         $entityManager->persist($venteVignette);
         $entityManager->flush();
         
+        return new Response('<h1>'.$billet->getId().'</h1>');
+    }
+    /**
+     * @Route("/addInvenduVignette/{id}/{nvente}", name="InvenduVignette")
+     */
+    public function invenduCommande($id,$nvente,MailController $mail)
+    {
+        $idBillet = intVal($id);
+        $vente = intVal($nvente);
+        $entityManager = $this
+        ->getDoctrine()
+        ->getManager();
+
+        $billet = $entityManager
+        ->getRepository(Vignette::class)
+        ->find($idBillet);
+
+//        $venteVignette = new venteVignette();
+//        $venteVignette->setBillet($billet);
+//        $venteVignette->setCreateAt(new \DateTime());
+//        $venteVignette->setUpdatedAt(new \DateTime());
+//        $venteVignette->setNbreDeBillet($vente);
+        $stockVignette=$entityManager->getRepository(StockVignette::class)->findOneBy([
+            'billet' => $billet,
+         ]);
+
+        $stockVignette->setNbre($stockVignette->getNbre()- $vente);
+
+
+//        $entityManager->persist($venteVignette);
+        $entityManager->flush();
+
         return new Response('<h1>'.$billet->getId().'</h1>');
     }
      /**

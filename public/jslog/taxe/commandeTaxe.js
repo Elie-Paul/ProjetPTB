@@ -25,6 +25,11 @@ function createRowElement(commande)
     prix.appendChild(prixContent);
     array.push(prix);
 
+    let type = document.createElement('td');
+    let typeContent = document.createTextNode(commande.type);
+    type.appendChild(typeContent);
+    array.push(type);
+
     let guichet = document.createElement('td');
     let guichetContent =document.createTextNode('Controlleur') ;
     guichet.appendChild(guichetContent);
@@ -81,7 +86,7 @@ function controlPasserCommande()
         
     })
         .then((value) => {
-            document.location.href=superLink+"/commande/taxe";
+            document.location.href="/commande/taxe";
             
         });
  }

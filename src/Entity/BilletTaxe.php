@@ -53,6 +53,11 @@ class BilletTaxe
      */
     private $venteTaxes;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->commandeTaxes = new ArrayCollection();
@@ -211,5 +216,17 @@ class BilletTaxe
         return 'Taxe:'.$this->getPrix();
         
         
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
     }
 }

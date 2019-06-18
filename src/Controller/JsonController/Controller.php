@@ -120,6 +120,13 @@ class Controller extends AbstractController
     {
         return $this->render('commandeView/PTB/venteCommandePTB2.html.twig');
     }
+    /**
+     * @Route("/commande/taxe/retour", name="commande_taxe_retour")
+     */
+    public function showCommandeTAXERetour()
+    {
+        return $this->render('commandeView/taxe/venteCommandeTaxe2.html.twig');
+    }
 
      /**
      * @Route("/commande/ptb/imprimer", name="commande_ptb_imprimer")

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\BilletTaxe;
+use App\Entity\VenteTaxe;
 use App\Form\BilletTaxeType;
 use App\Entity\StockTaxe;
 use App\Entity\CommandeTaxe;
@@ -127,7 +128,27 @@ class BilletTaxeController extends AbstractController
         {
             return $this->render('billet_taxe/show.html.twig', [
                 'billet_taxe' => $billetTaxe,
-                'error' => "Il y'a une contrainte d'integrité entre 'Commande PTB' et 'Billet PTB'"
+                'error' => "Il y'a une contrainte d'integrité entre 'Commande taxe' et 'Billet taxe'"
+            ]);
+        }
+        $vente = $this->getDoctrine()->getRepository(VenteTaxe::class)->findOneBy([
+            'billet' => $billetTaxe
+        ]);
+        if($vente)
+        {
+            return $this->render('billet_taxe/show.html.twig', [
+                'billet_taxe' => $billetTaxe,
+                'erreur' => "Il y'a une contrainte d'integrité entre 'vente' et 'Billet taxe'"
+            ]);
+        }
+        $stock = $this->getDoctrine()->getRepository(StockTaxe::class)->findOneBy([
+            'billet' => $billetTaxe
+        ]);
+        if($stock)
+        {
+            return $this->render('billet_taxe/show.html.twig', [
+                'billet_taxe' => $billetTaxe,
+                'erreurs' => "Il y'a une contrainte d'integrité entre 'stock taxe' et 'Billet taxe'"
             ]);
         }
         if ($this->isCsrfTokenValid('delete'.$billetTaxe->getId(), $request->request->get('_token'))) {

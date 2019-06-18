@@ -199,6 +199,7 @@
         <thead>
             <tr>
                 <th>Prix</th>
+                <th>Type</th>
                 <th>Guichet</th>
                 <th>Numéro Depart</th>
                 <th>Billets Commandés</th>
@@ -211,6 +212,7 @@
         {% for billet_taxe in billet_taxes %}
             <tr>
                 <td>{{ billet_taxe.billet.prix }}</td>
+                <td>{{ billet_taxe.billet.type }}</td>
                 <td>Controleur</td>
                 <td id="dpt{{ billet_taxe.billet.id }}">{{billet_taxe.billet.numeroDernierBillet}}</td>
                 <td >{{billet_taxe.total}}</td>

@@ -54,5 +54,13 @@
     swal("ERREUR", "Il y'a une contrainte d'integrité entre 'Commande taxe' et 'Billet Taxe'", "error");
     
   {% endif %}
+  {% if erreur is defined %}
+    swal("ERREUR", "Il y'a une contrainte d'integrité entre 'vente' et 'Billet PTB'. On ne peut pas supprimer un taxe qui a été vendu", "error");
+    
+  {% endif %}
+  {% if erreurs is defined %}
+    swal("ERREUR", "Il y'a une contrainte d'integrité entre 'stock' et 'Billet taxe'", "error");
+    
+  {% endif %}
 </script>
 {% endblock %}
