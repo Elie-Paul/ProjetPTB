@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\SectionEvent;
+use App\Entity\BilletPtb;
 use App\Entity\TrajetEvent;
 use App\Form\EvenementType;
 use App\Form\SectionEventType;
@@ -219,6 +220,20 @@ class EvenementController extends AbstractController
      */
     public function delete(Request $request, Evenement $evenement): Response
     {
+        $billet = $this->getDoctrine()->getRepository(BilletPtb::class)->findOneBy([
+            'evenement' => $evenement
+        ]);
+        if($billet)
+        {
+            return $this->render('evenement/show.html.twig', [
+            'evenement' => $evenement,
+            'error' => 'erreur'
+            ]);
+            /*return $this->render('trajet/show.html.twig', [
+            'trajet' => $trajet,
+            'error' => "Il y'a une contrainte d'integrité entre 'Trajet' et 'PTB'"
+        ]);*/
+        }
         if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($evenement);
