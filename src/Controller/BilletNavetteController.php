@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\BilletNavette;
+use App\Entity\CommandeNavette;
 use App\Entity\StockNavette;
 use App\Form\BilletNavetteType;
 use App\Controller\ControllerCommandeNavetteController;
@@ -33,7 +34,9 @@ class BilletNavetteController extends AbstractController
             $total = intVal($controller->totalBillet2($id));
             $arr = ['billet' => $value,'total' => $total];
             array_push($array,$arr);
-        }    
+        }  
+        //dump($array);
+        //die();  
     return $this->render('billet_navette/index.html.twig', [
         'billet_navettes' =>$array,
     ]);
@@ -139,8 +142,20 @@ class BilletNavetteController extends AbstractController
     /**
      * @Route("/{id}", name="billet_navette_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, BilletNavette $billetNavette): Response
+    public function delete(Request $request, BilletNavette $billetNavette, BilletNavetteRepository $billetNavetteRepository): Response
     {
+         $commande = $this->getDoctrine()->getRepository(CommandeNavette::class)->findOneBy([
+                'billet' => $billetNavette
+            ]);
+         //dump($commande);
+         //die();
+
+            if($commande)
+            {
+                return $this->render('billet_navette/index2.html.twig', [
+                    'billet_navettes' => $billetNavetteRepository->findAll(),
+                ]);
+            }
         if ($this->isCsrfTokenValid('delete'.$billetNavette->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($billetNavette);
