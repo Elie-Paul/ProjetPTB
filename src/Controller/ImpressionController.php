@@ -209,6 +209,10 @@ class ImpressionController extends AbstractController
          $stockNavette=$entityManager->getRepository(StockNavette::class)->findOneBy([
             'billet' => $billet,
          ]);
+         /**if(!$stockNavette)
+         {
+            return $this->redirectToRoute('billet_navette_index');
+         }**/
          $commnadesNavettes = $entityManager->getRepository(CommandeNavette::class)->findBy
          (
              [

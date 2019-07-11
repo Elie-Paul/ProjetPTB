@@ -121,7 +121,8 @@
             var checkbox = document.getElementById("modifierdpt");
             var userid = parseInt(document.getElementById("userid").innerHTML, 10);
             var motif = "";  
-            if(parseInt(nbreprint)>total)
+            dpt = parseInt(document.getElementById('nbredepart').value, 10);
+            if(parseInt(nbreprint)>total && !checkbox.checked)
             {
                 alert("Vous essayez d'imprimer un nombre de billet superieur au nombre commandé")
             }
@@ -210,7 +211,7 @@
                 <td >{{billet_navette.total}}</td>
                  <td>
                  {% if billet_navette.total == "0" %}
-                    <a class="btn btn-warning" id="myBBtn" href="#" disabled><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
+                    <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_navette.billet.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
                 {% else %}
                     <a class="btn btn-warning" id="myBBtn" href="#" onclick="print({{ billet_navette.billet.id }})"><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
                 {% endif %}
