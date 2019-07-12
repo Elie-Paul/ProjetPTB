@@ -34,7 +34,6 @@
     <table class="table table-hover table-striped table-bordered" id="example1">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Classe</th>
                 <th>Départ</th>
                 <th>Arrivée</th>
@@ -47,7 +46,6 @@
         <tbody>
         {% for billet_navette in billet_navettes %}
             <tr> 
-                <td>{{ billet_navette.navette.id}}</td>
                 <td>{{ billet_navette.navette.classe.libelle}}</td>
                 <td>{{ billet_navette.navette.trajet.depart.libelle}}</td>
                 <td>{{ billet_navette.navette.trajet.arrivee.libelle}}</td>

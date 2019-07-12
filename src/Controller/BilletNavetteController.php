@@ -154,6 +154,7 @@ class BilletNavetteController extends AbstractController
             {
                 return $this->render('billet_navette/index2.html.twig', [
                     'billet_navettes' => $billetNavetteRepository->findAll(),
+                    'error' => "Il y'a une contrainte d'integrité entre ce billet et la commande"
                 ]);
             }
         if ($this->isCsrfTokenValid('delete'.$billetNavette->getId(), $request->request->get('_token'))) {
