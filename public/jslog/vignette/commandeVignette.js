@@ -176,6 +176,25 @@ function checkforEmpty()
         
     })
         .then((value) => {
+            let userid = document.getElementById('userid').innerText;
+            let f="Commande";
+            let param=userid+"+Une Commande de vignette a été effectué";
+            //alert(param);
+            let thera=new XMLHttpRequest();
+                thera.onload=function ()
+                {
+                    if(this.status == 200)
+                    {
+                        console.log("request ok");
+                        /*thera.open("POST",superLink+"/audit/commandebythera",true);
+                        thera.send(param);*/
+                    }
+                }
+            if(f)
+            {
+                thera.open("POST",superLink+"/audit/commandevignettebythera",true);
+                thera.send(param);
+            }
             document.location.href=superLink+"/commande/vignette";
             
         });

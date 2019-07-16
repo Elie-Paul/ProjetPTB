@@ -66,6 +66,18 @@
                 {% if audit.type.libelle == "retour billet irregulier" %}
                     <td><button class="btn btn-warning" disabled>{{ audit.type.libelle}}</button></td>
                 {% endif %}
+                {% if audit.type.libelle == "Commande PTB" %}
+                    <td><button class="btn btn-warning" disabled>{{ audit.type.libelle}}</button></td>
+                {% endif %}
+                {% if audit.type.libelle == "Commande autorail" %}
+                    <td><button class="btn btn-info" disabled>{{ audit.type.libelle}}</button></td>
+                {% endif %}
+                {% if audit.type.libelle == "Commande Vignette" %}
+                    <td><button class="btn btn-default" disabled>{{ audit.type.libelle}}</button></td>
+                {% endif %}
+                {% if audit.type.libelle == "Validation commande PTB" %}
+                    <td><button class="btn btn-success" disabled>{{ audit.type.libelle}}</button></td>
+                {% endif %}
                 
                 <td>{{ audit.createdAt ? audit.createdAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss') }}</td>
                 <td>{{ audit.updatedAt ? audit.updatedAt|localizeddate('none', 'none', null, null, 'EE d MMMM y à HH:mm:ss') }}</td>

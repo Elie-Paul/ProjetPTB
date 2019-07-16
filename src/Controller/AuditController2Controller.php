@@ -55,6 +55,114 @@ class AuditController2Controller extends AbstractController
             "<h1>".$type->getLibelle()."</h1>"
         );
     }
+
+    /**
+     * @Route("/audit/commandebythera", name="audit_commandebythera")
+     */
+    public function newCommandPtb(Request $request)
+    {
+       $array= explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $text=$array[1];
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(5);
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription("Une commande pour le billet PTB a été effectué");
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
+    }
+
+    /**
+     * @Route("/audit/commandenavettebythera", name="audit_commandenavettebythera")
+     */
+    public function newCommandNavette(Request $request)
+    {
+       $array= explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $text=$array[1];
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(6);
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription("Une commande pour le billet autorail a été effectué");
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
+    }
+
+    /**
+     * @Route("/audit/commandevignettebythera", name="audit_commandevignettebythera")
+     */
+    public function newCommandVignette(Request $request)
+    {
+       $array= explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $text=$array[1];
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(7);
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription("Une commande de vignette a été effectué");
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
+    }
+
+    /**
+     * @Route("/audit/commandevignettebythera", name="audit_commandevignettebythera")
+     */
+    public function newValiderPtb(Request $request)
+    {
+       $array= explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $text=$array[1];
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(8);
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription("Une commande PTB a été validé");
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
+    }
     
     /**
      * @Route("/audit/reimpression", name="audit_reimpression")

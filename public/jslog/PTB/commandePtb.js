@@ -219,6 +219,27 @@ function getJson3()
         
     })
         .then((value) => {
+            let userid = document.getElementById('userid').innerText;
+            //alert("user id =  "+userid);
+            let f="Commande";
+            let param=userid+"+Une Commande PTB a été effectué";
+            //alert(param);
+            let thera=new XMLHttpRequest();
+                thera.onload=function ()
+                {
+                    if(this.status == 200)
+                    {
+                        console.log("request ok");
+                        /*thera.open("POST",superLink+"/audit/commandebythera",true);
+                        thera.send(param);*/
+                    }
+                }
+            if(f)
+            {
+                thera.open("POST",superLink+"/audit/commandebythera",true);
+                thera.send(param);
+            }
+
             document.location.href=superLink+"/commande/ptb";
             
         });
@@ -248,6 +269,9 @@ function getJson3()
      {
         if ( this.status == 200)
         {
+            //console.log("request ok");
+            
+            
             spansSuccess[i].style.display = "block";
             spansDanger[i].style.display = "none";
         }
