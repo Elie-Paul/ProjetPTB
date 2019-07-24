@@ -188,16 +188,20 @@ class ImpressionController extends AbstractController
     */
     public function show3($id,$numDepartMotif, MailController $mail)
     {
-        
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
          $depart = intval($arr[2]);
          $userid = intval($arr[3]);
-         $color = $arr[4];
          $entityManager = $this->getDoctrine()->getManager();
          $billet = $entityManager->getRepository(BilletNavette::class)->find($id);
          $user = $entityManager->getRepository(User::class)->find($userid);
+         if($motif === "pas de changement")
+         {
+            $depart = $billet->getNumeroDernierBillet();
+         }
+         $color = $arr[4];
+         
          if($depart ==$billet->getNumeroDernierBillet())
          {
             $testMotif="true";
