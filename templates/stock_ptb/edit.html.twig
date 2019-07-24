@@ -1,8 +1,37 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit StockPtb{% endblock %}
+{% block javascripts %}
+    <script>
+    document.getElementById("thera").addEventListener("click", function() {
+      console.log("Hello World!");
+      let userid = document.getElementById('userid').innerText;
+      let f="Commande";
+      let param=userid+"+Le stock PTB a été modifié";
+      //alert(param);
+      let thera=new XMLHttpRequest();
+      thera.onload=function ()
+      {
+        if(this.status == 200)
+        {
+          console.log("request ok");
+          /*thera.open("POST",superLink+"/audit/altererstockptb",true);
+          thera.send(param);*/
+        }
+      }
+      if(f)
+      {
+        thera.open("POST",superLink+"/audit/altererstockptb",true);
+        thera.send(param);
+      }
+    });
+    </script>
+{% endblock %}
 
 {% block body %}
+<div id="userid" style="display:none;">
+    {{ app.user.id }}
+ </div>
       <div class="box box-default">
           <div class="box-header with-border">
           <div class="col-md-6">

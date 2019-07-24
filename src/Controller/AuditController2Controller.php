@@ -84,6 +84,114 @@ class AuditController2Controller extends AbstractController
     }
 
     /**
+     * @Route("/audit/altererstockptb", name="audit_altererstockptb")
+     */
+    public function newAlterStockPtb(Request $request)
+    {
+       $array= explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $text=$array[1];
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(10);
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription("Stock PTB a été modifié");
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
+    }
+
+    /**
+     * @Route("/audit/altererstocknavette", name="audit_altererstocknavette")
+     */
+    public function newAlterStockAutorail(Request $request)
+    {
+       $array= explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $text=$array[1];
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(11);
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription("Le stock autorail a été modifié");
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
+    }
+
+    /**
+     * @Route("/audit/altererstocktaxe", name="audit_altererstocktaxe")
+     */
+    public function newAlterStockTaxe(Request $request)
+    {
+       $array= explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $text=$array[1];
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(12);
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription("Le stock taxe a été modifié");
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
+    }
+
+    /**
+     * @Route("/audit/altererstockvignette", name="audit_altererstockvignette")
+     */
+    public function newAlterStockVignette(Request $request)
+    {
+       $array= explode('+',$request->getContent());
+        $user = $this->getDoctrine()
+        ->getRepository(User::class)
+        ->find(intval($array[0]));
+        $text=$array[1];
+        $type = $this->getDoctrine()
+        ->getRepository(TypeAudit::class)
+        ->find(13);
+        $audit = new Audit();
+        $audit->setUser($user);
+        $audit->setType($type);
+        $audit->setDescription("Le stock vignette a été modifié");
+        $audit->setCreatedAt($this->test35());
+        $audit->setUpdatedAt($this->test35());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($audit);
+        $entityManager->flush();
+        return new Response(
+            "<h1>".$type->getLibelle()."</h1>"
+        );
+    }
+
+    /**
      * @Route("/audit/commandenavettebythera", name="audit_commandenavettebythera")
      */
     public function newCommandNavette(Request $request)

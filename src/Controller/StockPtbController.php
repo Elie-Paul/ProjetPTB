@@ -6,6 +6,7 @@ use App\Entity\StockPtb;
 use App\Form\StockPtbType;
 use App\Entity\Guichet;
 use App\Entity\BilletPtb;
+use App\Entity\Audit;
 use App\Repository\StockPtbRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,6 +70,9 @@ class StockPtbController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $date = new \DateTime();
+            $date->setTimezone(new \DateTimeZone('GMT'));
+            $stockPtb->setUpdatedAt($date);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('stock_ptb_lister', [

@@ -13,9 +13,6 @@ class StockNavetteType extends AbstractType
     {
         $builder
             ->add('nbre')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('billet')
         ;
     }
 
