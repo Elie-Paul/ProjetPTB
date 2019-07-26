@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\CommandeTaxe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\DBALException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,65 @@ class CommandeTaxeRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, CommandeTaxe::class);
+    }
+
+    /**
+     * @return void Returns an array of CommandePtb objects
+     * @throws DBALException
+     */
+    public function truncateCommandeTaxe()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        TRUNCATE TABLE commande_taxe';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+//        return $stmt->fetchAll();
+    }
+
+    /**
+     * @return void Returns an array of CommandePtb objects
+     * @throws DBALException
+     */
+    public function stockZero()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        UPDATE stock_taxe SET nbre=0 WHERE billet_id IS NOT NULL';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    }
+
+    /**
+     * @return void Returns an array of CommandePtb objects
+     * @throws DBALException
+     */
+    public function numeroDernierBillet()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        UPDATE billet_taxe SET numero_dernier_billet=1 WHERE id IS NOT NULL';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    }
+
+    /**
+     * @return void Returns an array of CommandePtb objects
+     * @throws DBALException
+     */
+    public function truncateVenteTaxe()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        TRUNCATE TABLE vente_taxe';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
     }
 
     // /**

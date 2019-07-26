@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\CommandeNavette;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\DBALException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,62 @@ class CommandeNavetteRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, CommandeNavette::class);
+    }
+
+    /**
+     * @return void Returns an array of CommandePtb objects
+     * @throws DBALException
+     */
+    public function truncateCommandeNavette()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        TRUNCATE TABLE commande_navette';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    }
+
+    /**
+     * @return void Returns an array of CommandePtb objects
+     * @throws DBALException
+     */
+    public function stockZero()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        UPDATE stock_navette SET nbre=0 WHERE billet_id IS NOT NULL';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    }
+
+    /**
+     * @return void Returns an array of CommandePtb objects
+     * @throws DBALException
+     */
+    public function numeroDernierBillet()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        UPDATE billet_navette SET numero_dernier_billet=1 WHERE guichet_id IS NOT NULL';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    }
+
+    /**
+     * @return void Returns an array of CommandePtb objects
+     * @throws DBALException
+     */
+    public function truncateVenteNavette()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        TRUNCATE TABLE vente_navette';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
     }
 
     // /**
