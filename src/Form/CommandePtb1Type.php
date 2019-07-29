@@ -13,6 +13,7 @@ class CommandePtb1Type extends AbstractType
     {
         $builder
             ->add('nombreBillet')
+            ->add('dateCommande')
         ;
     }
 

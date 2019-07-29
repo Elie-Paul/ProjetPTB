@@ -13,6 +13,7 @@ class CommandeNavetteType extends AbstractType
     {
         $builder
             ->add('nombreBillet')
+            ->add('dateCommande')
         ;
     }
 
