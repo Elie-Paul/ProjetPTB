@@ -56,7 +56,7 @@ class ImpressionController extends AbstractController
     */
     public function show2($id,$numDepartMotif, MailController $mail)
     {
-        
+         $date = new \DateTime();
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
@@ -82,7 +82,7 @@ class ImpressionController extends AbstractController
              [
                 'billet' => $billet,
              ],
-             ['dateCommande' =>'ASC']
+             ['dateCommande' =>'DESC']
          );
          $array=array();
          $j =0 ;
@@ -170,11 +170,16 @@ class ImpressionController extends AbstractController
                 $commnadesPTB[$a]->setEtatCommande(3);
                     
             }
+            if($a === 0)
+            {
+                $date = $commnadesPTB[$a]->getDateCommande();
+
+            }
             $a++;
         }
         
         $entityManager->flush();
-        $date=$this->test35();
+//        $date=$this->test35();
         $mail->sendMailForPrint($depart, end($array));
        // $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index.html.twig', [
@@ -188,6 +193,7 @@ class ImpressionController extends AbstractController
     */
     public function show3($id,$numDepartMotif, MailController $mail)
     {
+         $date = new \DateTime();
          $arr=explode("+",$numDepartMotif);
          $num = intval($arr[0]);
          $motif = $arr[1];
@@ -222,7 +228,7 @@ class ImpressionController extends AbstractController
              [
                 'billet' => $billet,
              ],
-             ['dateCommande' =>'ASC']
+             ['dateCommande' =>'DESC']
          );
          $array=array();
          $j =0;
@@ -307,11 +313,15 @@ class ImpressionController extends AbstractController
             {
                         $commnadesNavettes[$a]->setEtatCommande(3);
             }
+            if ($a === 0) {
+                $date = $commnadesNavettes[$a]->getDateCommande();
+
+            }
             $a++;
         }
    
         $entityManager->flush();
-        $date=$this->test35();
+//        $date=$this->test35();
         $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index2.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif,
