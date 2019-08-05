@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\BilletPtb;
+use App\Entity\Date;
 use App\Entity\BilletNavette;
 use App\Entity\CommandePtb;
 use App\Entity\StockPtb;
@@ -170,15 +171,17 @@ class ImpressionController extends AbstractController
                 $commnadesPTB[$a]->setEtatCommande(3);
                     
             }
-            if($a === 0)
+            /*if($a === 0)
             {
                 $date = $commnadesPTB[$a]->getDateCommande();
 
-            }
+            }*/
             $a++;
         }
         
         $entityManager->flush();
+        $dates = $this->getDoctrine()->getRepository(Date::class)->find(1);
+        $date = $dates->getDateBillets();
 //        $date=$this->test35();
         $mail->sendMailForPrint($depart, end($array));
        // $mail->sendMailForPrint($depart, end($array));
@@ -321,6 +324,8 @@ class ImpressionController extends AbstractController
         }
    
         $entityManager->flush();
+        $dates = $this->getDoctrine()->getRepository(Date::class)->find(1);
+        $date = $dates->getDateBillets();
 //        $date=$this->test35();
         $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index2.html.twig', [
@@ -455,6 +460,8 @@ class ImpressionController extends AbstractController
         }
         $entityManager->flush();
         $date=$this->test35();
+        $dates = $this->getDoctrine()->getRepository(Date::class)->find(1);
+        $date = $dates->getDateBillets();
         $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/index3taxes.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif
@@ -580,6 +587,8 @@ class ImpressionController extends AbstractController
         }
         $entityManager->flush();
         $date=$this->test35();
+        $dates = $this->getDoctrine()->getRepository(Date::class)->find(1);
+        $date = $dates->getDateBillets();
         $mail->sendMailForPrint($depart, end($array));
          return $this->render('impression/indexvignette.html.twig', [
              'billet' => $billet,'nbrebillet' => $array,'color' => $color,'date' =>$date ,'motif'=>$motif,'nDepart'=>$depart,'nLast'=>end($array),'testMotif'=> $testMotif

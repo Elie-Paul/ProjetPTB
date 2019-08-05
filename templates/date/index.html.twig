@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Date index{% endblock %}
+
+{% block body %}
+    <h1>Date sur les billets</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for date in dates %}
+            <tr>
+                <td>{{ date.dateBillets ? date.dateBillets|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('date_show', {'id': date.id}) }}">Voir</a>
+                    <a class="btn btn-warning" href="{{ path('date_edit', {'id': date.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Pas d'enregistrement</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

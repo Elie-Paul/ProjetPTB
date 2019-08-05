@@ -57,7 +57,7 @@ class CommandeVignetteRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-        UPDATE vignette SET numero_dernier_billet=1 WHERE guichet_id IS NOT NULL';
+        UPDATE vignette SET numero_dernier_billet=0 WHERE guichet_id IS NOT NULL';
         $stmt = $conn->prepare($sql);
         $stmt->execute();
     }
