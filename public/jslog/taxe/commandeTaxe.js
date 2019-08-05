@@ -44,6 +44,7 @@ function createRowElement(commande)
     input.type = 'number';
     input.classList.add('form-control');
     input.id=''+commande.id;
+    input.type=''+commande.type;
     input.placeholder = 'nombre de billet';
     div.appendChild(input);
     nombreCommande.appendChild(div);
@@ -86,7 +87,7 @@ function controlPasserCommande()
         
     })
         .then((value) => {
-            document.location.href="/commande/taxe";
+            document.location.href=superLink+"/commande/taxe";
             
         });
  }
@@ -118,11 +119,22 @@ function controlPasserCommande()
         }
         let link =superLink+"/newCommandeTaxe/";
         let params =`${inputs[i].value}`;
+        let val = "";
 
         if (parseInt(params,10)>0 ) 
         {
+            if(i == 0)
+            {
+                val = ""+parseInt(params,10)+"+ptb";
+            }
+            if(i == 1)
+            {
+                val = ""+parseInt(params,10)+"+autorail";
+            } 
             xhttp.open("POST",link,true);
-            xhttp.send(params);  
+            xhttp.send(val);    
+            /*xhttp.open("POST",link,true);
+            xhttp.send(params);*/  
         }
         else
         {

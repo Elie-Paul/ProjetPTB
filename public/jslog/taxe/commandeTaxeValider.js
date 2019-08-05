@@ -140,6 +140,7 @@ function getTaxes()
             xhr.send(button.id);
             getTaxes();
             updateTab();
+            document.location.href=superLink+"/commande/taxe/valider";
         }    
     });
 }
@@ -194,7 +195,7 @@ function updateTab()
   let tab1 = tab;
   if(guichetSelected ==0 && start.value == '' && end.value == '' )
   {
-    getAllCommande();
+    //getAllCommande();
   }
   if(guichetSelected !=0)
   {

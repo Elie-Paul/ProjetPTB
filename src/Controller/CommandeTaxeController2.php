@@ -55,10 +55,17 @@ class CommandeTaxeController2 extends AbstractController
      */
     public function newCommande(Request $request)//Request $request
     {
-        $billetTaxe = $this->getDoctrine()->getRepository(BilletTaxe::class)->find(1);
+        $array= explode('+',$request->getContent());
+        $billetTaxe = $this->getDoctrine()->getRepository(BilletTaxe::class)->findOneBy([
+            "type" => $array[1]
+        ]);
+        dump($array);
+        //die();
+        //$billetTaxe = $this->getDoctrine()->getRepository(BilletTaxe::class)->find(1);
         $commandeTaxe = new commandeTaxe();
         $commandeTaxe->setBillet($billetTaxe);
-        $commandeTaxe->setNombreBillet(intVal($request->getContent()));
+        $commandeTaxe->setNombreBillet(intVal($array[0]));
+        //$commandeTaxe->setNombreBillet(intVal($request->getContent()));
         $commandeTaxe->setNombreBilletRealise(0);
         $commandeTaxe->setNombreBilletVendu(0);
         

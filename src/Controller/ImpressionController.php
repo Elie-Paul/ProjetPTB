@@ -334,6 +334,8 @@ class ImpressionController extends AbstractController
     {
         
          $arr=explode("+",$numDepartMotif);
+         //dump($arr);
+         //die();
          $num = intval($arr[0]);
          $motif = $arr[1];
          $depart = intval($arr[2]);
@@ -407,7 +409,11 @@ class ImpressionController extends AbstractController
             }
             $num=$bb;
          }
-        $billet->setNumeroDernierBillet(end($array));
+        //$billet->setNumeroDernierBillet(end($array));
+         if($motif == "pas de changement")
+         {
+            $billet->setNumeroDernierBillet($num + $depart);
+         }
         $a=0;
         $d=0;
         $test=array();

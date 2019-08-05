@@ -14,6 +14,7 @@ class BilletNavetteType extends AbstractType
         $builder
             ->add('navette')
             ->add('guichet')
+            ->add('numeroDernierBillet')
         ;
     }
 

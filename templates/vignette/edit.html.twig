@@ -3,11 +3,11 @@
 {% block title %}Edit Vignette{% endblock %}
 
 {% block body %}
-    <h1>Edit Vignette</h1>
+    <h1>Modification Vignette</h1>
 
-    {{ include('vignette/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('vignette/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('vignette_index') }}">back to list</a>
+    <a href="{{ path('vignette_index') }}">Retour vers la liste</a>
 
     {{ include('vignette/_delete_form.html.twig') }}
 {% endblock %}

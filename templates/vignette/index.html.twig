@@ -207,6 +207,7 @@
                 <th>prix</th>
                 <th>Numéro Dernier Billet</th>
                 <th>Billets Commandés</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -219,6 +220,7 @@
                 <td id="dpt{{ vignette.billet.id }}">{{vignette.billet.numeroDernierBillet}}</td>
                 <td >{{vignette.total}}</td>
                 <td>
+                <a class="btn btn-info" href="{{ path('vignette_edit', {'id': vignette.billet.id}) }}"><i class="glyphicon glyphicon-print"></i>&nbsp;Modifier</a>
                     {% if vignette.total == "0" %}
                     <a class="btn btn-warning" id="myBBtn" href="#" disabled><i class="glyphicon glyphicon-print"></i>&nbsp;Imprimer</a>
                     {% else %}
