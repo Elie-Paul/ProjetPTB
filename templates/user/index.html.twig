@@ -171,7 +171,7 @@
     <script>
         function bloquer(id) {
             $.ajax({
-                url: '/user/bloquer',
+                url: superLink+'/user/bloquer',
                 type: 'post',
                 data: {id: id},
                 dataType: 'json',

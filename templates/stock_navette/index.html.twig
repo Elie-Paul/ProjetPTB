@@ -32,6 +32,9 @@
         <thead>
             <tr>
                 <th>Guichet</th>
+                <th>Classe</th>
+                <th>Depart</th>
+                <th>Arrivé</th>
                 <th>Nombre</th>
                 <th>Actions</th>
             </tr>
@@ -40,6 +43,9 @@
         {% for stock_navette in stock_navettes %}
             <tr>
                 <td>{{ stock_navette.billet.guichet }}</td>
+                <td>{{ stock_navette.billet.navette.classe.libelle }}</td>
+                <td>{{ stock_navette.billet.navette.trajet.depart }}</td>
+                <td>{{ stock_navette.billet.navette.trajet.arrivee }}</td>
                 <td>{{ stock_navette.nbre }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('stock_navette_voir', {'id': stock_navette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>

@@ -6,6 +6,7 @@ use App\Entity\Vignette;
 use App\Form\VignetteType;
 use App\Entity\StockVignette;
 use App\Repository\VignetteRepository;
+use App\Repository\StockVignetteRepository;
 use App\Controller\CommandeVignetteController2;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,9 +105,19 @@ class VignetteController extends AbstractController
     /**
      * @Route("/{id}", name="vignette_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Vignette $vignette): Response
+    public function delete(Request $request, Vignette $vignette, StockVignetteRepository $stockVignetteRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$vignette->getId(), $request->request->get('_token'))) {
+            $tmp = $this->getDoctrine()->getRepository(StockVignette::class)->findOneBy([
+            'billet' => $vignette
+            ]);
+            if($tmp)
+            {
+                return $this->render('stock_vignette/index.html.twig', [
+                'stock_vignettes' => $stockVignetteRepository->findAll(),
+                'error' => "Il y'a une contrainte d'integrité entre 'Vignette' et 'Stock vignette'"
+                ]);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($vignette);
             $entityManager->flush();

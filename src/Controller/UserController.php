@@ -116,9 +116,11 @@ class UserController extends AbstractController
                 'email' => $user->getEmail(),
                 'username' => $user->getUsername(),
             ]);
+            //dump($user);
+            //die();
             if (!$user1)
             {
-                $mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $user->getRoles());
+                //$mail->sendMailUserInfo($user->getNom(),$user->getPrenom(), $user->getEmail(), $user->getRoles());
                 $mail->sendMailToUser($user->getUsername(), $user->getPassword(), $user->getNom(), $user->getPrenom(), $user->getEmail(), $user->getRoles(), 'mail/index.html.twig');
                 $user->setCreatedAt($this->test35());
                 $user->setUpdateAt($this->test35());

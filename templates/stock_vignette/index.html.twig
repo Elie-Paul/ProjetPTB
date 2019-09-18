@@ -28,6 +28,7 @@
         <thead>
             <tr>
                 <th>Guichet</th>
+                <th>Type</th>
                 <th>Nombre</th>
                 <th>Actions</th>
             </tr>
@@ -35,7 +36,8 @@
         <tbody>
         {% for stock_vignette in stock_vignettes %}
             <tr>
-                <td>Contrôleur</td>
+                <td>{{ stock_vignette.billet.guichet }}</td>
+                <td>{{ stock_vignette.billet.type }}</td>
                 <td>{{ stock_vignette.nbre }}</td>
                 <td>
                     <a class="btn btn-ifno" href="{{ path('stock_vignette_voir', {'id': stock_vignette.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
@@ -72,6 +74,14 @@
     <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.colVis.min.js"></script>
 
     <script>
+    {% if error is defined %}
+        swal({
+        title: "Erreur",
+        text: "Il y'a une contrainte d'integrité entre le billet et le stock",
+        icon: "error",
+        
+        })
+    {% endif %}
      $(function () {
             $('#example1').DataTable({
                 "reponsive": true,

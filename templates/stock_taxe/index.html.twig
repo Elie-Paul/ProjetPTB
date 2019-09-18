@@ -27,6 +27,7 @@
         <thead>
             <tr>
                 <th>Guichet</th>
+                <th>Type</th>
                 <th>Nombre</th>
                 <th>Actions</th>
             </tr>
@@ -35,6 +36,7 @@
         {% for stock_taxe in stock_taxes %}
             <tr>
                 <td>{{ stock_taxe.billet }}</td>
+                <td>{{ stock_taxe.billet.type }}</td>
                 <td>{{ stock_taxe.nbre }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('stock_taxe_voir', {'id': stock_taxe.id}) }}"><i class="glyphicon glyphicon-eye-open"></i>&nbsp;Voir</a>
