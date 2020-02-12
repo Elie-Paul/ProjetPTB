@@ -60,6 +60,7 @@ class CommandeTaxeController2 extends AbstractController
             "type" => $array[1]
         ]);
         dump($array);
+        
         //die();
         //$billetTaxe = $this->getDoctrine()->getRepository(BilletTaxe::class)->find(1);
         $commandeTaxe = new commandeTaxe();

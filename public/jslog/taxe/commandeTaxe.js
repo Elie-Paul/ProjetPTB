@@ -119,6 +119,7 @@ function controlPasserCommande()
         }
         let link =superLink+"/newCommandeTaxe/";
         let params =`${inputs[i].value}`;
+        //alert(+inputs[i].value);
         let val = "";
 
         if (parseInt(params,10)>0 ) 
